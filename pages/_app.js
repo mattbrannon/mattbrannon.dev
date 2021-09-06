@@ -1,5 +1,6 @@
 import { GlobalStyle } from '../styles/global';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
 
@@ -22,6 +23,7 @@ export default function App({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         <Header />
         <Component {...pageProps} />
+        <Footer />
       </ThemeProvider>
     </>
   );
