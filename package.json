@@ -7,11 +7,22 @@
     "start": "next start"
   },
   "dependencies": {
+    "babel-plugin-macros": "^3.1.0",
     "gray-matter": "^4.0.2",
     "next": "latest",
     "next-mdx-remote": "^3.0.1",
     "next-remote-watch": "1.0.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "sharp": "^0.29.0",
+    "styled-components": "^5.3.1"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^11.1.2",
+    "eslint": "^7.32.0",
+    "eslint-plugin-mdx": "^1.15.0",
+    "eslint-plugin-prettierx": "^0.18.0",
+    "eslint-plugin-react": "^7.25.1",
+    "prettier": "aMarCruz/prettier"
   }
 }

@@ -1,0 +1,48 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "settings": {
+    "prettierx": {
+      "usePrettierrc": true,
+      "editorconfig": false,
+      "ignorePath": ".prettierignore",
+      "pluginSearchDirs": [],
+      "plugins": [],
+      "withNodeModules": false,
+      "useCache": true
+    }
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:mdx/recommended",
+    "plugin:prettierx/default"
+  ],
+  "plugins": ["react", "mdx", "prettierx"],
+  "rules": {
+    "no-var": "error",
+    "no-unused-vars": "warn",
+    "react/react-in-jsx-scope": "off",
+    "react/no-unescaped-entities": "off",
+    "react/prop-types": "off",
+    "prettierx/options": [
+      "warn",
+      {
+        "arrayBracketSpacing": true,
+        "breakBeforeElse": true,
+        "semi": true,
+        "printWidth": 90,
+        "offsetTernaryExpressions": false,
+        "singleQuote": true,
+        "breakLongMethodChains": true
+      }
+    ]
+  }
+}
