@@ -26,7 +26,7 @@ export default function PostPage({ source, frontMatter }) {
   return (
     <MaxWidthWrapper>
       <DocumentHead title={frontMatter.title} desc={frontMatter.description} />
-      <div>
+      <div style={{ marginTop: '32px' }}>
         <BlogHeader>{frontMatter}</BlogHeader>
       </div>
       <main>
@@ -37,7 +37,12 @@ export default function PostPage({ source, frontMatter }) {
 }
 
 export const getStaticProps = async ({ params }) => {
-  const postFilePath = path.join(POSTS_PATH, `${params.slug}.mdx`);
+  const filename = fs
+    .readdirSync(POSTS_PATH)
+    .filter((file) => file.slice(0, file.lastIndexOf('.')) === params.slug)
+    .join('');
+
+  const postFilePath = path.join(POSTS_PATH, filename);
   const source = fs.readFileSync(postFilePath);
 
   const { content, data } = matter(source);

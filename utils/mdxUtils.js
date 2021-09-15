@@ -15,6 +15,5 @@ export const postFilePaths = allFilePaths.filter((filename) => {
   const fullPath = path.resolve(POSTS_PATH, filename);
   const source = fs.readFileSync(fullPath);
   const { data } = matter(source);
-
   return data.status !== 'unpublished';
 });
