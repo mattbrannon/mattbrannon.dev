@@ -1,6 +1,7 @@
 import styled from 'styled-components/macro';
 import { useState } from 'react';
 import Link from 'next/link';
+import { Anchor } from './Anchor';
 
 export default function FancyLink({ href, children }) {
   const [ isHovering, setIsHovering ] = useState(false);
@@ -11,7 +12,7 @@ export default function FancyLink({ href, children }) {
       onMouseLeave={() => setIsHovering(false)}
     >
       <Link passHref href={href}>
-        <Anchor href={href}>{children}</Anchor>
+        <A href={href}>{children}</A>
       </Link>
 
       <Underline
@@ -33,7 +34,7 @@ const LinkWrapper = styled.span`
   /* font-variation-settings: */
 `;
 
-export const Anchor = styled.a.attrs((props) => {
+const A = styled(Anchor).attrs((props) => {
   return {
     href: props.href,
   };
