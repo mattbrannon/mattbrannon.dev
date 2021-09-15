@@ -50,6 +50,7 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Oswald&family=Amatic+SC:wght@400;700&display=swap"
             rel="stylesheet"
           />
+          <link rel="shortcut icon" href="/images/favicon.ico" />
         </Head>
         <body>
           <Main />
