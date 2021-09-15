@@ -76,6 +76,18 @@ export const GlobalStyle = createGlobalStyle`
     --headerHeight: 80px;
     --footerHeight: 70px;
     --mainHeight: calc(100% - (var(--headerHeight) - var(--footerHeight)));
+
+    --maxWidth: 80ch;
+
+    --darkPink:  hsl(328deg, 100%, 33%);
+    --medDarkPink: hsl(328deg, 100%, 42%);
+    --pink: hsl(328, 100%, 54%);
+    --medLightPink: hsl(328deg, 100%, 61%);
+    --lightPink: hsl(328deg, 100%, 66%);
+    --veryLightPink: hsl(328deg, 100%, 74%);
+
+
+    --darkModeLinkColor: hsl(245deg, 93%, 79%);
   }
 
   *,
@@ -86,7 +98,7 @@ export const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     margin: 0;
     padding: 0;
-    /* font-family: futura; */
+    /* font-family: 'Roboto Flex'; */
   }
 
   /* Remove default margin */
@@ -132,13 +144,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   /* Make images easier to work with */
-  /* img,
+  img,
   picture {
     height: auto;
     max-width: 100%;
     display: block;
-    object-fit: cover;
-  } */
+    object-fit: contain;
+  }
 
   /* Inherit fonts for inputs and buttons */
   /* input,
@@ -154,6 +166,10 @@ export const GlobalStyle = createGlobalStyle`
     margin: revert;
     padding: revert;
   }
+
+  ol{
+    list-style: decimal;
+  };
 
   /* width */
   ::-webkit-scrollbar {
@@ -205,11 +221,32 @@ export const GlobalStyle = createGlobalStyle`
     outline: none;
   }
 
+  *:focus-visible {
+    outline: 2px solid deepskyblue;
+    outline-offset: 0.2em;
+  }
+
   a:focus-visible,
   button:focus-visible {
     outline: 2px solid deepskyblue;
     outline-offset: 0.3em;
   }
+
+  /* a {
+    @media(prefers-color-scheme: dark) {
+      color: var(--darkModeLinkColor)
+    }
+  } */
+
+
+  /* a:hover {
+    cursor: pointer;
+    @media(prefers-color-scheme: dark) {
+      color: black;
+    }
+
+  } */
+
 
   pre > *{
     font-size: 0.9rem !important;
@@ -240,9 +277,10 @@ export const GlobalStyle = createGlobalStyle`
       color: beige;
     }
 
-    a {
+    /* a {
       color: hsl(195, 53%, 79%);
-    }
+      
+    } */
 
     a:visited {
       color: hsl(245, 93%, 79%);
