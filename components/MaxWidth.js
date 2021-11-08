@@ -1,15 +1,17 @@
 import styled from 'styled-components/macro';
 
-export function MaxWidthWrapper({ children }) {
+export function MaxWidthWrapper({ size = '80ch', children }) {
+  const maxWidth = typeof size === 'number' ? size + 'px' : size;
+
   return (
     <>
-      <Wrapper>{children}</Wrapper>
+      <Wrapper size={maxWidth}>{children}</Wrapper>
     </>
   );
 }
 
-const Wrapper = styled.div`
-  max-width: 80ch;
+export const Wrapper = styled.div`
+  max-width: ${(p) => p.size};
   width: 100%;
   margin: 0 auto;
   padding: 0 32px;
