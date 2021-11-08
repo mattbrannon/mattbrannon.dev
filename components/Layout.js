@@ -1,49 +1,53 @@
-export default function Layout({ children }) {
+import styled from 'styled-components/macro';
+
+const Layout = styled.div`
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: 1fr min(var(--max-width), 100%) 1fr;
+  grid-template-rows: auto 1fr auto;
+  padding-left: var(--breathing-room);
+  padding-right: var(--breathing-room);
+
+  & > * {
+    grid-column: 2;
+  }
+`;
+
+export const FullBleed = styled.div`
+  grid-column: 1 / -1;
+  margin-left: calc(var(--breathing-room) * -1);
+  margin-right: calc(var(--breathing-room) * -1);
+  height: fit-content;
+`;
+
+export const TopRow = styled.div`
+  padding-top: var(--breathing-room);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const TopRowLeftAligned = styled(TopRow)`
+  align-items: flex-start;
+`;
+
+export const BottomRow = styled(TopRow)`
+  margin-bottom: var(--breathing-room);
+`;
+
+const SectionTitleWrapper = styled.div`
+  margin-top: 32px;
+  width: fit-content;
+`;
+
+export const SectionTitle = ({ children }) => {
   return (
-    <>
-      <div className="wrapper">{children}</div>
-      <style jsx>{`
-        .wrapper {
-          max-width: 36rem;
-          margin: 0 auto;
-          padding: 1.5rem;
-        }
-      `}</style>
-      <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-        }
+    <SectionTitleWrapper>
+      <h3>{children}</h3>
+      <hr />
+    </SectionTitleWrapper>
+  );
+};
 
-        :root {
-          --site-color: royalblue;
-          --divider-color: rgba(0, 0, 0, 0.4);
-        }
-
-        html {
-          font: 100%/1.5 system-ui;
-        }
-
-        a {
-          color: inherit;
-          text-decoration-color: var(--divider-color);
-          text-decoration-thickness: 2px;
-        }
-
-        a:hover {
-          color: var(--site-color);
-          text-decoration-color: currentcolor;
-        }
-
-        h1,
-        p {
-          margin-bottom: 1.5rem;
-        }
-
-        code {
-          font-family: 'Menlo';
-        }
-      `}</style>
-    </>
-  )
-}
+export default Layout;
