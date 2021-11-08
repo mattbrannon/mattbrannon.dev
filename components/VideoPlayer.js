@@ -1,8 +1,8 @@
 import styled from 'styled-components/macro';
 
-export default function VideoPlayer({ sources }) {
+export default function VideoPlayer({ sources, size }) {
   return (
-    <Video autoPlay loop muted playsInline>
+    <Video size={size} autoPlay loop muted playsInline>
       {sources.map((src, i) => {
         const ext = src.slice(src.lastIndexOf('.') + 1);
         return <source src={src} type={`video/${ext}`} key={i} />;
@@ -12,10 +12,9 @@ export default function VideoPlayer({ sources }) {
 }
 
 const Video = styled.video`
-  max-width: 480px;
-  max-height: 270px;
-  width: 100%;
-  height: auto;
+  width: ${(p) => (p.size ? '' : '100%')};
+  height: ${(p) => p.size + 'px' || 'auto'};
 
-  object-fit: cover;
+  filter: drop-shadow(4px 8px 8px #222);
+  border-radius: 6px;
 `;
