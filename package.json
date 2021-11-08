@@ -2,18 +2,22 @@
   "private": true,
   "scripts": {
     "dev": "next",
-    "dev:watch": "next-remote-watch ./posts",
+    "dev:watch": "next-remote-watch ./articles",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^0.21.4",
     "babel-plugin-macros": "^3.1.0",
     "date-fns": "^2.22.1",
+    "dotenv": "^10.0.0",
     "focus-trap-react": "^8.5.1",
+    "framer-motion": "^4.1.17",
     "gray-matter": "^4.0.2",
     "next": "latest",
     "next-mdx-remote": "^3.0.1",
     "next-remote-watch": "1.0.0",
+    "nodemailer": "^6.6.3",
     "prismjs": "^1.23.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -22,7 +26,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^11.1.2",
-    "eslint": "^7.32.0",
+    "eslint": "7",
     "eslint-plugin-mdx": "^1.15.0",
     "eslint-plugin-prettierx": "^0.18.0",
     "eslint-plugin-react": "^7.25.1",
