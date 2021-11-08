@@ -32,13 +32,14 @@
     "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off",
+    "no-multiple-empty-lines": ["off", { "max": 8, "maxEOF": 2 }],
     "prettierx/options": [
       "warn",
       {
         "arrayBracketSpacing": true,
         "breakBeforeElse": true,
         "semi": true,
-        "printWidth": 90,
+        "printWidth": 100,
         "offsetTernaryExpressions": false,
         "singleQuote": true,
         "breakLongMethodChains": true

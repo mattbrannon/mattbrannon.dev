@@ -34,3 +34,8 @@ yarn-error.log*
 .vercel
 
 articles
+.env
+
+*trash*
+
+unused
