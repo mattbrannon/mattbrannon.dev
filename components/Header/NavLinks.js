@@ -1,32 +1,43 @@
-import styled from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components/macro';
 import FancyLink from '../FancyLink';
+import { useEffect, useState, useContext } from 'react';
 
-/**
- *
- ** NavLinks (desktop)
- *
- */
+export default function NavLinks({ clickedHome, setClickedHome }) {
+  const { pathname } = useContext(ThemeContext);
+  const [ activeLink, setActiveLink ] = useState(pathname);
 
-export default function NavLinks({ isMobile }) {
-  if (!isMobile) {
-    return (
-      <>
-        <LinkWrapper>
-          <FancyLink href="/">Home</FancyLink>
+  const handleLinkClick = (e) => {
+    const activeLink = clickedHome ? '' : e.target.attributes.href.value.slice(1);
+    setActiveLink(activeLink);
+  };
+
+  useEffect(() => {
+    if (clickedHome) {
+      setActiveLink('');
+      setClickedHome(false);
+    }
+  }, [ clickedHome ]);
+
+  useEffect(() => {
+    if (pathname) {
+      const activeLink = pathname.slice(1).split('/')[0];
+      setActiveLink(activeLink);
+    }
+  }, [ pathname ]);
+
+  const links = [ 'blog', 'apps', 'contact' ];
+
+  return (
+    <>
+      {links.map((link, i) => (
+        <LinkWrapper key={i}>
+          <FancyLink activeLink={activeLink} onClick={handleLinkClick} href={`/${link}`}>
+            {link.charAt(0).toUpperCase() + link.slice(1)}
+          </FancyLink>
         </LinkWrapper>
-        <LinkWrapper>
-          <FancyLink href="/blog">Blog</FancyLink>
-        </LinkWrapper>
-        <LinkWrapper>
-          <FancyLink href="/apps">Apps</FancyLink>
-        </LinkWrapper>
-        <LinkWrapper>
-          <FancyLink href="/contact">Contact</FancyLink>
-        </LinkWrapper>
-      </>
-    );
-  }
-  return null;
+      ))}
+    </>
+  );
 }
 
 const LinkWrapper = styled.span`

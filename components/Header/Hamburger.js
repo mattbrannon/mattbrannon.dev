@@ -35,14 +35,14 @@ const MenuButton = styled.button`
     --height: clamp(24px, 3vw, 36px);
   */
 
-  // * parent dimensions
+  ${'' /* // * parent dimensions */}
   --width: 32px;
   --height: 24px;
 
-  // * child dimensions
+  ${'' /* // * child dimensions */}
   --thickness: calc((var(--height) - var(--width)) * -0.5);
 
-  // * child placement
+  ${'' /* // * child placement */}
   --beforeLineTop: calc((var(--height) - var(--thickness)) * -0.5);
   --afterLineBottom: calc((var(--height) - var(--thickness)) * -0.5);
 
@@ -50,7 +50,7 @@ const MenuButton = styled.button`
   align-items: center;
 
   position: fixed;
-  right: 32px;
+  right: var(--breathing-room);
   top: calc((var(--thickness) + 80px - var(--height)) / 2);
   width: var(--width);
   height: var(--height);
@@ -61,8 +61,8 @@ const MenuButton = styled.button`
   border: none;
   background: none;
 
-  //! Has no effect when header is positioned fixed
-  // * solution - move element outside it's container
+  ${'' /* //! Has no effect when header is positioned fixed
+  // * solution - move element outside it's container */}
   z-index: 3;
 
   &:focus {

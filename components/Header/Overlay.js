@@ -26,6 +26,7 @@ const OverlayWrapper = styled.aside`
   position: fixed;
   z-index: var(--zIndex);
   left: 0;
+  top: 0;
 
   height: 100%;
   width: 100%;
