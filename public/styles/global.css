@@ -1,0 +1,485 @@
+:root {
+  /**
+  * image dimensions are 742 x 769
+  * width is 742
+  * height is 769
+  * my desired size is 50vmin
+*/
+
+  --double-gradient-background: linear-gradient(
+      to bottom,
+      var(--body-background) 20%,
+      hsla(256 35% 90% / 0.3) 70%
+    ),
+    linear-gradient(
+      to right,
+      hsla(190 10% 80% / 0.7) 0%,
+      hsla(190 10% 80% / 0.7) 40%,
+      hsla(210 20% 70% / 0.8) 40%,
+      hsla(210 20% 70% / 0.8) 100%
+    );
+
+  --dark-mode-double-gradient: linear-gradient(
+      to bottom,
+      hsla(210 12% 20% / 1) 24%,
+      hsla(256 35% 30% / 0.2) 90%
+    ),
+    linear-gradient(
+      to right,
+      hsla(190 10% 40% / 0.7) 0%,
+      hsla(190 10% 40% / 0.7) 40%,
+      hsla(210 20% 20% / 0.8) 40%,
+      hsla(210 20% 20% / 0.8) 100%
+    );
+
+  --bezier-curve-1: cubic-bezier(0.075, 0.82, 0.165, 1);
+  --bezier-curve-2: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --bezier-curve-3: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --bezier-curve-4: cubic-bezier(0.19, 1, 0.22, 1);
+  --bezier-curve-5: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --bezier-curve-6: cubic-bezier(0.23, 1, 0.32, 1);
+  --bezier-curve-7: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --bezier-curve-8: cubic-bezier(0.39, 0.575, 0.565, 1);
+  --bezier-curve-9: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+  --bezier-curve-10: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+  --bezier-curve-11: cubic-bezier(0.47, 0, 0.745, 0.715);
+  --bezier-curve-12: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  --bezier-curve-13: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  --bezier-curve-14: cubic-bezier(0.6, -0.28, 0.735, 0.045);
+  --bezier-curve-15: cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  --bezier-curve-16: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --bezier-curve-17: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --bezier-curve-18: cubic-bezier(0.755, 0.05, 0.855, 0.06);
+  --bezier-curve-19: cubic-bezier(0.77, 0, 0.175, 1);
+  --bezier-curve-20: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  --bezier-curve-21: cubic-bezier(0.86, 0, 0.07, 1);
+  --bezier-curve-22: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+  --bezier-curve-23: cubic-bezier(0.95, 0.05, 0.795, 0.035);
+  --bezier-curve-24: cubic-bezier(1, 0, 0, 1);
+
+  --size: 30;
+
+  --unit: calc((var(--size) / 100) * 1vw);
+  --cube-height: calc(50 * var(--unit));
+  --cube-width: calc(50 * var(--unit));
+  --cube-depth: calc(25 * var(--unit));
+  --header-height: 80px;
+  --footer-height: 100px;
+
+  /* --maxWidth: 80ch; */
+  --breathing-room: 48px;
+  --max-width: 80ch;
+
+  --dark-blue: hsl(195deg, 100%, 8%);
+  --med-blue: hsl(195deg, 100%, 16%);
+  --skyblue: hsl(195deg, 100%, 50%);
+  --skyblue2: hsl(195deg, 100%, 63%);
+
+  /* --dark-azure: hsl(210deg, 100%, 27%);
+  --med-azure: hsl(210deg, 100%, 37%);
+  --azure: hsl(210deg, 100%, 50%);
+  --very-dark-azure: hsl(210deg, 100%, 15%); */
+
+  --shadow1: hsl(190, 45%, 65%, 1);
+  --shadow2: hsl(200, 100%, 60%, 0.9);
+  --shadow3: hsl(210, 100%, 50%, 1);
+
+  --darkmode-link-color: hsl(245deg, 93%, 79%);
+  --body-background: hsl(223, 33%, 96%); /* #f1f3f8 */
+  --header-background: #333333;
+  --footer-background: var(--header-background);
+
+  --decovar-default: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 0,
+    'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0, 'SKLB' 0,
+    'TRMG' 0, 'TRME' 0;
+  --decovar-open: 'BLDA' 1000, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 0,
+    'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0, 'SKLB' 0,
+    'TRMG' 0, 'TRME' 0;
+  --decovar-worm: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 0,
+    'TRMF' 0, 'TRMK' 0, 'BLDB' 1000, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0, 'SKLB' 0,
+    'TRMG' 0, 'TRME' 0;
+  --decovar-checkered: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0,
+    'SKLA' 1000, 'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0,
+    'SKLB' 0, 'TRMG' 0, 'TRME' 0;
+  --decovar-checkered-reverse: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0,
+    'SKLA' 0, 'TRMF' 0, 'TRMK' 1000, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0,
+    'SKLB' 0, 'TRMG' 0, 'TRME' 0;
+  --decovar-striped: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 500, 'TRML' 0,
+    'SKLA' 0, 'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0,
+    'SKLB' 0, 'TRMG' 0, 'TRME' 0;
+  --decovar-rounded: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 0,
+    'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 1000, 'SKLB' 0,
+    'TRMG' 0, 'TRME' 0;
+  --decovar-flared: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 0,
+    'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 1000, 'TRMA' 0, 'SKLB' 0,
+    'TRMG' 0, 'TRME' 0;
+  --decovar-flared-open: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0,
+    'SKLA' 1000, 'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 1000, 'TRMA' 0,
+    'SKLB' 0, 'TRMG' 0, 'TRME' 0;
+  --decovar-rounded-slab: 'BLDA' 0, 'TRMD' 0, 'TRMC' 1000, 'SKLD' 0, 'TRML' 0,
+    'SKLA' 0, 'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0,
+    'SKLB' 0, 'TRMG' 0, 'TRME' 0;
+  --decovar-sheared: 'BLDA' 0, 'TRMD' 1000, 'TRMC' 0, 'SKLD' 0, 'TRML' 0,
+    'SKLA' 0, 'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0,
+    'SKLB' 0, 'TRMG' 0, 'TRME' 0;
+  --decovar-bifurcated: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0,
+    'SKLA' 0, 'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0,
+    'SKLB' 0, 'TRMG' 0, 'TRME' 1000;
+  --decovar-inline: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 500,
+    'TRMF' 500, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0, 'SKLB' 0,
+    'TRMG' 0, 'TRME' 0;
+  --decovar-slab: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 0,
+    'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0, 'SKLB' 0,
+    'TRMG' 1000, 'TRME' 0;
+  --decovar-contrast: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 0,
+    'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 1000, 'TRMB' 0, 'TRMA' 0, 'SKLB' 0,
+    'TRMG' 0, 'TRME' 0;
+  --decovar-fancy: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 1000,
+    'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 1000, 'TRMB' 1000, 'TRMA' 0, 'SKLB' 0,
+    'TRMG' 0, 'TRME' 0;
+  --decovar-mayhem: 'BLDA' 0, 'TRMD' 0, 'TRMC' 750, 'SKLD' 0, 'TRML' 250,
+    'SKLA' 1000, 'TRMF' 250, 'TRMK' 250, 'BLDB' 1000, 'WMX2' 750, 'TRMB' 500,
+    'TRMA' 500, 'SKLB' 1000, 'TRMG' 750, 'TRME' 500;
+  --decovar-start: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 1000, 'TRML' 0,
+    'SKLA' 1000, 'TRMF' 1000, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0,
+    'SKLB' 0, 'TRMG' 0, 'TRME' 0;
+  --decovar-end: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 0,
+    'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 650, 'TRMB' 0, 'TRMA' 1000, 'SKLB' 0,
+    'TRMG' 0, 'TRME' 0;
+
+  --jost-hairline: 'wght' 100, 'ital' 0;
+  --jost-thin: 'wght' 200, 'ital' 0;
+  --jost-light: 'wght' 300, 'ital' 0;
+  --jost-book: 'wght' 400, 'ital' 0;
+  --jost-medium: 'wght' 500, 'ital' 0;
+  --jost-semi: 'wght' 600, 'ital' 0;
+  --jost-bold: 'wght' 700, 'ital' 0;
+  --jost-heavy: 'wght' 800, 'ital' 0;
+  --jost-black: 'wght' 900, 'ital' 0;
+  --jost-hairline-italic: 'wght' 100, 'ital' 1;
+  --jost-thin-italic: 'wght' 200, 'ital' 1;
+  --jost-light-italic: 'wght' 300, 'ital' 1;
+  --jost-book-italic: 'wght' 400, 'ital' 1;
+  --jost-medium-italic: 'wght' 500, 'ital' 1;
+  --jost-semi-italic: 'wght' 600, 'ital' 1;
+  --jost-bold-italic: 'wght' 700, 'ital' 1;
+  --jost-heavy-italic: 'wght' 800, 'ital' 1;
+  --jost-black-italic: 'wght' 900, 'ital' 1;
+
+  --speech-bubble-start: #018793;
+  --speech-bubble-end: #0d9c89;
+
+  --pink0: hsl(328deg, 100%, 33%);
+  --pink1: hsl(328deg, 100%, 42%);
+  --pink3: hsl(328deg, 100%, 61%);
+  --pink4: hsl(328deg, 100%, 66%);
+  --pink5: hsl(328deg, 100%, 74%);
+
+  --pink-main: hsl(328, 100%, 54%);
+
+  --blue-main: hsl(195, 90%, 50%);
+  --blue-main-hover: hsl(195, 85%, 78%);
+
+  --blue0: hsl(210, 65%, 35%, 0.1);
+  --blue1: hsl(210, 75%, 80%, 1);
+  --blue2: hsl(210, 65%, 75%, 1);
+  --blue3: hsl(210, 60%, 70%, 1);
+
+  --blue4: hsl(210, 80%, 85%, 1);
+  --blue5: hsl(210, 85%, 90%, 1);
+  --blue6: hsl(210, 45%, 85%, 1);
+
+  --orange0: hsl(36, 65%, 90%);
+  --orange1: hsl(36deg, 65%, 72%);
+  --orange2: hsl(36deg, 64%, 57%);
+  --orange2: hsl(36deg, 100%, 62%);
+  --orange3: hsl(36deg, 63%, 42%);
+  /* 27 */
+  --orange4: hsl(36deg, 62%, 35%);
+  --orange5: hsl(36deg, 63%, 69%);
+
+  --px: 0.0125em;
+  --px1: calc(var(--px) * -1);
+  --px2: calc(var(--px) * -2);
+  --px3: calc(var(--px) * -3);
+
+  --text-shadow1: var(--px1) var(--px1) var(--blue1);
+  --text-shadow2: var(--px2) var(--px2) var(--blue2);
+  --text-shadow3: var(--px3) var(--px3) var(--blue3);
+
+  --welcome-gradient: var(--orange1), var(--orange2), var(--orange3),
+    var(--orange4) 90%;
+  --welcome-shadow: var(--text-shadow1), var(--text-shadow2),
+    var(--text-shadow3);
+
+  --hair-right: linear-gradient(
+    185deg,
+    #876543 0%,
+    #876543 11%,
+    darkgoldenrod 11%,
+    darkgoldenrod 12%,
+    #876542 13%,
+    #876542 15%,
+    #654321 15%,
+    #654321 20%,
+    #987654 20%,
+    #987654 26%,
+    #765432 26%,
+    #765432 30%,
+    #543210 30%,
+    #543210 36%,
+    tan 36%
+  );
+
+  --hair-left: linear-gradient(
+    185deg,
+    #876543 0%,
+    #876543 11%,
+    darkgoldenrod 11%,
+    darkgoldenrod 12%,
+    #876542 13%,
+    #876542 15%,
+    #654321 15%,
+    #654321 20%,
+    #987654 20%,
+    #987654 26%,
+    #765432 26%,
+    #765432 30%,
+    #543210 30%,
+    #543210 36%,
+    tan 36%
+  );
+
+  --hair-front: linear-gradient(
+    187deg,
+    #654321 0%,
+    #654321 2%,
+    darkgoldenrod 2%,
+    darkgoldenrod 5%,
+    #543210 5%,
+    #543210 8%,
+    #876543 8%,
+    #876543 12%,
+    #543210 12%,
+    #543210 16%,
+    tan 16%,
+    tan 100%
+  );
+
+  --hair-top: repeating-linear-gradient(
+    7deg,
+    #876543 0%,
+    #876543 2%,
+    #111 2%,
+    #111 3%,
+    #654321 3%,
+    #654321 5%,
+    #987654 5%,
+    #987654 6%,
+    #765432 6%,
+    #765432 9%,
+    #543210 9%,
+    #543210 10%
+  );
+
+  --hair-back: linear-gradient(
+    180deg,
+    #876543 0%,
+    #876543 12%,
+    darkgoldenrod 12%,
+    darkgoldenrod 16%,
+    #654321 16%,
+    #654321 22%,
+    #987654 22%,
+    #987654 28%,
+    #765432 28%,
+    #765432 33%,
+    #543210 33%,
+    #543210 39%,
+    tan 39%
+  );
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  list-style-type: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+
+  /* box-shadow: 0 0 0 2px red; */
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+/* Remove default margin */
+
+/* Set core root defaults */
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  text-rendering: optimizeSpeed;
+  /* background: hsl(208, 100%, 97%); */
+  background: var(--body-background);
+  line-height: 1.6;
+  font-size: 1.1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* isolation: isolate; */
+}
+
+/* main {
+  padding-top: var(--breathing-room);
+} */
+
+a:hover {
+  text-decoration: revert;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+  height: auto;
+  max-width: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+/* Inherit fonts for inputs and buttons */
+/* input,
+  button,
+  textarea,
+  select {
+    font: inherit;
+  } */
+
+p,
+ul,
+li {
+  margin: revert;
+  padding: revert;
+}
+
+ol {
+  list-style: decimal;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  /* background: linear-gradient(180deg, #333 0px, #333 80px, transparent 80px);
+    background: hsl(195, 53%, 79%); */
+  background: hsla(0deg, 0%, 80%, 0.9);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: hsl(215, 23%, 45%);
+  border: 2px ridge hsl(215, 20%, 34%);
+
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(215, 33%, 52%);
+}
+
+/* a,h1,h2,h3,h4,h5,h6 {
+    font-family: 'Jost', system-ui, sans-serif;
+  } */
+
+p,
+li,
+section {
+  font-family: 'Roboto Flex', system-ui, sans-serif;
+  line-height: 1.7;
+}
+
+button {
+  font-family: 'Jost';
+}
+
+a:focus,
+button:focus {
+  outline: revert;
+  outline-offset: 2px;
+}
+
+a:focus:not(::focus-visible),
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid deepskyblue;
+  outline-offset: 0.2em;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid deepskyblue;
+  outline-offset: 0.3em;
+}
+
+/* a {
+    @media(prefers-color-scheme: dark) {
+      color: var(--darkmode-link-color)
+    }
+  } */
+
+/* a:hover {
+    cursor: pointer;
+    @media(prefers-color-scheme: dark) {
+      color: black;
+    }
+
+  } */
+
+pre > * {
+  font-size: 0.9rem !important;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --body-background: #333;
+    --header-background: #111;
+    color: beige;
+  }
+
+  a:hover {
+    color: var(--pink6);
+  }
+}
