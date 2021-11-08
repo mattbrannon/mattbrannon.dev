@@ -10,6 +10,11 @@ export default function Button({ children, ...props }) {
 
 // outer_radius = inner_radius + gap_between_elements / 2;
 const Wrapper = styled.button`
+  --background: var(--pink-main);
+  --hover: var(--pink3);
+  --focus: var(--pink4);
+  --shadow: var(--pink0);
+
   padding: 3px 3px;
   border-radius: 10px;
   border: none;
@@ -23,7 +28,7 @@ const Wrapper = styled.button`
 
   &:focus,
   &:active {
-    box-shadow: 0 0 0 1px var(--pink);
+    box-shadow: 0 0 0 1px var(--background);
     background: white;
   }
   &:hover {
@@ -38,14 +43,14 @@ const InnerButton = styled.span`
   font-weight: 700;
   border-radius: 8px;
   border: none;
-  box-shadow: 0 0 0 1px var(--darkPink);
-  background: var(--pink);
+  box-shadow: 0 0 0 1px var(--shadow);
+  background: var(--background);
 
   &:hover {
-    background: var(--medLightPink);
+    background: var(--hover);
   }
   &:focus,
   &:active {
-    background: var(--lightPink);
+    background: var(--focus);
   }
 `;
