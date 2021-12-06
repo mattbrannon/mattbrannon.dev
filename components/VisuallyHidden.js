@@ -1,7 +1,7 @@
 import styled from 'styled-components/macro';
 
 // https://www.joshwcomeau.com/snippets/react-components/visually-hidden/
-const VisualyHidden = styled.span`
+const VisuallyHidden = styled.span`
   position: absolute;
   overflow: hidden;
   clip: rect(0 0 0 0);
@@ -12,4 +12,4 @@ const VisualyHidden = styled.span`
   border: 0;
 `;
 
-export default VisualyHidden;
+export default VisuallyHidden;
