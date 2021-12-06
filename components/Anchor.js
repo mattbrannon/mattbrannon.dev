@@ -6,18 +6,8 @@ export const Anchor = styled.a.attrs((props) => {
     target: props.newTab ? '_blank' : '_self',
   };
 })`
-  font-family: 'futura', system-ui, sans-serif;
-  color: var(--medDarkPink);
-
+  transition: color 140ms ease-in;
   &:hover {
-    color: var(--darkPink);
     cursor: pointer;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    color: var(--darkModeLinkColor);
-    &:hover {
-      color: var(--lightPink);
-    }
   }
 `;
