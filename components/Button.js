@@ -8,28 +8,36 @@ export default function Button({ children, ...props }) {
   );
 }
 
-// outer_radius = inner_radius + gap_between_elements / 2;
-const Wrapper = styled.button`
-  --background: var(--pink-main);
-  --hover: var(--pink3);
-  --focus: var(--pink4);
-  --shadow: var(--pink0);
+export function InvertedButton({ children, ...props }) {
+  return (
+    <InvertedWrapper {...props}>
+      <InnerButton {...props}>{children}</InnerButton>
+    </InvertedWrapper>
+  );
+}
 
+const Wrapper = styled.button`
+  --innerBg: var(--pinkBg);
+  --innerHover: var(--pinkHover);
+  --innerFocus: var(--pinkFocus);
+  --innerShadow: var(--pinkShadow);
+  --outerShadow: var(--pinkBg);
+  --outline: white;
   padding: 3px 3px;
   border-radius: 10px;
   border: none;
   min-width: 140px;
-
-  font-family: system-ui;
+  max-width: 200px;
+  width: 100%;
+  font-family: system-ui, sans-serif;
   color: white;
   background: transparent;
   outline: none;
   text-shadow: 1px 1px 2px black;
-
   &:focus,
   &:active {
-    box-shadow: 0 0 0 1px var(--background);
-    background: white;
+    box-shadow: 0 0 0 1px var(--outerShadow);
+    background: var(--outline);
   }
   &:hover {
     cursor: pointer;
@@ -43,14 +51,23 @@ const InnerButton = styled.span`
   font-weight: 700;
   border-radius: 8px;
   border: none;
-  box-shadow: 0 0 0 1px var(--shadow);
-  background: var(--background);
-
+  box-shadow: 0 0 0 1px var(--innerShadow);
+  background: var(--innerBg);
   &:hover {
-    background: var(--hover);
+    background: var(--innerHover);
   }
   &:focus,
   &:active {
-    background: var(--focus);
+    background: var(--innerFocus);
   }
+`;
+
+const InvertedWrapper = styled(Wrapper)`
+  --innerBg: var(--tealBg);
+  --innerHover: var(--tealHover);
+  --innerFocus: var(--tealFocus);
+  --innerShadow: var(--tealShadow);
+  --outerShadow: var(--tealBg);
+
+  transition: opacity 0.15s ease-in-out;
 `;
