@@ -1,27 +1,34 @@
 import styled from 'styled-components/macro';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Anchor } from './Anchor';
 
-export default function FancyLink({ href, children }) {
+export default function FancyLink({ children, ...props }) {
   const [ isHovering, setIsHovering ] = useState(false);
+  const [ isSelected, setIsSelected ] = useState(false);
+
+  useEffect(() => {
+    setIsSelected(props.activeLink === props.href.slice(1));
+  }, [ props.activeLink ]);
 
   return (
-    <LinkWrapper
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
-    >
-      <Link passHref href={href}>
-        <A href={href}>{children}</A>
+    <LinkWrapper onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
+      <Link passHref {...props}>
+        <A
+          {...props}
+          style={{
+            '--color': isSelected ? 'var(--orange0)' : 'whitesmoke',
+          }}
+        >
+          {children}
+        </A>
       </Link>
 
       <Underline
         style={{
-          '--maxWidth': isHovering ? '100%' : '0%',
+          '--maxWidth': isSelected || isHovering ? '100%' : '0%',
         }}
       />
-
-      {/* <Underline isHovering={isHovering} /> */}
     </LinkWrapper>
   );
 }
@@ -30,32 +37,29 @@ const LinkWrapper = styled.span`
   position: relative;
   background: transparent;
   border: none;
-  font-family: futuraa, 'Roboto Flex';
-  /* font-variation-settings: */
+  font-family: Jost, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 525;
 `;
 
-const A = styled(Anchor).attrs((props) => {
-  return {
-    href: props.href,
-  };
-})`
-  color: whitesmoke;
+const A = styled(Anchor)`
+  color: var(--color);
   letter-spacing: 0.8px;
   text-decoration: none;
   &:hover {
     text-decoration: none;
-    color: hsl(328deg, 100%, 74%);
+    color: var(--orange0);
     cursor: pointer;
   }
-
   transition: color 0.15s ease;
 `;
 
 const Underline = styled.span`
-  --maxWidth: ${(p) => (p.isHovering ? '100%' : '0%')};
+  --color: var(--pinkUnderline);
   height: 2px;
   width: 100%;
-  background: #ff7ac1;
+
+  background: var(--color);
   position: absolute;
   bottom: -4px;
   left: 0;
@@ -65,4 +69,8 @@ const Underline = styled.span`
 
   max-width: var(--maxWidth);
   transition: max-width 0.2s ease-in-out;
+
+  @media (prefers-color-scheme: dark) {
+    --color: var(--blueUnderline);
+  }
 `;
