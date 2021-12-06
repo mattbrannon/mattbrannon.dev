@@ -6,7 +6,7 @@
   * my desired size is 50vmin
 */
 
-  --double-gradient-background: linear-gradient(
+  /* --double-gradient-background: linear-gradient(
       to bottom,
       var(--body-background) 20%,
       hsla(256 35% 90% / 0.3) 70%
@@ -17,9 +17,9 @@
       hsla(190 10% 80% / 0.7) 40%,
       hsla(210 20% 70% / 0.8) 40%,
       hsla(210 20% 70% / 0.8) 100%
-    );
+    ); */
 
-  --dark-mode-double-gradient: linear-gradient(
+  /* --dark-mode-double-gradient: linear-gradient(
       to bottom,
       hsla(210 12% 20% / 1) 24%,
       hsla(256 35% 30% / 0.2) 90%
@@ -30,9 +30,9 @@
       hsla(190 10% 40% / 0.7) 40%,
       hsla(210 20% 20% / 0.8) 40%,
       hsla(210 20% 20% / 0.8) 100%
-    );
+    ); */
 
-  --bezier-curve-1: cubic-bezier(0.075, 0.82, 0.165, 1);
+  /* --bezier-curve-1: cubic-bezier(0.075, 0.82, 0.165, 1);
   --bezier-curve-2: cubic-bezier(0.165, 0.84, 0.44, 1);
   --bezier-curve-3: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   --bezier-curve-4: cubic-bezier(0.19, 1, 0.22, 1);
@@ -55,7 +55,7 @@
   --bezier-curve-21: cubic-bezier(0.86, 0, 0.07, 1);
   --bezier-curve-22: cubic-bezier(0.895, 0.03, 0.685, 0.22);
   --bezier-curve-23: cubic-bezier(0.95, 0.05, 0.795, 0.035);
-  --bezier-curve-24: cubic-bezier(1, 0, 0, 1);
+  --bezier-curve-24: cubic-bezier(1, 0, 0, 1); */
 
   --size: 30;
 
@@ -70,10 +70,34 @@
   --breathing-room: 48px;
   --max-width: 80ch;
 
+  --tealBg: hsl(191, 50%, 34%);
+  --tealHover: hsl(191, 44%, 40%);
+  --tealFocus: hsl(191, 40%, 44%);
+  --tealShadow: hsl(191, 36%, 30%);
+
+  --teal-accent: hsl(330, 100%, 40%);
+
+  --orange-main: hsl(36, 100%, 62%);
+  --orange-hover: hsl(45, 100%, 60%);
+  --tealBright: hsl(32, 100%, 50%);
+  --tealBrightHover: hsl(32, 100%, 65%);
+
+  /* --pink0: hsl(328deg, 100%, 33%); */
+  /* --pink1: hsl(328deg, 100%, 42%); */
+
+  --pinkBg: hsl(328, 100%, 54%);
+  --pinkHover: hsl(328, 88%, 60%);
+  --pinkFocus: hsl(328, 85%, 62%);
+  --pinkShadow: hsl(328, 100%, 45%);
+  --pinkActive: hsl(328, 78%, 60%);
+  --pinkUnderline: hsl(328, 100%, 74%);
+
   --dark-blue: hsl(195deg, 100%, 8%);
   --med-blue: hsl(195deg, 100%, 16%);
   --skyblue: hsl(195deg, 100%, 50%);
   --skyblue2: hsl(195deg, 100%, 63%);
+
+  --blueUnderline: hsl(210, 100%, 74%);
 
   /* --dark-azure: hsl(210deg, 100%, 27%);
   --med-azure: hsl(210deg, 100%, 37%);
@@ -84,8 +108,8 @@
   --shadow2: hsl(200, 100%, 60%, 0.9);
   --shadow3: hsl(210, 100%, 50%, 1);
 
-  --darkmode-link-color: hsl(245deg, 93%, 79%);
   --body-background: hsl(223, 33%, 96%); /* #f1f3f8 */
+
   --header-background: #333333;
   --footer-background: var(--header-background);
 
@@ -147,6 +171,14 @@
     'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 650, 'TRMB' 0, 'TRMA' 1000, 'SKLB' 0,
     'TRMG' 0, 'TRME' 0;
 
+  /* --decovar-start: 'BLDA' 1000, 'TRMD' 500, 'TRMC' 0, 'SKLD' 1000, 'TRML' 0,
+    'SKLA' 0, 'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0,
+    'SKLB' 0, 'TRMG' 0, 'TRME' 0;
+
+  --decovar-end: 'BLDA' 0, 'TRMD' 1000, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 0,
+    'TRMF' 0, 'TRMK' 0, 'BLDB' 0, 'WMX2' 800, 'TRMB' 0, 'TRMA' 0, 'SKLB' 0,
+    'TRMG' 0, 'TRME' 0; */
+
   --jost-hairline: 'wght' 100, 'ital' 0;
   --jost-thin: 'wght' 200, 'ital' 0;
   --jost-light: 'wght' 300, 'ital' 0;
@@ -166,24 +198,42 @@
   --jost-heavy-italic: 'wght' 800, 'ital' 1;
   --jost-black-italic: 'wght' 900, 'ital' 1;
 
+  --open-sans-narrow: 'wdth' 75, 'wght' 300;
+  --open-sans-heavy-narrow: 'wdth' 75, 'wght' 800;
+  --open-sans-wide: 'wdth' 100, 'wght' 300;
+  --open-sans-heavy-wide: 'wdth' 100, 'wght' 800;
+
+  --recursive1: 'MONO' 0, 'CRSV' 1, 'CASL' 0, 'wght' 400, 'slnt' 0;
+  --recursive2: 'MONO' 0, 'CRSV' 0, 'CASL' 1, 'wght' 700, 'slnt' -15;
+  --recursive3: 'MONO' 0, 'CRSV' 1, 'CASL' 0.77, 'wght' 666, 'slnt' -4;
+  --recursive4: 'MONO' 0, 'CRSV' 0, 'CASL' 0.15, 'wght' 900, 'slnt' -6;
+  --recursive5: 'MONO' 0, 'CRSV' 0, 'CASL' 1, 'wght' 300, 'slnt' -15;
+  --recursive6: 'MONO' 0, 'CRSV' 0, 'CASL' 0, 'wght' 700, 'slnt' 0;
+  --recursive7: 'MONO' 0, 'CRSV' 0, 'CASL' 1, 'wght' 400, 'slnt' 0;
+  --recursive8: 'MONO' 0, 'CRSV' 0, 'CASL' 1, 'wght' 700, 'slnt' -10;
+
   --speech-bubble-start: #018793;
   --speech-bubble-end: #0d9c89;
 
-  --pink0: hsl(328deg, 100%, 33%);
-  --pink1: hsl(328deg, 100%, 42%);
-  --pink3: hsl(328deg, 100%, 61%);
-  --pink4: hsl(328deg, 100%, 66%);
-  --pink5: hsl(328deg, 100%, 74%);
-
-  --pink-main: hsl(328, 100%, 54%);
-
   --blue-main: hsl(195, 90%, 50%);
-  --blue-main-hover: hsl(195, 85%, 78%);
+  --blue-main-light: hsl(195, 100%, 65%);
+  --blue-main-bright: hsl(195, 100%, 80%);
 
-  --blue0: hsl(210, 65%, 35%, 0.1);
-  --blue1: hsl(210, 75%, 80%, 1);
-  --blue2: hsl(210, 65%, 75%, 1);
-  --blue3: hsl(210, 60%, 70%, 1);
+  --blue-main-hover: hsl(210, 75%, 80%);
+
+  --text-shadow-hue: 210;
+  --text-shadow-outline-color: hsl(var(--text-shadow-hue), 85%, 20%);
+
+  --blue0: hsl(var(--text-shadow-hue), 65%, 35%, 0.1);
+  --blue1: hsl(var(--text-shadow-hue), 75%, 80%, 1);
+  --blue2: hsl(var(--text-shadow-hue), 70%, 75%, 1);
+  --blue3: hsl(var(--text-shadow-hue), 65%, 70%, 1);
+  --blue11: hsl(var(--text-shadow-hue), 60%, 65%, 0.9);
+  --blue22: hsl(var(--text-shadow-hue), 55%, 60%, 0.8);
+  --blue33: hsl(var(--text-shadow-hue), 50%, 55%, 0.8);
+  --blue111: hsl(var(--text-shadow-hue), 45%, 50%, 0.7);
+  --blue222: hsl(var(--text-shadow-hue), 40%, 45%, 0.7);
+  --blue333: hsl(var(--text-shadow-hue), 35%, 40%, 0.7);
 
   --blue4: hsl(210, 80%, 85%, 1);
   --blue5: hsl(210, 85%, 90%, 1);
@@ -191,113 +241,66 @@
 
   --orange0: hsl(36, 65%, 90%);
   --orange1: hsl(36deg, 65%, 72%);
-  --orange2: hsl(36deg, 64%, 57%);
+  /* --orange2: hsl(36deg, 64%, 57%); */
   --orange2: hsl(36deg, 100%, 62%);
   --orange3: hsl(36deg, 63%, 42%);
   /* 27 */
   --orange4: hsl(36deg, 62%, 35%);
   --orange5: hsl(36deg, 63%, 69%);
+  --orange: hsl(36deg, 100%, 50%);
+
+  --accent-pink: hsl(169, 100%, 24%);
 
   --px: 0.0125em;
-  --px1: calc(var(--px) * -1);
-  --px2: calc(var(--px) * -2);
-  --px3: calc(var(--px) * -3);
+  /* --px: 0.015625em; */
+  --blur: calc(var(--px) * 0);
 
-  --text-shadow1: var(--px1) var(--px1) var(--blue1);
-  --text-shadow2: var(--px2) var(--px2) var(--blue2);
-  --text-shadow3: var(--px3) var(--px3) var(--blue3);
+  --px1: calc(var(--px) * -1);
+  --px2: calc(var(--px) * -1.75);
+  --px3: calc(var(--px) * -2.5);
+  --px4: calc(var(--px) * -3.25);
+  --px5: calc(var(--px) * -4);
+  --px6: calc(var(--px) * -4.75);
+  --px7: calc(var(--px) * -5.5);
+  --px8: calc(var(--px) * -6.25);
+  --px9: calc(var(--px) * -7);
+
+  --blur0: calc(var(--blur) * 0.5);
+  --blur1: calc(var(--blur) * 1);
+  --blur2: calc(var(--blur) * 2);
+  --blur3: calc(var(--blur) * 2.5);
+  --blur4: calc(var(--blur) * 3);
+  --blur5: calc(var(--blur) * 3.25);
+  --blur6: calc(var(--blur) * 3.5);
+  --blur7: calc(var(--blur) * 3.75);
+  --blur8: calc(var(--blur) * 4);
+  --blur9: calc(var(--blur) * 4.125);
+
+  --text-shadow1: var(--px1) var(--px1) var(--blur0) var(--blue1);
+  --text-shadow2: var(--px2) var(--px2) var(--blur1) var(--blue2);
+  --text-shadow3: var(--px3) var(--px3) var(--blur2) var(--blue3);
+  --text-shadow4: var(--px4) var(--px4) var(--blur3) var(--blue11);
+  --text-shadow5: var(--px5) var(--px5) var(--blur4) var(--blue22);
+  --text-shadow6: var(--px6) var(--px6) var(--blur5) var(--blue33);
+  --text-shadow7: var(--px7) var(--px7) var(--blur6) var(--blue111);
+  --text-shadow8: var(--px8) var(--px8) var(--blur7) var(--blue222);
+  --text-shadow9: var(--px9) var(--px9) var(--blur8) var(--blue333);
+
+  --px0: calc(var(--px) * 0.25);
+  --px00: calc(var(--px0) * -1);
+  --text-shadow-outline: var(--px0) var(--px0) var(--text-shadow-outline-color),
+    var(--px00) var(--px00) var(--text-shadow-outline-color),
+    var(--px0) var(--px00) var(--text-shadow-outline-color),
+    var(--px00) var(--px0) var(--text-shadow-outline-color);
 
   --welcome-gradient: var(--orange1), var(--orange2), var(--orange3),
     var(--orange4) 90%;
   --welcome-shadow: var(--text-shadow1), var(--text-shadow2),
-    var(--text-shadow3);
+    var(--text-shadow3), var(--text-shadow4), var(--text-shadow5),
+    var(--text-shadow6);
 
-  --hair-right: linear-gradient(
-    185deg,
-    #876543 0%,
-    #876543 11%,
-    darkgoldenrod 11%,
-    darkgoldenrod 12%,
-    #876542 13%,
-    #876542 15%,
-    #654321 15%,
-    #654321 20%,
-    #987654 20%,
-    #987654 26%,
-    #765432 26%,
-    #765432 30%,
-    #543210 30%,
-    #543210 36%,
-    tan 36%
-  );
-
-  --hair-left: linear-gradient(
-    185deg,
-    #876543 0%,
-    #876543 11%,
-    darkgoldenrod 11%,
-    darkgoldenrod 12%,
-    #876542 13%,
-    #876542 15%,
-    #654321 15%,
-    #654321 20%,
-    #987654 20%,
-    #987654 26%,
-    #765432 26%,
-    #765432 30%,
-    #543210 30%,
-    #543210 36%,
-    tan 36%
-  );
-
-  --hair-front: linear-gradient(
-    187deg,
-    #654321 0%,
-    #654321 2%,
-    darkgoldenrod 2%,
-    darkgoldenrod 5%,
-    #543210 5%,
-    #543210 8%,
-    #876543 8%,
-    #876543 12%,
-    #543210 12%,
-    #543210 16%,
-    tan 16%,
-    tan 100%
-  );
-
-  --hair-top: repeating-linear-gradient(
-    7deg,
-    #876543 0%,
-    #876543 2%,
-    #111 2%,
-    #111 3%,
-    #654321 3%,
-    #654321 5%,
-    #987654 5%,
-    #987654 6%,
-    #765432 6%,
-    #765432 9%,
-    #543210 9%,
-    #543210 10%
-  );
-
-  --hair-back: linear-gradient(
-    180deg,
-    #876543 0%,
-    #876543 12%,
-    darkgoldenrod 12%,
-    darkgoldenrod 16%,
-    #654321 16%,
-    #654321 22%,
-    #987654 22%,
-    #987654 28%,
-    #765432 28%,
-    #765432 33%,
-    #543210 33%,
-    #543210 39%,
-    tan 39%
-  );
+  --no-shadow: 0em 0em transparent, 0em 0em transparent, 0em 0em transparent,
+    0em 0em transparent, 0em 0em transparent, 0em 0em transparent;
 }
 
 *,
@@ -318,8 +321,6 @@ body,
   height: 100%;
 }
 
-/* Remove default margin */
-
 /* Set core root defaults */
 html:focus-within {
   scroll-behavior: smooth;
@@ -328,18 +329,13 @@ html:focus-within {
 /* Set core body defaults */
 body {
   text-rendering: optimizeSpeed;
-  /* background: hsl(208, 100%, 97%); */
   background: var(--body-background);
   line-height: 1.6;
-  font-size: 1.1rem;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  /* isolation: isolate; */
+  font-size: 1.25rem;
+  font-variation-settings: 'wdth' 75;
+  font-family: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
-
-/* main {
-  padding-top: var(--breathing-room);
-} */
 
 a:hover {
   text-decoration: revert;
@@ -367,6 +363,11 @@ ul,
 li {
   margin: revert;
   padding: revert;
+}
+
+p {
+  font-weight: 500;
+  font-size: clamp(1rem, 0.2vw + 1rem, 1.25rem);
 }
 
 ol {
@@ -405,8 +406,9 @@ ol {
 p,
 li,
 section {
-  font-family: 'Roboto Flex', system-ui, sans-serif;
+  font-family: 'Open Sans', system-ui, sans-serif;
   line-height: 1.7;
+  font-variation-settings: 'wght' 555, 'wdth' 95;
 }
 
 button {
@@ -419,20 +421,20 @@ button:focus {
   outline-offset: 2px;
 }
 
-a:focus:not(::focus-visible),
+a:focus:not(:focus-visible),
 button:focus:not(:focus-visible) {
   outline: none;
 }
 
 *:focus-visible {
-  outline: 2px solid deepskyblue;
-  outline-offset: 0.2em;
+  outline: 2px solid hsl(210, 100%, 50%, 1);
+  /* outline-offset: 0.2em; */
 }
 
 a:focus-visible,
 button:focus-visible {
-  outline: 2px solid deepskyblue;
-  outline-offset: 0.3em;
+  outline: 2px solid hsl(210, 100%, 50%, 1);
+  /* outline-offset: 0.5em; */
 }
 
 /* a {
@@ -483,3 +485,21 @@ pre > * {
     color: var(--pink6);
   }
 }
+
+/* @media (prefers-color-scheme: light) {
+  :root {
+    --text-shadow1: var(--px1) var(--px1) var(--blur0) var(--blue333);
+    --text-shadow2: var(--px2) var(--px2) var(--blur0) var(--blue222);
+    --text-shadow3: var(--px3) var(--px3) var(--blur0) var(--blue111);
+    --text-shadow4: var(--px4) var(--px4) var(--blur0) var(--blue33);
+    --text-shadow5: var(--px5) var(--px5) var(--blur0) var(--blue22);
+    --text-shadow6: var(--px6) var(--px6) var(--blur0) var(--blue11);
+    --text-shadow7: var(--px7) var(--px7) var(--blur0) var(--blue3);
+    --text-shadow8: var(--px8) var(--px8) var(--blur0) var(--blue2);
+    --text-shadow9: var(--px9) var(--px9) var(--blur0) var(--blue1);
+    --welcome-shadow: var(--text-shadow1), var(--text-shadow2),
+      var(--text-shadow3), var(--text-shadow4), var(--text-shadow5),
+      var(--text-shadow6), var(--text-shadow7), var(--text-shadow8),
+      var(--text-shadow9);
+  }
+} */
