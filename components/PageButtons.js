@@ -26,12 +26,12 @@ const PageButtonsWrapper = styled.div`
 
 const LinkContent = styled.button`
   padding: 8px 12px;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 800;
   letter-spacing: 0.03em;
 
   background: transparent;
-  color: var(--medDarkPink);
+  color: var(--pinkShadow);
 
   border-radius: 6px;
   border: none;
@@ -43,10 +43,11 @@ const LinkContent = styled.button`
   }
 
   @media (prefers-color-scheme: dark) {
-    color: var(--darkModeLinkColor);
+    color: var(--orange2);
+    transition: color 198ms ease-out;
 
     &:hover {
-      color: var(--veryLightPink);
+      color: var(--orange1);
     }
   }
 `;
