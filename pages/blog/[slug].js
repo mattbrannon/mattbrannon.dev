@@ -3,15 +3,13 @@ import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import path from 'path';
-import { MaxWidthWrapper } from '../../components/MaxWidth';
-import BlogHeader from '../../components/BlogHeader';
-import SideNote from '../../components/SideNote';
-import Section from '../../components/Section';
-import { postFilePaths, POSTS_PATH } from '../../utils/mdxUtils';
-import 'prismjs/themes/prism-tomorrow.css';
-import prism from 'prismjs';
+import BlogHeader from '@components/BlogHeader';
+import SideNote from '@components/SideNote';
+import Section from '@components/Section';
+import { postFilePaths, POSTS_PATH } from '@utils/mdxUtils';
+import Prism from 'prismjs';
 import { useEffect } from 'react';
-import DocumentHead from '../../components/Head';
+import DocumentHead from '@components/Head';
 
 const components = {
   SideNote,
@@ -20,11 +18,61 @@ const components = {
 
 export default function PostPage({ source, frontMatter }) {
   useEffect(() => {
-    prism.highlightAll();
+    async function copyText(selectedText) {
+      try {
+        await navigator.clipboard.writeText(selectedText);
+        console.log('text copied clipboard');
+      } catch (err) {
+        console.error('Failed to copy: ', err);
+      }
+    }
+
+    setTimeout(() => {
+      Prism.plugins.toolbar.registerButton('copy', function (env) {
+        const button = document.createElement('button');
+        button.innerHTML = 'Copy snippet';
+
+        button.addEventListener('click', function () {
+          // Source: http://stackoverflow.com/a/11128179/2757940
+          if (document.body.createTextRange) {
+            // ms
+            const range = document.body.createTextRange();
+            range.moveToElementText(env.element);
+            range.select();
+          }
+          else if (window.getSelection) {
+            // moz, opera, webkit
+            const selection = window.getSelection();
+            const range = document.createRange();
+            range.selectNodeContents(env.element);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            copyText(selection.toString())
+              .then(selection.removeAllRanges())
+              .then(() => {
+                button.innerHTML = 'Snippet Copied to clipboard!';
+                button.style.color = 'white';
+                button.style.transition = 'all 0.3s ease';
+              })
+              .then(() =>
+                setTimeout(() => {
+                  button.innerHTML = 'Copy snippet';
+                }, 2000)
+              )
+              .catch(console.log);
+          }
+        });
+
+        return button;
+      });
+      Prism.highlightAll();
+      console.log(Prism.plugins);
+    }, 0);
   }, []);
 
   return (
-    <MaxWidthWrapper>
+    // <MaxWidthWrapper>
+    <>
       <DocumentHead title={frontMatter.title} desc={frontMatter.description} />
       <div style={{ marginTop: '32px' }}>
         <BlogHeader>{frontMatter}</BlogHeader>
@@ -32,7 +80,8 @@ export default function PostPage({ source, frontMatter }) {
       <main>
         <MDXRemote {...source} components={components} />
       </main>
-    </MaxWidthWrapper>
+    </>
+    // </MaxWidthWrapper>
   );
 }
 
