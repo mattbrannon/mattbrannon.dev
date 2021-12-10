@@ -1,6 +1,6 @@
-import styled from 'styled-components/macro';
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components/macro';
 import { Anchor } from './Anchor';
 
 export default function FancyLink({ children, ...props }) {
@@ -9,7 +9,7 @@ export default function FancyLink({ children, ...props }) {
 
   useEffect(() => {
     setIsSelected(props.activeLink === props.href.slice(1));
-  }, [ props.activeLink ]);
+  }, [ props.activeLink, props.href ]);
 
   return (
     <LinkWrapper onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
