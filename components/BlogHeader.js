@@ -34,7 +34,6 @@ const Title = styled.h1`
 `;
 
 const Time = styled.div`
-  /* font-size: 0.9rem; */
   white-space: nowrap;
   color: #777770;
   flex: 1;
