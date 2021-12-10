@@ -26,7 +26,7 @@ const PageButtonsWrapper = styled.div`
 
 const LinkContent = styled.button`
   padding: 8px 12px;
-  font-size: 1.25rem;
+  font-size: var(--size20);
   font-weight: 800;
   letter-spacing: 0.03em;
 
