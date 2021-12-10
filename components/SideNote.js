@@ -13,7 +13,7 @@ const AsideWrapper = styled.aside`
   border-bottom-right-radius: 8px;
   font-family: 'Open Sans', system-ui, sans-serif;
   border-left: 6px solid gold;
-  font-size: 1rem;
+  font-size: var(--size16);
 
   @media (prefers-color-scheme: dark) {
     color: #333;

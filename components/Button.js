@@ -47,7 +47,7 @@ const Wrapper = styled.button`
 const InnerButton = styled.span`
   display: block;
   padding: 12px 24px;
-  font-size: ${21 / 16}rem;
+  font-size: var(--size21);
   font-weight: 700;
   border-radius: 8px;
   border: none;
