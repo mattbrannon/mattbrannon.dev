@@ -1,30 +1,66 @@
-import styled from 'styled-components/macro';
+import styled, { keyframes, css } from 'styled-components/macro';
 
-const Message = styled.p.attrs((props) => {
+const gradientAnimation = keyframes`
+  0% {
+    background-size: 100% 400%;
+    font-variation-settings: var(--recursive7);
+    opacity: 0;
+  }
+
+  100% {
+    background-size: 100% 100%;
+    font-variation-settings: var(--recursive8);
+    opacity: 1;
+  }
+`;
+
+const shadowAnimation = keyframes`
+  0%{
+    font-variation-settings: var(--recursive7);
+    textShadow: var(--no-shadow);
+    opacity: 0;
+  }
+
+  100%{
+    font-variation-settings: var(--recursive8);
+    textShadow: var(--welcome-shadow);
+    opacity: 1;
+  }
+`;
+
+const animateGradient = (props) => {
+  const delay = props.theme.hasPlayed ? 100 : 4200;
+  return css`
+    ${gradientAnimation} 600ms ease-in-out both ${delay}ms;
+  `;
+};
+
+const animateShadow = (props) => {
+  const delay = props.theme.hasPlayed ? 200 : 4400;
+  return css`
+    ${shadowAnimation} 500ms ease-in-out both ${delay}ms;
+  `;
+};
+
+const Message = styled.div.attrs((props) => {
   return {
     style: {
-      '--max': props.max - 16 + 'px',
+      '--left': props.centered ? 0 : undefined,
+      '--right': props.centered ? 0 : undefined,
     },
   };
 })`
+  --scale: 10vw;
   position: absolute;
-  left: 0;
-  right: 0;
-  --clamp: min(200px, var(--max));
-
-  ${'' /* width: 100%; */}
-  /* height: 100%; */
-
-  text-align: center;
+  left: var(--left);
+  right: var(--right);
 
   white-space: nowrap;
-  overflow: hidden;
   margin: 0 auto;
+  padding: 12px 4px;
+  font-size: clamp(var(--size18), var(--scale), var(--size48));
 
-  /* font-size: clamp(1.8rem, 7vw, 3.6rem); */
-  font-size: clamp(18px, 7vw, 48px);
-  font-family: 'Decovar';
-  font-variation-settings: var(--decovar-end);
+  font-family: Recursive;
 
   @media (max-width: 300px) {
     white-space: revert;
@@ -36,6 +72,7 @@ export const WelcomeGradient = styled(Message)`
   background-size: 100% 100%;
   background-clip: text;
   -webkit-background-clip: text;
+  animation: ${(p) => animateGradient(p)};
 `;
 
 export const WelcomeShadow = styled(Message)`
@@ -44,4 +81,5 @@ export const WelcomeShadow = styled(Message)`
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+  animation: ${(p) => animateShadow(p)};
 `;

@@ -1,28 +1,36 @@
-import { forwardRef, useEffect, useContext, useRef, useState } from 'react';
-import { gradientFrames, shadowFrames, options } from './animations';
-import { WelcomeGradient, WelcomeShadow } from './WelcomeMessage';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-// import Spacer from '../Spacer';
-// import { FullBleed } from '../Layout';
-import { useWindowSize } from '../../hooks/useWindowSize';
+import { WelcomeGradient, WelcomeShadow } from './WelcomeMessage';
 
 export default function WelcomeMessage({ ...props }) {
   const shadowRef = useRef();
   const gradientRef = useRef();
   const context = useContext(ThemeContext);
-  const windowSize = useWindowSize();
-  const [ max, setMax ] = useState(0);
+  const prefersReducedMotion = useMediaQuery({ prefersReducedMotion: 'reduce' });
+  const [ reduceMotion, setReduceMotion ] = useState(null);
+
 
   useEffect(() => {
-    setMax(windowSize.width);
-  }, [ windowSize ]);
+    setReduceMotion(prefersReducedMotion);
+  }, [ prefersReducedMotion ]);
 
   return (
     <Wrapper>
-      <MessageShadow max={max} context={context} ref={shadowRef} {...props}>
+      <MessageShadow
+        prefersReducedMotion={reduceMotion}
+        context={context}
+        ref={shadowRef}
+        {...props}
+      >
         {props.children}
       </MessageShadow>
-      <MessageGradient max={max} context={context} ref={gradientRef} {...props}>
+      <MessageGradient
+        prefersReducedMotion={reduceMotion}
+        context={context}
+        ref={gradientRef}
+        {...props}
+      >
         {props.children}
       </MessageGradient>
     </Wrapper>
@@ -31,13 +39,16 @@ export default function WelcomeMessage({ ...props }) {
 
 const MessageShadow = forwardRef((props, ref) => {
   const context = props.context;
+  const shouldAnimate = props.animate;
+  const prefersReducedMotion = props.prefersReducedMotion;
 
   useEffect(() => {
-    if (!context.hasRun) {
-      ref.current.animate(shadowFrames, options);
-      // context.setHasRun(true);
+    if (!context.hasRun && shouldAnimate && !prefersReducedMotion) {
+      // const animation = ref.current.animate(shadowFrames, options);
+      // console.log(animation);
+      context.setHasRun(true);
     }
-  }, [ context ]);
+  }, [ context, shouldAnimate, prefersReducedMotion ]);
 
   return (
     <>
@@ -50,13 +61,16 @@ const MessageShadow = forwardRef((props, ref) => {
 
 const MessageGradient = forwardRef((props, ref) => {
   const context = props.context;
+  const shouldAnimate = props.animate;
+  const prefersReducedMotion = props.prefersReducedMotion;
 
   useEffect(() => {
-    if (!context.hasRun) {
-      ref.current.animate(gradientFrames, options);
-      // context.setHasRun(true);
+    if (!context.hasRun && shouldAnimate && !prefersReducedMotion) {
+      // const animation = ref.current.animate(gradientFrames, options);
+      // console.log(animation);
+      context.setHasRun(true);
     }
-  }, [ context ]);
+  }, [ context, shouldAnimate, prefersReducedMotion ]);
 
   return (
     <>
@@ -71,8 +85,7 @@ const Wrapper = styled.div`
   color: transparent;
   text-align: center;
   align-self: start;
-  padding-top: var(--breathing-room);
-  ${'' /* margin: 0 auto; */}
+  padding-bottom: calc(var(--breathing-room) * 2);
 `;
 
 MessageShadow.displayName = 'MessageShadow';
