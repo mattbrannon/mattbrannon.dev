@@ -1,13 +1,12 @@
+import VisualyHidden from '@components/VisuallyHidden';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 import { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
-import VisualyHidden from '../VisuallyHidden';
-import { useMediaQuery } from '../../hooks/useMediaQuery';
 
 export default function HamburgerMenu() {
   const { isOpen, setIsOpen } = useContext(ThemeContext);
-  const isMobile = useMediaQuery({ maxWidth: 600 });
+  const isMobile = useMediaQuery({ maxWidth: 564 });
   const action = isOpen ? 'close' : 'open';
-
   if (isMobile || isOpen) {
     return (
       <MenuButton onClick={() => setIsOpen(!isOpen)}>

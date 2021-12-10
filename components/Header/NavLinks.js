@@ -1,12 +1,15 @@
+import FancyLink from '@components/FancyLink';
+import { useContext, useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
-import FancyLink from '../FancyLink';
-import { useEffect, useState, useContext } from 'react';
 
 export default function NavLinks({ clickedHome, setClickedHome }) {
-  const { pathname } = useContext(ThemeContext);
+  const { pathname, setHasPlayed } = useContext(ThemeContext);
   const [ activeLink, setActiveLink ] = useState(pathname);
 
   const handleLinkClick = (e) => {
+    setTimeout(() => {
+      setHasPlayed(true);
+    }, 1000);
     const activeLink = clickedHome ? '' : e.target.attributes.href.value.slice(1);
     setActiveLink(activeLink);
   };
@@ -16,7 +19,7 @@ export default function NavLinks({ clickedHome, setClickedHome }) {
       setActiveLink('');
       setClickedHome(false);
     }
-  }, [ clickedHome ]);
+  }, [ setClickedHome, clickedHome ]);
 
   useEffect(() => {
     if (pathname) {
@@ -43,7 +46,7 @@ export default function NavLinks({ clickedHome, setClickedHome }) {
 const LinkWrapper = styled.span`
   background: transparent;
   border: none;
-  font-size: 1rem;
+  font-size: var(--size16);
   margin: 0 clamp(0.5rem, 1rem + 2vw, 4rem);
   min-height: 0vh;
 

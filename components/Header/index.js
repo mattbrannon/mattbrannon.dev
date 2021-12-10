@@ -1,82 +1,77 @@
+import { FullBleed } from '@components/Layout';
+import VisuallyHidden from '@components/VisuallyHidden';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import FocusTrap from 'focus-trap-react';
+import Link from 'next/link';
 import { useContext, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
-import NavLinks from './NavLinks';
-import { Overlay } from './Overlay';
 import HamburgerMenu from './Hamburger';
 import MobileNav from './MobileNav';
-import FocusTrap from 'focus-trap-react';
-import { useMediaQuery } from '../../hooks/useMediaQuery';
-import Link from 'next/link';
-import { FullBleed } from '../Layout';
+import NavLinks from './NavLinks';
+import { Overlay } from './Overlay';
 
 export default function Header() {
   const { isOpen } = useContext(ThemeContext);
-  const isMobile = useMediaQuery({ maxWidth: 600 });
+  const isMobile = useMediaQuery({ maxWidth: 564 });
   const Navigation = isMobile ? HamburgerMenu : NavLinks;
   const [ clickedHome, setClickedHome ] = useState(false);
 
   return (
     <>
       <FullBleedWrapper>
-        <MaxWidthFlexContainer>
-          <Left>
-            <Link href="/">
-              <BrandLogoWrapper onClick={() => setClickedHome(true)}>Matt Brannon</BrandLogoWrapper>
-            </Link>
-          </Left>
-          <Right>
-            <Navigation setClickedHome={setClickedHome} clickedHome={clickedHome} />
-          </Right>
-        </MaxWidthFlexContainer>
+        <InnerWrapper>
+          <MaxWidthFlexContainer>
+            <Left>
+              <Link passHref href="/">
+                <BrandLogoWrapper onClick={() => setClickedHome(true)}>
+                  Matt Brannon
+                </BrandLogoWrapper>
+              </Link>
+            </Left>
 
-        <FocusTrap active={isOpen}>
-          <div tabIndex={-1}>
-            <HamburgerMenu isOpen={isOpen} />
-            <Overlay />
-            <Overlay />
-            <MobileNav />
-          </div>
-        </FocusTrap>
+            <Right>
+              <VisuallyHidden>
+                <h2>Internal Navigation Links</h2>
+              </VisuallyHidden>
+              <Navigation setClickedHome={setClickedHome} clickedHome={clickedHome} />
+            </Right>
+          </MaxWidthFlexContainer>
+
+          <FocusTrap active={isOpen}>
+            <div tabIndex={-1}>
+              {isOpen && <HamburgerMenu isOpen={isOpen} />}
+              <Overlay />
+              <Overlay />
+              <MobileNav />
+            </div>
+          </FocusTrap>
+        </InnerWrapper>
       </FullBleedWrapper>
       {/* <Spacer axis="vertical" size={80} /> */}
     </>
   );
 }
 
-// export default function Header() {
-//   const { isOpen } = useContext(ThemeContext);
-//   const scrollWidth = useScrollWidth();
-//   const isMobile = useMediaQuery({ maxWidth: 600 });
-//   const Navigation = isMobile ? HamburgerMenu : NavLinks;
-//   const [ clickedHome, setClickedHome ] = useState(false);
-//   return (
-//     <StickyWrapper>
-//       <MaxWidthFlexContainer>
-//         <Left>
-//           <Link href="/">
-//             <BrandLogoWrapper onClick={() => setClickedHome(true)}>
-//               Matt Brannon
-//             </BrandLogoWrapper>
-//           </Link>
-//         </Left>
-//         <Right>
-//           <Navigation setClickedHome={setClickedHome} clickedHome={clickedHome} />
-//         </Right>
-//       </MaxWidthFlexContainer>
-//     </StickyWrapper>
-//   );
-// }
-
 const FullBleedWrapper = styled(FullBleed)`
-  height: 80px;
-  ${'' /* width: 100%; */}
+  height: var(--header-height);
   background-color: var(--header-background);
   grid-row: 1;
   grid-column: 1 / -1;
   padding: 0 var(--breathing-room);
   position: sticky;
+  ${'' /* position: fixed; */}
   top: 0;
-  z-index: 1;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  isolation: isolate;
+`;
+
+const InnerWrapper = styled.div`
+  height: var(--header-height);
+  ${'' /* background-color: red; */}
+  grid-row: 1;
+  grid-column: 1 / -1;
 `;
 
 const MaxWidthFlexContainer = styled.div`
@@ -88,62 +83,21 @@ const MaxWidthFlexContainer = styled.div`
   align-items: center;
 `;
 
-// const HeaderWrapper = styled.div`
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   right: ${(p) => p.scrollWidth}px;
-//   isolation: isolate;
-//   grid-area: header;
-//   height: 80px;
-//   ${'' /* background: var(--header-background); */}
-//   width: 100%;
-//   ${'' /* padding: 0 var(--breathing-room); */}
-//   z-index: 1;
-
-//   @media (prefers-color-scheme: dark) {
-//     border-bottom: 1px solid black;
-//   }
-// `;
-
-const BrandLogoWrapper = styled.a.attrs({
+const BrandLogoWrapper = styled.h1.attrs({
   tabIndex: 0,
 })`
-  font-size: 1.8rem;
+  font-size: var(--size28);
   color: white;
   color: var(--orange5);
-  font-family: 'Roboto Flex';
-
-  /* --wght: 'wght' 320;
-  --wdth: 'wdth' 82;
-  --opsz: 'opsz' 12;
-  --slnt: 'slnt' 15;
-  --GRAD: 'GRAD' 85;
-  --XTRA: 'XTRA' 0; */
-
-  font-variation-settings: 'wght' 320, 'wdth' 42, 'opsz' 44;
-  /* font-variation-settings: var(--wght), var(--wdth), var(--opsz), var(--slnt), var(--GRAD), */
-  /* var(--XTRA); */
+  font-family: 'Open Sans', system-ui, sans-serif;
+  font-variation-settings: 'wdth' 75, 'wght' 700;
 
   transition: all 140ms ease-in-out;
 
   &:hover {
-    --wght: 'wght' 120;
-    --wdth: 'wdth' 882;
-    --opsz: 'opsz' 184;
-    --slnt: 'slnt' -2;
-    --GRAD: 'GRAD' 765;
-    --XTRA: 'XTRA' 372;
     cursor: pointer;
     text-decoration: none;
     color: var(--orange0);
-  }
-
-  @media (prefers-color-scheme: dark) {
-    color: var(--orange5);
-    &:hover {
-      color: var(--orange1);
-    }
   }
 `;
 

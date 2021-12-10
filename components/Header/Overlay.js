@@ -22,7 +22,7 @@ export function Overlay() {
   );
 }
 
-const OverlayWrapper = styled.aside`
+const OverlayWrapper = styled.div`
   position: fixed;
   z-index: var(--zIndex);
   left: 0;
