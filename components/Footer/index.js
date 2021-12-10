@@ -1,7 +1,8 @@
-import styled from 'styled-components/macro';
-import Link from 'next/link';
+import { FullBleed } from '@components/Layout';
+import VisuallyHidden from '@components/VisuallyHidden';
 import Image from 'next/image';
-import { FullBleed } from '../Layout';
+import Link from 'next/link';
+import styled from 'styled-components/macro';
 
 export default function Footer() {
   return (
@@ -11,22 +12,37 @@ export default function Footer() {
           <InnerWrapper>
             <NavWrapper id="nav2">
               <Items className="items">
-                <Link href="https://github.com/mattbrannon">
+                <VisuallyHidden>
+                  <h2>Social Media Links</h2>
+                </VisuallyHidden>
+                <Link passHref href="https://github.com/mattbrannon">
                   <LinkButton>
                     <ImageLink
-                      src="/images/github/GitHub-Mark-Light-120px-plus.png"
+                      src="/images/github/github.png"
                       alt="link to github"
+                      width={30}
+                      height={30}
                     />
                   </LinkButton>
                 </Link>
-                <Link href="https://linkedin.com/in/mattbrannon1">
+                <Link passHref href="https://linkedin.com/in/mattbrannon1">
                   <LinkButton>
-                    <ImageLink src="/images/linkedin/linkedin.png" alt="link to linkedin" />
+                    <ImageLink
+                      width={30}
+                      height={30}
+                      src="/images/linkedin/linkedin.png"
+                      alt="link to linkedin"
+                    />
                   </LinkButton>
                 </Link>
-                <Link href="https://twitter.com/_mattbrannon">
+                <Link passHref href="https://twitter.com/_mattbrannon">
                   <LinkButton>
-                    <ImageLink src="/images/twitter/twitter.png" alt="link to twitter" />
+                    <ImageLink
+                      width={30}
+                      height={30}
+                      src="/images/twitter/twitter.png"
+                      alt="link to twitter"
+                    />
                   </LinkButton>
                 </Link>
               </Items>
@@ -46,6 +62,7 @@ const FooterContainer = styled(FullBleed)`
   ${'' /* grid-row-end: -1;
   grid-row: -1;
   grid-column: 1 / -1; */}
+  margin-top: 64px;
   background: var(--footer-background);
   min-height: var(--footer-height);
   display: grid;
@@ -102,7 +119,7 @@ const CopyrightWrapper = styled.div`
 `;
 
 const Notice = styled.span`
-  font-size: 12px;
+  font-size: var(--size12);
   color: whitesmoke;
 `;
 
@@ -116,10 +133,9 @@ const Items = styled.nav`
   gap: 32px;
 `;
 
-const ImageLink = styled(Image).attrs({
-  width: '30',
-  height: '30',
-})`
+const ImageLink = styled(Image)`
+  width: 30px;
+  height: 30px;
   &:hover {
     cursor: pointer;
   }
