@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import Link from 'next/link';
 import styled, { keyframes, css, ThemeContext } from 'styled-components/macro';
-
+import VisuallyHidden from '@components/VisuallyHidden';
 /**
  *
  * * Mobile navigation menu
@@ -30,6 +30,9 @@ export default function MobileNav() {
         '--zIndex': context.isOpen ? '4' : '-1',
       }}
     >
+      <VisuallyHidden>
+        <h2>Internal Navigation Links for Mobile Devices</h2>
+      </VisuallyHidden>
       <>
         {labels.map((label, index) => {
           const href = index > 0 ? `/${labels[index].toLowerCase()}` : '/';
