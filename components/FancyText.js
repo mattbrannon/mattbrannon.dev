@@ -17,7 +17,7 @@ const FancyText = styled.span`
   --original: black;
   --color: var(--pinkBg);
   color: var(--color);
-  animation: ${slantText} 1000ms ease both 1000ms;
+  animation: ${slantText} 1000ms ease both 300ms;
   @media (prefers-color-scheme: dark) {
     --original: beige;
     --color: var(--blue-main);
