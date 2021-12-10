@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 const Layout = styled.div`
   min-height: 100%;
   display: grid;
+  ${'' /* margin-top: var(--header-height); */}
   grid-template-columns: 1fr min(var(--max-width), 100%) 1fr;
   grid-template-rows: auto 1fr auto;
   padding-left: var(--breathing-room);
@@ -21,11 +22,12 @@ export const FullBleed = styled.div`
 `;
 
 export const TopRow = styled.div`
-  padding-top: var(--breathing-room);
   display: flex;
   justify-content: center;
   flex-direction: column;
-  align-items: center;
+  margin-bottom: 32px;
+  margin-top: 64px;
+  ${'' /* align-items: center; */}
 `;
 
 export const TopRowLeftAligned = styled(TopRow)`
@@ -41,10 +43,14 @@ const SectionTitleWrapper = styled.div`
   width: fit-content;
 `;
 
+const Heading = styled.h3`
+  font-size: clamp(var(--size20), 1.5vw + 1rem, var(--size40));
+`;
+
 export const SectionTitle = ({ children }) => {
   return (
     <SectionTitleWrapper>
-      <h3>{children}</h3>
+      <Heading>{children}</Heading>
       <hr />
     </SectionTitleWrapper>
   );
