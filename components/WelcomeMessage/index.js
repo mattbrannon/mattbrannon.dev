@@ -10,7 +10,6 @@ export default function WelcomeMessage({ ...props }) {
   const prefersReducedMotion = useMediaQuery({ prefersReducedMotion: 'reduce' });
   const [ reduceMotion, setReduceMotion ] = useState(null);
 
-
   useEffect(() => {
     setReduceMotion(prefersReducedMotion);
   }, [ prefersReducedMotion ]);
