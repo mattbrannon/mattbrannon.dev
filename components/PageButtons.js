@@ -1,5 +1,5 @@
-import styled from 'styled-components/macro';
 import Link from 'next/link';
+import styled from 'styled-components/macro';
 
 export default function PageButtons({ prev, next }) {
   return (
@@ -12,7 +12,7 @@ export default function PageButtons({ prev, next }) {
 
 export const PageButton = ({ href, children }) => {
   return (
-    <Link href={href}>
+    <Link passHref href={href}>
       <LinkContent>{children}</LinkContent>
     </Link>
   );
