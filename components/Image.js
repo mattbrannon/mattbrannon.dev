@@ -1,12 +1,30 @@
 import styled from 'styled-components/macro';
-import Img from 'next/image';
 
-const Image = styled(Img)`
+function Picture({ sources, alt, ...props }) {
+  const { sizes, types, name, folder } = sources;
+  return (
+    <picture>
+      {types.map((type, i) => {
+        const mediaType = `image/${type}`;
+        const srcSet = sizes
+          .map((size) => {
+            return `${folder}/${name}-${size}.${type} ${size}w`;
+          })
+          .join(', ');
+        return <source key={i} srcSet={srcSet} type={mediaType} />;
+      })}
+      <Image {...props} src={`${folder}/${name}.png`} alt={alt} />
+    </picture>
+  );
+}
+
+const Image = styled.img`
+  --radius: ${(p) => (p.rounded ? '50%' : undefined)};
   display: block;
-  object-fit: cover;
-  aspect-ratio: 1 / 1;
-  width: 100%;
+  width: ${(p) => p.width + 'px' || '100%'};
   height: auto;
+  object-fit: cover;
+  border-radius: var(--radius);
 `;
 
-export default Image;
+export default Picture;
