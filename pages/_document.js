@@ -1,4 +1,4 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
 export default class MyDocument extends Document {
@@ -30,28 +30,7 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head>
-          <link
-            rel="preload"
-            href="/fonts/futura/futura-medium-01-webfont.woff2"
-            as="font"
-            type="font/woff2"
-            crossOrigin="true"
-          />
-          <link
-            rel="preload"
-            href="https://pixelambacht.nl/remote/RobotoFlex[slnt,wdth,wght,opsz].woff2"
-            as="font"
-            type="font/woff2"
-            crossOrigin="true"
-          />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />{' '}
-          <link
-            href="https://fonts.googleapis.com/css2?family=Coming+Soon&family=Oswald&family=Amatic+SC:wght@400;700&display=swap"
-            rel="stylesheet"
-          />
-          <link rel="shortcut icon" href="/images/favicon.ico" />
-        </Head>
+        <Head></Head>
         <body>
           <Main />
           <NextScript />
