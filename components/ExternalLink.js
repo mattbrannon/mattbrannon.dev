@@ -5,7 +5,7 @@ import styled from 'styled-components/macro';
 export const ExternalLink = ({ href, children }) => {
   return (
     <Link passHref href={href}>
-      <A newTab href={href}>
+      <A newTab href={href} rel="noopener">
         {children}
       </A>
     </Link>
