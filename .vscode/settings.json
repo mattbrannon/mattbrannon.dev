@@ -1,14 +1,16 @@
 {
   "files.autoSave": "onFocusChange",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
   "eslint.format.enable": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "editor.acceptSuggestionOnCommitCharacter": false,
   "eslint.options": {
-    "extensions": [".js", ".jsx", ".md", ".mdx", ".ts", ".tsx"]
+    "extensions": [".js", ".jsx", ".mdx", ".ts", ".tsx"]
   },
   "eslint.validate": [
-    "markdown",
-    // "mdx",
     "javascript",
     "javascriptreact",
     "typescript",
@@ -26,8 +28,34 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "prettier.requireConfig": true,
+  "prettier.requireConfig": false,
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
-  }
+  },
+  "editor.fontFamily": "Fira Code",
+  "editor.fontLigatures": true,
+  "editor.acceptSuggestionOnEnter": "smart",
+  "editor.autoClosingBrackets": "beforeWhitespace",
+  "editor.autoClosingDelete": "always",
+  "editor.autoClosingOvertype": "always",
+  "editor.tabCompletion": "on",
+  "editor.bracketPairColorization.enabled": false,
+
+  "editor.autoClosingQuotes": "languageDefined",
+  "editor.autoIndent": "advanced",
+  "editor.autoSurround": "languageDefined",
+  "editor.cursorBlinking": "blink",
+  "editor.cursorStyle": "line",
+  "editor.guides.highlightActiveIndentation": false,
+  "editor.selectionHighlight": true,
+  "emmet.triggerExpansionOnTab": true,
+  "[dotenv]": {
+    "editor.defaultFormatter": null
+  },
+
+  "path-intellisense.mappings": {
+    "@components": "${workspaceRoot}/components",
+    "@hooks": "${workspaceRoot}/hooks"
+  },
+  "path-intellisense.absolutePathToWorkspace": true
 }

@@ -31,16 +31,12 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:mdx/recommended",
     "plugin:prettierx/default",
     "next/core-web-vitals"
   ],
   "plugins": ["module-resolver", "import", "react", "mdx", "prettierx"],
   "rules": {
-    "mdx/no-jsx-html-comments": "warn",
     "no-unused-expressions": "off",
-    "mdx/no-unused-expressions": "warn",
-    "mdx/remark": "warn",
     "module-resolver/use-alias": 2,
     "no-var": "error",
     "no-unused-vars": "warn",
