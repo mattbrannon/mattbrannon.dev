@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import { SectionTitle } from './PageTitle';
+import WelcomeMessage from './WelcomeMessage';
 
 export default function AboutMe() {
   return (
@@ -34,4 +34,18 @@ export default function AboutMe() {
 
 const Article = styled.article`
   ${'' /* background: dimgrey; */}
+`;
+
+export function SectionTitle({ children, ...props }) {
+  return (
+    <Wrapper>
+      <WelcomeMessage {...props}>{children}</WelcomeMessage>
+    </Wrapper>
+  );
+}
+
+const Wrapper = styled.div`
+  position: relative;
+  margin: 16px 0 16px 0;
+  padding: 0 2px;
 `;
