@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["./components/*"],
+      "@hooks/*": ["./hooks/*"],
+      "@constants/*": ["./constants/*"],
+      "@public/*": ["./public/*"],
+      "@utils/*": ["./utils/*"],
+      "@animations/*": ["./animations/*"],
+      "@styles/*": ["./styles/*"],
+      "@styled-components": ["./node_modules/styled-components/macro/*"]
+    }
+  }
+}
