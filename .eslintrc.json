@@ -34,7 +34,7 @@
     "plugin:prettierx/default",
     "next/core-web-vitals"
   ],
-  "plugins": ["module-resolver", "import", "react", "mdx", "prettierx"],
+  "plugins": ["module-resolver", "import", "react", "prettierx"],
   "rules": {
     "no-unused-expressions": "off",
     "module-resolver/use-alias": 2,
