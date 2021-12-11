@@ -38,22 +38,4 @@ export const BottomRow = styled(TopRow)`
   margin-bottom: var(--breathing-room);
 `;
 
-const SectionTitleWrapper = styled.div`
-  margin-top: 32px;
-  width: fit-content;
-`;
-
-const Heading = styled.h3`
-  font-size: clamp(var(--size20), 1.5vw + 1rem, var(--size40));
-`;
-
-export const SectionTitle = ({ children }) => {
-  return (
-    <SectionTitleWrapper>
-      <Heading>{children}</Heading>
-      <hr />
-    </SectionTitleWrapper>
-  );
-};
-
 export default Layout;
