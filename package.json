@@ -5,7 +5,8 @@
     "dev:watch": "next-remote-watch ./articles",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prod:start": "next start -p 4800"
   },
   "dependencies": {
     "axios": "^0.21.4",
