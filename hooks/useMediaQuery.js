@@ -5,6 +5,7 @@ const queryTypes = {
   maxWidth: 'max-width',
   minWidth: 'min-width',
   prefersColorScheme: 'prefers-color-scheme',
+  prefersReducedMotion: 'prefers-reduced-motion',
 };
 
 const parseQuery = (object) => {
