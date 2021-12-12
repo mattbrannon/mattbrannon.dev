@@ -15,7 +15,7 @@ export function Overlay() {
       style={{
         '--visibility': isOpen ? 'visible' : 'hidden',
         '--blur': isOpen ? 'blur(8px)' : 'blur(0px)',
-        '--background': isOpen ? 'hsla(220deg, 35%, 10%, 0.8)' : 'transparent',
+        '--background': isOpen ? 'hsla(220deg, 35%, 6%, 0.93)' : 'transparent',
         '--zIndex': isOpen ? '2' : '0',
       }}
     />

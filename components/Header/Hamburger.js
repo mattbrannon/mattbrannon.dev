@@ -4,12 +4,19 @@ import { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 
 export default function HamburgerMenu() {
-  const { isOpen, setIsOpen } = useContext(ThemeContext);
+  const { isOpen, setIsOpen, setClickedBurger } = useContext(ThemeContext);
   const isMobile = useMediaQuery({ maxWidth: 564 });
   const action = isOpen ? 'close' : 'open';
+  const handleClick = () => {
+    const status = !isOpen;
+    setIsOpen(status);
+    setClickedBurger(true);
+    console.log('button clicked', action, status);
+  };
+
   if (isMobile || isOpen) {
     return (
-      <MenuButton onClick={() => setIsOpen(!isOpen)}>
+      <MenuButton onClick={handleClick}>
         <VisualyHidden>{action + ' navigation menu'}</VisualyHidden>
         <LineWrapper>
           <BurgerLine isOpen={isOpen}></BurgerLine>
@@ -48,8 +55,8 @@ const MenuButton = styled.button`
   display: grid;
   align-items: center;
 
-  position: fixed;
-  right: var(--breathing-room);
+  position: absolute;
+  right: 16px;
   top: calc((var(--thickness) + 80px - var(--height)) / 2);
   width: var(--width);
   height: var(--height);
@@ -62,7 +69,7 @@ const MenuButton = styled.button`
 
   ${'' /* //! Has no effect when header is positioned fixed
   // * solution - move element outside it's container */}
-  z-index: 3;
+  z-index: 99;
 
   &:focus {
     outline: 3px solid deepskyblue;

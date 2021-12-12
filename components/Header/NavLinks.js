@@ -3,13 +3,13 @@ import { useContext, useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 
 export default function NavLinks({ clickedHome, setClickedHome }) {
-  const { pathname, setHasPlayed } = useContext(ThemeContext);
+  const { pathname } = useContext(ThemeContext);
   const [ activeLink, setActiveLink ] = useState(pathname);
 
   const handleLinkClick = (e) => {
-    setTimeout(() => {
-      setHasPlayed(true);
-    }, 1000);
+    // setTimeout(() => {
+    //   setHasPlayed(true);
+    // }, 1000);
     const activeLink = clickedHome ? '' : e.target.attributes.href.value.slice(1);
     setActiveLink(activeLink);
   };

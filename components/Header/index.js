@@ -1,4 +1,3 @@
-import { FullBleed } from '@components/Layout';
 import VisuallyHidden from '@components/VisuallyHidden';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import FocusTrap from 'focus-trap-react';
@@ -11,16 +10,21 @@ import NavLinks from './NavLinks';
 import { Overlay } from './Overlay';
 
 export default function Header() {
-  const { isOpen } = useContext(ThemeContext);
+  const theme = useContext(ThemeContext);
   const isMobile = useMediaQuery({ maxWidth: 564 });
   const Navigation = isMobile ? HamburgerMenu : NavLinks;
   const [ clickedHome, setClickedHome ] = useState(false);
+  const [ clickedBurger, setClickedBurger ] = useState(false);
+
+  const isOpen = theme.isOpen;
+  theme.clickedBurger = clickedBurger;
+  theme.setClickedBurger = setClickedBurger;
 
   return (
     <>
       <FullBleedWrapper>
         <InnerWrapper>
-          <MaxWidthFlexContainer>
+          <MaxWidthWrapper>
             <Left>
               <Link passHref href="/">
                 <BrandLogoWrapper onClick={() => setClickedHome(true)}>
@@ -35,13 +39,13 @@ export default function Header() {
               </VisuallyHidden>
               <Navigation setClickedHome={setClickedHome} clickedHome={clickedHome} />
             </Right>
-          </MaxWidthFlexContainer>
+          </MaxWidthWrapper>
 
           <FocusTrap active={isOpen}>
             <div tabIndex={-1}>
-              {isOpen && <HamburgerMenu isOpen={isOpen} />}
+              {isOpen && <HamburgerMenu />}
               <Overlay />
-              <Overlay />
+              {/* <Overlay clickedBurger={clickedBurger} /> */}
               <MobileNav />
             </div>
           </FocusTrap>
@@ -52,14 +56,23 @@ export default function Header() {
   );
 }
 
-const FullBleedWrapper = styled(FullBleed)`
+const MaxWidth = styled.div`
+  max-width: 80ch;
+  width: 100%;
+  margin: 0 auto;
+  background: orange;
+  padding: 0 100px;
+`;
+
+const FullBleedWrapper = styled.div`
   height: var(--header-height);
-  background-color: var(--header-background);
+  ${'' /* background-color: var(--header-background); */}
+  background: red;
   grid-row: 1;
   grid-column: 1 / -1;
-  padding: 0 var(--breathing-room);
-  position: sticky;
-  ${'' /* position: fixed; */}
+  ${'' /* padding: 0 var(--breathing-room); */}
+  ${'' /* position: sticky; */}
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -69,18 +82,19 @@ const FullBleedWrapper = styled(FullBleed)`
 
 const InnerWrapper = styled.div`
   height: var(--header-height);
-  ${'' /* background-color: red; */}
   grid-row: 1;
   grid-column: 1 / -1;
+  background: var(--header-background);
 `;
 
-const MaxWidthFlexContainer = styled.div`
+const MaxWidthWrapper = styled.div`
   max-width: var(--max-width);
   width: 100%;
   height: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
+  padding: 0 16px;
 `;
 
 const BrandLogoWrapper = styled.h1.attrs({
