@@ -59,9 +59,6 @@ export default function Footer() {
 }
 
 const FooterContainer = styled(FullBleed)`
-  ${'' /* grid-row-end: -1;
-  grid-row: -1;
-  grid-column: 1 / -1; */}
   margin-top: 64px;
   background: var(--footer-background);
   min-height: var(--footer-height);
