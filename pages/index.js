@@ -23,13 +23,13 @@ export default function Home({ config }) {
     }
   });
 
-  useEffect(() => {
-    context.setIsPlaying(true);
-    setTimeout(() => {
-      context.setIsPlaying(false);
-      context.setHasPlayed(true);
-    }, 7200);
-  });
+  // useEffect(() => {
+  //   context.setIsPlaying(true);
+  //   setTimeout(() => {
+  //     context.setIsPlaying(false);
+  //     // context.setHasPlayed(true);
+  //   }, 7200);
+  // });
 
   useEffect(() => {
     const size = isMobile ? 48 : 80;
