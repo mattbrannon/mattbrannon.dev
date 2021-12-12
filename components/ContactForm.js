@@ -1,7 +1,7 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components/macro';
 import { InvertedButton as Button } from './Button';
-import axios from 'axios';
 
 export default function ContactForm() {
   const [ name, setName ] = useState('');
