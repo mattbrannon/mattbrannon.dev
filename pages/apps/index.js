@@ -70,8 +70,13 @@ export default function AppsPage({ montyHall, elbowRoom, letsMakeGifs }) {
 }
 
 const A = styled(Anchor)`
+  color: var(--pinkBg);
   &:visited {
     color: currentColor;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--orange-main);
   }
 `;
 
@@ -90,7 +95,8 @@ const Heading = styled(H4)`
 `;
 
 const Article = styled.article`
-  padding: 0px 0 48px 0;
+  ${'' /* padding: 0px 0 48px 0; */}
+  padding-bottom: 48px;
 `;
 
 const Paragraph = styled.p`
@@ -108,7 +114,8 @@ const AppList = styled.div`
 
 const ImageLinkWrapper = styled.div`
   --shadow: -0.1em 0.4em 0.8em hsl(210, 12%, 46%);
-  transform: translateY(32px) scale(1.09);
+  ${'' /* transform: translateX(-24px); */}
+  ${'' /* transform: translateY(32px) scale(1.09); */}
   overflow: hidden;
 
   &:hover {
