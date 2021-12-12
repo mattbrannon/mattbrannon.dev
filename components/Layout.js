@@ -3,22 +3,35 @@ import styled from 'styled-components/macro';
 const Layout = styled.div`
   min-height: 100%;
   display: grid;
-  ${'' /* margin-top: var(--header-height); */}
+  margin-top: var(--header-height);
   grid-template-columns: 1fr min(var(--max-width), 100%) 1fr;
   grid-template-rows: auto 1fr auto;
-  padding-left: var(--breathing-room);
-  padding-right: var(--breathing-room);
+  ${'' /* padding-left: var(--breathing-room);
+  padding-right: var(--breathing-room); */}
 
   & > * {
     grid-column: 2;
+    padding: 0 16px;
+
+    &:first-child {
+      padding: 0 0px;
+    }
+    &:last-child {
+      padding: 0 0;
+      grid-column: 1 / -1;
+    }
   }
 `;
 
+// export const FullBleed = styled.div`
+//   grid-column: 1 / -1;
+//   margin-left: calc(var(--breathing-room) * -1);
+//   margin-right: calc(var(--breathing-room) * -1);
+//   height: fit-content;
+// `;
+
 export const FullBleed = styled.div`
   grid-column: 1 / -1;
-  margin-left: calc(var(--breathing-room) * -1);
-  margin-right: calc(var(--breathing-room) * -1);
-  height: fit-content;
 `;
 
 export const TopRow = styled.div`
