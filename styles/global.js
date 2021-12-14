@@ -2,41 +2,6 @@ import { fonts } from '@constants';
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
-@font-face {
-  font-family: 'Jost';
-  src: url(/fonts/Jost-english-subset.woff2) format('woff2 supports variations'),
-    url(/fonts/Jost-english-subset.woff2) format('woff2-variations');
-  font-weight: 100 900;
-  font-display: fallback;
-  font-style: oblique 0 2;
-}
-
-@font-face {
-  font-family: 'Recursive';
-  font-style: oblique 0deg 15deg;
-  font-weight: 300 1000;
-  font-display: fallback;
-  src: url(/fonts/recursive-variable.woff2) format('woff2');
-  unicode-range: U+000D, U+0020-007E, U+00A0, U+00A2-00A9, U+00AC-00AE,
-    U+00B0-00B7, U+00B9-00BA, U+00BC-00BE, U+00D7, U+00F7, U+2007-200B, U+2010,
-    U+2012-2015, U+2018-201A, U+201C-201E, U+2020-2022, U+2026, U+2030,
-    U+2032-2033, U+2039-203A, U+203E, U+2044, U+2052, U+2074, U+20AC, U+2122,
-    U+2190-2199, U+2212, U+2215, U+F8FF;
-}
-
-@font-face {
-  font-family: 'Open Sans';
-  src: url(/fonts/open-sans-regular.woff2);
-  font-display: swap;
-  font-weight: 300 800;
-  font-stretch: 75% 100%;
-  unicode-range: U+0000, U+000D, U+0020-007E, U+00A0, U+00A2-00A9, U+00AC-00AE,
-    U+00B0-00B7, U+00B9-00BA, U+00BC-00BE, U+00D7, U+00F7, U+2000-200B,
-    U+2013-2015, U+2017-201E, U+2020-2022, U+2026, U+2030, U+2032-2033,
-    U+2039-203A, U+203C, U+2044, U+2074, U+20AC, U+2122, U+2212, U+2215, U+FEFF,
-    U+FFFD;
-}
-
 :root {
   
   --size10: ${fonts.sizes.size10};
@@ -49,6 +14,7 @@ export const GlobalStyles = createGlobalStyle`
   --size24: ${fonts.sizes.size24};
   --size28: ${fonts.sizes.size28};
   --size32: ${fonts.sizes.size32};
+  --size36: ${fonts.sizes.size32};
   --size40: ${fonts.sizes.size40};
   --size48: ${fonts.sizes.size48};
   
@@ -238,7 +204,8 @@ html:focus-within {
   scroll-behavior: smooth;
 }
 
-body {
+${
+  '' /* body {
   text-rendering: optimizeSpeed;
   background: var(--body-background);
   line-height: 1.6;
@@ -246,6 +213,22 @@ body {
   font-variation-settings: 'wdth' 75;
   font-family: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+} */
+}
+
+body {
+  max-width: 80ch;
+  margin: 0 auto;
+  width: 100%;
+  --body-background: hsl(223, 33%, 96%); /* #f1f3f8 */
+
+  text-rendering: optimizeSpeed;
+  background: var(--body-background);
+  line-height: 1.6;
+  font-size: var(--size20);
+  font-variation-settings: 'wdth' 75;
+  font-family: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
 
 a:hover {
@@ -270,7 +253,7 @@ li {
 
 p {
   font-weight: 500;
-  font-size: clamp(var(--size16), 0.2vw + 1rem, var(--size20));
+  font-size: clamp(var(--size16), 0.05vw + 0.5rem, var(--size20));
 }
 
 ol {
