@@ -1,13 +1,28 @@
 import { textAnimation as slideText } from '@animations';
 import { springDown } from '@constants';
+import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components/macro';
+
+const getCookie = () => {
+  return document.cookie
+    .split(';')
+    .filter((cookie) => cookie.startsWith('animated'))
+    .join('');
+};
 
 const AnimatedWords = ({ children }) => {
   const words = children.split(' ');
 
+  const [ cookieExists, setCookieExists ] = useState(null);
+
+  useEffect(() => {
+    const cookieExists = !!getCookie().length;
+    setCookieExists(cookieExists);
+  }, [ cookieExists ]);
+
   return words.map((word, i) => {
     return (
-      <Span key={i} index={i + 1}>
+      <Span cookieExists={cookieExists} key={i} index={i + 1}>
         {word}&nbsp;
       </Span>
     );
@@ -42,7 +57,7 @@ const Span = styled.span.attrs(({ index }) => {
   --curve: ${springDown};
   display: inline-block;
   ${'' /* transform: translate(var(--distance), 0); */}
-  animation: ${(p) => textAnimation(p)};
+  animation: ${(p) => !p.cookieExists && textAnimation(p)};
 `;
 
 export default SlidingText;

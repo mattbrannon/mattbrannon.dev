@@ -18,13 +18,13 @@ export default function AppsPage({ montyHall, elbowRoom, letsMakeGifs }) {
       </TopRow>
 
       <Paragraph>
-        The modern web is all about components and for good reason. Component driven development
-        allows developers to focus on building smaller individual pieces of an app and then
-        gradually combine those pieces together. Kind of like building a complex model of the
-        Millenium Falcon out of Lego blocks. And when it comes to building a component based app
-        from the ground up, I can think of no other framework more suited to the task than{' '}
-        <strong>React. </strong> All the applications listed on this page were built with React on
-        the frontend.
+        The modern web is all about components and for good reason. Component driven
+        development allows developers to focus on building smaller individual pieces of an
+        app and then gradually combine those pieces together. Kind of like building a
+        complex model of the Millenium Falcon out of Lego blocks. And when it comes to
+        building a component based app from the ground up, I can think of no other
+        framework more suited to the task than <strong>React. </strong> All the
+        applications listed on this page were built with React on the frontend.
       </Paragraph>
 
       <AppList>
@@ -35,7 +35,9 @@ export default function AppsPage({ montyHall, elbowRoom, letsMakeGifs }) {
                 <A>Let's Make a Gif</A>
               </Link>
             </Heading>
-            <Small>A photo / video editing application. Built with React, Nodejs and FFMPEG</Small>
+            <Small>
+              A photo / video editing application. Built with React, Nodejs and FFMPEG
+            </Small>
           </HeadingWrapper>
 
           <AppImage sources={letsMakeGifs.main} href="/apps/lets-make-a-gif"></AppImage>
@@ -101,6 +103,7 @@ const Article = styled.article`
 
 const Paragraph = styled.p`
   font-size: clamp(var(--size16), 0.2vw + 1rem, var(--size20));
+  margin-bottom: 64px;
 `;
 
 const AppList = styled.div`
@@ -109,7 +112,7 @@ const AppList = styled.div`
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr));
-  gap: 32px;
+  ${'' /* gap: 32px; */}
 `;
 
 const ImageLinkWrapper = styled.div`

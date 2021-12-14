@@ -2,19 +2,35 @@ import { animations } from '@animations';
 import Picture from '@components/Image';
 import { springUp } from '@constants';
 import { getFluidSizes } from '@utils/helpers';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled, { css, ThemeContext } from 'styled-components/macro';
+
+const getCookie = () => {
+  return document.cookie
+    .split(';')
+    .filter((cookie) => cookie.startsWith('animated'))
+    .join('');
+};
 
 const HeroImage = ({ ...props }) => {
   const { hasPlayed, heroConfig } = useContext(ThemeContext);
-  console.log(heroConfig);
+  const [ cookieExists, setCookieExists ] = useState(null);
+
+  useEffect(() => {
+    const cookieExists = !!getCookie().length;
+    setCookieExists(cookieExists);
+  }, [ cookieExists ]);
 
   return (
     <ImageContainer {...props}>
       <ImageWrapper>
-        <OverlayWrapper>
-          <Image src="/images/hero/hero.png" alt="a very handsome man" sources={heroConfig.hero} />
-          {!hasPlayed ? <ImageOverylay /> : null}
+        <OverlayWrapper cookieExists={cookieExists}>
+          <Image
+            src="/images/hero/hero.png"
+            alt="a very handsome man"
+            sources={heroConfig.hero}
+          />
+          {!hasPlayed ? <ImageOverylay cookieExists={cookieExists} /> : null}
         </OverlayWrapper>
       </ImageWrapper>
     </ImageContainer>
@@ -92,18 +108,18 @@ export const OverlayWrapper = styled.div`
   top: 0;
   left: 0;
   opacity: 1;
-  clip-path: ${(p) => (p.theme.hasPlayed ? undefined : ' circle(0% at 50% 50%)')};
-  animation: ${(p) => expand(p)};
+  clip-path: ${(p) => (p.cookieExists ? undefined : ' circle(0% at 50% 50%)')};
+  animation: ${(p) => !p.cookieExists && expand(p)};
 `;
 
 export const ImageOverylay = styled.div`
   position: absolute;
-  background: var(--tealBg);
+  background: ${(p) => (p.cookieExists ? undefined : 'var(--tealBg)')};
   width: 100%;
   height: 100%;
   border-radius: var(--radius);
   clip-path: circle(100% at 50% 50%);
-  animation: ${(p) => fadeOut(p)};
+  animation: ${(p) => !p.cookieExists && fadeOut(p)};
 `;
 
 export default HeroImage;

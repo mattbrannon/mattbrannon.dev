@@ -26,7 +26,7 @@ export default function MobileNav() {
 
   useEffect(() => {
     if (isFirstPaint) {
-      console.log({ isFirstPaint });
+      // console.log({ isFirstPaint });
       context.setIsOpen(null);
       setIsFirstPaint(false);
     }
@@ -72,7 +72,13 @@ export default function MobileNav() {
         {labels.map((label, index) => {
           const href = index > 0 ? `/${labels[index].toLowerCase()}` : '/';
           return (
-            <NavLink tabIndex={0} href={href} key={index} i={index + 1} isOpen={context.isOpen}>
+            <NavLink
+              tabIndex={0}
+              href={href}
+              key={index}
+              i={index + 1}
+              isOpen={context.isOpen}
+            >
               {label}
             </NavLink>
           );
@@ -87,7 +93,7 @@ function NavLink({ children, ...props }) {
   const ref = useRef();
 
   useEffect(() => {
-    console.log({ isOpen: context.isOpen });
+    // console.log({ isOpen: context.isOpen });
     const frames = [
       { transform: 'translateX(-500px)', opacity: 0 },
       { transform: 'translateX(0)', opacity: 1 },
@@ -103,7 +109,7 @@ function NavLink({ children, ...props }) {
     const animation = ref.current.animate(frames, options);
     animation.pause();
 
-    console.log('both true?', context.clickedBurger && context.isOpen);
+    // console.log('both true?', context.clickedBurger && context.isOpen);
 
     if (context.isOpen !== null) {
       if (context.isOpen) {

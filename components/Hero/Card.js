@@ -1,20 +1,34 @@
 import { animations } from '@animations';
 import { useHasMounted } from '@hooks/useHasMounted';
 import { useWindowSize } from '@hooks/useWindowSize';
-import { useContext, useEffect, useRef, useState } from 'react';
-import styled, { css, keyframes, ThemeContext } from 'styled-components/macro';
+import { useEffect, useRef, useState } from 'react';
+import styled, { css, keyframes } from 'styled-components/macro';
 import Buttons from './Buttons';
 import HeroImage from './Image';
 import SlidingText from './SlidingText';
 
-export default function Hero(props) {
-  console.log('hero props', props);
-  const context = useContext(ThemeContext);
-  console.log(context);
+const getCookie = () => {
+  return document.cookie
+    .split(';')
+    .filter((cookie) => cookie.startsWith('animated'))
+    .join('');
+};
+
+export default function Hero() {
+  // console.log('hero props', props);
+  // const context = useContext(ThemeContext);
+  // console.log(context);
   const ref = useRef();
   const hasMounted = useHasMounted();
   const windowSize = useWindowSize();
   const [ cardDimensions, setCardDimensions ] = useState();
+
+  const [ cookieExists, setCookieExists ] = useState(null);
+
+  useEffect(() => {
+    const cookieExists = !!getCookie().length;
+    setCookieExists(cookieExists);
+  }, [ cookieExists ]);
 
   useEffect(() => {
     if (hasMounted) {
@@ -24,14 +38,20 @@ export default function Hero(props) {
   }, [ windowSize.width, windowSize.height, hasMounted ]);
 
   return (
-    <Container>
-      <CardWrapper ref={ref}>
+    <Container cookieExists={cookieExists}>
+      <CardWrapper cookieExists={cookieExists} ref={ref}>
         <div>
-          <HeroImage round width={160} src="/images/hero/hero1.png" alt="father of lies" />
-          <Heading>Matt Brannon</Heading>
+          <HeroImage
+            round
+            width={160}
+            src="/images/hero/hero1.png"
+            alt="father of lies"
+          />
+          <Heading cookieExists={cookieExists}>Matt Brannon</Heading>
           <SlidingText>
-            Hey there! My name is Matt. I'm a web developer and musician. I enjoy building solutions
-            to modern problems with code. Thanks for stopping by my little corner of the web.
+            Hey there! My name is Matt. I'm a web developer and musician. I enjoy building
+            solutions to modern problems with code. Thanks for stopping by my little
+            corner of the web.
           </SlidingText>
         </div>
         <div>
@@ -47,6 +67,7 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   isolation: isolate;
+  --cookieExists: ${(p) => p.cookieExists};
   --background-values: 223 35% 85%;
   --background-opacity: ${(p) => (p.hasPlayed ? 0 : 0.5)};
   --card-background: hsl(var(--background-values) / var(--background-opacity));
@@ -62,6 +83,9 @@ const Container = styled.div`
     8px 8px 16px hsl(var(--shadow-values) / var(--shadow-opacity)),
     9px 9px 18px hsl(var(--shadow-values) / var(--shadow-opacity));
 
+  --box-shadow: ${(p) => (p.cookieExists ? 'var(--card-shadow)' : undefined)};
+  --background: ${(p) => (p.cookieExists ? 'var(--card-background)' : undefined)};
+
   @media (prefers-color-scheme: dark) {
     --background-values: 223 5% 15%;
     --shadow-values: 210deg 5% 5%;
@@ -76,14 +100,14 @@ const Container = styled.div`
 
 const darkCard = (props) => {
   const animation = css`
-    ${animations.raiseCardDark} 1500ms ease 3300ms forwards;
+    ${animations.raiseCardDark} 1500ms ease 3300ms both;
   `;
   return props.theme.hasPlayed ? undefined : animation;
 };
 
 const lightCard = (props) => {
   const animation = css`
-    ${animations.raiseCardLight} 2000ms ease 3500ms forwards
+    ${animations.raiseCardLight} 2000ms ease 3500ms both
   `;
   return props.theme.hasPlayed ? undefined : animation;
 };
@@ -100,15 +124,20 @@ const CardWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+  box-shadow: var(--box-shadow);
+  background: var(--background);
+  ${
+    '' /* box-shadow: ${(p) => (p.theme.hasPlayed ? 'var(--card-shadow)' : undefined)};
+  background: ${(p) => (p.theme.hasPlayed ? 'var(--card-background)' : undefined)}; */
+  }
+  ${
+    '' /* transform: ${(p) => (p.theme.hasPlayed ? 'var(--hero-card-transform)' : undefined)}; */
+  }
 
-  box-shadow: ${(p) => (p.theme.hasPlayed ? 'var(--card-shadow)' : undefined)};
-  background: ${(p) => (p.theme.hasPlayed ? 'var(--card-background)' : undefined)};
-  ${'' /* transform: ${(p) => (p.theme.hasPlayed ? 'var(--hero-card-transform)' : undefined)}; */}
-
-  animation: ${(p) => lightCard(p)};
+  animation: ${(p) => !p.cookieExists && lightCard(p)};
 
   @media (prefers-color-scheme: dark) {
-    animation: ${(p) => darkCard(p)};
+    animation: ${(p) => !p.cookieExists && darkCard(p)};
     ${'' /* animation: ${animations.raiseCardDark} 1500ms ease 4000ms forwards; */}
   }
 
@@ -133,7 +162,9 @@ const fadeHeading = keyframes`
     ${
       '' /* font-variation-settings: "MONO" 0.5, "CASL" 1, 'wdth' 75, 'wght' 700, "slnt" -6, "CRSV" 0; */
     }
-    ${'' /* font-variation-settings: "MONO" 0, "CASL" 0, "wght" 655, "slnt" -3, "CRSV" 0; */}
+    ${
+      '' /* font-variation-settings: "MONO" 0, "CASL" 0, "wght" 655, "slnt" -3, "CRSV" 0; */
+    }
   }
 `;
 
@@ -162,7 +193,7 @@ const Heading = styled.h2`
 
   transform: translate(8px, 21px);
 
-  animation: ${(p) => animateHeading(p)};
+  animation: ${(p) => !p.cookieExists && animateHeading(p)};
 
   @media (max-width: 564px) {
     text-align: center;

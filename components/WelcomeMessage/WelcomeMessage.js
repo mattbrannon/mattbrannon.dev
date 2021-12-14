@@ -1,4 +1,4 @@
-import styled, { keyframes, css } from 'styled-components/macro';
+import styled, { css, keyframes } from 'styled-components/macro';
 
 const gradientAnimation = keyframes`
   0% {
@@ -28,17 +28,17 @@ const shadowAnimation = keyframes`
   }
 `;
 
-const animateGradient = (props) => {
-  const delay = props.theme.hasPlayed ? 100 : 4200;
+const animateGradient = () => {
+  // const delay = props.theme.cookieExists ? 100 : 4200;
   return css`
-    ${gradientAnimation} 600ms ease-in-out both ${delay}ms;
+    ${gradientAnimation} 600ms ease-in-out both 4200ms;
   `;
 };
 
-const animateShadow = (props) => {
-  const delay = props.theme.hasPlayed ? 200 : 4400;
+const animateShadow = () => {
+  // const delay = props.theme.cookieExists ? 200 : 4400;
   return css`
-    ${shadowAnimation} 500ms ease-in-out both ${delay}ms;
+    ${shadowAnimation} 500ms ease-in-out both 4200ms;
   `;
 };
 

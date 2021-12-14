@@ -19,7 +19,10 @@ export default function MontyHallPage({ config }) {
 
   return (
     <>
-      <DocumentHead title="Monty Hall Experiment" desc="Monty Hall Experiment discussion" />
+      <DocumentHead
+        title="Monty Hall Experiment"
+        desc="Monty Hall Experiment discussion"
+      />
 
       <AppTitle title="Monty Hall Experience" sources={sources} links={links}>
         A game inspired by the Monty Hall problem
@@ -35,22 +38,23 @@ export default function MontyHallPage({ config }) {
       <div>
         <SectionHeading>Motivation:</SectionHeading>
         <p>
-          Years ago when I first started learning javascript, one of the first things I made was a
-          little simulation of the monty hall problem. You'd tell it how many rounds to play and
-          whether to switch doors or stick with the original. Then, once it finished, it would tell
-          you the percentages of rounds won vs rounds lost. It was a cool program but it had no user
-          interface. Once I became a little more proficient at frontend development, I decided to go
-          ahead and create an actual game out of the simulation I'd programmed years ago.
+          Years ago when I first started learning javascript, one of the first things I
+          made was a little simulation of the monty hall problem. You'd tell it how many
+          rounds to play and whether to switch doors or stick with the original. Then,
+          once it finished, it would tell you the percentages of rounds won vs rounds
+          lost. It was a cool program but it had no user interface. Once I became a little
+          more proficient at frontend development, I decided to go ahead and create an
+          actual game out of the simulation I'd programmed years ago.
         </p>
       </div>
 
       <div>
         <SideNote>
-          If you played the little mini game above and got the wrong answer, don't feel bad. When
-          this question was first popularized, many people including mathematicians, physicists and
-          many others with advanced degrees actually got this wrong. And not only did they get it
-          wrong, a few of them were so sure they were right, they publicly berated others who
-          answered correctly.
+          If you played the little mini game above and got the wrong answer, don't feel
+          bad. When this question was first popularized, many people including
+          mathematicians, physicists and many others with advanced degrees actually got
+          this wrong. And not only did they get it wrong, a few of them were so sure they
+          were right, they publicly berated others who answered correctly.
         </SideNote>
       </div>
 
@@ -61,11 +65,11 @@ export default function MontyHallPage({ config }) {
       <div>
         <SectionHeading>Frontend: React</SectionHeading>
         <p>
-          One of the things that surprised me when making this game was the amount of state I needed
-          to keep track of. Which round are we on? Has the player chosen a door? Which door have
-          they chosen? What's their total score? These are just a few examples of the state we keep
-          track of during the game. Luckily, React makes keeping track of application state pretty
-          easy.
+          One of the things that surprised me when making this game was the amount of
+          state I needed to keep track of. Which round are we on? Has the player chosen a
+          door? Which door have they chosen? What's their total score? These are just a
+          few examples of the state we keep track of during the game. Luckily, React makes
+          keeping track of application state pretty easy.
         </p>
       </div>
 
@@ -96,7 +100,11 @@ function MiniGame() {
   const Results = forwardRef((props, ref) => {
     const { isCorrect } = props;
     const display =
-      isCorrect !== null ? (isCorrect ? "That's correct!" : "Sorry, that's incorrect") : isCorrect;
+      isCorrect !== null
+        ? isCorrect
+          ? "That's correct!"
+          : "Sorry, that's incorrect"
+        : isCorrect;
 
     return (
       <ResultContainer ref={ref}>
@@ -124,10 +132,10 @@ function MiniGame() {
   return (
     <div>
       <SideNote>
-        Suppose you're on a game show, and you're given the choice of three doors: Behind one door
-        is a car; behind the others, goats. You pick a door, say No. 1, and the host, who knows
-        what's behind the doors, opens another door, say No. 3, which has a goat. He then says to
-        you, "Do you want to pick door No. 2?"
+        Suppose you're on a game show, and you're given the choice of three doors: Behind
+        one door is a car; behind the others, goats. You pick a door, say No. 1, and the
+        host, who knows what's behind the doors, opens another door, say No. 3, which has
+        a goat. He then says to you, "Do you want to pick door No. 2?"
         <br />
         <br />
         <b> Is it to your advantage to switch your choice?</b>

@@ -13,8 +13,8 @@ export default function Contact() {
         <PageTitle>Contact Me</PageTitle>
       </TopRow>
       <p>
-        Wanna get in touch? Send me a message using the form below. All messages go staight to my
-        inbox.
+        Wanna get in touch? Send me a message using the form below. All messages go
+        staight to my inbox.
       </p>
       <ContactForm />
     </section>

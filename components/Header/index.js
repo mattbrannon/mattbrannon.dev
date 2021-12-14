@@ -56,13 +56,13 @@ export default function Header() {
   );
 }
 
-const MaxWidth = styled.div`
-  max-width: 80ch;
-  width: 100%;
-  margin: 0 auto;
-  background: orange;
-  padding: 0 100px;
-`;
+// const MaxWidth = styled.div`
+//   max-width: 80ch;
+//   width: 100%;
+//   margin: 0 auto;
+//   background: orange;
+//   padding: 0 100px;
+// `;
 
 const FullBleedWrapper = styled.div`
   height: var(--header-height);

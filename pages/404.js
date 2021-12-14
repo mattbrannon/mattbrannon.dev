@@ -6,7 +6,10 @@ import DocumentHead from '@components/Head';
 export default function Error404() {
   return (
     <>
-      <DocumentHead title="Whoops" desc="We must have taken a wrong turn at Albuquerque" />
+      <DocumentHead
+        title="Whoops"
+        desc="We must have taken a wrong turn at Albuquerque"
+      />
 
       <div style={{ display: 'grid', placeItems: 'center' }}>
         {/* <Creature /> */}

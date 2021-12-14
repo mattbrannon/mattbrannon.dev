@@ -1,5 +1,6 @@
 import { InvertedButton } from '@components/Button';
 import { springDown, springUp } from '@constants';
+import { useCookie } from '@hooks/useCookie';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -55,12 +56,41 @@ const closeGap = keyframes`
   }
 `;
 
+const getCookie = () => {
+  return document.cookie
+    .split(';')
+    .filter((cookie) => cookie.startsWith('animated'))
+    .join('');
+};
+
+// const frames = [
+//   { opacity: 0, transform: 'translate(0, 30px)' },
+//   { opacity: 1, transform: 'translate(0, 0)' },
+// ];
+
+// const timing = {
+//   duration: 1200,
+//   easing: 'ease',
+//   delay: 500,
+//   fill: 'both',
+// };
+
 export default function Buttons({ cardDimensions }) {
   const ref0 = useRef();
   const ref1 = useRef();
   const ref2 = useRef();
+  const ref4 = useRef();
+  const ref5 = useRef();
+  const ref6 = useRef();
   const gap = 60;
+  // const refs = [ ref0, ref1, ref2, ref4, ref5, ref6 ];
   const [ firstPaint, setFirstPaint ] = useState(false);
+  const [ cookieExists, setCookieExists ] = useState(null);
+  const hasCookie = useCookie();
+  // const [ started, setStarted ] = useState(null);
+  // const [ isFinished, setIsFinished ] = useState(false);
+
+  // const [ animationTiming, setAnimationTiming ] = useState(null);
 
   const [ position, setPosition ] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
@@ -78,44 +108,120 @@ export default function Buttons({ cardDimensions }) {
     return position;
   };
 
+  // const stopAnimations = (refs) => {
+  //   refs.forEach((ref) => {
+  //     if (hasCookie && ref.current) {
+  //       ref.current.getAnimations().forEach((animation) => {
+  //         animation.cancel();
+  //         // const timing = animation.effect.getComputedTiming();
+  //         // console.log(animation.effect);
+  //         // animation.currentTime = 100000;
+  //       });
+  //     }
+  //   });
+  // };
+
   useEffect(() => {
-    if (cardDimensions && !firstPaint) {
+    if (cardDimensions && !firstPaint && !cookieExists) {
       setFirstPaint(true);
       const bounds = ref1.current.getBoundingClientRect();
       const position = getPosition(cardDimensions, bounds);
       setPosition(position);
     }
-  }, [ cardDimensions, firstPaint ]);
+  }, [ cardDimensions, firstPaint, cookieExists ]);
+
+  useEffect(() => {
+    const cookieExists = !!getCookie().length;
+    setCookieExists(cookieExists);
+    // console.log(cookieExists);
+    [ ref0, ref1, ref2, ref4, ref5, ref6 ].forEach((ref) => {
+      if (hasCookie && ref.current) {
+        ref.current.addEventListener('animationstart', function () {
+          ref.current.getAnimations().forEach((animation) => {
+            // const timing = animation.effect.getComputedTiming();
+            animation.cancel();
+            // console.log(animation.effect);
+            animation.currentTime = 100000;
+          });
+        });
+      }
+    });
+  }, [ hasCookie ]);
 
   // useEffect(() => {
-  //   if (!context.hasPlayed) {
-  //     setTimeout(() => setGap(12), 3300);
-  //     setTimeout(() => context.setHasPlayed(true), 9000);
+  //   console.log('inside use effect');
+  //   if (!started) {
+  //     console.log('inside !started');
+  //     let animation;
+  //     if (hasCookie !== null) {
+  //       if (hasCookie) {
+  //         animation = ref.current.animate(frames, timing);
+  //       }
+  //       if (!hasCookie) {
+  //         animation = ref.current.animate(frames, { ...timing, delay: 3800 });
+  //       }
+  //       setStarted(true);
+  //       setAnimationTiming(animation.effect.getComputedTiming());
+  //       animation.finished.then(() => {
+  //         setIsFinished(true);
+  //       });
+  //     }
+
+  //     // setEffect(config);
   //   }
-  // }, [ context.hasPlayed ]);
+  // }, [ started, isFinished, hasCookie ]);
 
   return (
-    <ButtonGroup>
-      <ButtonContainer isSmall={isSmall} isMobile={isMobile} gap={gap} ref={ref0} index={0}>
+    <ButtonGroup cookieExists={cookieExists}>
+      <ButtonContainer
+        cookieExists={cookieExists}
+        isSmall={isSmall}
+        isMobile={isMobile}
+        gap={gap}
+        ref={ref0}
+        index={0}
+      >
         <Link passHref href="/contact">
-          <ButtonWrapper index={0}>
-            <Button index={0}>Contact Me</Button>
+          <ButtonWrapper cookieExists={cookieExists} index={0}>
+            <Button cookieExists={cookieExists} index={0}>
+              Contact Me
+            </Button>
           </ButtonWrapper>
         </Link>
       </ButtonContainer>
-      <CircleContainer
+      {!cookieExists ? (
+        <CircleContainer
+          isSmall={isSmall}
+          isMobile={isMobile}
+          position={position}
+          ref={ref1}
+          index={1}
+          cookieExists={cookieExists}
+        >
+          <Circle
+            cookieExists={cookieExists}
+            ref={ref5}
+            position={position}
+            isSmall={isSmall}
+            isMobile={isMobile}
+            gap={gap}
+          />
+        </CircleContainer>
+      ) : null}
+
+      <ButtonContainer
+        cookieExists={cookieExists}
         isSmall={isSmall}
         isMobile={isMobile}
-        position={position}
-        ref={ref1}
-        index={1}
+        gap={gap}
+        ref={ref2}
+        index={2}
       >
-        <Circle position={position} isSmall={isSmall} isMobile={isMobile} gap={gap} />
-      </CircleContainer>
-      <ButtonContainer isSmall={isSmall} isMobile={isMobile} gap={gap} ref={ref2} index={2}>
         <Link passHref href="/apps">
-          <ButtonWrapper index={2}>
-            <Button index={2}>See my work</Button>
+          <ButtonWrapper cookieExists={cookieExists} index={2}>
+            <Button cookieExists={cookieExists} index={2}>
+              See my work
+            </Button>
           </ButtonWrapper>
         </Link>
       </ButtonContainer>
@@ -124,6 +230,7 @@ export default function Buttons({ cardDimensions }) {
 }
 
 export const ButtonGroup = styled.div`
+  --cookieExists: ${(p) => p.cookieExists};
   display: flex;
   flex-wrap: wrap;
   white-space: nowrap;
@@ -167,11 +274,11 @@ const animateButtonContainer = (props) => {
   `;
 
   const animation = css`
-    ${moveCirclesHome} 1000ms  1000ms forwards;
+    ${moveCirclesHome} 1000ms 1000ms both;
   `;
 
   const mobileAnimation = css`
-    ${moveInFromSides} 1000ms cubic-bezier(.04,.25,.19,.95) 1000ms forwards;
+    ${moveInFromSides} 1000ms cubic-bezier(.04,.25,.19,.95) 1000ms both;
   `;
 
   return props.theme.hasPlayed ? undefined : props.isSmall ? mobileAnimation : animation;
@@ -189,17 +296,6 @@ const ButtonContainer = styled.div.attrs((props) => {
     : index === 0
     ? '-200%'
     : '200%';
-
-  // const xAxis = !isMobile
-  //   ? `calc(${a}% + ${c}px)`
-  //   : isMobile && !isSmall
-  //   ? `calc(${a}% + ${b}px)`
-  //   : isSmall
-  //   ? index === 0
-  //     ? '-150%'
-  //     : '150%'
-  //   : 0;
-
   const yAxis = !isSmall ? 0 : `calc(${a}% + ${b}px)`;
 
   return {
@@ -210,8 +306,9 @@ const ButtonContainer = styled.div.attrs((props) => {
   };
 })`
   position: relative;
-  transform: translate(var(--x), var(--y));
-  animation: ${(p) => animateButtonContainer(p)};
+  ${'' /* ${(p) => console.log('exists? ', p.cookieExists)} */}
+  transform: translate(0, 0);
+  animation: ${(p) => !p.cookieExists && animateButtonContainer(p)};
 `;
 
 const animateCircleContainer = (props) => {
@@ -247,7 +344,7 @@ const animateCircleContainer = (props) => {
 };
 
 const CircleContainer = styled.div`
-  animation: ${(p) => animateCircleContainer(p)};
+  animation: ${(p) => !p.cookieExists && animateCircleContainer(p)};
   @media (max-width: 564px) {
     position: relative;
   }
@@ -347,15 +444,18 @@ export const Button = styled(InvertedButton).attrs((props) => {
   };
 })`
   --fluid-size: calc(2vw + 0.5rem);
-  --button-font-size: clamp(var(--size12), 2vw + 0.5rem, var(--size20));
-  --button-font-size: clamp(0.25rem, 6.7vw - 1rem, var(--size24));
-  --button-font-size-fallback: max(var(--size12) min(var(--fluid-size), var(--size20)));
+  ${'' /* --button-font-size: clamp(var(--size12), 2vw + 0.5rem, var(--size20)); */}
+  ${'' /* --button-font-size: clamp(0.25rem, 6.7vw - 1rem, var(--size24)); */}
+  ${
+    '' /* --button-font-size-fallback: max(var(--size12) min(var(--fluid-size), var(--size20))); */
+  }
 
-  font-size: var(--button-font-size);
+  ${'' /* font-size: var(--button-font-size); */}
+  font-size: var(--size21);
   text-shadow: 1px 1px 2px black;
   color: white;
 
-  animation: ${(p) => animateButton(p)};
+  animation: ${(p) => !p.cookieExists && animateButton(p)};
 
   @supports not (font-size: var(--button-font-size)) {
     font-size: var(--button-font-size-fallback);

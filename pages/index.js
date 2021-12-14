@@ -1,40 +1,64 @@
 import AboutMePage from '@components/AboutMe';
+import ShadowGradient from '@components/GradientText';
 import DocumentHead from '@components/Head';
 import Hero from '@components/Hero';
 import Spacer from '@components/Spacer';
+import { useCookie } from '@hooks/useCookie';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { getImageConfig } from '@utils/images';
-import { useContext, useEffect, useState } from 'react';
-import styled, { css, keyframes, ThemeContext } from 'styled-components/macro';
+import { useContext, useEffect, useRef, useState } from 'react';
+import styled, { ThemeContext } from 'styled-components/macro';
+
+const frames = [
+  { opacity: 0, transform: 'translate(0, 30px)' },
+  { opacity: 1, transform: 'translate(0, 0)' },
+];
+
+const timing = {
+  duration: 1200,
+  easing: 'ease',
+  delay: 500,
+  fill: 'both',
+};
 
 export default function Home({ config }) {
   const context = useContext(ThemeContext);
   const isMobile = useMediaQuery({ maxWidth: 564 });
   const [ size, setSize ] = useState(32);
+  const [ isFinished, setIsFinished ] = useState(false);
+  // const [ isPlaying, setIsPlaying ] = useState(false);
+  // const [ hasPlayed, setHasPlayed ] = useState(false);
+  const [ started, setStarted ] = useState(null);
+  const [ animationTiming, setAnimationTiming ] = useState(null);
+  // const [ effect, setEffect ] = useState();
   context.heroConfig = config;
+  const ref = useRef();
+  const hasCookie = useCookie('animated');
+
+  useEffect(() => (isMobile ? setSize(48) : setSize(80)), [ isMobile ]);
 
   useEffect(() => {
-    const cookieExists = document.cookie
-      .split(';')
-      .some((item) => item.trim().startsWith('animated'));
-    if (!cookieExists) {
-      document.cookie = `animated=${Date.now()}`;
-      // 'animated=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; SameSite=None; Secure';
+    console.log('inside use effect');
+    if (!started) {
+      console.log('inside !started');
+      let animation;
+      if (hasCookie !== null) {
+        if (hasCookie) {
+          animation = ref.current.animate(frames, timing);
+        }
+        if (!hasCookie) {
+          animation = ref.current.animate(frames, { ...timing, delay: 3800 });
+        }
+        setStarted(true);
+        setAnimationTiming(animation.effect.getComputedTiming());
+        animation.finished.then(() => {
+          setIsFinished(true);
+        });
+      }
+
+      // setEffect(config);
     }
-  });
-
-  // useEffect(() => {
-  //   context.setIsPlaying(true);
-  //   setTimeout(() => {
-  //     context.setIsPlaying(false);
-  //     // context.setHasPlayed(true);
-  //   }, 7200);
-  // });
-
-  useEffect(() => {
-    const size = isMobile ? 48 : 80;
-    setSize(size);
-  }, [ isMobile ]);
+  }, [ started, isFinished, hasCookie ]);
 
   return (
     <Main>
@@ -43,7 +67,10 @@ export default function Home({ config }) {
         <Spacer axis="vertical" size={size} />
         <Hero config={config} />
 
-        <BottomGroup>
+        <BottomGroup ref={ref}>
+          <ShadowGradient animationTiming={animationTiming} isFinished={isFinished}>
+            About Me
+          </ShadowGradient>
           <AboutMePage />
         </BottomGroup>
       </Content>
@@ -63,31 +90,26 @@ const Content = styled.div`
   flex-direction: column;
 `;
 
-const bringUp = keyframes`
-  0% {
-    opacity: 0;
-    transform: translate(0, 100px);
-  }
+// const bringUp = keyframes`
+//   0% {
+//     opacity: 0;
+//     transform: translate(0, 100px);
+//   }
 
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-`;
+//   100% {
+//     opacity: 1;
+//     transform: translate(0, 0);
+//   }
+// `;
 
-const bringInText = (props) => {
-  const delay = props.theme.hasPlayed ? 0 : 3600;
-  const duration = props.theme.hasPlayed ? 0 : 1500;
-  return css`
-    ${bringUp} ${duration}ms ease-in-out ${delay}ms both;
-  `;
-};
+// const bringInText = (props) => {
+//   return css`
+//     ${bringUp} 1500ms ease-in-out 3600ms both;
+//   `;
+// };
 
 const BottomGroup = styled.div`
-  opacity: 0;
-
-  transform: translate(0, 100px);
-  animation: ${(p) => bringInText(p)};
+  margin-top: -32px;
 `;
 
 export async function getStaticProps() {
@@ -98,3 +120,29 @@ export async function getStaticProps() {
     },
   };
 }
+
+// useEffect(() => {
+//   console.log(context.cookieExists);
+//   if (!context.cookieExists && !isPlaying && !hasPlayed) {
+//     // const delay = context.cookieExists ? 300 : 4000;
+//     const timing = { duration: 1000, delay: 4000, easing: 'ease', fill: 'both' };
+//     const animation = ref.current.animate(frames, timing);
+//     setIsPlaying(true);
+//     animation.finished.then(() => {
+//       setIsFinished(true);
+//       setIsPlaying(false);
+//       setHasPlayed(true);
+//     });
+//   }
+//   else if (!isPlaying && !hasPlayed) {
+//     // const delay = context.cookieExists ? 300 : 4000;
+//     const timing = { duration: 1000, delay: 300, easing: 'ease', fill: 'both' };
+//     const animation = ref.current.animate(frames, timing);
+//     setIsPlaying(true);
+//     animation.finished.then(() => {
+//       setIsFinished(true);
+//       setIsPlaying(false);
+//       setHasPlayed(true);
+//     });
+//   }
+// }, [ context, isPlaying, hasPlayed ]);

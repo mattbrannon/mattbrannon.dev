@@ -12,7 +12,10 @@ export default function FancyLink({ children, ...props }) {
   }, [ props.activeLink, props.href ]);
 
   return (
-    <LinkWrapper onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
+    <LinkWrapper
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       <Link passHref {...props}>
         <A
           {...props}
@@ -37,8 +40,8 @@ const LinkWrapper = styled.span`
   position: relative;
   background: transparent;
   border: none;
-  font-family: Jost, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: Jost, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: 525;
 `;
 

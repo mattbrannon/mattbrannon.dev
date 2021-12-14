@@ -1,10 +1,11 @@
-import Header from '@components/Header';
 import Footer from '@components/Footer';
-import { useEffect, useState } from 'react';
-import { ThemeProvider } from 'styled-components';
+import Header from '@components/Header';
 import Layout from '@components/Layout';
+import { useCookie } from '@hooks/useCookie';
 import { usePathname } from '@hooks/usePathname';
 import { GlobalStyles } from '@styles/global';
+import { useEffect, useState } from 'react';
+import { ThemeProvider } from 'styled-components';
 // import { useHasMounted } from '../hooks/useHasMounted';
 
 // const getNames = (name) => {
@@ -22,7 +23,10 @@ export default function App({ Component, pageProps }) {
   const [ hasPlayed, setHasPlayed ] = useState(false);
   const pathname = usePathname();
   const [ currentPath, setCurrentPath ] = useState(pathname);
+  const cookieExists = useCookie('animated');
   // const hasMounted = useHasMounted();
+
+  // const [ cookieExists, setCookieExists ] = useState(null);
 
   const theme = {
     isOpen,
@@ -34,6 +38,7 @@ export default function App({ Component, pageProps }) {
     setIsPlaying,
     hasPlayed,
     setHasPlayed,
+    cookieExists,
   };
 
   useEffect(() => {
@@ -49,14 +54,12 @@ export default function App({ Component, pageProps }) {
   useEffect(() => {
     setCurrentPath(pathname);
     const rootStyle = document.querySelector('html').style;
-    const overflow = rootStyle.getPropertyValue('overflow');
-    const isHidden = overflow === 'hidden';
+    const isHidden = rootStyle.getPropertyValue('overflow') === 'hidden';
     const shouldBeHidden = !hasRun && pathname === '/';
-
-    if (!isHidden && shouldBeHidden) {
-      // rootStyle.setProperty('overflow', 'hidden');
-    }
-    else if (isHidden && !shouldBeHidden) {
+    // if (!isHidden && shouldBeHidden) {
+    //   rootStyle.setProperty('overflow', 'hidden');
+    // }
+    if (isHidden && !shouldBeHidden) {
       rootStyle.setProperty('overflow', 'auto');
     }
   }, [ pathname, hasRun ]);
