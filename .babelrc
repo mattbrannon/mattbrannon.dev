@@ -28,6 +28,6 @@
         "css": true
       }
     ],
-    ["transform-remove-console", { "exclude": ["error", "warn"] }]
+    ["transform-remove-console"]
   ]
 }
