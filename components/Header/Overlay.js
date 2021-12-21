@@ -28,7 +28,7 @@ const OverlayWrapper = styled.div`
   left: 0;
   top: 0;
 
-  height: 100%;
+  height: 120%;
   width: 100%;
 
   visibility: var(--visibility);

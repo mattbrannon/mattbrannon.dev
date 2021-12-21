@@ -1,4 +1,5 @@
 import VisuallyHidden from '@components/VisuallyHidden';
+import { breakpoints } from '@constants/';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import FocusTrap from 'focus-trap-react';
 import Link from 'next/link';
@@ -11,12 +12,14 @@ import { Overlay } from './Overlay';
 
 export default function Header() {
   const theme = useContext(ThemeContext);
-  const isMobile = useMediaQuery({ maxWidth: 564 });
-  const Navigation = isMobile ? HamburgerMenu : NavLinks;
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const [ clickedHome, setClickedHome ] = useState(false);
   const [ clickedBurger, setClickedBurger ] = useState(false);
 
   const isOpen = theme.isOpen;
+  // const showNothing = isOpen && isMobile;
+  const Navigation = isMobile ? HamburgerMenu : NavLinks;
+
   theme.clickedBurger = clickedBurger;
   theme.setClickedBurger = setClickedBurger;
 
@@ -41,20 +44,26 @@ export default function Header() {
             </Right>
           </MaxWidthWrapper>
 
-          <FocusTrap active={isOpen}>
-            <div tabIndex={-1}>
-              {isOpen && <HamburgerMenu />}
-              <Overlay />
-              {/* <Overlay clickedBurger={clickedBurger} /> */}
-              <MobileNav />
-            </div>
-          </FocusTrap>
+          <MobileMenu isOpen={isOpen} />
         </InnerWrapper>
       </FullBleedWrapper>
       {/* <Spacer axis="vertical" size={80} /> */}
     </>
   );
 }
+
+const MobileMenu = ({ isOpen }) => {
+  return (
+    <FocusTrap active={isOpen}>
+      <div tabIndex={-1}>
+        <HamburgerMenu />
+        <Overlay />
+        {/* <Overlay clickedBurger={clickedBurger} /> */}
+        <MobileNav />
+      </div>
+    </FocusTrap>
+  );
+};
 
 // const MaxWidth = styled.div`
 //   max-width: 80ch;
@@ -65,19 +74,18 @@ export default function Header() {
 // `;
 
 const FullBleedWrapper = styled.div`
-  height: var(--header-height);
-  ${'' /* background-color: var(--header-background); */}
-  background: red;
   grid-row: 1;
   grid-column: 1 / -1;
-  ${'' /* padding: 0 var(--breathing-room); */}
-  ${'' /* position: sticky; */}
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
   z-index: 3;
   isolation: isolate;
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    --header-height: 50px;
+  }
 `;
 
 const InnerWrapper = styled.div`
@@ -100,11 +108,15 @@ const MaxWidthWrapper = styled.div`
 const BrandLogoWrapper = styled.h1.attrs({
   tabIndex: 0,
 })`
-  font-size: var(--size28);
   color: white;
   color: var(--orange5);
   font-family: 'Open Sans', system-ui, sans-serif;
   font-variation-settings: 'wdth' 75, 'wght' 700;
+
+  font-size: var(--size21);
+  @media (min-width: ${breakpoints.mobile}px) {
+    font-size: var(--size28);
+  }
 
   transition: all 140ms ease-in-out;
 

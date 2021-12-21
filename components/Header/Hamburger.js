@@ -4,23 +4,30 @@ import { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 
 export default function HamburgerMenu() {
-  const { isOpen, setIsOpen, setClickedBurger } = useContext(ThemeContext);
+  const context = useContext(ThemeContext);
+  const { isOpen, setIsOpen, setClickedBurger } = context;
   const isMobile = useMediaQuery({ maxWidth: 564 });
+  // const [ showMobile, setShowMobile ] = useState(isMobile && isOpen);
   const action = isOpen ? 'close' : 'open';
   const handleClick = () => {
     const status = !isOpen;
     setIsOpen(status);
     setClickedBurger(true);
+    context.isOpen = isOpen;
     console.log('button clicked', action, status);
   };
+
+  // const handleClick = () => {
+  //   const shouldShow = !showMobile;
+  //   setShowMobile(shouldShow);
+  //   console.log(shouldShow);
+  // };
 
   if (isMobile || isOpen) {
     return (
       <MenuButton onClick={handleClick}>
         <VisualyHidden>{action + ' navigation menu'}</VisualyHidden>
-        <LineWrapper>
-          <BurgerLine isOpen={isOpen}></BurgerLine>
-        </LineWrapper>
+        <BurgerLine isOpen={isOpen}></BurgerLine>
       </MenuButton>
     );
   }
@@ -28,96 +35,88 @@ export default function HamburgerMenu() {
 }
 
 const MenuButton = styled.button`
-  /*
-  * For a fluid hamburger icon, uncomment the values below
-  * However, in hindsight, this probably isn't a good idea.
-  * At least not with these current values. The growth / shrink
-  * rate is such that resizing the browswer window causes a
-  * herky jerky effect. TLDR - Bad user experience
-    TODO - Experiment with values that scale more gradually
-    * Aspect ratio = 4:3
-
-    --width: clamp(32px, 4vw, 48px);
-    --height: clamp(24px, 3vw, 36px);
-  */
-
-  ${'' /* // * parent dimensions */}
-  --width: 32px;
-  --height: 24px;
-
-  ${'' /* // * child dimensions */}
-  --thickness: calc((var(--height) - var(--width)) * -0.5);
-
-  ${'' /* // * child placement */}
-  --beforeLineTop: calc((var(--height) - var(--thickness)) * -0.5);
-  --afterLineBottom: calc((var(--height) - var(--thickness)) * -0.5);
+  --burger-width: var(--size32);
+  --burger-height: var(--size24);
+  --thickness: calc((var(--burger-height) - var(--burger-width)) * -0.5);
+  --offset: calc((var(--burger-height) - var(--thickness)) * -0.5);
+  --top: calc((var(--thickness) + var(--header-height) - var(--burger-height)) * 0.5);
+  --zIndex: ${(p) => (p.isOpen ? -1 : 99)};
 
   display: grid;
   align-items: center;
 
   position: absolute;
-  right: 16px;
-  top: calc((var(--thickness) + 80px - var(--height)) / 2);
-  width: var(--width);
-  height: var(--height);
-  min-height: 0vh;
-
-  /* top: calc((80px - var(--height)) / 2); */
+  right: 32px;
+  top: var(--top);
+  width: var(--burger-width);
+  height: var(--burger-height);
 
   border: none;
   background: none;
-
-  ${'' /* //! Has no effect when header is positioned fixed
-  // * solution - move element outside it's container */}
-  z-index: 99;
+  z-index: 9999;
 
   &:focus {
     outline: 3px solid deepskyblue;
     outline-offset: 4px;
+    outline: none;
+  }
+
+  @media (max-width: 320px) {
+    --burger-width: var(--size24);
+    --burger-height: var(--size18);
   }
 `;
 
-const LineWrapper = styled.div`
-  position: relative;
-  /* height: 100%; */
-`;
+const BurgerLine = styled.div.attrs((props) => {
+  const rotate = props.isOpen ? 45 : 0;
+  return {
+    style: {
+      '--before': rotate * -1 + 'deg',
+      '--after': rotate + 'deg',
+      '--top': props.isOpen ? 0 : 'var(--offset)',
+      '--background': props.isOpen ? 'transparent' : 'white',
+      '--y': props.isOpen ? '-200%' : '-50%',
+      '--delay': props.isOpen ? '100ms' : '200ms',
+      '--radius': props.isOpen ? '12px' : '0px',
+    },
+  };
+})`
+  width: var(--burger-width);
+  height: var(--thickness);
+  background: var(--background);
 
-const BurgerLine = styled.div`
   position: absolute;
+  transform: translate(0, -50%);
   top: 50%;
   left: 0;
   right: 0;
-  transform: translatey(-50%);
 
-  width: var(--width);
-  height: var(--thickness);
+  border-radius: var(--radius);
 
-  background: ${(p) => (p.isOpen ? 'transparent' : 'white')};
+  transition: background var(--delay) linear;
 
   &::before,
   &::after {
     content: '';
-
     display: block;
     position: absolute;
-    transform-origin: center center;
+    transform-origin: center;
 
-    width: var(--width);
+    width: var(--burger-width);
     height: var(--thickness);
 
+    border-radius: var(--radius);
     background: white;
     transition: all 0.2s ease;
   }
 
   &::before {
-    top: ${(p) => (p.isOpen ? 0 : 'var(--beforeLineTop)')};
-    transform: ${(p) => p.isOpen && 'rotate(-45deg)'};
+    top: var(--top);
+    transform: rotate(var(--before));
   }
 
   &::after {
-    bottom: ${(p) => (p.isOpen ? 0 : 'var(--afterLineBottom)')};
-    transform: ${(p) => p.isOpen && 'rotate(45deg)'};
+    bottom: var(--top);
+    transform: rotate(var(--after));
   }
-
-  transition: all 0.2s ease;
 `;
