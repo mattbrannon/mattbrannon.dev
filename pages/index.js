@@ -2,7 +2,7 @@ import AboutMePage from '@components/AboutMe';
 import ShadowGradient from '@components/GradientText';
 import DocumentHead from '@components/Head';
 import Hero from '@components/Hero';
-import Spacer from '@components/Spacer';
+import { breakpoints } from '@constants/';
 import { useCookie } from '@hooks/useCookie';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { getImageConfig } from '@utils/images';
@@ -17,63 +17,44 @@ const frames = [
 const timing = {
   duration: 1200,
   easing: 'ease',
-  delay: 500,
+  delay: -100,
   fill: 'both',
 };
 
 export default function Home({ config }) {
   const context = useContext(ThemeContext);
-  const isMobile = useMediaQuery({ maxWidth: 564 });
-  const [ size, setSize ] = useState(32);
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const [ isFinished, setIsFinished ] = useState(false);
-  // const [ isPlaying, setIsPlaying ] = useState(false);
-  // const [ hasPlayed, setHasPlayed ] = useState(false);
   const [ started, setStarted ] = useState(null);
   const [ animationTiming, setAnimationTiming ] = useState(null);
-  // const [ effect, setEffect ] = useState();
   context.heroConfig = config;
   const ref = useRef();
-  const hasCookie = useCookie('animated');
-
-  useEffect(() => (isMobile ? setSize(48) : setSize(80)), [ isMobile ]);
+  const hasCookie = useCookie('navigated')[0];
 
   useEffect(() => {
-    console.log('inside use effect');
-    if (!started) {
-      console.log('inside !started');
-      let animation;
-      if (hasCookie !== null) {
-        if (hasCookie) {
-          animation = ref.current.animate(frames, timing);
-        }
-        if (!hasCookie) {
-          animation = ref.current.animate(frames, { ...timing, delay: 3800 });
-        }
-        setStarted(true);
-        setAnimationTiming(animation.effect.getComputedTiming());
-        animation.finished.then(() => {
-          setIsFinished(true);
-        });
-      }
-
-      // setEffect(config);
+    if (!started && hasCookie !== null && ref.current) {
+      setStarted(true);
+      const options = hasCookie || isMobile ? timing : { ...timing, delay: 3800 };
+      const animation = ref.current.animate(frames, options);
+      const animationTiming = animation.effect.getComputedTiming();
+      setAnimationTiming(animationTiming);
+      animation.finished.then(() => {
+        setIsFinished(true);
+      });
     }
-  }, [ started, isFinished, hasCookie ]);
+  }, [ started, hasCookie, isMobile ]);
 
   return (
     <Main>
       <DocumentHead title="Matt Brannon" desc="A brief introduction" />
-      <Content>
-        <Spacer axis="vertical" size={size} />
-        <Hero config={config} />
+      <Hero config={config} />
 
-        <BottomGroup ref={ref}>
-          <ShadowGradient animationTiming={animationTiming} isFinished={isFinished}>
-            About Me
-          </ShadowGradient>
-          <AboutMePage />
-        </BottomGroup>
-      </Content>
+      <BottomGroup ref={ref} hasCookie={hasCookie}>
+        <ShadowGradient isFinished={isFinished} animationTiming={animationTiming}>
+          About Me
+        </ShadowGradient>
+        <AboutMePage />
+      </BottomGroup>
     </Main>
   );
 }
@@ -82,34 +63,8 @@ const Main = styled.div`
   height: 100%;
 `;
 
-const Content = styled.div`
-  display: flex;
-  height: 100%;
-
-  justify-content: center;
-  flex-direction: column;
-`;
-
-// const bringUp = keyframes`
-//   0% {
-//     opacity: 0;
-//     transform: translate(0, 100px);
-//   }
-
-//   100% {
-//     opacity: 1;
-//     transform: translate(0, 0);
-//   }
-// `;
-
-// const bringInText = (props) => {
-//   return css`
-//     ${bringUp} 1500ms ease-in-out 3600ms both;
-//   `;
-// };
-
 const BottomGroup = styled.div`
-  margin-top: -32px;
+  opacity: 0;
 `;
 
 export async function getStaticProps() {
@@ -120,29 +75,3 @@ export async function getStaticProps() {
     },
   };
 }
-
-// useEffect(() => {
-//   console.log(context.cookieExists);
-//   if (!context.cookieExists && !isPlaying && !hasPlayed) {
-//     // const delay = context.cookieExists ? 300 : 4000;
-//     const timing = { duration: 1000, delay: 4000, easing: 'ease', fill: 'both' };
-//     const animation = ref.current.animate(frames, timing);
-//     setIsPlaying(true);
-//     animation.finished.then(() => {
-//       setIsFinished(true);
-//       setIsPlaying(false);
-//       setHasPlayed(true);
-//     });
-//   }
-//   else if (!isPlaying && !hasPlayed) {
-//     // const delay = context.cookieExists ? 300 : 4000;
-//     const timing = { duration: 1000, delay: 300, easing: 'ease', fill: 'both' };
-//     const animation = ref.current.animate(frames, timing);
-//     setIsPlaying(true);
-//     animation.finished.then(() => {
-//       setIsFinished(true);
-//       setIsPlaying(false);
-//       setHasPlayed(true);
-//     });
-//   }
-// }, [ context, isPlaying, hasPlayed ]);
