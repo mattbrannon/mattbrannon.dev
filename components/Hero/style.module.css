@@ -1,11 +1,11 @@
 .left,
-.center {
+.center,
+.mobile {
   border-radius: 50%;
   object-fit: cover;
   object-position: -81px;
   display: block;
   width: 100%;
-  transition: object-position 1000ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
 .left {
@@ -14,4 +14,8 @@
 
 .center {
   object-position: -26px;
+}
+
+.mobile {
+  object-position: -15px;
 }

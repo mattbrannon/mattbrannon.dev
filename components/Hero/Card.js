@@ -1,64 +1,162 @@
 import { animations } from '@animations';
+import Spacer from '@components/Spacer';
+import { breakpoints } from '@constants/';
+import { useCookie } from '@hooks/useCookie';
 import { useHasMounted } from '@hooks/useHasMounted';
-import { useWindowSize } from '@hooks/useWindowSize';
-import { useEffect, useRef, useState } from 'react';
-import styled, { css, keyframes } from 'styled-components/macro';
-import Buttons from './Buttons';
-import HeroImage from './Image';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { LayoutGroup, motion } from 'framer-motion';
+import { useContext, useEffect, useRef, useState } from 'react';
+import styled, { css, keyframes, ThemeContext } from 'styled-components/macro';
+import { MotionButton } from './MotionButtons';
+import HeroImage from './MotionImage';
 import SlidingText from './SlidingText';
+import s from './style.module.css';
 
-const getCookie = () => {
-  return document.cookie
-    .split(';')
-    .filter((cookie) => cookie.startsWith('animated'))
-    .join('');
+const getPosition = (cardDimensions, bounds) => {
+  const position = {
+    x: bounds.x - cardDimensions.x,
+    y: bounds.y - cardDimensions.y,
+    width: bounds.width,
+    height: bounds.height,
+  };
+  return position;
 };
 
 export default function Hero() {
-  // console.log('hero props', props);
-  // const context = useContext(ThemeContext);
-  // console.log(context);
-  const ref = useRef();
+  const card = useRef();
+  const circle = useRef();
   const hasMounted = useHasMounted();
-  const windowSize = useWindowSize();
-  const [ cardDimensions, setCardDimensions ] = useState();
+  const hasCookie = useCookie('navigated')[0];
+  // const isMobile = useMediaQuery({ maxWidth: 480 });
+  const [ stopAt, setStopAt ] = useState(0);
+  // const size = 40;
+  const theme = useContext(ThemeContext);
+  const [ isComplete, setIsComplete ] = useState(false);
+  const { mobile } = breakpoints;
+  const isMobile = useMediaQuery({ maxWidth: mobile });
+  const isSmall = useMediaQuery({ maxWidth: 320 });
 
-  const [ cookieExists, setCookieExists ] = useState(null);
+  const [ showImage, setShowImage ] = useState(null);
+
+  const [ spacerValues, setSpacerValues ] = useState({ axis: 'horizontal', size: 32 });
+
+  const shouldLoadStatic = hasCookie || isSmall || isMobile;
+
+  // const circleSize = 32;
+
+  // const buttons = variants.buttons();
 
   useEffect(() => {
-    const cookieExists = !!getCookie().length;
-    setCookieExists(cookieExists);
-  }, [ cookieExists ]);
+    const axis = isSmall ? 'vertical' : 'horizontal';
+    const size = axis === 'vertical' ? 16 : 32;
+    setSpacerValues({ axis, size });
+  }, [ isSmall ]);
 
   useEffect(() => {
-    if (hasMounted) {
-      const rect = ref.current.getBoundingClientRect();
-      setCardDimensions(rect);
+    if (hasMounted && card.current) {
+      setShowImage(false);
+      // alert(window.innerWidth);
+      const cardRect = card.current.getBoundingClientRect();
+      const circleRect = circle.current.getBoundingClientRect();
+      const position = getPosition(cardRect, circleRect);
+      const x = position ? position.x - (120 - position.width) : null;
+      setStopAt(x * -1);
     }
-  }, [ windowSize.width, windowSize.height, hasMounted ]);
+  }, [ hasMounted ]);
+
+  const variants = {
+    initial: { clipPath: 'circle(0%)', x: 0 },
+    animate: {
+      clipPath: 'circle(100%)',
+      y: -100,
+      x: `${stopAt}px`,
+      scale: 0,
+      transition: {
+        clipPath: {
+          delay: 0,
+          duration: 0.5,
+        },
+        y: {
+          delay: 2.25,
+          duration: 0.75,
+          type: 'spring',
+          bounce: 5,
+          damping: 10,
+        },
+        x: {
+          delay: 3.25,
+          duration: 0.75,
+          ease: [ 0.52, -0.51, 1, -0.09 ],
+        },
+        scale: {
+          duration: 0.5,
+          delay: 4,
+        },
+      },
+    },
+  };
+
+  const handleUpdate = (latest) => {
+    const diff = Math.abs(stopAt) - Math.abs(latest.x);
+    if (diff <= 50 && !showImage && showImage !== null) {
+      setShowImage(true);
+    }
+  };
+  const handleAnimationComplete = () => {
+    setIsComplete(true);
+    theme.setHasRun(true);
+  };
+
+  const amount = 108;
 
   return (
-    <Container cookieExists={cookieExists}>
-      <CardWrapper cookieExists={cookieExists} ref={ref}>
-        <div>
-          <HeroImage
-            round
-            width={160}
-            src="/images/hero/hero1.png"
-            alt="father of lies"
-          />
-          <Heading cookieExists={cookieExists}>Matt Brannon</Heading>
-          <SlidingText>
-            Hey there! My name is Matt. I'm a web developer and musician. I enjoy building
-            solutions to modern problems with code. Thanks for stopping by my little
-            corner of the web.
-          </SlidingText>
-        </div>
-        <div>
-          <Buttons cardDimensions={cardDimensions} />
-        </div>
-      </CardWrapper>
-    </Container>
+    <LayoutGroup>
+      <Container>
+        <CardWrapper hasCookie={hasCookie} ref={card}>
+          <TopSection>
+            <HeroImage
+              width={isMobile ? 100 : 160}
+              height={isMobile ? 100 : 160}
+              src="/images/hero/hero.png"
+              alt="photo of me"
+              className={isMobile ? s.mobile : s.center}
+              priority={true}
+              showImage={showImage}
+            />
+            {!isSmall && !isMobile && (
+              <Heading hasCookie={hasCookie}>Matt Brannon</Heading>
+            )}
+            {!isSmall && !isMobile && (
+              <SlidingText>
+                Hey there! My name is Matt. I'm a web developer and musician. I enjoy
+                building solutions to modern problems with code. Thanks for stopping by my
+                little corner of the web.
+              </SlidingText>
+            )}
+          </TopSection>
+          <ButtonWrapper>
+            <MotionButton x={amount} isComplete={isComplete} showImage={showImage} left>
+              Contact me
+            </MotionButton>
+            {!shouldLoadStatic ? (
+              <Circle
+                variants={variants}
+                initial={variants.initial}
+                animate={variants.animate}
+                ref={circle}
+                onUpdate={handleUpdate}
+                onAnimationComplete={handleAnimationComplete}
+              />
+            ) : (
+              !isMobile && <Spacer axis={spacerValues.axis} size={spacerValues.size} />
+            )}
+            <MotionButton x={amount} isComplete={isComplete} showImage={showImage} right>
+              View my work
+            </MotionButton>
+          </ButtonWrapper>
+        </CardWrapper>
+      </Container>
+    </LayoutGroup>
   );
 }
 
@@ -66,8 +164,8 @@ const Container = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
+
   isolation: isolate;
-  --cookieExists: ${(p) => p.cookieExists};
   --background-values: 223 35% 85%;
   --background-opacity: ${(p) => (p.hasPlayed ? 0 : 0.5)};
   --card-background: hsl(var(--background-values) / var(--background-opacity));
@@ -83,8 +181,8 @@ const Container = styled.div`
     8px 8px 16px hsl(var(--shadow-values) / var(--shadow-opacity)),
     9px 9px 18px hsl(var(--shadow-values) / var(--shadow-opacity));
 
-  --box-shadow: ${(p) => (p.cookieExists ? 'var(--card-shadow)' : undefined)};
-  --background: ${(p) => (p.cookieExists ? 'var(--card-background)' : undefined)};
+  --box-shadow: ${(p) => (p.hasCookie ? 'var(--card-shadow)' : undefined)};
+  --background: ${(p) => (p.hasCookie ? 'var(--card-background)' : undefined)};
 
   @media (prefers-color-scheme: dark) {
     --background-values: 223 5% 15%;
@@ -96,52 +194,51 @@ const Container = styled.div`
       5px 5px 10px hsl(var(--shadow-values) / var(--shadow-opacity)),
       6px 6px 12px hsl(var(--shadow-values) / var(--shadow-opacity));
   }
+
+  @media (min-width: ${breakpoints.mobile}px) {
+    margin-top: 96px;
+    margin-bottom: -96px;
+    padding-bottom: 96px;
+  }
 `;
 
 const darkCard = (props) => {
+  const delay = props.hasCookie ? 300 : 3300;
+
   const animation = css`
-    ${animations.raiseCardDark} 1500ms ease 3300ms both;
+    ${animations.raiseCardDark} 1500ms ease ${delay}ms both;
   `;
-  return props.theme.hasPlayed ? undefined : animation;
+  return animation;
 };
 
 const lightCard = (props) => {
+  const delay = props.hasCookie ? 500 : 3500;
+
   const animation = css`
-    ${animations.raiseCardLight} 2000ms ease 3500ms both
+    ${animations.raiseCardLight} 2000ms ease ${delay}ms both
   `;
-  return props.theme.hasPlayed ? undefined : animation;
+  return animation;
 };
 
 const CardWrapper = styled.div`
   width: 100%;
   height: 100%;
   max-width: 655px;
-  padding: 16px;
+  padding: 24px;
   margin: auto;
   overflow: hidden;
-  ${'' /* --shadow-color: 208 10% 35%; */}
   border-radius: 12px;
 
   display: flex;
   flex-direction: column;
-  box-shadow: var(--box-shadow);
-  background: var(--background);
-  ${
-    '' /* box-shadow: ${(p) => (p.theme.hasPlayed ? 'var(--card-shadow)' : undefined)};
-  background: ${(p) => (p.theme.hasPlayed ? 'var(--card-background)' : undefined)}; */
-  }
-  ${
-    '' /* transform: ${(p) => (p.theme.hasPlayed ? 'var(--hero-card-transform)' : undefined)}; */
-  }
 
-  animation: ${(p) => !p.cookieExists && lightCard(p)};
-
-  @media (prefers-color-scheme: dark) {
-    animation: ${(p) => !p.cookieExists && darkCard(p)};
-    ${'' /* animation: ${animations.raiseCardDark} 1500ms ease 4000ms forwards; */}
-  }
-
-  @media (max-width: 555px) {
+  @media (min-width: ${breakpoints.mobile}px) {
+    box-shadow: var(--box-shadow);
+    background: var(--background);
+    animation: ${(p) => lightCard(p)};
+    @media (prefers-color-scheme: dark) {
+      animation: ${(p) => darkCard(p)};
+    }
   }
 `;
 
@@ -150,29 +247,20 @@ const fadeHeading = keyframes`
     color: var(--accent-color);
     opacity: 0;
     font-variation-settings: 'wdth' 100, 'wght' 300;
-    ${
-      '' /* font-variation-settings: "MONO" 0.5, "CASL" 1, 'wdth' 75, "wght" 300, "slnt" -6, "CRSV" 0; */
-    }
   }
   to {
     color: var(--heading-color);
     opacity: 1;
     font-variation-settings: 'wdth' 75, 'wght' 700;
-
-    ${
-      '' /* font-variation-settings: "MONO" 0.5, "CASL" 1, 'wdth' 75, 'wght' 700, "slnt" -6, "CRSV" 0; */
-    }
-    ${
-      '' /* font-variation-settings: "MONO" 0, "CASL" 0, "wght" 655, "slnt" -3, "CRSV" 0; */
-    }
   }
 `;
 
 const animateHeading = (props) => {
+  const delay = props.hasCookie ? 400 : 3400;
   const animation = css`
-    ${fadeHeading} 600ms ease-in 3400ms both;
+    ${fadeHeading} 600ms ease-in ${delay}ms both;
   `;
-  return props.theme.hasPlayed ? undefined : animation;
+  return animation;
 };
 
 const Heading = styled.h2`
@@ -193,14 +281,114 @@ const Heading = styled.h2`
 
   transform: translate(8px, 21px);
 
-  animation: ${(p) => !p.cookieExists && animateHeading(p)};
+  animation: ${(p) => animateHeading(p)};
 
-  @media (max-width: 564px) {
+  @media (max-width: ${breakpoints.mobile}px) {
     text-align: center;
   }
 
   @media (prefers-color-scheme: dark) {
     --heading-color: hsl(191 50% 65%);
     --accent-color: var(--blue-main-light);
+  }
+`;
+
+// const ButtonWrapper = styled(motion.div).attrs(({ isComplete }) => {
+//   const gap = isComplete ? 24 : 0;
+//   const size = isComplete ? 0 : 32;
+//   return {
+//     style: {
+//       gap: gap + 'px',
+//       '--circle-size': size + 'px',
+//     },
+//   };
+// })`
+//   ${'' /* --circle-size: 32px; */}
+//   --half-circle: calc(var(--circle-size) * 0.5);
+//   --left-x: calc(50% + var(--half-circle));
+//   --right-x: calc(-50% - var(--half-circle));
+
+//   --left-translate: var(--left-x), 0;
+//   --right-translate: var(--right-x), 0;
+
+//   display: flex;
+//   ${'' /* gap: ${(p) => (p.isComplete ? '24px' : '8px')}; */}
+//   flex-wrap: wrap;
+//   align-items: center;
+
+//   transition: all 1.2s;
+//   justify-content: flex-end;
+//   ${'' /* @media (min-width: ${breakpoints.mobile}px) {
+//     justify-content: flex-end;
+//   } */}
+// `;
+
+const ButtonWrapper = styled(motion.div).attrs((props) => {
+  console.info(props);
+  const gap = props.theme.hasRun ? 8 : 0;
+  const size = props.theme.hasRun ? 0 : 40;
+  const marginRight = props.theme.hasRun ? 8 : 0;
+  return {
+    style: {
+      '--gap': gap + 'px',
+      '--circle-size': size + 'px',
+      '--margin-right': marginRight + 'px',
+    },
+  };
+})`
+  --half-circle: calc(var(--circle-size) * 0.5);
+  --left-x: calc(50% + var(--half-circle));
+  --right-x: calc(-50% - var(--half-circle));
+
+  --left-translate: var(--left-x), 0;
+  --right-translate: var(--right-x), 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--gap);
+
+  transition: all 1s;
+  justify-content: center;
+
+  gap: 8px;
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    max-width: 200px;
+    margin: 16px auto;
+  }
+
+  @media (min-width: ${breakpoints.mobile}px) {
+    justify-content: flex-end;
+    margin-right: var(--margin-right);
+  }
+`;
+
+const Circle = styled(motion.div)`
+  ${'' /* height: var(--circle-size); */}
+  width:32px;
+  height: 32px;
+  background: var(--tealBg);
+  border-radius: 50%;
+`;
+
+// const WrapButton = ({ isComplete, ...props }) => {
+//   const dumbProps = Object.assign({}, props);
+//   delete dumbProps.isComplete;
+//   return (
+//     <ButtonWrapper isComplete={isComplete} {...dumbProps}>
+//       {props.children}
+//     </ButtonWrapper>
+//   );
+// };
+
+// // eslint-disable-next-line react/display-name
+// const WithHOC = (Component) => (props) => {
+//   return <Component {...props}>{props.children}</Component>;
+// };
+
+const TopSection = styled.div`
+  @media (max-width: ${breakpoints.mobile}px) {
+    margin: 0 auto;
   }
 `;
