@@ -8,40 +8,49 @@ const getCookie = (name) => {
     .join('');
 };
 
-export const useCookie = (cookie = 'animated') => {
+const hasCookie = (name) => {
+  return !!getCookie(name).length;
+};
+
+export const useCookie = (cookie) => {
+  if (!cookie) {
+    throw new Error('You need to pass in the name of the cookie for useCookie to work');
+  }
+
   const [ exists, setExists ] = useState(null);
   const hasMounted = useHasMounted();
 
   useEffect(() => {
     if (hasMounted) {
-      const doesExist = !!getCookie(cookie).length;
-      setExists(doesExist);
+      setExists(hasCookie(cookie));
     }
   }, [ hasMounted, exists, cookie ]);
 
-  useEffect(() => {
-    const byEndTimes = (nodeA, nodeB) => {
-      return (
-        nodeA.effect.getComputedTiming().endTime -
-        nodeB.effect.getComputedTiming().endTime
-      );
-    };
+  const setCookie = (name = cookie) => {
+    document.cookie = `${name}=true; expires=Fri, 31 Dec 9999 23:59:59 GMT;`;
+  };
 
-    const setCookie = () => {
-      return (document.cookie = 'animated=true; expires=Fri, 31 Dec 9999 23:59:59 GMT;');
-    };
+  // useEffect(() => {
+  //   const byEndTimes = (nodeA, nodeB) => {
+  //     return (
+  //       nodeA.effect.getComputedTiming().endTime -
+  //       nodeB.effect.getComputedTiming().endTime
+  //     );
+  //   };
 
-    if (!exists && exists !== null) {
-      const longest = document
-        .getAnimations()
-        .sort(byEndTimes)
-        .pop();
+  //   if (!exists && exists !== null) {
+  //     const longest = document
+  //       .getAnimations()
+  //       .sort(byEndTimes)
+  //       .pop();
 
-      longest.finished.then(setCookie).then(() => {
-        setExists(!!getCookie('animated').length);
-      });
-    }
-  }, [ exists ]);
+  //     longest.finished
+  //       .then(() => setCookie(cookie))
+  //       .then(() => {
+  //         setExists(!!getCookie('animated').length);
+  //       });
+  //   }
+  // }, [ cookie, exists ]);
 
-  return exists;
+  return [ exists, setCookie ];
 };
