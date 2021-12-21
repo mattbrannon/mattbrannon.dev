@@ -24,7 +24,9 @@ export const fonts = {
 };
 
 export const breakpoints = {
-  mobile: 564,
+  smallest: 240,
+  small: 360,
+  mobile: 480,
   tablet: 768,
   laptop: 992,
   desktop: 1200,

@@ -1,4 +1,5 @@
 import VisualyHidden from '@components/VisuallyHidden';
+import { breakpoints } from '@constants/';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
@@ -6,7 +7,7 @@ import styled, { ThemeContext } from 'styled-components/macro';
 export default function HamburgerMenu() {
   const context = useContext(ThemeContext);
   const { isOpen, setIsOpen, setClickedBurger } = context;
-  const isMobile = useMediaQuery({ maxWidth: 564 });
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   // const [ showMobile, setShowMobile ] = useState(isMobile && isOpen);
   const action = isOpen ? 'close' : 'open';
   const handleClick = () => {
@@ -61,7 +62,7 @@ const MenuButton = styled.button`
     outline: none;
   }
 
-  @media (max-width: 320px) {
+  @media (max-width: ${breakpoints.mobile}px) {
     --burger-width: var(--size24);
     --burger-height: var(--size18);
   }
