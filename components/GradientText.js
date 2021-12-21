@@ -1,44 +1,11 @@
 import { getTextShadow } from '@utils/helpers';
-import { forwardRef, useEffect, useRef } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components/macro';
-
-// const recursiveAnimation = keyframes`
-//   from {
-//     opacity: 0;
-//     transform:translate(-10%, 0);
-//     font-variation-settings: var(--recursive7)
-//   }
-//   to {
-//     opacity: 1;
-//     transform:translate(0, 0);
-
-//     font-variation-settings: var(--recursive8)
-//   }
-// `;
-
-// const shadowAnimation = keyframes`
-//   from {
-//     text-shadow: none;
-//   }
-//   to {
-//     text-shadow: var(--welcome-shadow);
-//   }
-// `;
-
-// const gradientAnimation = keyframes`
-//   from {
-//     background-size: 100% 300%;
-//   }
-
-//   to {
-//     background-size: 100% 100%;
-//   }
-// `;
 
 const Template = styled.div`
   --scale: 7vw;
 
-  --font-size: clamp(var(--size18), var(--scale), var(--size48));
+  --font-size: clamp(var(--size32), var(--scale), var(--size48));
   --left: ${(p) => (p.centered ? 0 : undefined)};
 
   position: absolute;
@@ -68,35 +35,19 @@ const Text = styled(Template)`
   font-family: Recursive;
 `;
 
-// const Gradient = styled(Text)`
-//   background-image: linear-gradient(var(--fancy-gradient));
-//   background-size: 100% 100%;
-//   animation: ${recursiveAnimation} 1000ms ease-out 5500ms both,
-//     ${gradientAnimation} 1500ms ease-in-out 5500ms both;
-// `;
-
-// const Shadow = styled(Text)`
-//   text-shadow: var(--welcome-shadow);
-//   animation: ${recursiveAnimation} 1000ms ease-out 5500ms both,
-//     ${shadowAnimation} 700ms ease-in-out 5800ms both;
-// `;
-
 const Gradient = styled(Text)`
   background-image: linear-gradient(var(--fancy-gradient));
   background-size: 100% 100%;
-  opacity: 0;
 `;
 
 const Shadow = styled(Text)`
   text-shadow: var(--welcome-shadow);
-  opacity: 0;
+  position: static;
 `;
 
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
-  ${'' /* display: grid;
-  place-items: center; */}
 
   --shadow-hue: 40;
   --layers: 7;
@@ -105,26 +56,6 @@ const Wrapper = styled.div`
   --fancy-shadow: ${getTextShadow(7, 'var(--shadow-hue)', 0.008)};
   --fancy-gradient: var(--welcome-gradient);
 `;
-
-// const TextGradient = forwardRef((props, ref) => {
-//   return (
-//     <>
-//       <Gradient {...props} ref={ref}>
-//         {props.children}
-//       </Gradient>
-//     </>
-//   );
-// });
-
-// const TextShadow = forwardRef((props, ref) => {
-//   return (
-//     <>
-//       <Shadow {...props} ref={ref}>
-//         {props.children}
-//       </Shadow>
-//     </>
-//   );
-// });
 
 const gradientAnimation = [
   {
@@ -160,15 +91,15 @@ const timing = {
   fill: 'forwards',
 };
 
-const ShadowGradient = forwardRef((props, ref) => {
+const GradientText = forwardRef((props, ref) => {
   const ref1 = useRef();
   const ref2 = useRef();
-  // const context = useContext(ThemeContext);
-  // const [ hasStarted, setHasStarted ] = useState(false);
-  const isFinished = props.isFinished;
+  const [ hasStarted, setHasStarted ] = useState(false);
+  const { isFinished, animationTiming } = props;
 
   useEffect(() => {
-    if (props.animationTiming && !isFinished) {
+    if (animationTiming && !isFinished && !hasStarted) {
+      setHasStarted(true);
       console.log(props.animationTiming);
       const {
         animationTiming: { endTime, duration },
@@ -183,16 +114,7 @@ const ShadowGradient = forwardRef((props, ref) => {
         delay: endTime - duration,
       });
     }
-  }, [ props, isFinished ]);
-
-  // useEffect(() => {
-  //   if (props.isFinished && !hasStarted) {
-  //     setHasStarted(true);
-  //     const delay = context.cookieExists ? 3300 : 4200;
-  // ref1.current.animate(shadowAnimation, { ...timing });
-  // ref2.current.animate(gradientAnimation, { ...timing });
-  //   }
-  // }, [ props, hasStarted, context.cookieExists ]);
+  }, [ props, isFinished, animationTiming, hasStarted ]);
 
   return (
     <Wrapper ref={ref}>
@@ -202,7 +124,6 @@ const ShadowGradient = forwardRef((props, ref) => {
   );
 });
 
-ShadowGradient.displayName = 'ShadowGradient';
-// TextShadow.displayName = 'TextShadow';
+GradientText.displayName = 'GradientText';
 
-export default ShadowGradient;
+export default GradientText;
