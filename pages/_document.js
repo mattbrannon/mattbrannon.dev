@@ -32,7 +32,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
           <link
             rel="preload"
             href="/fonts/Jost-english-subset.woff2"
@@ -54,7 +53,9 @@ export default class MyDocument extends Document {
             crossOrigin=""
             type="font/woff2"
           />
+
           <link rel="stylesheet" href="/styles/fonts.css" />
+          <link rel="stylesheet" href="/styles/global.css" />
         </Head>
         <body>
           <Main />
