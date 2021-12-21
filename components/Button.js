@@ -68,6 +68,5 @@ const InvertedWrapper = styled(Wrapper)`
   --innerFocus: var(--tealFocus);
   --innerShadow: var(--tealShadow);
   --outerShadow: var(--tealBg);
-
   transition: opacity 0.15s ease-in-out;
 `;

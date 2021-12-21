@@ -59,19 +59,15 @@ export default function Footer() {
 }
 
 const FooterContainer = styled(FullBleed)`
-  ${'' /* grid-row-end: -1;
-  grid-row: -1;
-  grid-column: 1 / -1; */}
   margin-top: 64px;
-  background: var(--footer-background);
   min-height: var(--footer-height);
   display: grid;
-  place-items: center;
 `;
 
 const FooterWrapper = styled.div`
   width: 100%;
   z-index: 1;
+  background: var(--footer-background);
 
   @media (prefers-color-scheme: dark) {
     background: #111;
@@ -84,8 +80,7 @@ const MaxWidthFlexContainer = styled.div`
   width: 100%;
   height: 100%;
 
-  margin: auto;
-  padding: 16px 0;
+  margin: 0 auto;
 
   ${'' /* display: flex;
   align-items: center;
@@ -96,7 +91,6 @@ const NavWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 clamp(0.25rem, 1rem + 3vw, 3rem);
-
   &:last-child {
     margin-right: 0;
   }
@@ -109,6 +103,8 @@ const InnerWrapper = styled.div`
   align-items: center;
 
   gap: 16px;
+  padding: 16px;
+  ${'' /* background: var(--footer-background); */}
 `;
 
 const CopyrightWrapper = styled.div`

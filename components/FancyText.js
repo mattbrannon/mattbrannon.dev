@@ -12,7 +12,8 @@ const slantText = keyframes`
 `;
 
 const FancyText = styled.span`
-  font-family: Recursive, 'Coming Soon', sans-serif;
+  display: inline-block;
+  font-family: Recursive, sans-serif;
   font-variation-settings: var(--recursive2);
   --original: black;
   --color: var(--pinkBg);

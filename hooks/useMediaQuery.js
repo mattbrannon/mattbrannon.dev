@@ -1,27 +1,28 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useHasMounted } from './useHasMounted';
 
-const queryTypes = {
-  maxWidth: 'max-width',
-  minWidth: 'min-width',
-  prefersColorScheme: 'prefers-color-scheme',
-  prefersReducedMotion: 'prefers-reduced-motion',
-};
+function camelCaseToCss(str) {
+  return str.replace(/([A-Z])/g, (v) => '-' + v.toLowerCase());
+}
+// eslint-disable-next-line no-unused-vars
+function cssToCamelCase(str) {
+  return str.replace(/(-[a-z]){1}/g, (v) => v.slice(1).toUpperCase());
+}
 
 const parseQuery = (object) => {
-  const key = Object.keys(object)[0];
+  const key = Object.keys(object).join('');
+  const query = camelCaseToCss(key);
 
   const value = Object.values(object).map((val) => {
     return typeof val === 'number' ? val + 'px' : val;
   })[0];
 
-  const mediaQuery = `(${queryTypes[key]}: ${value})`;
+  const mediaQuery = `(${query}: ${value})`;
 
   return mediaQuery;
 };
 
 export const useMediaQuery = (query) => {
-  // const hasMounted = useHasMounted();
   const [ isMatch, setsIsMatch ] = useState(null);
   const mediaQuery = parseQuery(query);
   const hasMounted = useHasMounted();

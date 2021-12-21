@@ -1,11 +1,13 @@
+import { useFontSize } from '@hooks/useFontSize';
 import styled from 'styled-components/macro';
 import FancyText from './FancyText';
 
 export default function PageTitle({ children, ...props }) {
+  const fontSize = useFontSize(32, 40, 320, 1200);
   if (children.length) {
     const [ highlighted, ...rest ] = children.split(' ');
     return (
-      <FluidHeading>
+      <FluidHeading fontSize={fontSize}>
         <FancyText {...props}>{highlighted}&nbsp;</FancyText>
         {rest.join(' ')}
       </FluidHeading>
@@ -17,5 +19,6 @@ export default function PageTitle({ children, ...props }) {
 const FluidHeading = styled.h3`
   font-family: Recursive, 'Open Sans', system-ui, sans-serif;
   font-variation-settings: var(--recursive6);
-  font-size: clamp(var(--size32), 1.5vw + 1rem, var(--size40));
+  font-size: ${(p) => p.fontSize || 'var(--size24)}'};
+  line-height: 1.2;
 `;

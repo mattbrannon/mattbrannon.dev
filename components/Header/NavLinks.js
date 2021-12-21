@@ -1,25 +1,27 @@
 import FancyLink from '@components/FancyLink';
+import { useCookie } from '@hooks/useCookie';
 import { useContext, useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components/macro';
 
-export default function NavLinks({ clickedHome, setClickedHome }) {
-  const { pathname, setHasPlayed } = useContext(ThemeContext);
+export default function NavLinks(props) {
+  const { pathname } = useContext(ThemeContext);
   const [ activeLink, setActiveLink ] = useState(pathname);
+  const [ hasNavigated, setHasNavigated ] = useCookie('navigated');
 
   const handleLinkClick = (e) => {
-    setTimeout(() => {
-      setHasPlayed(true);
-    }, 1000);
-    const activeLink = clickedHome ? '' : e.target.attributes.href.value.slice(1);
+    const activeLink = props.clickedHome ? '' : e.target.attributes.href.value.slice(1);
     setActiveLink(activeLink);
+    if (!hasNavigated) {
+      setHasNavigated();
+    }
   };
 
   useEffect(() => {
-    if (clickedHome) {
+    if (props.clickedHome) {
       setActiveLink('');
-      setClickedHome(false);
+      props.setClickedHome(false);
     }
-  }, [ setClickedHome, clickedHome ]);
+  }, [ props ]);
 
   useEffect(() => {
     if (pathname) {

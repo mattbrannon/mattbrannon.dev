@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-css-tags */
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -5,10 +6,10 @@ export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
     const sheet = new ServerStyleSheet();
     const originalRenderPage = ctx.renderPage;
+
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          // eslint-disable-next-line react/display-name
           enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
         });
 
@@ -17,8 +18,8 @@ export default class MyDocument extends Document {
         ...initialProps,
         styles: (
           <>
-            {' '}
-            {initialProps.styles} {sheet.getStyleElement()}{' '}
+            {initialProps.styles}
+            {sheet.getStyleElement()}
           </>
         ),
       };
@@ -30,7 +31,32 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head></Head>
+        <Head>
+          <link
+            rel="preload"
+            href="/fonts/Jost-english-subset.woff2"
+            as="font"
+            crossOrigin=""
+            type="font/woff2"
+          />
+          <link
+            rel="preload"
+            href="/fonts/open-sans-regular.woff2"
+            as="font"
+            crossOrigin=""
+            type="font/woff2"
+          />
+          <link
+            rel="preload"
+            href="/fonts/recursive-variable.woff2"
+            as="font"
+            crossOrigin=""
+            type="font/woff2"
+          />
+
+          <link rel="stylesheet" href="/styles/fonts.css" />
+          <link rel="stylesheet" href="/styles/global.css" />
+        </Head>
         <body>
           <Main />
           <NextScript />

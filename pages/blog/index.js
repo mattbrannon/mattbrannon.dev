@@ -33,7 +33,8 @@ export default function Index({ posts }) {
           sources={[ '/videos/demos/mitm.mp4', '/videos/demos/mitm.webm' ]}
         />
         <Introduction fontSize={fontSize}>
-          Sometimes I learn things. And sometimes the things that I learn are kinda interesting.
+          Sometimes I learn things. And sometimes the things that I learn are kinda
+          interesting.
         </Introduction>
 
         <BlogList>

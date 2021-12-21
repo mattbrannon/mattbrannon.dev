@@ -34,7 +34,11 @@ export const H1 = styled.h1`
   font-family: 'Jost', sans-serif;
   font-variation-settings: var(--font);
 
-  background-image: linear-gradient(var(--pinkShadow), var(--orange2) 60%, var(--orange3));
+  background-image: linear-gradient(
+    var(--pinkShadow),
+    var(--orange2) 60%,
+    var(--orange3)
+  );
   color: var(--blue0);
   -webkit-text-fill-color: var(--blue0);
 

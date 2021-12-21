@@ -50,7 +50,7 @@
         "arrayBracketSpacing": true,
         "breakBeforeElse": true,
         "semi": true,
-        "printWidth": 100,
+        "printWidth": 90,
         "offsetTernaryExpressions": false,
         "singleQuote": true,
         "breakLongMethodChains": true

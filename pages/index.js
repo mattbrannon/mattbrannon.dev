@@ -1,52 +1,60 @@
 import AboutMePage from '@components/AboutMe';
+import ShadowGradient from '@components/GradientText';
 import DocumentHead from '@components/Head';
 import Hero from '@components/Hero';
-import Spacer from '@components/Spacer';
+import { breakpoints } from '@constants/';
+import { useCookie } from '@hooks/useCookie';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { getImageConfig } from '@utils/images';
-import { useContext, useEffect, useState } from 'react';
-import styled, { css, keyframes, ThemeContext } from 'styled-components/macro';
+import { useContext, useEffect, useRef, useState } from 'react';
+import styled, { ThemeContext } from 'styled-components/macro';
+
+const frames = [
+  { opacity: 0, transform: 'translate(0, 30px)' },
+  { opacity: 1, transform: 'translate(0, 0)' },
+];
+
+const timing = {
+  duration: 1200,
+  easing: 'ease',
+  delay: -100,
+  fill: 'both',
+};
 
 export default function Home({ config }) {
   const context = useContext(ThemeContext);
-  const isMobile = useMediaQuery({ maxWidth: 564 });
-  const [ size, setSize ] = useState(32);
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
+  const [ isFinished, setIsFinished ] = useState(false);
+  const [ started, setStarted ] = useState(null);
+  const [ animationTiming, setAnimationTiming ] = useState(null);
   context.heroConfig = config;
+  const ref = useRef();
+  const hasCookie = useCookie('navigated')[0];
 
   useEffect(() => {
-    const cookieExists = document.cookie
-      .split(';')
-      .some((item) => item.trim().startsWith('animated'));
-    if (!cookieExists) {
-      document.cookie = `animated=${Date.now()}`;
-      // 'animated=true; expires=Fri, 31 Dec 9999 23:59:59 GMT; SameSite=None; Secure';
+    if (!started && hasCookie !== null && ref.current) {
+      setStarted(true);
+      const options = hasCookie || isMobile ? timing : { ...timing, delay: 3800 };
+      const animation = ref.current.animate(frames, options);
+      const animationTiming = animation.effect.getComputedTiming();
+      setAnimationTiming(animationTiming);
+      animation.finished.then(() => {
+        setIsFinished(true);
+      });
     }
-  });
-
-  useEffect(() => {
-    context.setIsPlaying(true);
-    setTimeout(() => {
-      context.setIsPlaying(false);
-      context.setHasPlayed(true);
-    }, 7200);
-  });
-
-  useEffect(() => {
-    const size = isMobile ? 48 : 80;
-    setSize(size);
-  }, [ isMobile ]);
+  }, [ started, hasCookie, isMobile ]);
 
   return (
     <Main>
       <DocumentHead title="Matt Brannon" desc="A brief introduction" />
-      <Content>
-        <Spacer axis="vertical" size={size} />
-        <Hero config={config} />
+      <Hero config={config} />
 
-        <BottomGroup>
-          <AboutMePage />
-        </BottomGroup>
-      </Content>
+      <BottomGroup ref={ref} hasCookie={hasCookie}>
+        <ShadowGradient isFinished={isFinished} animationTiming={animationTiming}>
+          About Me
+        </ShadowGradient>
+        <AboutMePage />
+      </BottomGroup>
     </Main>
   );
 }
@@ -55,39 +63,8 @@ const Main = styled.div`
   height: 100%;
 `;
 
-const Content = styled.div`
-  display: flex;
-  height: 100%;
-
-  justify-content: center;
-  flex-direction: column;
-`;
-
-const bringUp = keyframes`
-  0% {
-    opacity: 0;
-    transform: translate(0, 100px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translate(0, 0);
-  }
-`;
-
-const bringInText = (props) => {
-  const delay = props.theme.hasPlayed ? 0 : 3600;
-  const duration = props.theme.hasPlayed ? 0 : 1500;
-  return css`
-    ${bringUp} ${duration}ms ease-in-out ${delay}ms both;
-  `;
-};
-
 const BottomGroup = styled.div`
   opacity: 0;
-
-  transform: translate(0, 100px);
-  animation: ${(p) => bringInText(p)};
 `;
 
 export async function getStaticProps() {

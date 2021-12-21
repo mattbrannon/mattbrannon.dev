@@ -1,7 +1,7 @@
-import { useContext, useEffect } from 'react';
-import Link from 'next/link';
-import styled, { keyframes, css, ThemeContext } from 'styled-components/macro';
 import VisuallyHidden from '@components/VisuallyHidden';
+import Link from 'next/link';
+import { useContext, useEffect, useRef, useState } from 'react';
+import styled, { css, ThemeContext } from 'styled-components/macro';
 /**
  *
  * * Mobile navigation menu
@@ -11,6 +11,8 @@ import VisuallyHidden from '@components/VisuallyHidden';
 export default function MobileNav() {
   const context = useContext(ThemeContext);
   const labels = [ 'Home', 'Blog', 'Apps', 'Contact' ];
+  const [ isFirstPaint, setIsFirstPaint ] = useState(true);
+  const ref = useRef();
 
   useEffect(() => {
     const handler = (e) => {
@@ -22,13 +24,20 @@ export default function MobileNav() {
     return () => window.removeEventListener('keydown', handler);
   });
 
+  useEffect(() => {
+    if (isFirstPaint) {
+      // console.log({ isFirstPaint });
+      context.setIsOpen(null);
+      setIsFirstPaint(false);
+    }
+  }, [ context, isFirstPaint ]);
+
   return (
     <MobileNavWrapper
+      isOpen={context.isOpen}
+      ref={ref}
       style={{
-        '--height': context.isOpen ? '80%' : '0px',
-        '--width': context.isOpen ? 'auto' : '0px',
-        '--zIndex': context.isOpen ? '4' : '-1',
-        '--display': context.isOpen ? 'flex' : 'none',
+        '--zIndex': context.isOpen ? '4' : '-10',
       }}
     >
       <VisuallyHidden>
@@ -42,10 +51,8 @@ export default function MobileNav() {
               tabIndex={0}
               href={href}
               key={index}
+              i={index + 1}
               isOpen={context.isOpen}
-              style={{
-                '--index': index + 1,
-              }}
             >
               {label}
             </NavLink>
@@ -58,93 +65,92 @@ export default function MobileNav() {
 
 function NavLink({ children, ...props }) {
   const context = useContext(ThemeContext);
-  const { setIsOpen } = context;
-  const handleClick = () => setIsOpen(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    // console.log({ isOpen: context.isOpen });
+    const frames = [
+      { transform: 'translateX(-500px)', opacity: 0 },
+      { transform: 'translateX(0)', opacity: 1 },
+    ];
+
+    const options = {
+      duration: 800,
+      delay: props.i * 100 + 25,
+      easing: 'cubic-bezier(.55,.36,.51,1.41)',
+      fill: 'forwards',
+    };
+
+    const animation = ref.current.animate(frames, options);
+    animation.pause();
+
+    // console.log('both true?', context.clickedBurger && context.isOpen);
+
+    if (context.isOpen !== null) {
+      if (context.isOpen) {
+        ref.current.style.setProperty('display', 'grid');
+        animation.play();
+      }
+      else {
+        const closing = ref.current.animate(frames.reverse(), {
+          ...options,
+          delay: props.i * 50,
+          duration: options.duration / 2,
+        });
+        closing.finished.then(() => {
+          animation.finished.then(() => {
+            ref.current.style.setProperty('display', 'none');
+          });
+          // ref.current.getAnimations()[0].playState = 'paused';
+          // console.log(ref.current.getAnimations()[0].playState);
+        });
+      }
+    }
+  }, [ context, props.i ]);
+
   return (
     <Link passHref href={props.href}>
-      <ButtonLink onClick={handleClick} {...props}>
+      <ButtonLink ref={ref} onClick={() => context.setIsOpen(false)} {...props}>
         {children}
       </ButtonLink>
     </Link>
   );
 }
 
-// * Animations: mobile nav
-const staggerIn = keyframes`
-  from {
-    transform: translateX(-200px);
-    padding: 5vh 0;
-  }
+const setTransition = (props) => {
+  return !props.isOpen ? css`z-index 1000ms linear` : undefined;
+};
 
-  to {
-    /* transform: translateX(140px); */
-    transform: translateX(200px);
-
-    padding: 2vh 0;
-  }
-`;
-
-const staggerOut = keyframes`
-  0% {
-    transform: translateX(140px);
-    padding: 2vh 0;
-    display: block;
-  }
-  
-  99% {
-    transform: translateX(-200px);
-    padding: 5vh 0;
-    display: block;
-  }
-  100% {
-    transform: translateX(-200px);
-    padding: 5vh 0;
-    display: none;
-  }
-`;
-
-const showMenu = css`
-  animation: ${staggerIn} calc(300ms + var(--index) * 100ms) linear normal both 1;
-`;
-
-const hideMenu = css`
-  animation: ${staggerOut} calc(300ms + var(--index) * 200ms) ease-in-out normal both 1;
-`;
-
-// * Components: mobile nav
 const MobileNavWrapper = styled.nav`
-  display: var(--display);
-  flex-direction: column;
+  display: ${(p) => (p.theme.isOpen ? 'grid' : 'none')};
+  justify-items: baseline;
   justify-content: center;
-  align-items: flex-start;
+  align-items: baseline;
+  align-content: space-between;
+  height: 30vh;
+
   flex: 1;
-  position: fixed;
-  transform: translateX(-100%);
+  position: absolute;
+  left: 0;
+  width: 100%;
 
   z-index: var(--zIndex);
-  /* width: var(--width);
-  height: var(--height); */
-
-  top: 80px;
+  top: calc(var(--header-height) + 64px);
   gap: 24px;
+  transition: ${(p) => setTransition(p)};
 `;
 
 const ButtonLink = styled.button`
-  /* width: 142px; */
-
   background: none;
   border: none;
-
-  margin-left: 24px;
-  transform: translateX(-150px);
   font-family: Recursive;
   font-variation-settings: var(--recursive8);
-  font-size: var(--size24)
+  font-size: var(--size24);
   font-weight: 600;
   text-shadow: -1px 0px 1px black;
   color: palegoldenrod;
-
-  ${(p) => (p.isOpen ? showMenu : p.isOpen !== null ? hideMenu : null)};
+  transform: translateX(-500px); 
+  opacity: 0
 
   &:hover {
     text-decoration: underline;

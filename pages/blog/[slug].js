@@ -1,15 +1,15 @@
+import BlogHeader from '@components/BlogHeader';
+import DocumentHead from '@components/Head';
+import Section from '@components/Section';
+import SideNote from '@components/SideNote';
+import { postFilePaths, POSTS_PATH } from '@utils/mdxUtils';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import path from 'path';
-import BlogHeader from '@components/BlogHeader';
-import SideNote from '@components/SideNote';
-import Section from '@components/Section';
-import { postFilePaths, POSTS_PATH } from '@utils/mdxUtils';
 import Prism from 'prismjs';
 import { useEffect } from 'react';
-import DocumentHead from '@components/Head';
 
 const components = {
   SideNote,

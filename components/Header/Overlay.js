@@ -15,7 +15,7 @@ export function Overlay() {
       style={{
         '--visibility': isOpen ? 'visible' : 'hidden',
         '--blur': isOpen ? 'blur(8px)' : 'blur(0px)',
-        '--background': isOpen ? 'hsla(220deg, 35%, 10%, 0.8)' : 'transparent',
+        '--background': isOpen ? 'hsla(220deg, 35%, 6%, 0.93)' : 'transparent',
         '--zIndex': isOpen ? '2' : '0',
       }}
     />
@@ -28,7 +28,7 @@ const OverlayWrapper = styled.div`
   left: 0;
   top: 0;
 
-  height: 100%;
+  height: 120%;
   width: 100%;
 
   visibility: var(--visibility);

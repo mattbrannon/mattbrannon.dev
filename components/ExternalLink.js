@@ -1,6 +1,6 @@
-import { Anchor } from './Anchor';
 import Link from 'next/link';
 import styled from 'styled-components/macro';
+import { Anchor } from './Anchor';
 
 export const ExternalLink = ({ href, children }) => {
   return (
