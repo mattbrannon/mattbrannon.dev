@@ -1,5 +1,4 @@
 import { animations } from '@animations';
-import Spacer from '@components/Spacer';
 import { breakpoints } from '@constants/';
 import { useCookie } from '@hooks/useCookie';
 import { useHasMounted } from '@hooks/useHasMounted';
@@ -7,7 +6,7 @@ import { useMediaQuery } from '@hooks/useMediaQuery';
 import { LayoutGroup, motion } from 'framer-motion';
 import { useContext, useEffect, useRef, useState } from 'react';
 import styled, { css, keyframes, ThemeContext } from 'styled-components/macro';
-import { MotionButton } from './MotionButtons';
+import Button from './Button';
 import HeroImage from './MotionImage';
 import SlidingText from './SlidingText';
 import s from './style.module.css';
@@ -22,14 +21,17 @@ const getPosition = (cardDimensions, bounds) => {
   return position;
 };
 
+const circleSize = 32;
+const gapSize = 32;
+const buttonWidth = 180;
+const offset = buttonWidth / 2 + circleSize / 2 + gapSize;
+
 export default function Hero() {
   const card = useRef();
   const circle = useRef();
   const hasMounted = useHasMounted();
   const hasCookie = useCookie('navigated')[0];
-  // const isMobile = useMediaQuery({ maxWidth: 480 });
   const [ stopAt, setStopAt ] = useState(0);
-  // const size = 40;
   const theme = useContext(ThemeContext);
   const [ isComplete, setIsComplete ] = useState(false);
   const { mobile } = breakpoints;
@@ -53,7 +55,7 @@ export default function Hero() {
   }, [ isSmall ]);
 
   useEffect(() => {
-    if (hasMounted && card.current) {
+    if (hasMounted && card.current && circle.current) {
       setShowImage(false);
       // alert(window.innerWidth);
       const cardRect = card.current.getBoundingClientRect();
@@ -94,6 +96,7 @@ export default function Hero() {
         },
       },
     },
+    transitionEnd: { width: '8px' },
   };
 
   const handleUpdate = (latest) => {
@@ -106,8 +109,6 @@ export default function Hero() {
     setIsComplete(true);
     theme.setHasRun(true);
   };
-
-  const amount = 108;
 
   return (
     <LayoutGroup>
@@ -134,11 +135,11 @@ export default function Hero() {
               </SlidingText>
             )}
           </TopSection>
-          <ButtonWrapper>
-            <MotionButton x={amount} isComplete={isComplete} showImage={showImage} left>
+          <ButtonWrapper hasCookie={hasCookie}>
+            <Button x={offset} isComplete={isComplete} showImage={showImage}>
               Contact me
-            </MotionButton>
-            {!shouldLoadStatic ? (
+            </Button>
+            {!hasCookie ? (
               <Circle
                 variants={variants}
                 initial={variants.initial}
@@ -147,12 +148,10 @@ export default function Hero() {
                 onUpdate={handleUpdate}
                 onAnimationComplete={handleAnimationComplete}
               />
-            ) : (
-              !isMobile && <Spacer axis={spacerValues.axis} size={spacerValues.size} />
-            )}
-            <MotionButton x={amount} isComplete={isComplete} showImage={showImage} right>
+            ) : null}
+            <Button x={offset * -1} isComplete={isComplete} showImage={showImage}>
               View my work
-            </MotionButton>
+            </Button>
           </ButtonWrapper>
         </CardWrapper>
       </Container>
@@ -325,9 +324,10 @@ const Heading = styled.h2`
 
 const ButtonWrapper = styled(motion.div).attrs((props) => {
   console.info(props);
-  const gap = props.theme.hasRun ? 8 : 0;
+  // const gap = props.theme.hasRun ? 8 : 32;
   const size = props.theme.hasRun ? 0 : 40;
   const marginRight = props.theme.hasRun ? 8 : 0;
+  const gap = props.hasCookie || props.theme.hasRun ? 8 : 32;
   return {
     style: {
       '--gap': gap + 'px',
@@ -336,22 +336,14 @@ const ButtonWrapper = styled(motion.div).attrs((props) => {
     },
   };
 })`
-  --half-circle: calc(var(--circle-size) * 0.5);
-  --left-x: calc(50% + var(--half-circle));
-  --right-x: calc(-50% - var(--half-circle));
-
-  --left-translate: var(--left-x), 0;
-  --right-translate: var(--right-x), 0;
-
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--gap);
 
   transition: all 1s;
   justify-content: center;
 
-  gap: 8px;
+  gap: var(--gap);
 
   @media (max-width: ${breakpoints.mobile}px) {
     max-width: 200px;
@@ -366,8 +358,9 @@ const ButtonWrapper = styled(motion.div).attrs((props) => {
 
 const Circle = styled(motion.div)`
   ${'' /* height: var(--circle-size); */}
-  width:32px;
-  height: 32px;
+  display: ${(p) => (p.theme.hasRun ? 'none' : 'block')};
+  width: ${circleSize}px;
+  height: ${circleSize}px;
   background: var(--tealBg);
   border-radius: 50%;
 `;
