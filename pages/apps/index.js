@@ -35,11 +35,8 @@ export default function AppsPage({ montyHall, elbowRoom, letsMakeGifs }) {
                 <A>Let's Make a Gif</A>
               </Link>
             </Heading>
-            <Small>
-              A photo / video editing application. Built with React, Nodejs and FFMPEG
-            </Small>
+            <Small>Online photo &amp; video editing application</Small>
           </HeadingWrapper>
-
           <AppImage sources={letsMakeGifs.main} href="/apps/lets-make-a-gif"></AppImage>
         </Section>
 
@@ -73,8 +70,15 @@ export default function AppsPage({ montyHall, elbowRoom, letsMakeGifs }) {
 
 const A = styled(Anchor)`
   color: var(--pinkBg);
+  font-size: clamp(var(--size24), 10vw, var(--size40));
+  line-height: 1.2;
+  display: block;
   &:visited {
     color: currentColor;
+  }
+
+  @media (max-width: 320px) {
+    text-align: center;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -85,11 +89,16 @@ const A = styled(Anchor)`
 const HeadingWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  @media (min-width: 360px) {
+    align-items: flex-start;
+  }
 `;
 
 const Small = styled.small`
-  font-size: clamp(var(--size10), 2.5vw, var(--size16));
-  font-variation-settings: 'wdth' 75, 'wght' 333;
+  font-size: clamp(var(--size14), 5vw, var(--size21));
+  font-variation-settings: 'wdth' 75, 'wght' 555;
+  margin-bottom: -16px;
 `;
 
 const Heading = styled(H4)`
@@ -103,7 +112,6 @@ const Article = styled.article`
 
 const Paragraph = styled.p`
   font-size: clamp(var(--size16), 0.2vw + 1rem, var(--size20));
-  margin-bottom: 64px;
 `;
 
 const AppList = styled.div`
@@ -117,16 +125,9 @@ const AppList = styled.div`
 
 const ImageLinkWrapper = styled.div`
   --shadow: -0.1em 0.4em 0.8em hsl(210, 12%, 46%);
-  ${'' /* transform: translateX(-24px); */}
-  ${'' /* transform: translateY(32px) scale(1.09); */}
-  overflow: hidden;
-
-  &:hover {
-    --shadow: 0em 0.6em 1.2em hsl(210, 10%, 50%);
-    ${'' /* transform: translateY(48px) scale(1.14); */}
-    cursor: pointer;
-    transition: all 160ms ease-in 40ms;
-  }
+  position: relative;
+  left: 0;
+  padding: 0 8px;
 
   @media (prefers-color-scheme: dark) {
     --shadow: 0px 1em 1em hsl(210, 6%, 4%);
@@ -134,6 +135,17 @@ const ImageLinkWrapper = styled.div`
       --shadow: 0em 0.6em 1.2em hsl(210, 10%, 10%);
     }
   }
+
+  @media (min-width: 320px) {
+    max-width: revert;
+    &:hover {
+      --shadow: 0em 0.6em 1.2em hsl(210, 10%, 50%);
+      cursor: pointer;
+      transition: all 160ms ease-in 40ms;
+    }
+  }
+
+  transform: translateY(32px) scale(1.07);
 
   transition: all 400ms ease-in-out 100ms;
 `;
@@ -149,8 +161,8 @@ function AppImage({ ...props }) {
             href={props.href}
             sources={props.sources}
             src={`/images/${appName}/main.png`}
-            width={1440 / 2}
-            height={900 / 2}
+            width={1440}
+            height={900}
             alt={`Go to the ${appName.replace(/-/g, ' ')} discussion page`}
           />
         </Anchor>
