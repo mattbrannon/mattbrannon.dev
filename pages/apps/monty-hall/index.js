@@ -194,7 +194,7 @@ const ButtonGroup = styled.div`
   justify-content: space-evenly;
 
   margin: 32px 0;
-  padding: 32px 0;
+  ${'' /* padding: 32px 0; */}
   margin: auto;
   width: 100%;
   ${'' /* height: 160px; */}
