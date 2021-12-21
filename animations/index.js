@@ -384,48 +384,111 @@ const materia = keyframes`
   }
 `;
 
+// export const lookAround = keyframes`
+//     0%,5% {
+//       transform: translateX(0%);
+//     }
+
+//     6%,15% {
+//       transform: translateX(45%);
+//     }
+
+//     16%,25% {
+//       transform: translateX(0%);
+//     }
+
+//     26%,35% {
+//       transform: translateX(35%);
+//     }
+
+//     36%, 40% {
+//       transform: translateX(0%);
+//     }
+
+//     41%, 55%{
+//       transform: translateY(50%);
+//     }
+
+//     56%, 65%{
+//       transform: translateX(0%);
+//     }
+
+//     66%, 80%{
+//       transform: translateX(40%);
+//     }
+
+//     81%, 85%{
+//       transform: translateX(0%);
+//     }
+//     86%, 96%{
+//       transform: translateX(-37%);
+//     }
+
+//     97%, 100%{
+//       transform: translateX(0%);
+//     }
+// `;
+
 export const lookAround = keyframes`
-    0%,5% {
+    0%,3% {
       transform: translateX(0%);
     }
 
-    6%,15% {
+    4%,9% {
       transform: translateX(45%);
     }
 
-    16%,25% {
+    10%, 16% {
       transform: translateX(0%);
     }
 
-    26%,35% {
-      transform: translateX(35%);
+    17%,21% {
+      transform: translateY(35%);
     }
     
-    36%, 40% {
+    22%, 29% {
       transform: translateX(0%);
     }
 
-    41%, 55%{
-      transform: translateX(-50%);
+    30%, 36%{
+      transform: translateX(-24%);
     }
 
-    56%, 65%{
+    37%, 45%{
       transform: translateX(0%);
     }
     
-    66%, 80%{
-      transform: translateX(40%);
+    46%, 54%{
+      transform: translateY(34%);
     }
 
-    81%, 85%{
+    55%, 60%{
       transform: translateX(0%);
     }
-    86%, 96%{
+    61%, 68%{
       transform: translateX(-37%);
     }
 
-    97%, 100%{
+    69%, 74%{
       transform: translateX(0%);
+    }
+    75%,79% {
+      transform: translateY(30%);
+    }
+    80%, 83% {
+      transform: translateY(0%);
+    }
+    84%, 88%{
+      transform: translateY(36%)
+    }
+    89%, 100%{
+      tranform: translateX(0%);
+    }
+    96%, 98%{
+      transform: translateX(0%);
+    }
+    99%, 100% {
+      tranform: translateX(0%);
     }
 `;
 
@@ -462,7 +525,6 @@ const goofySmile = keyframes`
 
 export const textAnimation = keyframes`
   0% {
-  
     transform: translate(var(--distance), 0);
   }
 
@@ -553,6 +615,7 @@ const raiseCardDark = keyframes`
 
 export const expand = keyframes`
   to {
+    opacity: 1;
     clip-path: circle(100% at 50% 50%);
   }
 `;
@@ -567,12 +630,18 @@ export const contract = keyframes`
 `;
 
 export const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
   to {
     opacity: 0;
   }
 `;
 
 export const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
   to {
     opacity: 1;
   }
