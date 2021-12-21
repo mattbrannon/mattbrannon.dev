@@ -2,8 +2,9 @@ import styled from 'styled-components/macro';
 
 const Layout = styled.div`
   min-height: 100%;
+  height: 100%;
   display: grid;
-  margin-top: var(--header-height);
+  ${'' /* margin-top: var(--header-height); */}
   grid-template-columns: 1fr min(var(--max-width), 100%) 1fr;
   grid-template-rows: auto 1fr auto;
   ${'' /* padding-left: var(--breathing-room);
@@ -11,7 +12,7 @@ const Layout = styled.div`
 
   & > * {
     grid-column: 2;
-    padding: 0 16px;
+    padding: 0 18px;
 
     &:first-child {
       padding: 0 0px;
@@ -39,7 +40,10 @@ export const TopRow = styled.div`
   justify-content: center;
   flex-direction: column;
   margin-bottom: 32px;
-  margin-top: 64px;
+  margin-top: 32px;
+  @media (min-width: 480px) {
+    margin-top: 64px;
+  }
   ${'' /* align-items: center; */}
 `;
 
