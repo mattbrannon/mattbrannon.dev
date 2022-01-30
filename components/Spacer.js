@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 function getHeight({ axis, size }) {
   return axis === 'horizontal' ? 1 : size;

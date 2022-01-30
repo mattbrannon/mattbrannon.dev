@@ -1,12 +1,14 @@
 import Link from 'next/link';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 export default function PageButtons({ prev, next }) {
   return (
-    <PageButtonsWrapper>
-      <PageButton href={prev}>Previous</PageButton>
-      <PageButton href={next}>Next</PageButton>
-    </PageButtonsWrapper>
+    <BottomRow>
+      <PageButtonsWrapper>
+        <PageButton href={prev}>Previous</PageButton>
+        <PageButton href={next}>Next</PageButton>
+      </PageButtonsWrapper>
+    </BottomRow>
   );
 }
 
@@ -17,6 +19,18 @@ export const PageButton = ({ href, children }) => {
     </Link>
   );
 };
+
+const BottomRow = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  ${'' /* margin-bottom: 48px; */}
+
+  margin: 32px 0 64px 0;
+  @media (min-width: 480px) {
+    margin-top: 64px;
+  }
+`;
 
 const PageButtonsWrapper = styled.div`
   display: flex;
@@ -47,7 +61,7 @@ const LinkContent = styled.button`
     transition: color 198ms ease-out;
 
     &:hover {
-      color: var(--orange1);
+      color: var(--yellow);
     }
   }
 `;

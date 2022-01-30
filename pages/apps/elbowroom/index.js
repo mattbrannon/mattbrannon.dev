@@ -1,11 +1,18 @@
+// import { ResponsiveImage } from '@/components/Image';
 import AppTitle from '@components/AppTitle';
-import DocumentHead from '@components/Head';
-import Picture from '@components/Image';
-import { BottomRow, FullBleed } from '@components/Layout';
+import Head from '@components/Head';
+import Layout from '@components/Layout';
 import PageButtons from '@components/PageButtons';
-import SectionHeading from '@components/SectionHeading';
 import { getImageConfig } from '@utils/images';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
+import desktopImage from '/public/images/elbowroom/desktop.png';
+import mobileImage from '/public/images/elbowroom/mobile.png';
+import signupGif from '/public/videos/gif/elbowroom-signup.gif';
+import Text from '@components/Text';
+import { AppVideo } from '@components/VideoPlayer';
+import { H2 } from '@components/Headings';
+
+import Image from 'next/image';
 
 export default function ElbowRoomPage({ config }) {
   const links = {
@@ -15,9 +22,9 @@ export default function ElbowRoomPage({ config }) {
 
   const sources = [ '/videos/demos/elbowroom.mp4' ];
   return (
-    <>
-      <DocumentHead
-        desc="Discussion page concerning the making of elbowroom.dev"
+    <Layout>
+      <Head
+        description="Discussion page concerning the making of elbowroom.dev"
         title="Elbow Room"
       />
 
@@ -26,8 +33,8 @@ export default function ElbowRoomPage({ config }) {
       </AppTitle>
 
       <div>
-        <SectionHeading>Motivation</SectionHeading>
-        <p>
+        <H2>Motivation</H2>
+        <Text>
           Ever since I caught the programming bug, I've always wanted to build a chat room
           application. I always kinda felt like if I could do that and come away with
           something that actually worked, I could finally think of myself as real
@@ -35,20 +42,16 @@ export default function ElbowRoomPage({ config }) {
           feels so beyond you that it seems like only super talented rockstar programmers
           could that kind of thing. Now, I am by no means a super talented rockstar
           programmer. But I am a programmer and, I built a chat app to prove it. 😊
-        </p>
+        </Text>
       </div>
 
-      <ImageWrapper>
-        <Picture
-          sources={config.combined}
-          alt="combined view of mobile and desktop layouts"
-        />
-        <Picture sources={config['login-signup2']} alt="login and signup pages" />
-      </ImageWrapper>
-
       <div>
-        <SectionHeading>FrontEnd</SectionHeading>
-        <p>
+        <H2>FrontEnd</H2>
+        <FlexContainer>
+          <Image src={desktopImage} alt="desktop view of the app" />
+          <Image src={mobileImage} alt="mobile view of the app" />
+        </FlexContainer>
+        <Text>
           The choice to use React for building out the frontend was, by far, the easiest
           decision of the project. Using a component based approach allowed me write small
           chunks of code that could be reused multiple times. I was able to build some
@@ -58,12 +61,21 @@ export default function ElbowRoomPage({ config }) {
           evenly with the viewport. Every bit of css is hand written. The bulk of the app
           uses CSS Modules for styling. SASS is also used here and there and there's even
           a few styled-components lying around.
-        </p>
+        </Text>
       </div>
 
       <div>
-        <SectionHeading>Backend</SectionHeading>
-        <p>
+        <H2>Backend</H2>
+        <FlexContainer>
+          <AppVideo
+            sources={[
+              '/videos/mp4/elbowroom-signup.mp4',
+              '/videos/webm/elbowroom-signup.webm',
+            ]}
+          />
+          {/* <Image src={signupGif} alt="demonstration of the signup process" /> */}
+        </FlexContainer>
+        <Text>
           I have to give credit where credit is due. Firebase was such a lifesaver on this
           app. Utilizing Firebase for data storage allowed me not only to have a robust
           and battle tested real time database, it also allowed me to implement multiple
@@ -72,19 +84,19 @@ export default function ElbowRoomPage({ config }) {
           password combination. The user signup form performs input validation of each
           field as the user types. Coupled with a debounce function ensures a more
           pleasant user experience while at also providing instant feedback to the user.
-        </p>
+        </Text>
       </div>
 
-      <BottomRow>
-        <PageButtons prev="/apps/lets-make-a-gif" next="/apps/monty-hall" />
-      </BottomRow>
-    </>
+      <PageButtons prev="/apps/lets-make-a-gif" next="/apps/monty-hall" />
+    </Layout>
   );
 }
 
-const ImageWrapper = styled(FullBleed)`
-  max-width: 1600px;
-  margin: 0 auto;
+const FlexContainer = styled.div`
+  display: flex;
+  gap: 24px;
+  filter: drop-shadow(1px 3px 6px #333);
+  margin: 16px 0 32px 0;
 `;
 
 export async function getStaticProps() {

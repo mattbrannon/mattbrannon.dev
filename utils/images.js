@@ -21,7 +21,7 @@ export const allFilePaths = fs
 export const imageFilePaths = allFilePaths.filter((filename) => {
   const fullPath = path.resolve(IMAGES_PATH, filename);
   const source = fs.readFileSync(fullPath);
-  console.log(source);
+  // console.log(source);
   return source;
 });
 

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 
 /**
  *
@@ -28,7 +28,7 @@ const OverlayWrapper = styled.div`
   left: 0;
   top: 0;
 
-  height: 120%;
+  height: 100vh;
   width: 100%;
 
   visibility: var(--visibility);

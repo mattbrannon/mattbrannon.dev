@@ -1,33 +1,24 @@
 {
   "presets": ["next/babel"],
+
   "plugins": [
     [
-      "babel-plugin-module-resolver",
+      "babel-plugin-styled-components",
       {
-        "root": ["."],
-        "alias": {
-          "@components": "./components",
-          "@hooks": "./hooks",
-          "@constants": "./constants",
-          "@public": "./public",
-          "@utils": "./utils",
-          "@animations": "./animations",
-          "@styles": "./styles",
-          "@styled-components": "styled-components/macro"
-        }
+        "ssr": true,
+        "displayName": true
       }
     ],
-    ["babel-plugin-styled-components", { "ssr": true }],
-    "babel-plugin-macros",
     [
       "prismjs",
       {
-        "languages": ["javascript", "jsx", "css", "html"],
-        "plugins": ["toolbar"],
+        "languages": ["javascript", "css", "html", "jsx"],
+        "plugins": ["line-numbers", "show-language"],
         "theme": "okaidia",
         "css": true
       }
     ],
+    ["babel-plugin-macros"],
     ["transform-remove-console"]
   ]
 }

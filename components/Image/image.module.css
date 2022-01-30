@@ -1,0 +1,34 @@
+.responsive {
+  display: block;
+  width: 100%;
+  max-height: 300px;
+  max-width: 300px;
+}
+
+.card {
+  filter: drop-shadow(3px 3px 6px #111);
+}
+
+.test {
+  border-radius: 50%;
+  aspect-ratio: 1 !important;
+}
+
+.blah {
+  background: hsl(0, 0%, 16%);
+}
+
+.image {
+  border-radius: 50%;
+  aspect-ratio: 1;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  object-position: -36px;
+}
+
+@media (max-width: 480px) {
+  .image {
+    object-position: -20px;
+  }
+}

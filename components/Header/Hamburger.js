@@ -1,27 +1,21 @@
 import VisualyHidden from '@components/VisuallyHidden';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
+import { breakpoints } from '@constants/index';
 
 export default function HamburgerMenu() {
   const context = useContext(ThemeContext);
   const { isOpen, setIsOpen, setClickedBurger } = context;
   const isMobile = useMediaQuery({ maxWidth: 564 });
-  // const [ showMobile, setShowMobile ] = useState(isMobile && isOpen);
   const action = isOpen ? 'close' : 'open';
+
   const handleClick = () => {
     const status = !isOpen;
     setIsOpen(status);
     setClickedBurger(true);
     context.isOpen = isOpen;
-    console.log('button clicked', action, status);
   };
-
-  // const handleClick = () => {
-  //   const shouldShow = !showMobile;
-  //   setShowMobile(shouldShow);
-  //   console.log(shouldShow);
-  // };
 
   if (isMobile || isOpen) {
     return (
@@ -61,7 +55,7 @@ const MenuButton = styled.button`
     outline: none;
   }
 
-  @media (max-width: 320px) {
+  @media (max-width: ${breakpoints.mobile}px) {
     --burger-width: var(--size24);
     --burger-height: var(--size18);
   }

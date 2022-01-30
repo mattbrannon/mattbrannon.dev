@@ -1,15 +1,17 @@
 export const setVariables = (index) => {
-  // const hue = index * 60;
+  const hue = (index - 1) * 60;
   const cubeWidth = 'var(--cube-width)';
   const cubeHeight = 'var(--cube-height)';
-  const depth = 'var(--depth)';
+  const depth = 'var(--cube-depth)';
   const coefficient = index === 1 ? -0.5 : 0.5;
   const rotation = index === 4 || index === 6 ? -90 : 90;
   const rotate =
     index === 3 || index === 4 ? `rotateY(${rotation}deg)` : `rotateX(${rotation}deg)`;
-  const topLeft = index > 2 && '50%';
-  const sideWidth = index === 3 || index === 4 ? 'var(--depth)' : 'var(--cube-width)';
-  const sideHeight = index === 5 || index === 6 ? 'var(--depth)' : 'var(--cube-height)';
+  const topLeft = index > 2 ? '50%' : 0;
+  const sideWidth =
+    index === 3 || index === 4 ? 'var(--cube-depth)' : 'var(--cube-width)';
+  const sideHeight =
+    index === 5 || index === 6 ? 'var(--cube-depth)' : 'var(--cube-height)';
   const direction =
     index === 3 || index === 4
       ? cubeWidth
@@ -26,10 +28,12 @@ export const setVariables = (index) => {
   const transform =
     index > 2
       ? `translate(-${topLeft}, -${topLeft}) ${rotate} translate3d(${translate3d})`
+      : index === 1
+      ? `translate3d(0, 0, calc(${depth} * ${coefficient})) rotateY(180deg)`
       : `translate3d(${translate3d})`;
 
-  // const background = `hsl(${hue} 100% 50% / 1)`;
-  const background = index === 5 ? '#876543' : 'tan';
+  // const background = `hsl(${hue} 100% 50% / 0.5)`;
+  const background = index === 5 ? '#543210' : 'tan';
 
   return {
     '--topLeft': topLeft,
@@ -167,4 +171,411 @@ export const getSvgPath = () => {
     pathA: pathA,
     pathB: pathB,
   };
+};
+
+// const getTranslateXPoints = (start, end, divider) => {
+//   let total = Math.abs(start) + Math.abs(end);
+//   let multiplier = start < end ? 1 : -1;
+//   let steps = total / divider;
+//   let arr = [ start ];
+//   for (let i = 0; i < steps; i++) {
+//     start += divider * multiplier;
+//     arr.push(start);
+//   }
+//   return arr;
+// };
+// const walking = (start, end, amount, xdeg, ydeg) => {
+//   return getTranslateXPoints(start, end, amount).map((frame, i) => {
+//     const rotateX = i % 2 === 0 ? xdeg : xdeg * -1;
+//     const rotateY = i % 2 === 0 ? ydeg : ydeg + 5;
+//     const translateX = frame + 'px';
+//     return {
+//       transform: `translateX(${translateX}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+//     };
+//   });
+// };
+
+// function getWalkingPath(start, stop) {
+//   const total = Math.abs(start) + Math.abs(stop);
+//   const multiplier = start < stop ? 1 : -1;
+//   return function getSteps(stepDistance) {
+//     const steps = total / stepDistance;
+//     return Array.from({ length: steps }, (value, i) => {
+//       start += stepDistance * multiplier;
+//       return start;
+//     });
+//   };
+// }
+
+// export function createWalkingAnimation(start, stop) {
+//   const total =
+//     start < stop ? Math.abs(start) + Math.abs(stop) : Math.abs(start) - Math.abs(stop);
+
+//   const multiplier = start < stop ? 1 : -1;
+//   return function getSteps(stepDistance) {
+//     const steps = Math.round(total / stepDistance);
+//     const percents = getPercentages(steps + 1);
+//     return function rotation(x, y) {
+//       return Array.from({ length: steps + 1 }, (_, i) => {
+//         const rotateX = i % 2 === 0 ? x : x * -1;
+//         const rotateY = i % 2 === 0 ? y : y + 5;
+//         const translateX =
+//           i === 0 ? start : i === steps ? stop : (start += stepDistance * multiplier);
+
+//         return `${percents[i]}% { transform: translateX(${translateX}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) }`;
+//       });
+//     };
+//   };
+// }
+
+// export const createWalkingFrames = (start, stop) => {
+//   const total = Math.abs(start) + Math.abs(stop);
+//   const multiplier = start < stop ? 1 : -1;
+//   return (stepDistance) => {
+//     const steps = Math.round(total / stepDistance);
+//     return (x, y) => {
+//       return Array.from({ length: steps + 1 }, (_, i) => {
+//         const rotateX = i % 2 === 0 ? x : x * -1;
+//         const rotateY = i % 2 === 0 ? y : y + 5;
+//         const translateX =
+//           i === 0 ? start : i === steps ? stop : (start += stepDistance * multiplier);
+
+//         return `translateX(${translateX}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+//       });
+//     };
+//   };
+// };
+
+// export function getOffsets(n) {
+//   return Array.from({ length: n }, (_, i) => {
+//     const step = 100 / (n - 1);
+//     const offset = (step * i) / 100;
+//     return Math.round(offset * 10000) / 10000;
+//   });
+// }
+
+// export function getPercentages(n) {
+//   return getOffsets(n).map((value) => Math.round(value * 100));
+// }
+
+// export const walkingFrames = walking(200, -300, 42, -5, 62);
+
+const randomNumber = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+export const random = (min) => (max) => randomNumber(min, max);
+
+export const makeFrames = (n) => {
+  return Array.from({ length: n }, (_, i) => {
+    const low = random(25);
+    const high = random(35);
+
+    const top = i % 2 === 0 ? low(40) : high(50);
+    const bottom = 100 - top;
+
+    return `polygon(0 ${top}%, 100% ${top}%, 100% ${bottom}%, 0 ${bottom}%)`;
+  });
+};
+
+//////////////////////////////////////////////
+/////////                             ////////
+//////         walking animation         /////
+/////////                             ////////
+//////////////////////////////////////////////
+
+// export function createWalkingAnimation(start, stop) {
+//   const { direction, totalDistance } = calculateDistance(start, stop);
+
+//   return function getSteps(stepDistance) {
+//     const steps = Math.round(totalDistance / stepDistance);
+//     return function rotation(x, y) {
+//       return Array.from({ length: steps + 1 }, (_, i) => {
+//         const rotateX = i % 2 === 0 ? x : x * -1;
+//         const rotateY = i % 2 === 0 ? y : y + 5;
+//         const translateX =
+//           i === 0 ? start : i === steps ? stop : (start += stepDistance * direction);
+
+//         return `transform: translateX(${translateX}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+//       });
+//     };
+//   };
+// }
+
+function getOffsets(n) {
+  return Array.from({ length: n }, (_, i) => {
+    const step = 100 / (n - 1);
+    const offset = (step * i) / 100;
+    return Math.round(offset * 10000) / 10000;
+  });
+}
+
+function getPercentages(n) {
+  return getOffsets(n).map((value) => Math.round(value * 100));
+}
+
+// function calculateDistance(start, stop) {
+//   const a = Math.abs(start);
+//   const b = Math.abs(stop);
+//   const totalDistance = start < stop ? a + b : a - b;
+//   const direction = start < stop ? 1 : -1;
+
+//   return { totalDistance, direction };
+// }
+
+// function makeAnimationString(frames) {
+//   const offsets = getPercentages(frames.length);
+
+//   return frames.reduce((acc, value, i) => {
+//     acc += `
+//         ${offsets[i]}% {
+//             ${value}
+//         }`;
+//     return acc;
+//   }, '');
+// }
+
+// function makeAnimationFrames(frames) {
+//   const offsets = getOffsets(frames.length);
+//   return frames.map((frame, i) => {
+//     const [ key, value ] = frame.split(':');
+//     return {
+//       [key]: value.trim(),
+//     };
+//   });
+// }
+
+// function makeMotionFrames(frames) {
+//   return frames.reduce((acc, str, i) => {
+//     const [ key, value ] = str.split(':');
+//     acc[key] = acc[key] || [];
+//     acc[key].push(value.trim());
+//     return acc;
+//   }, {});
+// }
+
+// export function makeAnimation(frames) {
+//   const string = makeAnimationString(frames);
+//   const array = makeAnimationFrames(frames);
+//   const motion = makeMotionFrames(frames);
+
+//   return {
+//     css: string,
+//     frames: array,
+//     motion: motion,
+//   };
+// }
+
+// function makeCss(frames) {
+//     return frames.reduce((acc, value) => {
+//         acc += `${value.offset}% {${value.frame}}`;
+//         return acc;
+//     },'');
+// }
+
+// var walkLeft = makeCss(frames);
+// var walkRight = makeCss(reverse);
+
+// const createWalkingFrames = (start, stop) => {
+//   const total = Math.abs(start) + Math.abs(stop);
+//   const multiplier = start < stop ? 1 : -1;
+//   return (stepDistance) => {
+//     const steps = Math.round(total / stepDistance);
+//     return (x, y) => {
+//       return Array.from({ length: steps + 1 }, (_, i) => {
+//         const rotateX = i % 2 === 0 ? x : x * -1;
+//         const rotateY = i % 2 === 0 ? y : y + 5;
+//         const translateX =
+//           i === 0 ? start : i === steps ? stop : (start += stepDistance * multiplier);
+
+//         return `translateX(${translateX}px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+//       });
+//     };
+//   };
+// };
+
+function createWalkingAnimation(start, stop) {
+  const { direction, totalDistance } = calculateDistance(start, stop);
+
+  return function getSteps(stepDistance) {
+    const steps = Math.round(totalDistance / stepDistance);
+
+    return Array.from({ length: steps + 1 }, (_, i) => {
+      const x =
+        i === 0 ? start : i === steps ? stop : (start += stepDistance * direction);
+
+      return x;
+    });
+  };
+}
+
+function getMotionRotation(steps) {
+  return function rotateStart(start) {
+    return function rotateEnd(end) {
+      return Array.from({ length: steps }, (_, i) => {
+        return i % 2 === 0 ? start : end;
+      });
+    };
+  };
+}
+
+const translateX = createWalkingAnimation(500, 0)(32);
+const rotateX = getMotionRotation(translateX.length)(5)(-12);
+const rotateY = getMotionRotation(translateX.length)(-65)(-50);
+
+export const walking = {
+  start: {
+    x: translateX,
+    rotateX,
+    rotateY,
+  },
+};
+
+// export function setPoints(start) {
+//   return function setStop(stop) {
+//     return function getSteps(stepDistance) {
+//       let amount = start;
+//       const { direction, totalDistance } = calculateDistance(start, stop);
+//       const steps = Math.round(totalDistance / stepDistance);
+//       return Array.from({ length: steps + 1 }, (_, i) => {
+//         if (i === 0) return start;
+//         else if (i === steps) return stop;
+//         else amount += stepDistance * direction;
+//         return amount;
+//       });
+//     };
+//   };
+// }
+
+export const setPoints = (start) => (stop) => (stepDistance) => {
+  let amount = start;
+  const { direction, totalDistance } = calculateDistance(start, stop);
+  const steps = Math.round(totalDistance / stepDistance);
+  return Array.from({ length: steps + 1 }, (_, i) => {
+    amount += i === 0 ? 0 : i === steps ? stop - amount : stepDistance * direction;
+    return amount;
+  });
+};
+
+function calculateDistance(start, stop) {
+  const totalDistance = start < stop ? Math.abs(stop - start) : Math.abs(start - stop);
+  const direction = start < stop ? 1 : -1;
+
+  return { totalDistance, direction };
+}
+
+export const getWalkingAnimation = (start, stop) => {
+  return function (stepDistance) {
+    return function (x, y) {
+      const setForwardSteps = setPoints(start)(stop);
+      const setReverseSteps = setPoints(stop)(start);
+
+      const forwardSteps = setForwardSteps(stepDistance).map((value) => `${value}px`);
+      const reverseSteps = setReverseSteps(stepDistance).map((value) => `${value}px`);
+
+      const xAngle = Array.from({ length: forwardSteps.length }, (_, i) => {
+        const value = i % 2 === 0 ? x : x * -1;
+        return `${value}deg`;
+      });
+
+      const yAngleForward = Array(forwardSteps.length).fill(`${y}deg`);
+      const yAngleReverse = Array(reverseSteps.length).fill(`${y * -1}deg`);
+
+      const walkLeft = forwardSteps.map((step, i) => {
+        const rotateX = `rotateX(${xAngle[i]})`;
+        const rotateY = `rotateY(${yAngleForward[i]})`;
+        const translateX = `translateX(${step})`;
+
+        return `${translateX} ${rotateX} ${rotateY}`;
+      });
+
+      const walkRight = reverseSteps.map((step, i) => {
+        const rotateX = `rotateX(${xAngle[i]})`;
+        const rotateY = `rotateY(${yAngleReverse[i]})`;
+        const translateX = `translateX(${step})`;
+
+        return `${translateX} ${rotateX} ${rotateY}`;
+      });
+
+      const faceCameraOnLeft = [
+        walkLeft[walkLeft.length - 1],
+        `translateX(${reverseSteps[0]}) rotateX(5deg) rotateY(15deg)`,
+      ];
+
+      const faceCameraOnRight = [
+        walkRight[walkRight.length - 1],
+        `translateX(${forwardSteps[0]}) rotateX(5deg) rotateY(-15deg)`,
+      ];
+
+      const faceRight = [ faceCameraOnLeft[faceCameraOnLeft.length - 1], walkRight[0] ];
+      const faceLeft = [ faceCameraOnRight[faceCameraOnRight.length - 1], walkLeft[0] ];
+
+      const standStillLeft = Array(stepDistance).fill(faceCameraOnLeft[1]);
+      const standStillRight = Array(stepDistance).fill(faceCameraOnRight[1]);
+
+      const halfRight = walkRight.slice(0, Math.floor(walkRight.length / 2));
+      const halfReverseSeps = reverseSteps.slice(0, Math.floor(reverseSteps.length / 2));
+
+      const faceCameraFromHalf = [
+        halfRight[halfRight.length - 1],
+        `translateX(0px) rotateY(-15deg) rotateX(-3deg)`,
+      ];
+
+      return [
+        walkLeft,
+        faceCameraOnLeft,
+        standStillLeft,
+        faceRight,
+        halfRight,
+        faceCameraFromHalf,
+        // walkRight,
+        // faceCameraOnRight,
+        // standStillRight,
+        // faceLeft,
+      ].flat(Infinity);
+    };
+  };
+};
+
+// var random = (min) => (max) => {
+//   min = Math.ceil(min);
+//   max = Math.floor(max);
+//   return Math.floor(Math.random() * (max - min + 1) + min);
+// }
+
+export const getRandomPercentages = (steps = 10) => {
+  const start = 0;
+  const end = 100;
+
+  let currentMin = 0;
+  let currentMax = random(currentMin + 2)(steps - 1);
+
+  const percents = [ [ currentMin, currentMax ] ];
+
+  for (let i = start; i < end; i += steps) {
+    let min = currentMax + 1;
+    let max = random(min + steps / 2)(i + steps);
+    percents.push([ min, max ]);
+    currentMin = min;
+    currentMax = max;
+  }
+
+  percents[percents.length - 1][1] = 100;
+
+  return percents;
+};
+
+export const makeLookAround = (steps, min, max) => {
+  return getRandomPercentages(steps).map((arr, i) => {
+    const [ start, end ] = arr;
+    let value = i % 2 === 0 ? 0 : random(min)(max);
+    while (value === 0 && i % 2 !== 0) {
+      value = random(min)(max);
+    }
+
+    const css = `${start}%, ${end}% { transform: translateX(${value}px); }`;
+    return css;
+  });
 };

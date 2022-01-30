@@ -1,125 +1,190 @@
-import { getTextShadow } from '@utils/helpers';
-import { forwardRef, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components/macro';
+import { makeShadow } from '@utils/helpers';
+import { motion, AnimatePresence } from 'framer-motion';
+import { forwardRef } from 'react';
+import styled from 'styled-components';
 
-const Template = styled.div`
-  --scale: 7vw;
+const Wrapper = styled(motion.div)`
+  @supports (background-image: paint(something)) {
+    @property --gradPoint {
+      syntax: '<percentage>';
+      inherits: false;
+      initial-value: 40%;
+    }
+  }
 
-  --font-size: clamp(var(--size32), var(--scale), var(--size48));
+  --center: polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%);
+  --left: polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%);
+  --right: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%);
+  --top: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+  --bottom: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
+  --visible: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+
+  --gradPoint: 25%;
+
+  font-variation-settings: var(--fontVariationSettings);
+  font-family: var(--fontFamily);
+
+  position: relative;
+  width: 100%;
+  place-self: end;
+  transition: --gradPoint 0.2s linear;
+
+  will-change: font-variation-settings;
+`;
+
+// ${'' /* --scale: 3vw; */}
+// ${'' /* --font-size: clamp(var(--size18), var(--scale), var(--size32)); */}
+
+const Text = styled(motion.div)`
   --left: ${(p) => (p.centered ? 0 : undefined)};
 
-  position: absolute;
+  ${'' /* position: absolute; */}
   left: var(--left);
   right: var(--left);
   top: 0;
 
-  white-space: nowrap;
   margin: 0 auto;
   padding: 12px 4px;
 
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
   color: transparent;
 
-  will-change: font-variation-settings;
+  font-size: inherit;
+
+  transition: all 500ms linear;
 
   @media (max-width: 300px) {
     white-space: revert;
   }
 `;
 
-const Text = styled(Template)`
-  font-size: var(--font-size);
-  font-variation-settings: var(--recursive2);
-  font-family: Recursive;
-`;
-
 const Gradient = styled(Text)`
-  background-image: linear-gradient(var(--fancy-gradient));
-  background-size: 100% 100%;
+  background-image: var(--gradient);
+  &:after {
+    content: '${(p) => p.children}';
+    background-image: none;
+    text-shadow: var(--shadow);
+    position: absolute;
+    transform: translate(-100%);
+    z-index: -1;
+    transition: text-shadow 1s linear var(--delay);
+  }
 `;
 
-const Shadow = styled(Text)`
-  text-shadow: var(--welcome-shadow);
-  position: static;
-`;
+// const Gradient = styled(Text)`
+//   background-image: linear-gradient(var(--startColor), var(--endColor));
+//   background-size: 100% 100%;
+// `;
 
-const Wrapper = styled.div`
-  position: relative;
-  width: 100%;
+// const Shadow = styled(Text)`
+//   text-shadow: var(--shadow);
+//   -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
+//   position: static;
+// `;
 
-  --shadow-hue: 40;
-  --layers: 7;
-  --em: 0.008;
+// const container = {
+//   hidden: { clipPath: 'var(--center)', opacity: 0 },
+//   show: {
+//     clipPath: 'var(--visible)',
+//     opacity: 1,
+//     transition: {
+//       delay: 0,
+//       duration: 1,
+//     },
+//   },
+// };
 
-  --fancy-shadow: ${getTextShadow(7, 'var(--shadow-hue)', 0.008)};
-  --fancy-gradient: var(--welcome-gradient);
-`;
+// const gradient = {
+//   hidden: {
+//     // fontVariationSettings: 'var(--recursive7)',
+//     // backgroundSize: '400% 100%',
+//     // backgroundPosition: '-100% 0%',
+//     backgroundImage: 'none',
+//   },
+//   show: {
+//     // fontVariationSettings: 'var(--recursive8)',
+//     // backgroundSize: '100% 100%',
+//     // backgroundPosition: '0% 0%',
+//     backgroundImage: 'var(--gradient)',
+//     transition: {
+//       delay: 0,
+//       duration: 2,
+//     },
+//   },
+// };
 
-const gradientAnimation = [
-  {
+const gradient = {
+  hidden: {
+    '--gradient': 'none',
+    '--shadow': 'none',
+    '--delay': '1s',
     opacity: 0,
-    fontVariationSettings: 'var(--recursive7)',
-    backgroundSize: '100% 400%',
   },
-
-  {
+  show: {
+    '--gradient': 'var(--gradient-dark)',
+    '--shadow': 'var(--shadow-after)',
+    '--delay': '0s',
     opacity: 1,
-    fontVariationSettings: 'var(--recursive8)',
-    backgroundSize: '100% 100%',
+    transition: {
+      delay: 0,
+      duration: 1,
+      opacity: {
+        duration: 0.5,
+      },
+      '--delay': {
+        delay: 2,
+      },
+    },
   },
-];
-
-const shadowAnimation = [
-  {
-    opacity: 0,
-    fontVariationSettings: 'var(--recursive7)',
-    textShadow: 'var(--no-shadow)',
+  exit: {
+    '--gradient': 'var(--gradient-transparent)',
+    '--shadow': 'none',
   },
-
-  {
-    opacity: 1,
-    fontVariationSettings: 'var(--recursive8)',
-    textShadow: 'var(--welcome-shadow)',
-  },
-];
-
-const timing = {
-  duration: 2000,
-  easing: 'cubic-bezier(0.5, 1.05, 0.25, 1.15)',
-  fill: 'forwards',
 };
 
+// const shadow = {
+//   hidden: {
+//     textShadow: 'none',
+//   },
+//   show: {
+//     textShadow: 'var(--shadow)',
+//     transition: {
+//       delay: 0,
+//       duration: 2,
+//     },
+//   },
+//   exit: {
+//     textShadow: 'none',
+//   },
+// };
+
 const GradientText = forwardRef((props, ref) => {
-  const ref1 = useRef();
-  const ref2 = useRef();
-  const [ hasStarted, setHasStarted ] = useState(false);
-  const { isFinished, animationTiming } = props;
-
-  useEffect(() => {
-    if (animationTiming && !isFinished && !hasStarted) {
-      setHasStarted(true);
-      console.log(props.animationTiming);
-      const {
-        animationTiming: { endTime, duration },
-      } = props;
-
-      ref1.current.animate(shadowAnimation, {
-        ...timing,
-        delay: endTime - duration,
-      });
-      ref2.current.animate(gradientAnimation, {
-        ...timing,
-        delay: endTime - duration,
-      });
-    }
-  }, [ props, isFinished, animationTiming, hasStarted ]);
-
   return (
-    <Wrapper ref={ref}>
-      <Shadow ref={ref1}>{props.children}</Shadow>
-      <Gradient ref={ref2}>{props.children}</Gradient>
+    <Wrapper {...props} initial="hidden" animate="show">
+      <AnimatePresence>
+        <Gradient
+          key="shadow"
+          {...props}
+          variants={gradient}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+        >
+          {props.children}
+        </Gradient>
+        {/* <Gradient
+          key="gradient"
+          {...props}
+          variants={gradient}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+        >
+          {props.children}
+        </Gradient> */}
+      </AnimatePresence>
     </Wrapper>
   );
 });

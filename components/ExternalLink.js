@@ -1,32 +1,35 @@
-import Link from 'next/link';
-import styled from 'styled-components/macro';
+import NextLink from 'next/link';
+import styled from 'styled-components';
 import { Anchor } from './Anchor';
 
 export const ExternalLink = ({ href, children }) => {
   return (
-    <Link passHref href={href}>
+    <NextLink passHref href={href}>
       <A newTab href={href} rel="noopener">
         {children}
       </A>
-    </Link>
+    </NextLink>
   );
 };
 
-export const InternalLink = ({ href, children }) => {
+export const Link = ({ href, children, ...props }) => {
   return (
-    <Link passHref href={href}>
-      <A href={href}>{children}</A>
-    </Link>
+    <NextLink {...props} passHref href={href}>
+      <A {...props} href={href}>
+        {children}
+      </A>
+    </NextLink>
   );
 };
 
 const A = styled(Anchor)`
-  --link-color: deeppink;
+  --link-color: var(--dark-pink);
   font-weight: 700;
   color: var(--link-color);
 
   &:hover {
     --link-color: var(--pinkShadow);
+    text-decoration: none;
   }
 
   @media (prefers-color-scheme: dark) {

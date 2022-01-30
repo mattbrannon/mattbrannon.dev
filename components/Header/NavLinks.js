@@ -1,7 +1,7 @@
 import FancyLink from '@components/FancyLink';
 import { useCookie } from '@hooks/useCookie';
 import { useContext, useEffect, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 
 export default function NavLinks(props) {
   const { pathname } = useContext(ThemeContext);
@@ -30,7 +30,7 @@ export default function NavLinks(props) {
     }
   }, [ pathname ]);
 
-  const links = [ 'blog', 'apps', 'contact' ];
+  const links = [ 'blog', 'apps', 'misc', 'contact' ];
 
   return (
     <>

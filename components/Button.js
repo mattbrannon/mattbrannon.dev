@@ -1,4 +1,5 @@
-import styled from 'styled-components/macro';
+import { breakpoints } from '@constants/index';
+import styled from 'styled-components';
 
 export default function Button({ children, ...props }) {
   return (
@@ -17,18 +18,21 @@ export function InvertedButton({ children, ...props }) {
 }
 
 const Wrapper = styled.button`
-  --innerBg: var(--pinkBg);
+  ${'' /* --innerBg: var(--pinkBg);
   --innerHover: var(--pinkHover);
   --innerFocus: var(--pinkFocus);
   --innerShadow: var(--pinkShadow);
   --outerShadow: var(--pinkBg);
-  --outline: white;
+  --outline: white; */}
+
+  --innerBg: var(--medium-orange);
+  --innerHover: var(--orange);
+  --innerFocus: var(--yellow);
+  --innerShadow: darkorange;
+  --outerShadow: orange;
   padding: 3px 3px;
   border-radius: 10px;
   border: none;
-  min-width: 140px;
-  max-width: 200px;
-  width: 100%;
   font-family: system-ui, sans-serif;
   color: white;
   background: transparent;
@@ -41,6 +45,9 @@ const Wrapper = styled.button`
   }
   &:hover {
     cursor: pointer;
+  }
+  @media (max-width: ${breakpoints.mobile}px) {
+    user-select: none;
   }
 `;
 
@@ -59,6 +66,11 @@ const InnerButton = styled.span`
   &:focus,
   &:active {
     background: var(--innerFocus);
+  }
+  @media (max-width: ${breakpoints.mobile}px) {
+    user-select: none;
+    padding: 8px 16px;
+    font-size: var(--size18);
   }
 `;
 

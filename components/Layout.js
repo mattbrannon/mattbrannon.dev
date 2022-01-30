@@ -1,58 +1,38 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
-const Layout = styled.div`
-  min-height: 100%;
-  height: 100%;
+// const Layout = ({ children, ...props }) => {
+//   return <Main {...props}>{children}</Main>;
+// };
+
+const Layout = styled.main`
+  margin-top: var(--header-height);
+  margin-bottom: var(--header-height);
   display: grid;
-  ${'' /* margin-top: var(--header-height); */}
-  grid-template-columns: 1fr min(var(--max-width), 100%) 1fr;
-  grid-template-rows: auto 1fr auto;
-  ${'' /* padding-left: var(--breathing-room);
-  padding-right: var(--breathing-room); */}
-
+  grid-template-columns: auto min(var(--max-width), 100%) auto;
   & > * {
     grid-column: 2;
-    padding: 0 18px;
+    padding: 0 var(--breathing-room);
+  }
 
-    &:first-child {
-      padding: 0 0px;
-    }
-    &:last-child {
-      padding: 0 0;
-      grid-column: 1 / -1;
-    }
+  @media (max-width: 180px) {
+    --breathing-room: 0;
   }
 `;
-
-// export const FullBleed = styled.div`
-//   grid-column: 1 / -1;
-//   margin-left: calc(var(--breathing-room) * -1);
-//   margin-right: calc(var(--breathing-room) * -1);
-//   height: fit-content;
-// `;
 
 export const FullBleed = styled.div`
   grid-column: 1 / -1;
 `;
 
-export const TopRow = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-bottom: 32px;
-  margin-top: 32px;
-  @media (min-width: 480px) {
-    margin-top: 64px;
-  }
-  ${'' /* align-items: center; */}
-`;
+// export const BottomRow = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   flex-direction: column;
+//   margin-bottom: var(--breathing-room);
 
-export const TopRowLeftAligned = styled(TopRow)`
-  align-items: flex-start;
-`;
-
-export const BottomRow = styled(TopRow)`
-  margin-bottom: var(--breathing-room);
-`;
+//   margin-top: 32px;
+//   @media (min-width: 480px) {
+//     margin-top: 64px;
+//   }
+// `;
 
 export default Layout;

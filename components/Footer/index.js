@@ -2,11 +2,12 @@ import { FullBleed } from '@components/Layout';
 import VisuallyHidden from '@components/VisuallyHidden';
 import Image from 'next/image';
 import Link from 'next/link';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
+import { breakpoints } from '@constants/index';
 
 export default function Footer() {
   return (
-    <FooterContainer>
+    <FooterContainer as="footer">
       <FooterWrapper>
         <MaxWidthFlexContainer>
           <InnerWrapper>
@@ -59,14 +60,12 @@ export default function Footer() {
 }
 
 const FooterContainer = styled(FullBleed)`
-  margin-top: 64px;
-  min-height: var(--footer-height);
   display: grid;
+  ${'' /* margin-top: 96px; */}
 `;
 
 const FooterWrapper = styled.div`
   width: 100%;
-  z-index: 1;
   background: var(--footer-background);
 
   @media (prefers-color-scheme: dark) {
@@ -78,13 +77,7 @@ const FooterWrapper = styled.div`
 const MaxWidthFlexContainer = styled.div`
   max-width: 80ch;
   width: 100%;
-  height: 100%;
-
   margin: 0 auto;
-
-  ${'' /* display: flex;
-  align-items: center;
-  justify-content: center; */}
 `;
 
 const NavWrapper = styled.div`
@@ -103,8 +96,7 @@ const InnerWrapper = styled.div`
   align-items: center;
 
   gap: 16px;
-  padding: 16px;
-  ${'' /* background: var(--footer-background); */}
+  padding: 32px 0;
 `;
 
 const CopyrightWrapper = styled.div`
@@ -144,5 +136,8 @@ const LinkButton = styled.button`
     &:not(:last-child) {
       margin-right: 32px;
     }
+  }
+  @media (max-width: ${breakpoints.mobile}px) {
+    user-select: none;
   }
 `;

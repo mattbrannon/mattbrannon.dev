@@ -55,7 +55,6 @@ export default class MyDocument extends Document {
           />
 
           <link rel="stylesheet" href="/styles/fonts.css" />
-          <link rel="stylesheet" href="/styles/global.css" />
         </Head>
         <body>
           <Main />

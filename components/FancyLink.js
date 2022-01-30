@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { Anchor } from './Anchor';
 
 export default function FancyLink({ children, ...props }) {
@@ -41,7 +41,7 @@ const LinkWrapper = styled.span`
   background: transparent;
   border: none;
   font-family: Jost, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    Oxygen, Ubuntu, Cantarell, 'OpenSans', 'Helvetica Neue', sans-serif;
   font-weight: 525;
 `;
 

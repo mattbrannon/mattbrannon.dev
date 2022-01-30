@@ -23,9 +23,6 @@
       "plugins": [],
       "withNodeModules": false,
       "useCache": true
-    },
-    "import/resolver": {
-      "babel-module": {}
     }
   },
   "extends": [
@@ -37,7 +34,6 @@
   "plugins": ["module-resolver", "import", "react", "prettierx"],
   "rules": {
     "no-unused-expressions": "off",
-    "module-resolver/use-alias": 2,
     "no-var": "error",
     "no-unused-vars": "warn",
     "react/react-in-jsx-scope": "off",

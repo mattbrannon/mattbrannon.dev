@@ -1,13 +1,16 @@
+import GradientText from '@components/GradientText';
+
 export default function AboutMe() {
   return (
     <>
+      <GradientText>About Me</GradientText>
       <p>
         I've always had an interest in tech. When I was a little kid, my dad taught me how
         to work my way around an MS-DOS system. When I got a little older and had my first
         Mac, I started learning all about Unix systems and how to work from the command
         line.
-      </p>
-      <p>
+        <br />
+        <br />
         Since that time, I've had the opportunity to work with and learn from some
         wonderful people. A couple years ago, I was fortunate enough to join Hack
         Reactor's 38th cohort in Austin, Tx. After graduating, I stayed on as a resident

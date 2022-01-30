@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { InvertedButton as Button } from './Button';
 
 export default function ContactForm() {
@@ -131,7 +131,7 @@ const Input = styled.input`
   min-width: 0;
   width: 100%;
   font-size: var(--size16);
-  font-family: 'Open Sans', system-ui, sans-serif;
+  font-family: 'OpenSans', system-ui, sans-serif;
   flex-basis: 80%;
 
   transition: box-shadow 0.2s ease-in-out;

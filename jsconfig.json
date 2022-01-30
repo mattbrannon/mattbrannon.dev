@@ -2,14 +2,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      "@articles/*": ["./articles/*"],
       "@components/*": ["./components/*"],
       "@hooks/*": ["./hooks/*"],
       "@constants/*": ["./constants/*"],
+      "@lib/*": ["./lib/*"],
       "@public/*": ["./public/*"],
       "@utils/*": ["./utils/*"],
       "@animations/*": ["./animations/*"],
-      "@styles/*": ["./styles/*"],
-      "@styled-components": ["./node_modules/styled-components/macro/*"]
+      "@styles/*": ["./styles/*"]
     }
   }
 }

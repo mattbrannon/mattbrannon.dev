@@ -1,7 +1,7 @@
 import VisuallyHidden from '@components/VisuallyHidden';
 import Link from 'next/link';
 import { useContext, useEffect, useRef, useState } from 'react';
-import styled, { css, ThemeContext } from 'styled-components/macro';
+import styled, { css, ThemeContext } from 'styled-components';
 /**
  *
  * * Mobile navigation menu
@@ -10,7 +10,7 @@ import styled, { css, ThemeContext } from 'styled-components/macro';
 
 export default function MobileNav() {
   const context = useContext(ThemeContext);
-  const labels = [ 'Home', 'Blog', 'Apps', 'Contact' ];
+  const labels = [ 'Home', 'Blog', 'Apps', 'Misc', 'Contact' ];
   const [ isFirstPaint, setIsFirstPaint ] = useState(true);
   const ref = useRef();
 

@@ -1,14 +1,33 @@
 {
   "files.autoSave": "onFocusChange",
+  "files.exclude": {
+    "*babel*": false,
+    "*eslint*": false,
+    "*git*": false,
+    "*jsconfig*": false,
+    "*netlify*": false,
+    "*next*": false,
+    "*package*": false,
+    "*prettier*": false,
+    "node_modules": false,
+    "README.md": false,
+    "renovate.json": false
+  },
+
+  // "files.associations": {
+  //   "*.mdx": "markdown"
+  // },
+
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "editor.formatOnSave": true,
   "eslint.format.enable": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true
+    "source.organizeImports": false,
+    "source.fixAll.eslint": true
   },
   "editor.acceptSuggestionOnCommitCharacter": false,
   "eslint.options": {
-    "extensions": [".js", ".jsx", ".mdx", ".ts", ".tsx"]
+    "extensions": [".js", ".jsx", ".ts", ".tsx"]
   },
   "eslint.validate": [
     "javascript",
@@ -28,6 +47,19 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
+  "[markdown]": {
+    "editor.unicodeHighlight.ambiguousCharacters": false,
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[mdx]": {
+    "editor.wordWrap": "bounded",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.autoClosingQuotes": "never"
+  },
+
   "prettier.requireConfig": false,
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
@@ -51,11 +83,11 @@
   "emmet.triggerExpansionOnTab": true,
   "[dotenv]": {
     "editor.defaultFormatter": null
-  },
+  }
 
-  "path-intellisense.mappings": {
-    "@components": "${workspaceRoot}/components",
-    "@hooks": "${workspaceRoot}/hooks"
-  },
-  "path-intellisense.absolutePathToWorkspace": true
+  // "path-intellisense.mappings": {
+  //   "@components": "${workspaceRoot}/components",
+  //   "@hooks": "${workspaceRoot}/hooks"
+  // },
+  // "path-intellisense.absolutePathToWorkspace": true
 }

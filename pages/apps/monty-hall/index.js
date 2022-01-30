@@ -1,14 +1,20 @@
 import AppTitle from '@components/AppTitle';
 import { InvertedButton as Button } from '@components/Button';
-import DocumentHead from '@components/Head';
+import Head from '@components/Head';
 import Picture from '@components/Image';
-import { BottomRow, FullBleed } from '@components/Layout';
+import Layout from '@components/Layout';
 import PageButtons from '@components/PageButtons';
-import SectionHeading from '@components/SectionHeading';
+import { H2 } from '@components/Headings';
 import SideNote from '@components/SideNote';
 import { getImageConfig } from '@utils/images';
 import { forwardRef, useEffect, useRef, useState } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
+import Image from 'next/image';
+import image1 from '/public/images/monty-hall/monty-hall1.png';
+import image2 from '/public/images/monty-hall/monty-hall2.png';
+import image3 from '/public/images/monty-hall/monty-hall3.png';
+import image4 from '/public/images/monty-hall/monty-hall4.png';
+import Text from '@components/Text';
 
 export default function MontyHallPage({ config }) {
   const links = {
@@ -18,10 +24,10 @@ export default function MontyHallPage({ config }) {
   const sources = [ '/videos/demos/montyhall.mp4' ];
 
   return (
-    <>
-      <DocumentHead
+    <Layout>
+      <Head
         title="Monty Hall Experiment"
-        desc="Monty Hall Experiment discussion"
+        description="Monty Hall Experiment discussion"
       />
 
       <AppTitle title="Monty Hall Experience" sources={sources} links={links}>
@@ -29,15 +35,15 @@ export default function MontyHallPage({ config }) {
       </AppTitle>
 
       <div>
-        <SectionHeading>What is the Monty Hall Problem?</SectionHeading>
+        <H2>What is the Monty Hall Problem?</H2>
 
         <MiniGame />
         {/* <Spacer axis="vertical" size={32} /> */}
       </div>
 
       <div>
-        <SectionHeading>Motivation:</SectionHeading>
-        <p>
+        <H2>Motivation:</H2>
+        <Text>
           Years ago when I first started learning javascript, one of the first things I
           made was a little simulation of the monty hall problem. You'd tell it how many
           rounds to play and whether to switch doors or stick with the original. Then,
@@ -45,10 +51,8 @@ export default function MontyHallPage({ config }) {
           lost. It was a cool program but it had no user interface. Once I became a little
           more proficient at frontend development, I decided to go ahead and create an
           actual game out of the simulation I'd programmed years ago.
-        </p>
-      </div>
+        </Text>
 
-      <div>
         <SideNote>
           If you played the little mini game above and got the wrong answer, don't feel
           bad. When this question was first popularized, many people including
@@ -58,103 +62,89 @@ export default function MontyHallPage({ config }) {
         </SideNote>
       </div>
 
-      <ImageWrapper>
-        <Picture sources={config.keep} alt="player chooses to stay" />
-        <Picture sources={config.swap} alt="player chooses to swap" />
-      </ImageWrapper>
       <div>
-        <SectionHeading>Frontend: React</SectionHeading>
-        <p>
+        <H2>Frontend: React</H2>
+        <Text>
           One of the things that surprised me when making this game was the amount of
           state I needed to keep track of. Which round are we on? Has the player chosen a
           door? Which door have they chosen? What's their total score? These are just a
           few examples of the state we keep track of during the game. Luckily, React makes
           keeping track of application state pretty easy.
-        </p>
+        </Text>
+        <FlexContainer>
+          <ResponsiveImage src={image1} alt="image1" />
+          <ResponsiveImage src={image2} alt="image2" />
+        </FlexContainer>
+        <div style={{ height: '4px' }}></div>
+        <FlexContainer>
+          <ResponsiveImage src={image3} alt="image3" />
+        </FlexContainer>
       </div>
 
-      <BottomRow>
-        <PageButtons prev="/apps/elbowroom" next="/apps/lets-make-a-gif" />
-      </BottomRow>
-    </>
+      <PageButtons prev="/apps/elbowroom" next="/apps/lets-make-a-gif" />
+    </Layout>
   );
 }
 
 function MiniGame() {
   const [ isCorrect, setIsCorrect ] = useState(null);
-  const ref1 = useRef();
-  const ref2 = useRef();
 
-  useEffect(() => {
-    const fadingOut = [ { opacity: 1 }, { opacity: 0 } ];
-    const fadingIn = [ { opacity: 0 }, { opacity: 1 } ];
-    const timing = { easing: 'ease', fill: 'both', duration: 1000 };
-    if (isCorrect !== null) {
-      ref1.current.animate(fadingOut, { ...timing, duration: 400 });
-      // fadeOut.pause();
-      // fadeOut.finished.then(() => {});
-      ref2.current.animate(fadingIn, { ...timing, duration: 200 });
-    }
-  }, [ isCorrect ]);
-
-  const Results = forwardRef((props, ref) => {
-    const { isCorrect } = props;
+  const Results = ({ isCorrect }) => {
     const display =
       isCorrect !== null
         ? isCorrect
           ? "That's correct!"
           : "Sorry, that's incorrect"
-        : isCorrect;
+        : null;
 
     return (
-      <ResultContainer ref={ref}>
+      <ResultContainer>
         <Result>{display}</Result>
         <div>
           <Small>You have a 67% chance of winning if you switch doors</Small>
         </div>
       </ResultContainer>
     );
-  });
+  };
 
-  Results.displayName = 'showResult';
+  const Buttons = ({ isCorrect }) => {
+    if (isCorrect === null) {
+      return (
+        <ButtonGroup>
+          <FancyButton onClick={() => setIsCorrect(true)}>Yes</FancyButton>
+          <FancyButton onClick={() => setIsCorrect(false)}>No</FancyButton>
+        </ButtonGroup>
+      );
+    }
+    else {
+      return <Results isCorrect={isCorrect} />;
+    }
+  };
 
-  const Buttons = forwardRef((props, ref) => {
+  const Question = ({ isCorrect }) => {
     return (
-      <ButtonGroup ref={ref}>
-        <FancyButton onClick={() => setIsCorrect(true)}>Yes</FancyButton>
-        <FancyButton onClick={() => setIsCorrect(false)}>No</FancyButton>
-      </ButtonGroup>
+      <div>
+        <SideNote>
+          Suppose you're on a game show, and you're given the choice of three doors:
+          Behind one door is a car; behind the others, goats. You pick a door, say No. 1,
+          and the host, who knows what's behind the doors, opens another door, say No. 3,
+          which has a goat. He then says to you, "Do you want to pick door No. 2?"
+          <br />
+          <br />
+          <b> Is it to your advantage to switch your choice?</b>
+        </SideNote>
+
+        <Buttons isCorrect={isCorrect} />
+      </div>
     );
-  });
+  };
 
-  Buttons.displayName = 'Buttons';
-
-  return (
-    <div>
-      <SideNote>
-        Suppose you're on a game show, and you're given the choice of three doors: Behind
-        one door is a car; behind the others, goats. You pick a door, say No. 1, and the
-        host, who knows what's behind the doors, opens another door, say No. 3, which has
-        a goat. He then says to you, "Do you want to pick door No. 2?"
-        <br />
-        <br />
-        <b> Is it to your advantage to switch your choice?</b>
-      </SideNote>
-
-      <ButtonSection>
-        <Buttons ref={ref1} />
-        <Results isCorrect={isCorrect} ref={ref2} />
-      </ButtonSection>
-    </div>
-  );
+  return <Question isCorrect={isCorrect} />;
 }
 
 const ResultContainer = styled.div`
-  ${'' /* height: 10px; */}
-  opacity: 0;
-  position: absolute;
   width: 100%;
-  margin: 32px auto;
+  min-height: 140px;
 `;
 
 const Result = styled.div`
@@ -176,6 +166,8 @@ const ButtonSection = styled.section`
   ${'' /* background: red; */}
   position: relative;
   display: grid;
+  place-items: center;
+  width: 100%;
 `;
 
 const FancyButton = styled(Button)`
@@ -184,7 +176,6 @@ const FancyButton = styled(Button)`
 `;
 
 const ButtonGroup = styled.div`
-  position: absolute;
   display: flex;
   gap: clamp(16px, 5vw, 32px);
   align-items: center;
@@ -197,13 +188,8 @@ const ButtonGroup = styled.div`
   padding: 32px 0;
   margin: auto;
   width: 100%;
+  min-height: 140px;
   ${'' /* height: 160px; */}
-`;
-
-const ImageWrapper = styled(FullBleed)`
-  max-width: 1600px;
-  margin: 0 auto;
-  display: flex;
 `;
 
 export async function getStaticProps() {
@@ -214,3 +200,25 @@ export async function getStaticProps() {
     },
   };
 }
+
+const ImageContainer = styled.div`
+  display: block;
+  width: 100%;
+`;
+
+const ResponsiveImage = ({ ...props }) => {
+  return (
+    <ImageContainer>
+      <Image {...props} layout="responsive" alt={props.alt} />
+    </ImageContainer>
+  );
+};
+
+const GifWrapper = styled.div`
+  height: 280px;
+`;
+
+const FlexContainer = styled.div`
+  display: flex;
+  gap: 4px;
+`;

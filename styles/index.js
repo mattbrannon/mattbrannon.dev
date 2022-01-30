@@ -1,4 +1,4 @@
-import { fonts } from '@constants';
+import { fonts } from '../constants';
 import { createGlobalStyle } from 'styled-components';
 
 export const FontSizes = createGlobalStyle`

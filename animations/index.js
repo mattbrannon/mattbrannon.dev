@@ -302,18 +302,6 @@ const borderRadius = keyframes`
   }
 `;
 
-const init = keyframes`
-  0%{
-    clip-path: circle(0% at 50% 50%);
-    transform: translate(0, 10vh);
-  }
-  100%{
-    clip-path: circle(var(--size) at 50% 50%);
-    transform: translate(0, 0vh);
-  }
-
-`;
-
 export const moveIn = keyframes`
   0% {
     margin-top: 50px;
@@ -331,19 +319,6 @@ const scaleIn = keyframes`
   }
   100% {
     transform: scale(1);
-  }
-`;
-
-const ripple = keyframes`
-  0% {
-    transform: scale3d(0, 0, 0);
-  }
-  50%,
-  100% {
-    transform: scale3d(1, 1, 1);
-  }
-  100% {
-    opacity: 0;
   }
 `;
 
@@ -367,67 +342,6 @@ const change = keyframes`
     bottom: 0;
   }
 `;
-
-const materia = keyframes`
-  from {
-    background-size: 1000% 1000%;
-    background-position: 0% 0%;
-    background: linear-gradient(to right, lightblue, blue);
-    clip-path: circle(var(--size) at 50% 50%);
-  }
-  to {
-    background-size: 100% 100%;
-    background-position: 50% 50%;
-
-    clip-path: circle(100% at 50% 50%);
-    background: linear-gradient(to right, lightblue, blue);
-  }
-`;
-
-// export const lookAround = keyframes`
-//     0%,5% {
-//       transform: translateX(0%);
-//     }
-
-//     6%,15% {
-//       transform: translateX(45%);
-//     }
-
-//     16%,25% {
-//       transform: translateX(0%);
-//     }
-
-//     26%,35% {
-//       transform: translateX(35%);
-//     }
-
-//     36%, 40% {
-//       transform: translateX(0%);
-//     }
-
-//     41%, 55%{
-//       transform: translateY(50%);
-//     }
-
-//     56%, 65%{
-//       transform: translateX(0%);
-//     }
-
-//     66%, 80%{
-//       transform: translateX(40%);
-//     }
-
-//     81%, 85%{
-//       transform: translateX(0%);
-//     }
-//     86%, 96%{
-//       transform: translateX(-37%);
-//     }
-
-//     97%, 100%{
-//       transform: translateX(0%);
-//     }
-// `;
 
 export const lookAround = keyframes`
     0%,3% {
@@ -492,6 +406,84 @@ export const lookAround = keyframes`
     }
 `;
 
+export const lookAround3 = keyframes`
+    0%,7% {
+      transform: translateX(0%);
+    }
+
+    8%,13% {
+      transform: translateX(-25%);
+    }
+
+    14%, 21% {
+      transform: translateX(0%);
+    }
+
+    22%, 28% {
+      transform: translateX(35%);
+    }
+    
+    29%, 37% {
+      transform: translateX(0%);
+    }
+
+    38%, 46%{
+      transform: translateX(-20%);
+    }
+
+    47%, 51%{
+      transform: translateX(0%);
+    }
+    
+    52%, 60%{
+      transform: translateY(-15%);
+    }
+
+    61%, 66%{
+      transform: translateY(0%);
+    }
+    67%, 73%{
+      transform: translateX(30%);
+    }
+
+    74%, 80%{
+      transform: translateX(0%);
+    }
+    81%, 84% {
+      transform: translateY(30%);
+    }
+    85%, 90% {
+      transform: translateY(0%);
+    }
+    91%, 95%{
+      transform: translateY(36%)
+    }
+    96%, 100% {
+      tranform: translateX(0%);
+    }
+`;
+
+export const lookAround2 = keyframes`
+0%, 2% { transform: translateY(0%); }
+3%, 6% { transform: translateX(10%); }
+7%, 12% { transform: translateX(0%); }
+13%, 16% { transform: translateX(22%); }
+17%, 24% { transform: translateY(-17%); }
+25%, 28% { transform: translateX(20%); }
+29%, 35% { transform: translateX(0%); }
+36%, 40% { transform: translateX(27%); }
+41%, 46% { transform: translateY(0%); }
+47%, 53% { transform: translateX(10%); }
+54%, 59% { transform: translateX(-23%); }
+60%, 63% { transform: translateX(24%); }
+64%, 72% { transform: translateY(0%); }
+73%, 77% { transform: translateX(23%); }
+78%, 83% { transform: translateX(0%); }
+84%, 88% { transform: translateX(18%); }
+89%, 95% { transform: translateY(-18%); }
+96%, 100% { transform: translateX(10%); }
+`;
+
 export const eyesWide = keyframes`
   0% { 
     padding: 22px;
@@ -506,8 +498,66 @@ export const eyesWide = keyframes`
   }
 `;
 
-const goofySmile = keyframes`
+export const blink = keyframes`
   0% {
+    margin: -60px;
+  }
+  50% {
+    margin: 0;
+  }
+
+  100% {
+    margin: -60px;
+  }
+`;
+
+export const shocked = keyframes`
+  from {
+    border-radius: 4px 4px 6px 6px;
+    padding: 0px 0;
+    margin: -6px 0;
+    width: 50%;
+  }
+  to {
+    border-radius: 18px 18px 14px 14px;
+    padding: 12px 0;
+    margin: -12px 0;
+    width: 50%;
+  }
+`;
+
+export const smile = keyframes`
+  from {
+    --mouth-padding: 2px;
+    border-radius: 4px 4px 6px 6px;
+    ${'' /* padding: 0px 0; */}
+    
+    ${'' /* width: 70%; */}
+  }
+  to {
+    --mouth-padding: 6px;
+    border-radius: 4px 4px 24px 24px;
+    ${'' /* padding: 6px 0; */}
+    
+    ${'' /* width: 70%; */}
+  }
+`;
+
+export const frown = keyframes`
+  from {
+    border-radius: 4px 4px 6px 6px;
+    padding: 0px 0;
+  }
+  to {
+    border-radius: 24px 24px 6px 6px;
+    padding: 6px 0;
+    margin-bottom: -6px; 
+  }
+`;
+
+export const goofySmile = keyframes`
+  0% {
+    padding: 1px 0;
     border-radius: 24px 24px 24px 24px;
     clip-path: polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%);
   }
@@ -515,13 +565,34 @@ const goofySmile = keyframes`
     clip-path: polygon(0% 40%, 100% 40%, 100% 90%, 0% 90%);
   }
   100%{
+    padding: 8px 0;
     borderRadius: 6px 6px 24px 24px;
     clip-path: polygon(4% 20%, 100% 20%, 80% 90%, 6% 80%);
 
     ${'' /* clip-path: polygon(0% 20%, 100% 20%, 80% 100%, 0% 80%); */}
   }
-
 `;
+
+// export const talk = keyframes`
+//   0%{
+//     clip-path: polygon(0 45%, 100% 45%, 100% 55%, 0 55%);
+//   }
+//   20%{
+//     clip-path: polygon(0 30%, 100% 30%, 100% 70%, 0 70%);
+//   }
+//   40%{
+//     clip-path: polygon(0 40%, 100% 40%, 100% 60%, 0 60%);
+//   }
+//   60%{
+//     clip-path: polygon(0 33%, 100% 33%, 100% 67%, 0 67%);
+//   }
+//   80%{
+//     clip-path: polygon(0 47%, 100% 47%, 100% 53%, 0 53%);
+//   }
+//   100%{
+//     clip-path: polygon(0 40%, 100% 40%, 100% 60%, 0 60%);
+//   }
+// `;
 
 export const textAnimation = keyframes`
   0% {
@@ -585,7 +656,6 @@ const moveLeft = keyframes`
 const raiseCardLight = keyframes`
   to {
     background: hsl(223 35% 85% / 0.5);
-    ${'' /* transform: perspective(500px) translateZ(12px); */}
     box-shadow:
        2px 2px 4px hsl(210 5% 38% / 0.1),
        3px 3px 6px hsl(210 5% 38% / 0.1),
@@ -601,9 +671,7 @@ const raiseCardLight = keyframes`
 
 const raiseCardDark = keyframes`
   to {
-    ${'' /* background: hsl(223 5% 15% / 0.5); */}
     background: #292929;
-    ${'' /* transform: perspective(500px) translateZ(12px); */}
     box-shadow:
        2px 2px 4px hsl(210 5% 5% / 0.3),
        3px 3px 6px hsl(210 5% 5% / 0.3),
@@ -648,15 +716,12 @@ export const fadeIn = keyframes`
 `;
 
 export const animations = {
-  init,
   borderRadius,
   moveDown,
   moveUp,
   moveRight,
   moveLeft,
-  materia,
   scaleIn,
-  ripple,
   change,
   expand,
   contract,
