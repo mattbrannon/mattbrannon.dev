@@ -11,7 +11,9 @@ export default function AppCard({ ...props }) {
       <Link passHref href={href}>
         <Wrapper>
           <Heading before={title}>
-            <A href={href}>{title}</A>
+            <A href={href}>
+              <Span>{title}</Span>
+            </A>
           </Heading>
           <Small>{description}</Small>
 
@@ -23,35 +25,55 @@ export default function AppCard({ ...props }) {
 }
 
 const Card = styled.div`
-  margin 16px 0 64px 0;
+  margin: 16px 0 64px 0;
   @media (max-width: ${breakpoints.mobile}px) {
     margin: 16px 0 32px 0;
   }
 `;
 
+const Wrapper = styled.div`
+  @media (max-width: ${breakpoints.tablet}px) {
+    text-align: center;
+  }
+`;
+
+const Heading = styled.h4`
+  font-family: Recursive, sans-serif;
+  font-variation-settings: var(--recursive4);
+  width: fit-content;
+  transition: all 10ms;
+  font-size: var(--size40);
+  font-size: clamp(var(--size24), 3vw, var(--size40));
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    font-size: var(--size21);
+  }
+
+  @media (max-width: ${breakpoints.tablet}px) {
+    margin: auto;
+  }
+`;
+
+const Small = styled.small`
+  font-size: clamp(var(--size14), 3vw, var(--size21));
+  font-variation-settings: 'wdth' 75, 'wght' 555;
+  margin-bottom: 23px;
+  display: inline-block;
+`;
+
 const A = styled(Anchor)`
+  &:hover {
+    text-decoration: none;
+  }
+`;
+
+const Span = styled.span`
   display: block;
   color: var(--pinkBg);
   font-size: clamp(var(--size24), 7vw, var(--size48));
   line-height: 1.2;
 
-  ${'' /* --stroke: black;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
-  --amount: 0.065em; */}
-  ${'' /* 
-  &:before {
-    content: "${(p) => p.children}";
-    font-family: Recursive, sans-serif;
-    font-variation-settings: var(--recursive4);
-    width: fit-content;
-    font-size: inherit;
-    position: absolute;
-    top: 0;
-    z-index: -1;
-    -webkit-text-stroke: var(--amount) var(--stroke);
-    transition: font-variation-settings 0.2s ease;
-  } */}
-
-   &:hover {
+  &:hover {
     color: var(--dark-pink);
     --amount: 3px;
     --stroke: hsl(0deg, 0%, 0%, 1);
@@ -76,30 +98,6 @@ const A = styled(Anchor)`
     &:hover {
       color: orange;
     }
-  }
-`;
-
-const Small = styled.small`
-  font-size: clamp(var(--size14), 3vw, var(--size21));
-  font-variation-settings: 'wdth' 75, 'wght' 555;
-  margin-bottom: 23px;
-  display: inline-block;
-`;
-
-const Heading = styled.h4`
-  font-family: Recursive, sans-serif;
-  font-variation-settings: var(--recursive4);
-  width: fit-content;
-  transition: all 10ms;
-  font-size: var(--size40);
-  font-size: clamp(var(--size24), 3vw, var(--size40));
-
-  @media (max-width: ${breakpoints.mobile}px) {
-    font-size: var(--size21);
-  }
-
-  @media (max-width: ${breakpoints.tablet}px) {
-    margin: auto;
   }
 `;
 
@@ -139,12 +137,6 @@ const Heading = styled.h4`
 //   }
 // `;
 
-const Wrapper = styled.div`
-  @media (max-width: 795px) {
-    text-align: center;
-  }
-`;
-
 // @media (prefers-color-scheme: dark) {
 //   color: var(--orange2);
 //   &:hover {
@@ -167,3 +159,53 @@ const Wrapper = styled.div`
 //     color: green;
 //   }
 // }
+
+// ${'' /* --stroke: black;
+// --amount: 0.065em; */}
+// ${'' /*
+// &:before {
+//   content: "${(p) => p.children}";
+//   font-family: Recursive, sans-serif;
+//   font-variation-settings: var(--recursive4);
+//   width: fit-content;
+//   font-size: inherit;
+//   position: absolute;
+//   top: 0;
+//   z-index: -1;
+//   -webkit-text-stroke: var(--amount) var(--stroke);
+//   transition: font-variation-settings 0.2s ease;
+// } */}
+
+// const A = styled(Anchor)`
+//   display: block;
+//   color: var(--pinkBg);
+//   font-size: clamp(var(--size24), 7vw, var(--size48));
+//   line-height: 1.2;
+
+//   &:hover {
+//     color: var(--dark-pink);
+//     --amount: 3px;
+//     --stroke: hsl(0deg, 0%, 0%, 1);
+//     &:before {
+//       -webkit-text-stroke: var(--amount) var(--stroke);
+//       transition: all 0.2s ease;
+//     }
+//   }
+
+//   transition: all 0.2s ease;
+
+//   &:visited {
+//     color: currentColor;
+//   }
+
+//   @media (max-width: ${breakpoints.mobile}px) {
+//     font-size: clamp(1.15rem, 1rem + 2vw, 1.5rem);
+//   }
+
+//   @media (prefers-color-scheme: dark) {
+//     color: var(--orange2);
+//     &:hover {
+//       color: orange;
+//     }
+//   }
+// `;

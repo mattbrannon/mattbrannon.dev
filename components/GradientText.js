@@ -1,4 +1,4 @@
-import { makeShadow } from '@utils/helpers';
+import { makeShadow, pxToEm } from '@utils/helpers';
 import { motion, AnimatePresence } from 'framer-motion';
 import { forwardRef } from 'react';
 import styled from 'styled-components';
@@ -62,81 +62,40 @@ const Text = styled(motion.div)`
 
 const Gradient = styled(Text)`
   background-image: var(--gradient);
+  
   &:after {
     content: '${(p) => p.children}';
-    background-image: none;
+    ${'' /* background-image: none; */}
     text-shadow: var(--shadow);
     position: absolute;
-    transform: translate(-100%);
+    transform: translateX(-100%);
     z-index: -1;
-    transition: text-shadow 1s linear var(--delay);
+    -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
+    transition: text-shadow 1s linear var(--delay), -webkit-text-stroke 1s linear var(--delay);
   }
 `;
-
-// const Gradient = styled(Text)`
-//   background-image: linear-gradient(var(--startColor), var(--endColor));
-//   background-size: 100% 100%;
-// `;
-
-// const Shadow = styled(Text)`
-//   text-shadow: var(--shadow);
-//   -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
-//   position: static;
-// `;
-
-// const container = {
-//   hidden: { clipPath: 'var(--center)', opacity: 0 },
-//   show: {
-//     clipPath: 'var(--visible)',
-//     opacity: 1,
-//     transition: {
-//       delay: 0,
-//       duration: 1,
-//     },
-//   },
-// };
-
-// const gradient = {
-//   hidden: {
-//     // fontVariationSettings: 'var(--recursive7)',
-//     // backgroundSize: '400% 100%',
-//     // backgroundPosition: '-100% 0%',
-//     backgroundImage: 'none',
-//   },
-//   show: {
-//     // fontVariationSettings: 'var(--recursive8)',
-//     // backgroundSize: '100% 100%',
-//     // backgroundPosition: '0% 0%',
-//     backgroundImage: 'var(--gradient)',
-//     transition: {
-//       delay: 0,
-//       duration: 2,
-//     },
-//   },
-// };
 
 const gradient = {
   hidden: {
     '--gradient': 'none',
     '--shadow': 'none',
     '--delay': '1s',
+    '--strokeColor': 'none',
+    '--strokeWidth': 0,
     opacity: 0,
   },
-  show: {
-    '--gradient': 'var(--gradient-dark)',
-    '--shadow': 'var(--shadow-after)',
-    '--delay': '0s',
-    opacity: 1,
-    transition: {
-      delay: 0,
-      duration: 1,
-      opacity: {
-        duration: 0.5,
-      },
-      '--delay': {
-        delay: 2,
-      },
-    },
+  show: ({ startColor, endColor, shadow, strokeColor, strokeWidth }) => {
+    const gradient = `linear-gradient(${startColor}, ${endColor})`;
+
+    return {
+      '--gradient': gradient,
+      '--shadow': shadow,
+      '--delay': '0s',
+      '--strokeColor': strokeColor,
+      '--strokeWidth': pxToEm(strokeWidth) + 'em',
+      '--strokeDelay': '0s',
+      opacity: 1,
+    };
   },
   exit: {
     '--gradient': 'var(--gradient-transparent)',
@@ -144,46 +103,28 @@ const gradient = {
   },
 };
 
-// const shadow = {
-//   hidden: {
-//     textShadow: 'none',
-//   },
-//   show: {
-//     textShadow: 'var(--shadow)',
-//     transition: {
-//       delay: 0,
-//       duration: 2,
-//     },
-//   },
-//   exit: {
-//     textShadow: 'none',
-//   },
-// };
-
 const GradientText = forwardRef((props, ref) => {
+  const startColor = props.startColor;
+  const endColor = props.endColor;
+  const shadow = props.shadow;
+  const strokeColor = props.strokeColor;
+  const strokeWidth = props.strokeWidth;
+
   return (
     <Wrapper {...props} initial="hidden" animate="show">
       <AnimatePresence>
         <Gradient
+          ref={ref}
           key="shadow"
           {...props}
           variants={gradient}
           initial="hidden"
           animate="show"
           exit="exit"
+          custom={{ startColor, endColor, shadow, strokeColor, strokeWidth }}
         >
           {props.children}
         </Gradient>
-        {/* <Gradient
-          key="gradient"
-          {...props}
-          variants={gradient}
-          initial="hidden"
-          animate="show"
-          exit="exit"
-        >
-          {props.children}
-        </Gradient> */}
       </AnimatePresence>
     </Wrapper>
   );
@@ -192,3 +133,14 @@ const GradientText = forwardRef((props, ref) => {
 GradientText.displayName = 'GradientText';
 
 export default GradientText;
+
+// {/* <Gradient
+//   key="gradient"
+//   {...props}
+//   variants={gradient}
+//   initial="hidden"
+//   animate="show"
+//   exit="exit"
+// >
+//   {props.children}
+// </Gradient> */}

@@ -25,42 +25,82 @@ export function FontControls({ ...props }) {
   return (
     <ControlsLayout>
       <ControlsContainer>
-        <Select value={state.font} onChange={handleFontSelection}>
-          {displayOptions()}
-        </Select>
+        <Group>
+          <Heading>Font Family</Heading>
+          <Select value={state.font} onChange={handleFontSelection}>
+            {displayOptions()}
+          </Select>
+        </Group>
+        <Group>
+          <Heading>Text Color</Heading>
+          <ColorInput type="color" name="start color" {...props} />
+          <ColorInput type="color" name="end color" {...props} />
+        </Group>
 
-        <ColorInput type="color" name="start color" {...props} />
-        <ColorInput type="color" name="end color" {...props} />
+        <Group>
+          <Heading>Shadow Color</Heading>
+          <ColorInput type="color" name="shadow color start" {...props} />
+          <ColorInput type="color" name="shadow color end" {...props} />
+        </Group>
+        <Group>
+          <Heading>Shadow Properties</Heading>
+          <RangeSlider type="range" min={1} max={20} name="shadow layers" {...props} />
+          <RangeSlider
+            type="range"
+            min={0}
+            max={10}
+            step={0.1}
+            name="shadow offset"
+            {...props}
+          />
+          <RangeSlider type="range" min={0} max={10} step={0.1} name="blur" {...props} />
+          <RangeSlider type="range" min={-10} max={10} name="offset x" {...props} />
+          <RangeSlider type="range" min={-10} max={10} name="offset y" {...props} />
+        </Group>
+        <Group>
+          <Heading>Text Outline</Heading>
+          <RangeSlider
+            type="range"
+            name="text stroke width"
+            min={0}
+            max={3}
+            step={0.1}
+            {...props}
+          />
+          <ColorInput type="color" name="text stroke color" {...props} />
+        </Group>
 
-        <ColorInput type="color" name="shadow color start" {...props} />
-        <ColorInput type="color" name="shadow color end" {...props} />
+        <Group>
+          <Heading>Font Properties</Heading>
+          <RangeSlider
+            name="font size"
+            min={4}
+            max={20}
+            value={state.fontSize}
+            step={1}
+            {...props}
+          />
+          {Object.keys(font).map((key, i) => {
+            const [ min, max ] = font[key];
+            const step = max - min > 2 ? 1 : key === 'CRSV' ? 0.5 : 0.01;
+            return (
+              <div key={i}>
+                <label>{props.value}</label>
+                <RangeSlider
+                  name={key}
+                  min={min}
+                  max={max}
+                  value={state.settings[key] || 0}
+                  step={step}
+                  {...props}
+                />
+              </div>
+            );
+          })}
+        </Group>
 
-        <RangeSlider type="range" min={0} max={20} name="shadow layers" {...props} />
-        <RangeSlider type="range" min={0} max={20} name="shadow offset" {...props} />
-        <RangeSlider type="range" min={0} max={20} name="blur" {...props} />
-        <RangeSlider type="range" min={-10} max={10} name="offset x" {...props} />
-        <RangeSlider type="range" min={-10} max={10} name="offset y" {...props} />
+        <Button onClick={() => props.getCss()}>Get CSS</Button>
 
-        <RangeSlider type="range" name="text stroke width" {...props} />
-        <ColorInput type="color" name="text stroke color" {...props} />
-
-        {Object.keys(font).map((key, i) => {
-          const [ min, max ] = font[key];
-          const step = max - min > 2 ? 1 : key === 'CRSV' ? 0.5 : 0.01;
-          return (
-            <div key={i}>
-              <label>{props.value}</label>
-              <RangeSlider
-                name={key}
-                min={min}
-                max={max}
-                value={state.settings[key] || 0}
-                step={step}
-                {...props}
-              />
-            </div>
-          );
-        })}
         <Button onClick={() => props.dispatch({ type: 'RESET' })}>Reset</Button>
       </ControlsContainer>
     </ControlsLayout>
@@ -82,4 +122,15 @@ const ColorInput = styled(CustomInput)`
 
 const NumberInput = styled(CustomInput)`
   min-width: 0;
+`;
+
+const Heading = styled.h2`
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--orange);
+`;
+
+const Group = styled.div`
+  display: flex;
+  flex-direction: column;
 `;

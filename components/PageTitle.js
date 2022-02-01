@@ -3,8 +3,10 @@ import styled from 'styled-components';
 import FancyText from './FancyText';
 import { breakpoints } from '@constants/index';
 import { useMediaQuery } from '@hooks/useMediaQuery';
+import { forwardRef } from 'react';
 
-export default function PageTitle({ children, ...props }) {
+// eslint-disable-next-line react/display-name
+const PageTitle = forwardRef((props, ref) => {
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const desktopFontSize = useFontSize(32, 40, breakpoints.mobile, breakpoints.desktop);
   const mobileFontSize = useFontSize(24, 32, 0, breakpoints.mobile);
@@ -16,19 +18,21 @@ export default function PageTitle({ children, ...props }) {
 
   // console.log({ isMobile });
 
-  if (children.length) {
-    const [ highlighted, ...rest ] = children.split(' ');
+  if (props.children.length) {
+    const [ highlighted, ...rest ] = props.children.split(' ');
     return (
       <TopRow>
         <FluidHeading fontSize={fontSize}>
           <RecursiveText {...props}>{highlighted}&nbsp;</RecursiveText>
-          <Span {...props}>{rest.join(' ')}</Span>
+          <Span ref={ref} {...props}>
+            {rest.join(' ')}
+          </Span>
         </FluidHeading>
       </TopRow>
     );
   }
   return null;
-}
+});
 
 const RecursiveText = styled(FancyText)`
   font-size: var(--size40);
@@ -65,3 +69,5 @@ const Span = styled.span`
     display: ${(p) => (p.inline ? 'inline' : 'block')};
   }
 `;
+
+export default PageTitle;

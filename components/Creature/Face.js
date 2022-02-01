@@ -17,6 +17,8 @@ const FaceContainer = styled.div`
 export default function withFace(EyeComponent) {
   return function Eyes(MouthComponent) {
     return function Mouth(props) {
+      // const faceProps = {...props};
+
       return (
         <FaceContainer {...props}>
           <EyeComponent {...props} />

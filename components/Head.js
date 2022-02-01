@@ -13,8 +13,6 @@ export default function Head({ description, title, children }) {
   const prefersDarkMode = useMediaQuery({ prefersColorScheme: 'dark' });
   const icon = prefersDarkMode ? darkModeIcon : lightModeIcon;
 
-  console.log({ prefersDarkMode });
-
   return (
     <NextHead>
       <meta name="description" content={description} />

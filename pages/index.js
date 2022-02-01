@@ -16,32 +16,38 @@ import { useMediaQuery } from '@hooks/useMediaQuery';
 
 export default function HomePage() {
   const container = useRef();
+  const text = useRef();
   const [ startX, setStartX ] = useState(null);
+  const [ stopX, setStopX ] = useState(null);
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
 
   useEffect(() => {
     const containerExists = container && container.current;
-    if (containerExists && startX === null) {
+    const textExists = text && text.current;
+
+    if (containerExists && textExists) {
       const containerRect = container.current.getBoundingClientRect();
+      const textRect = text.current.getBoundingClientRect();
+      const stop = containerRect.left - textRect.right;
       const start = containerRect.width;
       setStartX(start);
+      setStopX(stop);
+      console.log({ containerRect, textRect });
     }
-  }, [ container, startX ]);
-
-  useEffect(() => {
-    console.log({ isMobile });
-  }, [ isMobile ]);
+  }, [ container, startX, text ]);
 
   return (
     <Layout>
       <Head title="Matt Brannon" description="A brief introduction" />
       <Top>
         <TitleWrapper>
-          <PageTitle inline>About me</PageTitle>
+          <PageTitle ref={text} inline>
+            About me
+          </PageTitle>
         </TitleWrapper>
 
         <CreatureWrapper ref={container}>
-          <CreatureHero $blink startX={startX} />
+          <CreatureHero eyelid={42} blink startX={startX} stopX={stopX} />
         </CreatureWrapper>
       </Top>
 
@@ -204,7 +210,6 @@ const CreatureWrapper = styled(motion.div)`
 // `;
 
 const TitleWrapper = styled.div`
-  ${'' /* justify-self: flex-start; */}
   width: 100%;
   flex: 1;
 `;

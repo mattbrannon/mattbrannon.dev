@@ -1,10 +1,10 @@
 // import Cube from '@components/Creature';
 import { FontControls } from '@components/Controls/FontControls';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Layout from '@components/Layout';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import GradientText from '@components/GradientText';
-import { makeShadow, snakeToCamel } from '@utils/helpers';
+import { makeShadow, snakeToCamel, pxToEm } from '@utils/helpers';
 import Head from '@components/Head';
 
 const fontProperties = {
@@ -101,36 +101,30 @@ const getDefaultFont = () => {
   return { name, settings };
 };
 
+//  #a8bb1b
+//  #00612d
+//  #147500
+//  #081900
+//  #143800
+
 const initialState = {
   font: getDefaultFont().name,
   settings: getDefaultFont().settings,
 
   fonts: data.fonts,
+  fontSize: 10,
   startColor: '#a8bb1b', //'hsl(67deg, 75%, 42%)',
   endColor: '#00612d', //'hsl(148deg 100% 19%)',
-  shadowColorStart: '#57ffeb', //'hsl(173deg 100% 67%)',
-  shadowColorEnd: '#0a3fff', //'hsl(227deg 100% 52%)',
-  shadowLayers: 14,
-  shadowOffset: 10,
-  textStrokeColor: '#000000',
-  textStrokeWidth: 2,
+  shadowColorStart: '#147500', //'hsl(173deg 100% 67%)',
+  shadowColorEnd: '#081900', //'hsl(227deg 100% 52%)',
+  shadowLayers: 7,
+  shadowOffset: 2,
+  textStrokeColor: '#143800',
+  textStrokeWidth: 0.5,
   offsetX: -5,
   offsetY: -5,
   blur: 1,
 };
-
-/**
- *
- * start color 67 75 42
- * end color 148 100 19
- *
- * shadow color start 173 100 67
- * shadow color end 227 100 52
- *
- * shadow layers 14
- * shadow offset 6
- * stroke width 2
- */
 
 function reducer(state, action) {
   const actionType = snakeToCamel(action.type);
@@ -147,6 +141,7 @@ function reducer(state, action) {
     case 'BLUR':
     case 'TEXT_STROKE_COLOR':
     case 'TEXT_STROKE_WIDTH':
+    case 'FONT_SIZE':
       return { ...state, [actionType]: action.value };
     case 'MONO':
     case 'CRSV':
@@ -188,12 +183,17 @@ function reducer(state, action) {
       return { ...state, settings, font };
     }
 
+    case 'GET_CSS': {
+      console.log(state);
+
+      return { ...state };
+    }
+
     case 'RESET': {
       const settings = state.settings;
       for (const key in settings) {
         settings[key] = 0;
       }
-      console.log(state);
       return { ...initialState, settings, font: state.font };
     }
     default:
@@ -201,11 +201,33 @@ function reducer(state, action) {
   }
 }
 
-const makeOutline = (color, size) => {
-  return `-${size}px -${size}px 0 ${color}, 
-  ${size}px -${size}px 0 ${color},
-  -${size}px ${size}px 0 ${color}, 
-  ${size}px ${size}px 0 ${color};`;
+// const makeOutline = (color, size) => {
+//   return `-${size}px -${size}px 0 ${color},
+//   ${size}px -${size}px 0 ${color},
+//   -${size}px ${size}px 0 ${color},
+//   ${size}px ${size}px 0 ${color};`;
+// };
+
+const getShadowConfig = (state) => {
+  const {
+    shadowColorStart,
+    shadowColorEnd,
+    shadowLayers,
+    shadowOffset,
+    offsetX,
+    offsetY,
+    blur,
+  } = state;
+
+  return {
+    x: offsetX,
+    y: offsetY,
+    blurAmount: blur,
+    offsetAmount: shadowOffset,
+    layers: shadowLayers,
+    startColor: shadowColorStart,
+    endColor: shadowColorEnd,
+  };
 };
 
 export default function VariableFontPlayground() {
@@ -213,6 +235,7 @@ export default function VariableFontPlayground() {
   const [ controlWidth, setControlWidth ] = useState(0);
   const [ css, setCss ] = useState('');
   const [ shadow, setShadow ] = useState('');
+  const ref = useRef();
 
   const width = controlWidth < 220 ? 220 : controlWidth;
 
@@ -231,24 +254,41 @@ export default function VariableFontPlayground() {
   }, [ state ]);
 
   useEffect(() => {
-    if (state.shadowColorStart && state.shadowColorEnd) {
-      const shadow = makeShadow(
-        state.shadowColorStart,
-        state.shadowColorEnd,
-        state.shadowLayers,
-        state.shadowOffset,
-        state.offsetX,
-        state.offsetY,
-        state.blur
-      );
-      setShadow(shadow);
-      if (state.shadowLayers < 0) {
-        const shadow = makeOutline(state.shadowColorStart, state.shadowOffset);
-        console.log({ shadow });
-        setShadow(shadow);
+    const config = getShadowConfig(state);
+    const shadow = makeShadow(config);
+    setShadow(shadow);
+  }, [ state, shadow ]);
+
+  const getCss = () => {
+    // const styles = window.getComputedStyle(ref.current);
+    const styleProps = [
+      'content',
+      'position',
+      'text-shadow',
+      'transform',
+      '-webkit-text-stroke-color',
+      '-webkit-text-stroke-width',
+      'z-index',
+    ];
+    const styles = getComputedStyle(ref.current, ':after');
+
+    const obj = styleProps.reduce((acc, prop) => {
+      let value = styles.getPropertyValue(prop);
+      if (prop === '-webkit-text-stroke-width') {
+        value = pxToEm(state.textStrokeWidth) + 'em';
       }
-    }
-  }, [ state.shadowColorStart, state.shadowLayers, state.shadowColorEnd, state ]);
+      if (prop === 'text-shadow') {
+        value = shadow;
+      }
+      if (prop === 'transform') {
+        value = 'translateX(-100%)';
+      }
+      acc[prop] = value;
+      return acc;
+    }, {});
+
+    console.log(obj);
+  };
 
   return (
     <>
@@ -259,22 +299,24 @@ export default function VariableFontPlayground() {
 
       <Grid style={{ '--controlWidth': `${width}px` }}>
         <Wrapper>
-          <TextContent>
+          <TextContent
+            style={{
+              '--fontSize': state.fontSize + 'vw',
+              '--fontFamily': state.font,
+              '--fontVariationSettings': css,
+              '--startColor': state.startColor,
+              '--endColor': state.endColor,
+            }}
+          >
             <GradientText
+              ref={ref}
+              shadow={shadow}
+              strokeWidth={state.textStrokeWidth}
+              strokeColor={state.textStrokeColor}
+              startColor={state.startColor}
+              endColor={state.endColor}
               style={{
-                '--fontFamily': state.font,
-                '--fontVariationSettings': css,
-                '--startColor': state.startColor,
-                '--endColor': state.endColor,
-                '--shadowStart': state.shadowColorStart,
-                '--shadowEnd': state.shadowColorEnd,
-                '--shadow-before': 'none',
-                '--shadow-after': shadow,
-                '--delay': 0,
-                // '--shadow': shadow,
-                // '--strokeWidth': state.textStrokeWidth + 'px',
-                // '--strokeColor': state.textStrokeColor,
-                // '--shadowOffset': state.shadowOffset + 'px',
+                '--shadow': shadow,
               }}
             >
               Testing
@@ -283,6 +325,7 @@ export default function VariableFontPlayground() {
         </Wrapper>
         <ControlWrapper>
           <FontControls
+            getCss={getCss}
             state={state}
             font={fontProperties[state.font]}
             dispatch={dispatch}
@@ -303,7 +346,7 @@ const Grid = styled(Layout)`
 
 const TextContent = styled.h1`
   font-family: var(--fontFamily);
-  font-size: 10vw;
+  font-size: var(--fontSize);
   ${'' /* font-variation-settings: var(--fontVariationSettings); */}
   transition: all 1s linear;
 `;

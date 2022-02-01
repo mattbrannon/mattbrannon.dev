@@ -466,7 +466,7 @@ function calculateDistance(start, stop) {
   return { totalDistance, direction };
 }
 
-export const getWalkingAnimation = (start, stop) => {
+export const getWalkingAnimation = (start, stop, isMobile) => {
   return function (stepDistance) {
     return function (x, y) {
       const setForwardSteps = setPoints(start)(stop);
@@ -523,18 +523,18 @@ export const getWalkingAnimation = (start, stop) => {
         `translateX(0px) rotateY(-15deg) rotateX(-3deg)`,
       ];
 
-      return [
+      const mobileAnimation = [ walkLeft, faceCameraOnLeft ];
+      const desktopAnimation = [
         walkLeft,
         faceCameraOnLeft,
         standStillLeft,
         faceRight,
         halfRight,
         faceCameraFromHalf,
-        // walkRight,
-        // faceCameraOnRight,
-        // standStillRight,
-        // faceLeft,
-      ].flat(Infinity);
+      ];
+
+      const frames = isMobile ? mobileAnimation : desktopAnimation;
+      return frames.flat(Infinity);
     };
   };
 };

@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useRef, forwardRef } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getWalkingAnimation } from './utils';
 import { motion } from 'framer-motion';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { breakpoints } from '@constants/index';
 
 import { SmallHair, MediumHair, LargeHair, HugeHair, DumbHair } from './Svg';
 
@@ -61,14 +63,19 @@ const GlobeContainer = React.forwardRef((props, ref) => {
   );
 });
 
-const animateCube = (ref, context, props) => {
+const animateCube = (ref, context, props, isMobile) => {
   if (ref && ref.current && !context.hasRun) {
     const elem = ref.current;
-    const setStepAmount = getWalkingAnimation(300, -200);
+    // console.log({ start: props.startX, stop: props.stopX });
+    const start = props.startX;
+    const stop = isMobile ? 0 : props.stopX * -1 + 24;
+    const duration = isMobile ? 4000 : 8000;
+
+    const setStepAmount = getWalkingAnimation(start, stop, isMobile);
     const setAngles = setStepAmount(20);
     const transform = setAngles(5, -65);
 
-    const animation = elem.animate({ transform }, { duration: 8000, fill: 'both' });
+    const animation = elem.animate({ transform }, { duration, fill: 'both' });
 
     animation.pause();
     animation.ready.then(() => animation.play());
@@ -87,19 +94,16 @@ const animateCube = (ref, context, props) => {
   }
 };
 
-const CuboidWalking = (props) => {
+const CuboidWalking = ({ ...props }) => {
   const ref = useRef();
   const context = useContext(ThemeContext);
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
 
   useEffect(() => {
-    animateCube(ref, context, props);
-  }, [ props, context ]);
+    animateCube(ref, context, props, isMobile);
+  }, [ props, context, isMobile ]);
 
-  return (
-    <StaticCube ref={ref} {...props}>
-      {props.children}
-    </StaticCube>
-  );
+  return <StaticCube ref={ref}>{props.children}</StaticCube>;
 };
 
 // function withCube(Cuboid) {
@@ -129,14 +133,14 @@ const withCreature = (Container) => {
     return function getHair(Hair) {
       return React.forwardRef((props, ref) => {
         return (
-          <Container $startX={props.startX} ref={ref} {...props}>
+          <Container ref={ref} {...props}>
             {Array.from({ length: 7 }, (_, i) => {
               return i === 4 || i === 5 ? (
                 <Side key={i} index={i + 1} />
               ) : i === 6 ? (
-                <Face key={i} {...props} />
+                <Face {...props} key={i} />
               ) : (
-                <Hair {...props} key={i} index={i} />
+                <Hair key={i} index={i} />
               );
             })}
           </Container>
@@ -166,12 +170,22 @@ const container = {
 };
 
 const side = {
-  hidden: { rotateX: 0, rotateY: 0 },
-  show: ({ rotateX, rotateY }) => {
-    console.log(rotateX);
+  initial: { rotateX: 0, rotateY: 0 },
+  animate: ({ i, s }) => {
+    // i += 1;
+    console.log(i, s);
+    const angle = (720 / s) * i;
+    // const hue = i % 2 === 0 ? 360 + angle : 360 - angle;
+    const hue = (360 / s) * i;
+    // const rotateX = i % 2 === 0 ? angle : 0;
+    // const rotateY = i % 2 === 1 ? angle : 0;
+    const rotateX = angle;
+    const rotateY = angle;
+    // const background = `hsl(${hue}deg, 100%, 50%)`;
     return {
       rotateX,
       rotateY,
+      // background,
     };
   },
 

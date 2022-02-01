@@ -22,9 +22,10 @@ export const OpenMouth = styled(Mouth)`
 
 const withMouth = (Component) => {
   return function Mouth({ ...props }) {
+    console.log({ mouth: props });
     return (
-      <motion.div {...props}>
-        <Component {...props}>{props.children}</Component>
+      <motion.div>
+        <Component>{props.children}</Component>
       </motion.div>
     );
   };

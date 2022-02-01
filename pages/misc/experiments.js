@@ -134,6 +134,14 @@ export default function Experiments() {
 
   const radius = Component === Cube ? 0 : 50;
   const width = controlWidth < 200 ? 200 : controlWidth;
+
+  console.log(state.width, state.height);
+
+  const m = (parseInt(state.width) + parseInt(state.height)) / 2;
+
+  const lid = m * 0.1 * 2.5;
+  console.log({ lid });
+
   return (
     <>
       <Head
@@ -146,6 +154,8 @@ export default function Experiments() {
           <Wrapper>
             <Component
               ref={ref}
+              blink
+              eyelid={lid}
               sides={state.sides}
               $backgroundDisplay={state.backgroundDisplay}
               start={state.start}

@@ -119,10 +119,15 @@ const IntroWrapper = styled.div`
 `;
 
 const BlogList = styled.div`
-  display: grid;
+  ${'' /* display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: 32px;
-  place-items: center;
+  place-items: center; */}
+
+  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 
   @media (min-width: ${breakpoints.mobile}px) {
     margin-top: 32px;
@@ -137,7 +142,7 @@ const BlogList = styled.div`
     display: flex;
     flex-direction: column;
     gap: 24px;
-    margin: 64px auto 0 auto;
+    margin: 32px auto 0 auto;
     max-width: 555px;
   }
 

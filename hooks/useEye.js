@@ -10,7 +10,7 @@ let random = (min) => (max) => randomNumber(min, max);
 
 export const useEye = (props) => {
   const eyelid = props.eyelid || 150;
-  const blink = props.$blink;
+  const blink = props.blink;
   const closed = props.closed;
   const [ margin, setMargin ] = useState(eyelid * -1);
 

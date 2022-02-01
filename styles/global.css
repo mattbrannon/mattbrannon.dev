@@ -257,11 +257,11 @@ picture {
   object-fit: contain;
 }
 
-ul,
+/* ul,
 li {
-  /* margin: revert !important; */
-  /* padding: revert !important; */
-}
+  margin: revert !important;
+  padding: revert !important;
+} */
 
 p {
   font-weight: 500;
@@ -500,9 +500,8 @@ input[type="range"] {
   /* box-shadow: 0 0 0 1px black; */
 }
 
-input[type="range"]:focus {
-  /* outline: none; */
-}
+/* input[type="range"]:focus {
+} */
 
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;

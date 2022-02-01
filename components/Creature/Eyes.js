@@ -32,7 +32,6 @@ const Eye = styled(Template)`
 
   top: 0;
   padding: calc(((var(--cube-width) / 6) + (var(--cube-height) / 6)) / 2);
-  ${'' /* margin-top: -4px; */}
   margin-bottom: var(--more);
 
   overflow: hidden;
@@ -69,13 +68,14 @@ const Pupil = styled(Cornea)`
   width: 40%;
 `;
 
-const Dilated = styled(Pupil)`
-  height: 60%;
-  width: 60%;
-`;
+// const Dilated = styled(Pupil)`
+//   height: 60%;
+//   width: 60%;
+// `;
 
 const Eyelid = styled(Eye)`
   background: tan;
+  background: hsl(34, 40%, 60%);
   z-index: 999;
   position: absolute;
   margin-top: var(--eyelid);

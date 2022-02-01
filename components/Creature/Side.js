@@ -37,11 +37,13 @@ const getColorSelection = (color1, opacity = 1) => {
 
 const getColors = (props) => {
   const { start, end, color, opacity, $backgroundType, sides, i } = props;
-  const angle = (360 / sides / 2) * i;
+  const angle = (360 / sides / 2) * (i + 1);
   const startColor = getColorSelection(start, opacity);
   const endColor = getColorSelection(end, opacity);
   const mainColor = getColorSelection(color, opacity);
+  // const j = i + 1;
   const hue = i % 2 === 0 ? 360 + angle : 360 - angle;
+  // const hue = (360 / sides) * j;
   const conic = 180 / sides;
 
   const background =

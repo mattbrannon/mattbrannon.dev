@@ -20,6 +20,17 @@ import Color from 'color-tools';
 //   return textShadow;
 // };
 
+// function emToPx(size) {
+//     return size / 0.0625;
+// }
+
+// function pxToEm(size) {
+//     return size * 0.0625;
+// }
+
+export const emToPx = (size) => size / 0.0625;
+export const pxToEm = (size) => size * 0.0625;
+
 export function debounce(func, timeout = 300) {
   let timer;
   return (...args) => {
@@ -32,50 +43,52 @@ export function debounce(func, timeout = 300) {
 
 const toFloat = (n) => Math.round(n * 100) / 100;
 
-function createShadow(startColor) {
-  const color1 = new Color(startColor);
-  return function (endColor) {
-    const color2 = new Color(endColor);
-    let [ h1, s1, l1 ] = color1.hsl.array();
-    let [ h2, s2, l2 ] = color2.hsl.array();
-    const dS = Math.abs(s2 - s1);
-    const dL = Math.abs(l2 - l1);
-    const { direction, shortest } = getDirection(h1, h2);
+// function createShadow(startColor) {
+//   const color1 = new Color(startColor);
+//   return function (endColor) {
+//     const color2 = new Color(endColor);
+//     let [ h1, s1, l1 ] = color1.hsl.array();
+//     let [ h2, s2, l2 ] = color2.hsl.array();
+//     const dS = Math.abs(s2 - s1);
+//     const dL = Math.abs(l2 - l1);
+//     const { direction, shortest } = getDirection(h1, h2);
 
-    let h = h1;
-    let s = s1;
-    let l = l1;
+//     let h = h1;
+//     let s = s1;
+//     let l = l1;
 
-    const sDirection = s1 < s2 ? 1 : s1 > s2 ? -1 : s1 === s2 ? 1 : 0;
-    const lDirection = l1 < l2 ? 1 : l1 > l2 ? -1 : l1 === l2 ? 1 : 0;
-    return function (x) {
-      return function (y) {
-        return function (offset) {
-          return function (layers) {
-            const steps = (shortest / layers) * direction;
+//     const sDirection = s1 < s2 ? 1 : s1 > s2 ? -1 : s1 === s2 ? 1 : 0;
+//     const lDirection = l1 < l2 ? 1 : l1 > l2 ? -1 : l1 === l2 ? 1 : 0;
+//     return function (x) {
+//       return function (y) {
+//         return function (offset) {
+//           return function (layers) {
+//             const steps = (shortest / layers) * direction;
 
-            const iS = toFloat(dS / layers);
-            const iL = toFloat(dL / layers);
-          };
-        };
-      };
-    };
-  };
-}
+//             const iS = toFloat(dS / layers);
+//             const iL = toFloat(dL / layers);
+//           };
+//         };
+//       };
+//     };
+//   };
+// }
 
-export const makeShadow = (
+export const makeShadow = ({
   startColor,
-  target,
+  endColor,
   layers = 12,
   offsetAmount = 1,
   x = 1,
   y = 1,
-  blurAmount = 1
-) => {
-  const offset = offsetAmount * 0.0001;
-  const blurOffset = blurAmount * 0.0001;
+  blurAmount = 1,
+}) => {
+  // const offset = offsetAmount * 0.001;
+  const offset = pxToEm(offsetAmount * 0.25);
+  const blurOffset = pxToEm(blurAmount * 0.01);
+  // const blurOffset = blurAmount * 0.0001;
   const color1 = new Color(startColor);
-  const color2 = new Color(target);
+  const color2 = new Color(endColor);
 
   const [ h1, s1, l1 ] = color1.hsl.array();
   const [ h2, s2, l2 ] = color2.hsl.array();
@@ -111,13 +124,25 @@ export const makeShadow = (
   const shadow = hsl
     .map((color, i) => {
       const blur = blurOffset * i;
+      // const xOffset = toFloat(i * offset * x);
+      // const yOffset = toFloat(i * offset * y);
+      const yOffset = pxToEm(y * i * offset);
+      const xOffset = pxToEm(x * i * offset);
+
       // const blur = (layers / hsl.length) * offset * blurAmount;
-      console.log({ blur });
-      return `${i * offset * x}em ${i * offset * y}em ${blur}em ${color}`;
+      // console.log({ blur });
+      return `${xOffset}em ${yOffset}em ${toFloat(blur)}em ${color}`;
     })
     .join(', ');
 
   return shadow;
+};
+
+export const generateShadow = (config) => {
+  const shadow = makeShadow(config);
+  return function () {
+    return shadow;
+  };
 };
 
 const makeCamelCase = (re) => (s) => {
@@ -231,6 +256,16 @@ export const getFluidSizes = (size, min = 0, max = 100) => {
     clamp: `clamp(${min}, ${max}, ${size})`,
     fallback: `max(${min}, min(${size}, ${max}))`,
   };
+};
+
+export const replaceShadowValues = (shadow) => {
+  let re = /-?\d+\.?\d{0,}px/g;
+  shadow.match(re).forEach((px) => {
+    const n = px.replace('px', '');
+    const em = toFloat(pxToEm(n));
+    shadow = shadow.replace(px, `${em}em`);
+  });
+  return shadow;
 };
 
 // export const toFloat = (n) => Math.round(n * 100) / 100;

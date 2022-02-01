@@ -44,13 +44,10 @@ export default function Index({ posts }) {
       <MaxWidthWrapper>
         <Card>
           <Link passHref href="/misc/variable-fonts">
-            <H2>Variable Fonts</H2>
+            <H2>Fancy Text Generator</H2>
           </Link>
           <Text>
-            Variable fonts are great. They allow you to do things you simply cannot do
-            with regular fonts. But it can be difficult to remember all the properties of
-            a specific font as well as the range of values each property accepts. This
-            playground helps me visualize and make tweaks to variable font styles.
+            Variable fonts + gradient backgrounds + layered text shadows = Fancy text
           </Text>
         </Card>
       </MaxWidthWrapper>
@@ -87,3 +84,8 @@ const Card = styled.div`
     background: hsl(223 30% 88%);
   }
 `;
+
+// Variable fonts are great. They allow you to do things you simply cannot do
+// with regular fonts. But it can be difficult to remember all the properties of
+// a specific font as well as the range of values each property accepts. This
+// playground helps me visualize and make tweaks to variable font styles.

@@ -2,9 +2,44 @@ import styled from 'styled-components';
 
 import { spaceToCamelCase as toCamelCase, toSnakeUpperCase } from '@utils/helpers';
 
+const createLabel = (name) => {
+  const removeText = [ 'update', 'cube', 'shadow', 'translate', 'rotate', 'text stroke' ];
+
+  let label = name;
+  removeText.forEach((str) => {
+    label = label.replace(str, '');
+  });
+  return label;
+};
+
 export default function RangeSlider({ ...props }) {
   const { name, state, dispatch } = props;
-  const label = props.name.replace(/update|cube|(translate|rotate) ([XYZ]$)/g, '$2 axis');
+
+  // const replaceText = [ 'translate', 'rotate' ];
+  // const removeText = [ 'update', 'cube', 'shadow', 'translate', 'rotate' ];
+
+  // let label = name;
+  // for (let i = 0; i < removeText.length; i++) {
+  //   if (label.includes(removeText[i])) {
+  //     label = label.replace(removeText[i], '');
+  //   }
+  // }
+
+  const label = createLabel(name);
+
+  // let label = name;
+  // removeText.forEach((str) => {
+  //   label = label.replace(str, '');
+  // });
+
+  // const label = replaceText.includes(props.name)
+  //   ? props.name.replace(/(translate|rotate) ([XYZ]$)/g, '$2 axis')
+  //   : removeText.includes(props.name)
+  //   ? props.name.replace(/update|cube|shadow/g, '')
+  //   : props.name;
+
+  // const thing = props.name.replace(/update|cube|(translate|rotate) ([XYZ]$)/g, '$2 axis');
+
   const key = toCamelCase(name);
 
   const dispatchAction = (e) => {
@@ -14,7 +49,7 @@ export default function RangeSlider({ ...props }) {
       .join('_');
 
     const value = e.target.value;
-
+    console.log({ type, value });
     return dispatch({ type, value });
   };
 
@@ -34,12 +69,16 @@ export default function RangeSlider({ ...props }) {
 
 export const CustomInput = ({ ...props }) => {
   const { name, state, dispatch, type } = props;
-  const label = props.name.replace(/update|cube /g, '');
+  // const label = props.name.replace(/update|cube /g, '');
   const key = toCamelCase(name);
+
+  const label = createLabel(name);
 
   const dispatchAction = (e) => {
     const type = toSnakeUpperCase(name);
     const value = e.target.value;
+
+    console.log({ type, value });
     return dispatch({ type, value });
   };
 
