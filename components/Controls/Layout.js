@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { breakpoints } from '@constants/index';
 import { forwardRef } from 'react';
 
@@ -26,7 +26,7 @@ export const ControlsContainer = ({ children }) => {
 
 const Wrapper = styled.div`
   width: fit-content;
-  min-width: 220px;
+  min-width: 235px;
   height: calc(100% - var(--header-height));
   position: absolute;
   background: hsl(0, 0%, 3.5%, 1);

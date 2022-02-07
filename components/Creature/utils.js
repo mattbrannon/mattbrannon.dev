@@ -1,8 +1,18 @@
-export const setVariables = (index) => {
+export const setVariables = (props) => {
+  const index = props.index;
+  const shape = props.shape;
+
+  const boxShadow = props.$outline ? '0 0 0 2px black' : 'none';
+
+  const scale = shape === 'Cube' ? 1 : undefined;
   const hue = (index - 1) * 60;
   const cubeWidth = 'var(--cube-width)';
   const cubeHeight = 'var(--cube-height)';
   const depth = 'var(--cube-depth)';
+  const halfDepth = `calc(${depth} * 0.5)`;
+
+  console.log({ depth });
+
   const coefficient = index === 1 ? -0.5 : 0.5;
   const rotation = index === 4 || index === 6 ? -90 : 90;
   const rotate =
@@ -12,12 +22,14 @@ export const setVariables = (index) => {
     index === 3 || index === 4 ? 'var(--cube-depth)' : 'var(--cube-width)';
   const sideHeight =
     index === 5 || index === 6 ? 'var(--cube-depth)' : 'var(--cube-height)';
+
   const direction =
     index === 3 || index === 4
       ? cubeWidth
       : index === 5 || index === 6
       ? cubeHeight
       : undefined;
+
   const translate3d =
     index > 2
       ? `0, 0, calc(${direction} * ${coefficient})`
@@ -26,14 +38,16 @@ export const setVariables = (index) => {
   const width = index > 2 ? sideWidth : 'var(--cube-width)';
   const height = index > 2 ? sideHeight : 'var(--cube-height)';
   const transform =
-    index > 2
+    index === 7
+      ? `translate(-50%, -50%) translateZ(calc(var(--cube-depth) * 0.5))`
+      : index > 2
       ? `translate(-${topLeft}, -${topLeft}) ${rotate} translate3d(${translate3d})`
       : index === 1
       ? `translate3d(0, 0, calc(${depth} * ${coefficient})) rotateY(180deg)`
       : `translate3d(${translate3d})`;
 
   // const background = `hsl(${hue} 100% 50% / 0.5)`;
-  const background = index === 5 ? '#543210' : 'tan';
+  const background = index === 5 ? '#654321' : index === 7 ? 'transparent' : 'tan';
 
   return {
     '--topLeft': topLeft,
@@ -41,6 +55,8 @@ export const setVariables = (index) => {
     '--width': width,
     '--height': height,
     '--transform': transform,
+    '--boxShadow': boxShadow,
+    '--scale': scale,
   };
 };
 

@@ -25,9 +25,9 @@ export default function AppCard({ ...props }) {
 }
 
 const Card = styled.div`
-  margin: 16px 0 64px 0;
+  margin: 64px 0 64px 0;
   @media (max-width: ${breakpoints.mobile}px) {
-    margin: 16px 0 32px 0;
+    margin: 32px 0 32px 0;
   }
 `;
 
@@ -42,12 +42,7 @@ const Heading = styled.h4`
   font-variation-settings: var(--recursive4);
   width: fit-content;
   transition: all 10ms;
-  font-size: var(--size40);
-  font-size: clamp(var(--size24), 3vw, var(--size40));
-
-  @media (max-width: ${breakpoints.mobile}px) {
-    font-size: var(--size21);
-  }
+  font-size: clamp(var(--size32), 7vw, var(--size40));
 
   @media (max-width: ${breakpoints.tablet}px) {
     margin: auto;
@@ -55,10 +50,8 @@ const Heading = styled.h4`
 `;
 
 const Small = styled.small`
-  font-size: clamp(var(--size14), 3vw, var(--size21));
-  font-variation-settings: 'wdth' 75, 'wght' 555;
   margin-bottom: 23px;
-  display: inline-block;
+  display: block;
 `;
 
 const A = styled(Anchor)`
@@ -70,7 +63,7 @@ const A = styled(Anchor)`
 const Span = styled.span`
   display: block;
   color: var(--pinkBg);
-  font-size: clamp(var(--size24), 7vw, var(--size48));
+  ${'' /* font-size: clamp(var(--size24), 5vw, var(--size48)); */}
   line-height: 1.2;
 
   &:hover {
@@ -90,7 +83,7 @@ const Span = styled.span`
   }
 
   @media (max-width: ${breakpoints.mobile}px) {
-    font-size: clamp(1.15rem, 1rem + 2vw, 1.5rem);
+    ${'' /* font-size: clamp(1.15rem, 1rem + 2vw, 1.5rem); */}
   }
 
   @media (prefers-color-scheme: dark) {

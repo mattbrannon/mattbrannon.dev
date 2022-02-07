@@ -2,7 +2,7 @@ import VisuallyHidden from '@components/VisuallyHidden';
 import { breakpoints } from '@constants/index';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import FocusTrap from 'focus-trap-react';
-import { useCssVariable } from 'hooks/useCssVariable';
+// import { useCssVariable } from 'hooks/useCssVariable';
 import Link from 'next/link';
 import { useContext, useEffect, useRef, useState } from 'react';
 import styled, { ThemeContext, keyframes, css } from 'styled-components';
@@ -10,89 +10,52 @@ import HamburgerMenu from './Hamburger';
 import MobileNav from './MobileNav';
 import NavLinks from './NavLinks';
 import { Overlay } from './Overlay';
-import GradientText from '@components/GradientText';
+// import GradientText from '@components/GradientText';
+import { FullBleed } from '@components/Layout';
 
-const arr = [ '--decovar-checkered', '--decovar-striped' ];
+// const arr = [ '--decovar-checkered', '--decovar-striped' ];
 
-export default function Header({ isHeaderVisible, headerPosition }) {
+export default function Header({ headerPosition }) {
   const theme = useContext(ThemeContext);
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const [ clickedHome, setClickedHome ] = useState(false);
-  const [ clickedBurger, setClickedBurger ] = useState(false);
   const headerRef = useRef();
-  const countRef = useRef(0);
-  // const [ headerPosition, setHeaderPosition ] = useCssVariable(
-  //   '--header-position',
-  //   headerRef
-  // );
-
-  // const headerPosition = isHeaderVisible ? '0%' : '-100%';
-
-  // console.log({ headerPosition });
-
-  // useEffect(() => {
-  //   const yAxis = isHeaderVisible ? 0 : -100;
-  //   setHeaderPosition(`${yAxis}%`);
-
-  //   return () => {};
-  // }, [ isHeaderVisible, setHeaderPosition ]);
+  // const countRef = useRef(0);
 
   const isOpen = theme.isOpen;
   // const showNothing = isOpen && isMobile;
   const Navigation = isMobile ? HamburgerMenu : NavLinks;
 
-  theme.clickedBurger = clickedBurger;
-  theme.setClickedBurger = setClickedBurger;
-
-  const [ randomHoverFont, setRandomHoverFont ] = useState('--decovar-default');
-
-  const handleMouseEnter = () => {
-    countRef.current = countRef.current === arr.length ? 0 : countRef.current;
-    console.log(countRef.current, arr[countRef.current]);
-    // const random = (n) => Math.floor(Math.random() * (n + 1));
-    // const font = arr[random(arr.length - 1)];
-    setRandomHoverFont(arr[countRef.current]);
-    countRef.current++;
-  };
-
   return (
-    <>
+    <div>
       <FullBleedWrapper ref={headerRef} headerPosition={headerPosition}>
         <InnerWrapper>
-          <MaxWidthWrapper>
-            <Left>
-              <Link passHref href="/">
-                <BrandLogoWrapper
-                  tabIndex={0}
-                  onMouseEnter={handleMouseEnter}
-                  onClick={() => setClickedHome(true)}
-                  randomHoverFont={randomHoverFont}
-                >
-                  Matt Brannon
-                </BrandLogoWrapper>
-              </Link>
-            </Left>
+          <Left>
+            <Link passHref href="/">
+              <NameWrapper tabIndex={0} onClick={() => setClickedHome(true)}>
+                <Button>Matt Brannon</Button>
+              </NameWrapper>
+            </Link>
+          </Left>
 
-            <Right>
-              <VisuallyHidden>
-                <h2>Internal Navigation Links</h2>
-              </VisuallyHidden>
-              <Navigation setClickedHome={setClickedHome} clickedHome={clickedHome} />
-            </Right>
-          </MaxWidthWrapper>
-
-          <MobileMenu isOpen={isOpen} />
+          <Right>
+            <VisuallyHidden>
+              <h2>Internal Navigation Links</h2>
+            </VisuallyHidden>
+            <Navigation setClickedHome={setClickedHome} clickedHome={clickedHome} />
+          </Right>
         </InnerWrapper>
+        <MobileMenu isOpen={isOpen} />
       </FullBleedWrapper>
-    </>
+    </div>
   );
 }
 
-const MobileMenu = ({ isOpen }) => {
+export const MobileMenu = ({ isOpen }) => {
   return (
-    <FocusTrap active={isOpen}>
-      <div tabIndex={-1}>
-        <HamburgerMenu />
+    <FocusTrap active={isOpen} focusTrapOptions={{ preventScroll: true }}>
+      <div>
+        {isOpen && <HamburgerMenu />}
         <Overlay />
         <MobileNav />
       </div>
@@ -100,15 +63,17 @@ const MobileMenu = ({ isOpen }) => {
   );
 };
 
-const FullBleedWrapper = styled.header`
-  grid-row: 1;
-  grid-column: 1 / -1;
+const FullBleedWrapper = styled(FullBleed).attrs({ as: 'header' })`
+  ${'' /* grid-row: 1;
+  grid-column: 1 / -1; */}
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1;
+  background: var(--header-background);
 
+  isolation: isolate;
   @media (max-width: ${breakpoints.mobile}px) {
     --header-height: 50px;
   }
@@ -121,26 +86,16 @@ const InnerWrapper = styled.div`
   background: var(--header-background);
   transform: var(--header-position);
   transition: transform 300ms ease-in-out;
-`;
 
-const MaxWidthWrapper = styled.div`
   max-width: var(--max-width);
   width: 100%;
-  height: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  padding: 0 var(--breathing-room);
 `;
 
-const getRandomFont = (p) => {
-  const font = p.randomHoverFont;
-  return css`
-    var(${font})
-  `;
-};
-
-const BrandLogoWrapper = styled.h1`
+const NameWrapper = styled.h1`
   font-size: var(--size24);
   font-family: recursive;
   font-variation-settings: var(--recursive4);
@@ -175,6 +130,7 @@ const Left = styled.div`
   white-space: nowrap;
   display: flex;
   justify-content: flex-start;
+  margin-right: var(--header-link-gap);
 `;
 
 const Right = styled.nav`
@@ -182,6 +138,17 @@ const Right = styled.nav`
   justify-content: flex-end;
   align-items: center;
   flex: 1;
+  gap: var(--header-link-gap);
+`;
+
+const Button = styled.button`
+  background: transparent;
+  border: none;
+  font: inherit;
+  color: inherit;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 // const headerAnimation = keyframes`

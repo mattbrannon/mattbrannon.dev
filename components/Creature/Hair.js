@@ -1,8 +1,8 @@
-import small from './waves/Hair150';
-import medium from './waves/Hair200';
-import large from './waves/Hair250';
-import huge from './waves/Hair300';
-import hair from './waves/Hair1200';
+import { Hair150 as small } from './waves/Hair150';
+import { Hair200 as medium } from './waves/Hair200';
+import { Hair250 as large } from './waves/Hair250';
+import { Hair300 as huge } from './waves/Hair300';
+import { Hair1200 as hair } from './waves/Hair1200';
 // import { Hair200 as medium } from './Hair200';
 // import { Hair300 as large } from './Hair300';
 
@@ -22,7 +22,7 @@ export default function getHair(size) {
       ? large
       : size === 'huge'
       ? huge
-      : hair;
+      : huge;
 
   return withHair(Component);
 }

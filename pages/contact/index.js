@@ -9,7 +9,7 @@ import Head from '@components/Head';
 
 export default function Contact() {
   return (
-    <Layout>
+    <>
       <Head title="Contact" description="If you want to get in touch, here's how.." />
       <PageTitle>Contact Me</PageTitle>
 
@@ -18,6 +18,6 @@ export default function Contact() {
         staight to my inbox.
       </p>
       <ContactForm />
-    </Layout>
+    </>
   );
 }

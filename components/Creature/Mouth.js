@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { motion, useAnimation } from 'framer-motion';
 import { shocked, smile, frown, goofySmile } from '@animations/index';
 import { makeFrames } from './utils';
@@ -13,7 +13,7 @@ export const Mouth = styled(motion.div)`
   border-radius: var(--mouth-radius);
   padding: var(--mouth-padding);
   margin-bottom: var(--eye-margin);
-  transition: all 1s linear;
+  ${'' /* transition: all 1s linear; */}
 `;
 
 export const OpenMouth = styled(Mouth)`

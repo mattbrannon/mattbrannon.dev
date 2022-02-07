@@ -6,14 +6,13 @@ import { breakpoints } from '@constants/index';
 
 export default function HamburgerMenu() {
   const context = useContext(ThemeContext);
-  const { isOpen, setIsOpen, setClickedBurger } = context;
+  const { isOpen, setIsOpen } = context;
   const isMobile = useMediaQuery({ maxWidth: 564 });
   const action = isOpen ? 'close' : 'open';
 
   const handleClick = () => {
     const status = !isOpen;
     setIsOpen(status);
-    setClickedBurger(true);
     context.isOpen = isOpen;
   };
 
@@ -48,12 +47,6 @@ const MenuButton = styled.button`
   border: none;
   background: none;
   z-index: 9999;
-
-  &:focus {
-    outline: 3px solid deepskyblue;
-    outline-offset: 4px;
-    outline: none;
-  }
 
   @media (max-width: ${breakpoints.mobile}px) {
     --burger-width: var(--size24);

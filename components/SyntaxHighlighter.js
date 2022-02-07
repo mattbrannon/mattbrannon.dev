@@ -5,9 +5,10 @@ import theme from 'prism-react-renderer/themes/nightOwl';
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 
-const SyntaxHighlighter = ({ children }) => {
+const SyntaxHighlighter = ({ children, ...props }) => {
   const code = children.props.children;
-  const language = children.props.className?.replace('language-', '').trim();
+  const language =
+    props.language || children.props.className?.replace('language-', '').trim();
   const ref = useRef();
   const [ buttonText, setButtonText ] = useState('Copy Snippet');
 

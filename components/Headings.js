@@ -5,15 +5,15 @@ import GradientText from './GradientText';
 export const H1 = styled.h1`
   margin: 80px 0 24px 0;
   color: var(--orange);
-  position: sticky;
-  top: 0;
+  ${'' /* position: sticky;
+  top: 0; */}
 
   @media (prefers-color-scheme: light) {
     color: var(--pinkShadow);
   }
 
   @media (max-width: ${breakpoints.mobile}px) {
-    margin: 0px 0 16px 0;
+    margin: 16px 0 16px 0;
   }
 `;
 
@@ -35,6 +35,10 @@ export const H3 = styled.h3`
     color: var(--pinkShadow);
     color: #4051b5;
   }
+`;
+
+export const H4 = styled.h4`
+  margin: 21px 0 21px 0;
 `;
 
 export const H5 = styled.h5``;

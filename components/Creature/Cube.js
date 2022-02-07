@@ -1,12 +1,13 @@
 /* eslint-disable react/display-name */
-import React, { useContext, useEffect, useRef, forwardRef } from 'react';
+import { useContext, useEffect, useRef, forwardRef, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { getWalkingAnimation } from './utils';
 import { motion } from 'framer-motion';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/index';
 
-import { SmallHair, MediumHair, LargeHair, HugeHair, DumbHair } from './Svg';
+// import Hair, { SmallHair, MediumHair, LargeHair, HugeHair, DumbHair } from './Svg';
+import Hair from './Svg';
 
 import Side, { CircleSide, CubeSide, SphereSide } from './Side';
 
@@ -36,6 +37,8 @@ const Cuboid = styled.div`
   height: var(--cube-height);
 
   transition: var(--transition);
+
+  ${(p) => console.log({ cuboid: p })}
 `;
 
 const StaticCube = styled(Cuboid)`
@@ -46,22 +49,22 @@ const StaticCube = styled(Cuboid)`
     p.theme.hasRun ? 'translateX(0px) rotateY(-15deg) rotateX(-3deg)' : undefined};
 `;
 
-const Globe = styled(Cuboid)`
-  position: relative;
-  z-index: -99;
-  transform: translateX(var(--translateX)) translateY(var(--translateY))
-    rotateX(var(--rotateX)) rotateY(var(--rotateY)) rotateZ(var(--rotateZ))
-    translateZ(var(--translateZ));
-  transition: all var(--speed) linear;
-`;
+// const Globe = styled(Cuboid)`
+//   position: relative;
+//   z-index: -99;
+//   transform: translateX(var(--translateX)) translateY(var(--translateY))
+//     rotateX(var(--rotateX)) rotateY(var(--rotateY)) rotateZ(var(--rotateZ))
+//     translateZ(var(--translateZ));
+//   transition: all var(--speed) linear;
+// `;
 
-const GlobeContainer = React.forwardRef((props, ref) => {
-  return (
-    <Globe ref={ref} {...props}>
-      {props.children}
-    </Globe>
-  );
-});
+// const GlobeContainer = React.forwardRef((props, ref) => {
+//   return (
+//     <Globe ref={ref} {...props}>
+//       {props.children}
+//     </Globe>
+//   );
+// });
 
 const animateCube = (ref, context, props, isMobile) => {
   if (ref && ref.current && !context.hasRun) {
@@ -94,17 +97,28 @@ const animateCube = (ref, context, props, isMobile) => {
   }
 };
 
-const CuboidWalking = ({ ...props }) => {
-  const ref = useRef();
+// const CuboidWalking = ({ ...props }) => {
+//   const ref = useRef();
+//   const context = useContext(ThemeContext);
+//   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
+
+//   useEffect(() => {
+//     animateCube(ref, context, props, isMobile);
+//   }, [ props, context, isMobile ]);
+
+//   return <StaticCube ref={ref}>{props.children}</StaticCube>;
+// };
+
+const CuboidWalking = forwardRef((props, ref) => {
   const context = useContext(ThemeContext);
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
 
   useEffect(() => {
     animateCube(ref, context, props, isMobile);
-  }, [ props, context, isMobile ]);
+  }, [ props, context, isMobile, ref ]);
 
   return <StaticCube ref={ref}>{props.children}</StaticCube>;
-};
+});
 
 // function withCube(Cuboid) {
 //   return function getFace(Face) {
@@ -131,16 +145,26 @@ const CuboidWalking = ({ ...props }) => {
 const withCreature = (Container) => {
   return function getFace(Face) {
     return function getHair(Hair) {
-      return React.forwardRef((props, ref) => {
+      return forwardRef((props, ref) => {
+        const [ size, setSize ] = useState({ width: null, height: null });
+        useEffect(() => {
+          if (ref && ref.current) {
+            setSize({
+              width: ref.current.clientWidth,
+              height: ref.current.clientHeight,
+            });
+          }
+        }, [ ref ]);
+        console.log({ creatureProps: props });
         return (
           <Container ref={ref} {...props}>
             {Array.from({ length: 7 }, (_, i) => {
               return i === 4 || i === 5 ? (
-                <Side key={i} index={i + 1} />
+                <Side {...props} key={i} index={i + 1} />
               ) : i === 6 ? (
-                <Face {...props} key={i} />
+                <Face {...props} key={i} index={i + 1} />
               ) : (
-                <Hair key={i} index={i} />
+                <Hair {...props} key={i} index={i + 1} size={size} />
               );
             })}
           </Container>
@@ -150,47 +174,54 @@ const withCreature = (Container) => {
   };
 };
 
-const getTransform = (i, sides) => {
-  const angle = (360 / sides / 2) * i;
+// const getTransform = (i, sides) => {
+//   const angle = (360 / sides / 2) * i;
 
-  const rotateX = i % 2 === 0 ? angle : 0;
-  const rotateY = i % 2 === 1 ? angle : 0;
-  const transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+//   const rotateX = i % 2 === 0 ? angle : 0;
+//   const rotateY = i % 2 === 1 ? angle : 0;
+//   const transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
 
-  return { rotateX, rotateY, transform };
-};
+//   return { rotateX, rotateY, transform };
+// };
 
-const container = {
+const sphere = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { delay: 2, staggerChildren: 0 },
+    // transition: { duration: 1, staggerChildren: 1 },
   },
-  close: { opacity: 0 },
+  close: {
+    opacity: 0,
+
+    // transition: {
+    //   staggerChildren: 1,
+    //   staggerDirection: -1,
+    // },
+  },
 };
 
-const side = {
-  initial: { rotateX: 0, rotateY: 0 },
-  animate: ({ i, s }) => {
-    // i += 1;
-    console.log(i, s);
-    const angle = (720 / s) * i;
-    // const hue = i % 2 === 0 ? 360 + angle : 360 - angle;
-    const hue = (360 / s) * i;
-    // const rotateX = i % 2 === 0 ? angle : 0;
-    // const rotateY = i % 2 === 1 ? angle : 0;
-    const rotateX = angle;
-    const rotateY = angle;
-    // const background = `hsl(${hue}deg, 100%, 50%)`;
-    return {
-      rotateX,
-      rotateY,
-      // background,
-    };
-  },
+// const side = {
+//   initial: { rotateX: 0, rotateY: 0 },
+//   animate: ({ i, s }) => {
+//     // i += 1;
+//     console.log(i, s);
+//     const angle = (720 / s) * i;
+//     // const hue = i % 2 === 0 ? 360 + angle : 360 - angle;
+//     const hue = (360 / s) * i;
+//     // const rotateX = i % 2 === 0 ? angle : 0;
+//     // const rotateY = i % 2 === 1 ? angle : 0;
+//     const rotateX = angle;
+//     const rotateY = angle;
+//     // const background = `hsl(${hue}deg, 100%, 50%)`;
+//     return {
+//       rotateX,
+//       rotateY,
+//       // background,
+//     };
+//   },
 
-  exit: { rotateX: 0, rotateY: 0 },
-};
+//   exit: { rotateX: 0, rotateY: 0 },
+// };
 
 // const withShape = (Container) => {
 //   return function getSide(Side) {
@@ -223,7 +254,7 @@ export const Sphere = forwardRef((props, ref) => {
   return (
     <Cuboid
       ref={ref}
-      variants={container}
+      variants={sphere}
       initial="hidden"
       animate="show"
       exit="close"
@@ -240,7 +271,87 @@ export const Sphere = forwardRef((props, ref) => {
   );
 });
 
-export const Cube = withCreature(Cuboid)(Face.Shifty)(HugeHair);
+const cube = {
+  hidden: { opacity: 0, rotateX: -360, rotateY: -360 },
+  show: {
+    opacity: 1,
+    rotateX: 0,
+    rotateY: 0,
+    transition: { delay: 2, staggerChildren: 1 },
+  },
+  close: {
+    opacity: 0,
+    rotateX: 360,
+    rotateY: 360,
+  },
+};
+
+// export const Cube = forwardRef((props, ref) => {
+//   return (
+//     <Cuboid
+//       ref={ref}
+//       variants={cube}
+//       initial="hidden"
+//       animate="show"
+//       exit="close"
+//       {...props}
+//     >
+//       {Array.from({ length: 7 }, (_, i) => {
+//         return i === 4 || i === 5 ? (
+//           <CubeSide {...props} key={i} i={i} />
+//         ) : i === 6 ? (
+//           <Face.Shifty key={i} {...props} />
+//         ) : (
+//           <Hair {...props} key={i} index={i + 1} i={i} size={props.size} />
+//         );
+//       })}
+
+//       {/* {Array.from({ length: 7 }, (_, i) => {
+//         return i === 6 ? (
+//           <Face.Shifty {...props} i={i} key={i} />
+//         ) : (
+//           <CubeSide {...props} key={i} i={i} />
+//         );
+//       })} */}
+
+//       {/* {Array.from({ length: 6 }, (_, i) => {
+//         return (
+//           <CubeSide key={i} i={i} {...props}>
+//             {props.children}
+//           </CubeSide>
+//         );
+//       })} */}
+//     </Cuboid>
+//   );
+// });
+
+// export const Cube = forwardRef((props, ref) => {
+//   const [ size, setSize ] = useState({ width: null, height: null });
+//   useEffect(() => {
+//     if (ref && ref.current) {
+//       setSize({
+//         width: ref.current.clientWidth,
+//         height: ref.current.clientHeight,
+//       });
+//     }
+//   }, [ ref ]);
+//   return (
+//     <Cuboid
+//       ref={ref}
+//       variants={container}
+//       initial="hidden"
+//       animate="show"
+//       exit="close"
+//       {...props}
+//     >
+//       {Array.from({ length: 7 }, (_, i) => {
+//         return <Side {...props} key={i} index={i + 1} />;
+//       })}
+//     </Cuboid>
+//   );
+// });
+
+// export const Cube = withCreature(Cuboid)(Face.Shifty)(Hair);
 
 // export const Sphere = withShape(Globe)(Side);
 
@@ -292,8 +403,9 @@ export const Cube = withCreature(Cuboid)(Face.Shifty)(HugeHair);
 // export const Sphere = withShape(SphereShape);
 // export const Cube = withShape(CubeShape);
 // export const Cube = withCube(Cuboid)(Face.ShiftySmirking)(HugeHair);
-export const Creature404 = withCreature(StaticCube)(Face.Shifty)(SmallHair);
-export const CreatureHero = withCreature(CuboidWalking)(Face.ShiftySmirking)(SmallHair);
+export const Creature404 = withCreature(StaticCube)(Face.Shifty)(Hair);
+export const CreatureHero = withCreature(CuboidWalking)(Face.ShiftySmirking)(Hair);
+export const Cube = withCreature(Cuboid)(Face.Shifty)(Hair);
 
 // export const shape = {
 //   Sphere,

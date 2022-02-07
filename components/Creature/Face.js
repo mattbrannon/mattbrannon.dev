@@ -1,8 +1,9 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import * as Eyes from './Eyes';
 import * as Mouth from './Mouth';
+import { CubeSide } from './Side';
 
-const FaceContainer = styled.div`
+const FaceContainer = styled(CubeSide)`
   width: 100%;
   height: 100%;
   padding: 32px;
@@ -11,6 +12,8 @@ const FaceContainer = styled.div`
   justify-content: space-around;
   align-items: center;
   background: transparent;
+  top: 0;
+  left: 0;
   transform: translateZ(calc(var(--cube-depth) * 0.5));
 `;
 

@@ -89,7 +89,7 @@ export default function Error404() {
   };
 
   return (
-    <Layout>
+    <main>
       <DocumentHead title="Whoops" desc="We must have taken a wrong turn at Albuquerque">
         <link
           rel="preload"
@@ -116,7 +116,7 @@ export default function Error404() {
           </Link>
         </Wrapper>
       </Container>
-    </Layout>
+    </main>
   );
 }
 

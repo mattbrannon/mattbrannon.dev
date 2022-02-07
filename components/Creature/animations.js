@@ -1,4 +1,4 @@
-import { keyframes, css } from 'styled-components/macro';
+import { keyframes, css } from 'styled-components';
 import { createWalkingAnimation } from './utils';
 
 export const walkLeft = keyframes`

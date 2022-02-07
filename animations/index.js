@@ -1,4 +1,5 @@
 import { keyframes } from 'styled-components';
+export { textGeneratorVariant } from './variants';
 
 export const shadowAnimation = keyframes`
   0% {

@@ -13,4 +13,7 @@ const Spacer = styled.span`
   height: ${getHeight}px;
   min-height: ${getHeight}px;
 `;
+
+export const Gap = styled(Spacer).attrs({ axis: 'vertical' })``;
+
 export default Spacer;

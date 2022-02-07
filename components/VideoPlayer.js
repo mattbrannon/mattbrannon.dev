@@ -23,9 +23,18 @@ function VideoPlayer({ sources, ...props }) {
   // useCssVariable('--max-video-width', size, ref);
   useCssVariable('--video-margin', margin, wrapperRef);
 
+  const toggleVideoPlayState = (e) => {
+    if (ref.current.paused) {
+      ref.current.play();
+    }
+    else {
+      ref.current.pause();
+    }
+  };
+
   return (
     <>
-      <VideoWrapper ref={wrapperRef} {...props}>
+      <VideoWrapper onClick={toggleVideoPlayState} ref={wrapperRef} {...props}>
         <Video ref={ref} autoPlay loop muted playsInline>
           {sources.map((src, i) => {
             const ext = src.slice(src.lastIndexOf('.') + 1);
@@ -193,9 +202,20 @@ export const AppPlayer = styled.video`
 `;
 
 export const AppVideo = ({ ...props }) => {
+  const ref = useRef();
+
+  const toggleVideoPlayState = () => {
+    if (ref.current.paused) {
+      ref.current.play();
+    }
+    else {
+      ref.current.pause();
+    }
+  };
+
   return (
-    <AppPlayerWrapper {...props}>
-      <AppPlayer autoPlay loop muted playsInline>
+    <AppPlayerWrapper onClick={toggleVideoPlayState} {...props}>
+      <AppPlayer ref={ref} autoPlay loop muted playsInline>
         {props.sources.map((src, i) => {
           const ext = src.slice(src.lastIndexOf('.') + 1);
           return <source src={src} type={`video/${ext}`} key={i} />;

@@ -16,6 +16,7 @@ import { useMediaQuery } from '@hooks/useMediaQuery';
 
 export default function HomePage() {
   const container = useRef();
+  const cubeRef = useRef();
   const text = useRef();
   const [ startX, setStartX ] = useState(null);
   const [ stopX, setStopX ] = useState(null);
@@ -37,7 +38,7 @@ export default function HomePage() {
   }, [ container, startX, text ]);
 
   return (
-    <Layout>
+    <>
       <Head title="Matt Brannon" description="A brief introduction" />
       <Top>
         <TitleWrapper>
@@ -47,7 +48,7 @@ export default function HomePage() {
         </TitleWrapper>
 
         <CreatureWrapper ref={container}>
-          <CreatureHero eyelid={42} blink startX={startX} stopX={stopX} />
+          <CreatureHero ref={cubeRef} eyelid={42} blink startX={startX} stopX={stopX} />
         </CreatureWrapper>
       </Top>
 
@@ -72,7 +73,7 @@ export default function HomePage() {
         sharpening my ability to learn without guidance and find solutions to problems
         autonomously.
       </Text>
-    </Layout>
+    </>
   );
 }
 

@@ -84,8 +84,6 @@ function NavLink({ children, ...props }) {
     const animation = ref.current.animate(frames, options);
     animation.pause();
 
-    // console.log('both true?', context.clickedBurger && context.isOpen);
-
     if (context.isOpen !== null) {
       if (context.isOpen) {
         ref.current.style.setProperty('display', 'grid');

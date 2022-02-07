@@ -6,11 +6,14 @@ import PageButtons from '@components/PageButtons';
 import { getImageConfig } from '@utils/images';
 import Image from 'next/image';
 import styled from 'styled-components';
-import burnGif from '/public/videos/gif/burn.gif';
-import burningGif from '/public/videos/gif/burning.gif';
-import sammyAndMolly from '/public/videos/gif/sammy-molly.gif';
+// import burnGif from '/public/videos/gif/burn.gif';
+// import burningGif from '/public/videos/gif/burning.gif';
+// import sammyAndMolly from '/public/videos/gif/sammy-molly.gif';
+import VideoPlayer from '@components/VideoPlayer';
 import Text from '@components/Text';
 import { H2, H3 } from '@components/Headings';
+import FancyTextItalic from '@components/FancyText';
+import Spacer from '@components/Spacer';
 
 export default function LetsMakeAGifpage({ config }) {
   const links = {
@@ -21,7 +24,7 @@ export default function LetsMakeAGifpage({ config }) {
   const sources = [ '/videos/demos/lets-make-a-gif.mp4' ];
 
   return (
-    <Layout>
+    <article>
       <Head title="Let's Make a Gif" description="Let's Make a Gif discussion page" />
 
       <AppTitle rounded center title="Lets Make a Gif" sources={sources} links={links}>
@@ -29,7 +32,7 @@ export default function LetsMakeAGifpage({ config }) {
       </AppTitle>
 
       <div>
-        <H2>Motivation</H2>
+        <Heading>Motivation</Heading>
         <Text>
           When I was a kid, my friends and I would spend hours making short little 10
           minute horror movies. The video camera we used also had a stop motion feature
@@ -41,7 +44,7 @@ export default function LetsMakeAGifpage({ config }) {
         </Text>
       </div>
       <div>
-        <H2>Frontend: React</H2>
+        <Heading>Frontend: React</Heading>
         <Text>
           The coolest part of this app (in my opinion) is the wide range of effect filters
           available. The original idea for the app was a simple file converter. Upload a
@@ -50,12 +53,11 @@ export default function LetsMakeAGifpage({ config }) {
           the framerate. So I added a setting for that.
         </Text>
 
-        <FlexContainer>
-          <ResponsiveImage
-            src={sammyAndMolly}
-            alt="my dog sammy telling my dog molly to get out of his bed"
-          />
+        <FlexContainer max={548} column>
+          <VideoPlayer sources={[ '/videos/mp4/sammy-molly2.mp4' ]} />
         </FlexContainer>
+        <ImageCaption>Sammy is not too pleased with Molly being in his bed</ImageCaption>
+        <Spacer size={32} />
 
         <Text>
           Then, I started messing around with the various filters available with ffmpeg. I
@@ -68,13 +70,14 @@ export default function LetsMakeAGifpage({ config }) {
         </Text>
 
         <FlexContainer>
-          <ResponsiveImage src={burningGif} alt="image before processing" />
-          <ResponsiveImage src={burnGif} alt="image after processing" />
+          <VideoPlayer sources={[ '/videos/mp4/burning1.mp4' ]} />
+          <VideoPlayer sources={[ '/videos/mp4/burning3.mp4' ]} />
         </FlexContainer>
+        <ImageCaption>Before and after applying a few filters to a video</ImageCaption>
       </div>
 
       <div>
-        <H2>Backend: NodeJs</H2>
+        <Heading>Backend: NodeJs</Heading>
         <Text>
           A lot of the heavy lifting happens in the Nodejs backend. Video and image
           processing can be very resource intensive so it's important to look for and
@@ -87,10 +90,16 @@ export default function LetsMakeAGifpage({ config }) {
           270. Once the file is resized, the original file is deleted. All edits then use
           the newly created, much smaller file.
         </Text>
+
+        <FlexContainer>
+          <VideoPlayer sources={[ '/videos/mp4/scary-clown.mp4' ]} />
+          <VideoPlayer sources={[ '/videos/mp4/scary-clown2.mp4' ]} />
+        </FlexContainer>
+        <ImageCaption>A couple variations of a scary clown</ImageCaption>
       </div>
 
       <div>
-        <H2>Secret sauce: Ffmpeg</H2>
+        <Heading>Secret sauce: Ffmpeg</Heading>
         <Text>
           This app harnesses the power of a program called ffmpeg. Ffmpeg is an extremely
           powerful command line utilty for working with all kinds of media files. From
@@ -103,41 +112,47 @@ export default function LetsMakeAGifpage({ config }) {
       </div>
 
       <div>
-        <H2>Roadmap forward</H2>
+        <Heading>Roadmap forward</Heading>
         <Text>
           This app was and still is a challenge on many levels. As mentioned earlier,
           video and image processing is pretty resource intensive. Reducing the input file
-          size is a good start but, there are still pleny more opportunities for
+          size is a good start but, there are still plenty more opportunities for
           optimizations. For instance, currently, when you make changes to the filters, it
           takes the unedited input file and reapplies the new filters. In some cases this
-          will be unavoidable. But other times, I believe we should be able to take
+          will be unavoidable. But other times, I believe we should be able to take the
           currently filtered video, and apply the updates directly to that. For example,
-          if you've applied a bunch of effects and now you want to simply crop the video,
-          there's no need to reapply all the effects. We've already done that. We should
-          be able to just crop the video without having to wait around for the effect to
-          be reapplied.
+          if you've applied a bunch of effects and now you want to simply adjust the
+          framerate, there's no need to reapply all the effects. We've already done that.
+          We should be able to adjust the framerate without having to wait around for the
+          same effects to be reapplied.
+        </Text>
+        <Text>
+          What I'd <FancyTextItalic>really</FancyTextItalic> like is to implement a live
+          preview when applying effects.
         </Text>
 
         <p></p>
       </div>
 
       <PageButtons prev="/apps/monty-hall" next="/apps/elbowroom" />
-    </Layout>
+    </article>
   );
 }
 
-const ImageContainer = styled.div`
-  display: block;
-  width: 100%;
-`;
+// const ImageContainer = styled.div`
+//   display: block;
+//   width: 100%;
+//   max-width: 548px;
+//   ${'' /* margin: 0 auto; */}
+// `;
 
-const ResponsiveImage = ({ ...props }) => {
-  return (
-    <ImageContainer>
-      <Image {...props} layout="responsive" alt={props.alt} />
-    </ImageContainer>
-  );
-};
+// const ResponsiveImage = ({ ...props }) => {
+//   return (
+//     <ImageContainer>
+//       <Image {...props} layout="responsive" alt={props.alt} />
+//     </ImageContainer>
+//   );
+// };
 
 export async function getStaticProps() {
   const config = await getImageConfig('lets-make-a-gif');
@@ -150,6 +165,19 @@ export async function getStaticProps() {
 
 const FlexContainer = styled.div`
   display: flex;
-  gap: 4px;
-  margin: 32px 0;
+  gap: 16px;
+  margin: 32px 0 0 0;
+  overflow: hidden;
+  object-fit: cover;
+  max-height: ${(p) => p.max || 320}px;
+
+  flex-direction: ${(p) => (p.column ? 'column' : 'row')};
+`;
+
+const ImageCaption = styled.small`
+  margin-bottom: 32px;
+`;
+
+const Heading = styled(H2)`
+  margin: 64px 0 8px 0;
 `;

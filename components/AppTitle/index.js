@@ -22,7 +22,8 @@ export default function AppTitle({ title, sources, links, children, ...props }) 
 
 const Heading = styled(H1)`
   font-size: clamp(var(--size21), 10vw, var(--size48));
-  ${'' /* margin: 32px 0 0 0; */}
+  margin-bottom: 0;
+  margin-top: 0;
   font-family: Recursive, sans-serif;
   font-variation-settings: var(--recursive4);
 
@@ -38,10 +39,11 @@ const Heading = styled(H1)`
 
 const Top = styled.div`
   text-align: center;
-  margin-bottom: 64px;
-  ${'' /* @media (max-width: ${breakpoints.mobile}px) {
-    margin-bottom: px;
-  } */}
+  margin-bottom: 96px;
+  margin-top: 64px;
+  @media (max-width: ${breakpoints.mobile}px) {
+    margin-top: 32px;
+  }
 `;
 
 const Caption = styled.div`
@@ -58,11 +60,12 @@ const Caption = styled.div`
 
 const LinksWrapper = styled.div`
   width: 100%;
-  margin-top: 32px;
+  margin-top: 64px;
   display: flex;
   justify-content: space-around;
   @media (max-width: ${breakpoints.mobile}px) {
-    gap: 32px;
+    margin-top: 16px;
+    gap: 16px;
     flex-direction: column;
     align-items: center;
   }

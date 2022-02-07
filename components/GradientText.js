@@ -1,9 +1,9 @@
-import { makeShadow, pxToEm } from '@utils/helpers';
+import { makeGradient, makeShadow } from '@utils/helpers';
 import { motion, AnimatePresence } from 'framer-motion';
 import { forwardRef } from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled(motion.div)`
+const MotionGradientWrapper = styled(motion.div)`
   @supports (background-image: paint(something)) {
     @property --gradPoint {
       syntax: '<percentage>';
@@ -18,129 +18,242 @@ const Wrapper = styled(motion.div)`
   --top: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
   --bottom: polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%);
   --visible: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
-
   --gradPoint: 25%;
 
   font-variation-settings: var(--fontVariationSettings);
   font-family: var(--fontFamily);
+  font-size: var(--fontSize);
+  ${'' /* font-size: ${(p) => p.fontSize}; */}
+  -webkit-background-clip: text;
 
   position: relative;
   width: 100%;
   place-self: end;
   transition: --gradPoint 0.2s linear;
 
+  ${'' /* padding: 24px 0; */}
+
   will-change: font-variation-settings;
 `;
 
-// ${'' /* --scale: 3vw; */}
-// ${'' /* --font-size: clamp(var(--size18), var(--scale), var(--size32)); */}
-
-const Text = styled(motion.div)`
-  --left: ${(p) => (p.centered ? 0 : undefined)};
-
-  ${'' /* position: absolute; */}
-  left: var(--left);
-  right: var(--left);
-  top: 0;
+export const Text = styled(motion.span)`
+  display: block;
+  font-size: var(--fontSize);
 
   margin: 0 auto;
-  padding: 12px 4px;
+  ${'' /* padding: 24px 0; */}
+  ${'' /* font-size: var(--fontSize); */}
 
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
 
-  font-size: inherit;
+  font-variation-settings: var(--fontVariationSettings);
+  background-image: var(--gradient);
 
   transition: all 500ms linear;
 
   @media (max-width: 300px) {
     white-space: revert;
   }
-`;
 
-const Gradient = styled(Text)`
-  background-image: var(--gradient);
-  
-  &:after {
+
+  &:before {
+    word-break: break-word;
     content: '${(p) => p.children}';
-    ${'' /* background-image: none; */}
     text-shadow: var(--shadow);
     position: absolute;
-    transform: translateX(-100%);
     z-index: -1;
     -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
-    transition: text-shadow 1s linear var(--delay), -webkit-text-stroke 1s linear var(--delay);
+
+  }
+
+
+`;
+
+export const TextGradient = styled(Text)`
+  background-image: var(--gradient);
+  font-variation-settings: var(--fontVariationSettings);
+  word-break: break-word;
+
+  font-size: var(--fontSize);
+
+  &:before {
+    word-break: break-word;
+    content: '${(p) => p.children}';
+    text-shadow: var(--shadow);
+    ${'' /* position: absolute; */}
+
+
+
+    z-index: -1;
+    -webkit-text-stroke-width: var(--strokeWidth);
+    -webkit-text-stroke-color: var(--strokeColor);
+
+
   }
 `;
 
-const gradient = {
-  hidden: {
-    '--gradient': 'none',
-    '--shadow': 'none',
-    '--delay': '1s',
-    '--strokeColor': 'none',
-    '--strokeWidth': 0,
-    opacity: 0,
-  },
-  show: ({ startColor, endColor, shadow, strokeColor, strokeWidth }) => {
-    const gradient = `linear-gradient(${startColor}, ${endColor})`;
+// ${'' /* transition: -webkit-text-stroke 1s linear var(--strokeDelay); */}
+// ${'' /* transition: all 20ms linear var(--delay); */}
+// ${
+//   '' /* transition: text-shadow 0.1s linear var(--delay), -webkit-text-stroke 0.1s linear var(--delay); */
+// }
 
+// ${'' /* transition: all 5s linear 500ms; */}
+
+// ${'' /* -webkit-text-stroke: var(--strokeWidth) var(--strokeColor); */}
+// ${'' /* transition: -webkit-text-stroke 1s linear var(--strokeDelay); */}
+// ${'' /* transition:  20ms linear var(--delay); */}
+// ${
+//   '' /* transition: text-shadow 0.1s linear var(--delay), -webkit-text-stroke 0.1s linear var(--delay); */
+// }
+// const startColor = props.startColor;
+// const endColor = props.endColor;
+// const shadow = props.shadow;
+// const gradient = props.gradient;
+// const strokeColor = props.strokeColor;
+// const strokeWidth = props.strokeWidth;
+// const fontVariationSettings = props.fontVariationSettings;
+
+export const gradientVariant = {
+  hidden: (props) => {
+    // const initialSettings = props.initialSettings;
+    // console.log({ initialSettings });
     return {
-      '--gradient': gradient,
-      '--shadow': shadow,
-      '--delay': '0s',
-      '--strokeColor': strokeColor,
-      '--strokeWidth': pxToEm(strokeWidth) + 'em',
-      '--strokeDelay': '0s',
-      opacity: 1,
+      '--fontSize': props.fontSize,
+      '--gradient': 'transparent',
+      // '--shadow': 'none',
+      '--fontVariationSettings': 'none',
+      '--strokeDelay': 4,
+      opacity: 0,
+      // '--delay': '5s',
+      transition: {
+        duration: 2,
+      },
     };
   },
-  exit: {
-    '--gradient': 'var(--gradient-transparent)',
-    '--shadow': 'none',
+  show: (props) => {
+    console.log({ show: props });
+    return {
+      '--delay': '0s',
+      '--strokeDelay': '0s',
+      '--strokeColor': props.strokeColor,
+      '--strokeWidth': props.strokeWidth,
+      '--shadow': props.shadow,
+      '--gradient': props.gradient,
+      '--shadowDelay': 4,
+      '--fontVariationSettings': props.fontVariationSettings,
+      opacity: 1,
+      transition: {
+        easing: 'linear',
+        duration: 0.1,
+      },
+      // transition: {
+      //   '--strokeWidth': {
+      //     easing: 'linear',
+      //   },
+      //   '--strokeColor': {
+      //     easing: 'linear',
+      //   },
+      //   '--gradient': {
+      //     delay: 0,
+      //     duration: 4,
+      //   },
+      //   '--shadow': {
+      //     delay: 'var(--shadowDelay)',
+      //     duration: 3,
+      //     type: 'tween',
+      //   },
+      //   '--fontVariationSettings': {
+      //     delay: 0,
+      //     duration: 1,
+      //   },
+      // },
+    };
+  },
+  close: (props) => {
+    const initialSettings = props.initialSettings;
+    // console.log({ initialSettings });
+    return {
+      '--fontVariationSettings': initialSettings,
+      opacity: 0,
+      transition: {
+        duration: 2,
+      },
+    };
   },
 };
 
-const GradientText = forwardRef((props, ref) => {
-  const startColor = props.startColor;
-  const endColor = props.endColor;
-  const shadow = props.shadow;
-  const strokeColor = props.strokeColor;
-  const strokeWidth = props.strokeWidth;
+// textShadow: props.shadow,
+// backgroundImage: props.gradient,
+// fontVariationSettings: props.fontVariationSettings,
+// opacity: 1,
 
-  return (
-    <Wrapper {...props} initial="hidden" animate="show">
-      <AnimatePresence>
-        <Gradient
-          ref={ref}
-          key="shadow"
-          {...props}
-          variants={gradient}
+// transition: {
+//   textShadow: {
+//     delay: 2,
+//   },
+//   fontVariationSettings: {
+//     delay: 1,
+//   },
+//   WebkitTextStrokeWidth: {
+//     delay: 2,
+//     duration: 3,
+//   },
+//   WebkitTextStrokeColor: {
+//     delay: 2,
+//     duration: 3,
+//   },
+//   backgroundImage: {
+//     delay: 2,
+//   },
+// },
+
+// const GradientText = forwardRef((props, ref) => {
+//   // const style = { '--delay': '4s' };
+//   return (
+//     <Wrapper {...props} initial="hidden" animate="show">
+//       <AnimatePresence exitBeforeEnter>
+//         <TextGradient
+//           ref={ref}
+//           key={props}
+//           {...props}
+//           variants={gradientVariant}
+//           initial="hidden"
+//           animate="show"
+//           exit="close"
+//           custom={props}
+//           // style={style}
+//           // onAnimationComplete={() => (style['--delay'] = '0s')}
+//         >
+//           {props.children}
+//         </TextGradient>
+//       </AnimatePresence>
+//     </Wrapper>
+//   );
+// });
+
+export const withGradient = (Gradient) => {
+  const forwarded = forwardRef((props, ref) => {
+    return (
+      <AnimatePresence exitBeforeEnter>
+        <MotionGradientWrapper
+          variant={props.variant}
           initial="hidden"
           animate="show"
-          exit="exit"
-          custom={{ startColor, endColor, shadow, strokeColor, strokeWidth }}
+          exit="close"
+          key={props}
+          {...props}
         >
-          {props.children}
-        </Gradient>
+          <Gradient ref={ref} key={props} {...props}>
+            {props.children}
+          </Gradient>
+        </MotionGradientWrapper>
       </AnimatePresence>
-    </Wrapper>
-  );
-});
-
-GradientText.displayName = 'GradientText';
-
-export default GradientText;
-
-// {/* <Gradient
-//   key="gradient"
-//   {...props}
-//   variants={gradient}
-//   initial="hidden"
-//   animate="show"
-//   exit="exit"
-// >
-//   {props.children}
-// </Gradient> */}
+    );
+  });
+  forwarded.displayName = 'withGradient';
+  return forwarded;
+};

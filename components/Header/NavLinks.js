@@ -49,11 +49,16 @@ const LinkWrapper = styled.span`
   background: transparent;
   border: none;
   font-size: var(--size16);
-  margin: 0 clamp(0.5rem, 1rem + 2vw, 4rem);
+  ${'' /* margin: 0 clamp(0.5rem, 1rem + 2vw, 4rem);
   min-height: 0vh;
 
   &:last-child {
     margin-right: 0;
-  }
+  } */}
+
   margin-bottom: -6px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

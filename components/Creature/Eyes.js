@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import { lookAround, eyesWide, lookAround2 } from '@animations/index';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useEye } from '@hooks/useEye';
 import { makeLookAround } from './utils';

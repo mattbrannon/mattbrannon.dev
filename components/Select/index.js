@@ -1,4 +1,4 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import React, { useEffect, useRef, useState } from 'react';
 
 export function getDisplayedValue({ value, children }) {

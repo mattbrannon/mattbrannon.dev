@@ -1,11 +1,16 @@
-// import Cube from '@components/Creature';
 import { FontControls } from '@components/Controls/FontControls';
 import styled from 'styled-components';
-import Layout from '@components/Layout';
+// import Layout from '@components/Layout';
 import { useEffect, useReducer, useRef, useState } from 'react';
-import GradientText from '@components/GradientText';
-import { makeShadow, snakeToCamel, pxToEm } from '@utils/helpers';
+// import GradientText, { gradientVariant } from '@components/GradientText';
+import TextGradient, { withGradient, Text } from '@components/GradientText';
+
+import { textGeneratorVariant } from '@animations/variants';
+import { makeShadow, makeGradient, snakeToCamel, pxToEm } from '@utils/helpers';
 import Head from '@components/Head';
+import { motion, AnimatePresence } from 'framer-motion';
+import { blogVariant } from '@constants/blog';
+import SyntaxHighlighter from '@components/SyntaxHighlighter';
 
 const fontProperties = {
   Recursive: {
@@ -54,28 +59,50 @@ const data = {
         MONO: 0,
       },
       default: true,
+      homepage: 'https://www.recursive.design/',
+      github: 'https://github.com/arrowtype/recursive',
     },
 
     {
       name: 'Decovar',
+      // settings: {
+      // BLDA: 1000,
+      // TRMD: 0,
+      // TRMC: 0,
+      // SKLD: 455,
+      // TRML: 0,
+      // SKLA: 384,
+      // TRMF: 405,
+      // TRMK: 0,
+      // BLDB: 0,
+      // WMX2: 176,
+      // TRMB: 0,
+      // TRMA: 0,
+      // SKLB: 0,
+      // TRMG: 491,
+      // TRME: 0,
+      // },
       settings: {
-        BLDA: 1000,
-        TRMD: 0,
-        TRMC: 0,
-        SKLD: 455,
-        TRML: 0,
-        SKLA: 384,
-        TRMF: 405,
-        TRMK: 0,
-        BLDB: 0,
-        WMX2: 176,
+        BLDA: 0,
+        TRMD: 1000,
+        TRMC: 1000,
+        SKLD: 260,
+        TRML: 100,
+        SKLA: 612,
+        TRMF: 395,
+        TRMK: 394,
+        BLDB: 165,
+        WMX2: 163,
         TRMB: 0,
         TRMA: 0,
         SKLB: 0,
-        TRMG: 491,
-        TRME: 0,
+        TRMG: 0,
+        TRME: 204,
       },
       default: false,
+      homepage:
+        'https://www.typenetwork.com/brochure/decovar-a-decorative-variable-font-by-david-berlow',
+      github: 'https://github.com/sannorozco/Decovar',
     },
     {
       name: 'Jost',
@@ -84,6 +111,8 @@ const data = {
         ital: 1,
       },
       default: false,
+      homepage: 'https://indestructibletype.com/Jost.html',
+      github: 'https://github.com/indestructible-type/Jost',
     },
     {
       name: 'OpenSans',
@@ -92,6 +121,8 @@ const data = {
         wdth: 95,
       },
       default: false,
+      homepage: 'https://www.opensans.com/',
+      github: 'https://github.com/googlefonts/opensans',
     },
   ],
 };
@@ -101,6 +132,15 @@ const getDefaultFont = () => {
   return { name, settings };
 };
 
+const getInitialSettings = (function parseFonts(fonts) {
+  const defaultSettings = [ ...fonts ].map((font) => {
+    return Object.assign({}, font);
+  });
+  return function getDefault(fontName) {
+    return defaultSettings.find((font) => font.name === fontName);
+  };
+})(data.fonts);
+
 //  #a8bb1b
 //  #00612d
 //  #147500
@@ -109,29 +149,33 @@ const getDefaultFont = () => {
 
 const initialState = {
   font: getDefaultFont().name,
-  settings: getDefaultFont().settings,
+  settings: Object.assign({}, getDefaultFont().settings),
 
   fonts: data.fonts,
   fontSize: 10,
-  startColor: '#a8bb1b', //'hsl(67deg, 75%, 42%)',
-  endColor: '#00612d', //'hsl(148deg 100% 19%)',
-  shadowColorStart: '#147500', //'hsl(173deg 100% 67%)',
-  shadowColorEnd: '#081900', //'hsl(227deg 100% 52%)',
-  shadowLayers: 7,
-  shadowOffset: 2,
-  textStrokeColor: '#143800',
-  textStrokeWidth: 0.5,
+  gradientColorStart: 'hsl(157deg, 100%, 43%)', //'gold', //'hsl(67deg, 75%, 42%)',
+  gradientColorEnd: 'hsl(200deg, 100%, 65%)', //'darkorange', //'hsl(148deg 100% 19%)',
+  gradientMidpoint: 50,
+  gradientBlend: 50,
+  gradientAngle: 0,
+  shadowColorStart: 'hsl(280.3deg, 98.98%, 50.12%)', //'hsl(210 35% 85%)', //'hsl(173deg 100% 67%)',
+  shadowColorEnd: 'hsl(253deg, 59.2%, 15.8%)', // 'hsl(195 65% 20%)', //'hsl(227deg 100% 52%)',
+  shadowLayers: 20,
+  shadowOffset: 1,
   offsetX: -5,
   offsetY: -5,
+  textStrokeColor: 'black',
+  textStrokeWidth: 0.35,
   blur: 1,
+  toggleCode: false,
 };
 
 function reducer(state, action) {
   const actionType = snakeToCamel(action.type);
 
   switch (action.type) {
-    case 'START_COLOR':
-    case 'END_COLOR':
+    case 'GRADIENT_COLOR_START':
+    case 'GRADIENT_COLOR_END':
     case 'SHADOW_COLOR_START':
     case 'SHADOW_COLOR_END':
     case 'SHADOW_LAYERS':
@@ -142,6 +186,10 @@ function reducer(state, action) {
     case 'TEXT_STROKE_COLOR':
     case 'TEXT_STROKE_WIDTH':
     case 'FONT_SIZE':
+    case 'GRADIENT_MIDPOINT':
+    case 'GRADIENT_BLEND':
+    case 'GRADIENT_ANGLE':
+    case 'TOGGLE_CODE':
       return { ...state, [actionType]: action.value };
     case 'MONO':
     case 'CRSV':
@@ -174,19 +222,21 @@ function reducer(state, action) {
     }
 
     case 'CHANGE_FONT': {
-      const font = action.value;
+      // const font = action.value;
+      const previousFont = state.font;
+      const previousFontSettings = Object.assign({}, state.settings);
+      // console.log({ previousFontSettings });
 
+      let prev = state.fonts.find((font) => font.name === previousFont);
+      prev.settings = previousFontSettings;
+      const nextFont = action.value;
       const settings = state.fonts
-        .filter((obj) => obj.name === font)
+        .filter((obj) => obj.name === nextFont)
         .map((obj) => obj.settings)[0];
 
-      return { ...state, settings, font };
-    }
+      // console.log({ previousFont, previousFontSettings, nextFont, settings });
 
-    case 'GET_CSS': {
-      console.log(state);
-
-      return { ...state };
+      return { ...state, settings, previousFontSettings, previousFont, font: nextFont };
     }
 
     case 'RESET': {
@@ -201,170 +251,303 @@ function reducer(state, action) {
   }
 }
 
-// const makeOutline = (color, size) => {
-//   return `-${size}px -${size}px 0 ${color},
-//   ${size}px -${size}px 0 ${color},
-//   -${size}px ${size}px 0 ${color},
-//   ${size}px ${size}px 0 ${color};`;
-// };
-
-const getShadowConfig = (state) => {
-  const {
-    shadowColorStart,
-    shadowColorEnd,
-    shadowLayers,
-    shadowOffset,
-    offsetX,
-    offsetY,
-    blur,
-  } = state;
-
-  return {
-    x: offsetX,
-    y: offsetY,
-    blurAmount: blur,
-    offsetAmount: shadowOffset,
-    layers: shadowLayers,
-    startColor: shadowColorStart,
-    endColor: shadowColorEnd,
-  };
+const parseSettings = (settings) => {
+  return Object.keys(settings)
+    .reduce((acc, prop) => {
+      acc = acc.concat(`"${prop}" ${settings[prop]}`);
+      return acc;
+    }, [])
+    .join(', ');
 };
 
 export default function VariableFontPlayground() {
   const [ state, dispatch ] = useReducer(reducer, initialState);
+
   const [ controlWidth, setControlWidth ] = useState(0);
-  const [ css, setCss ] = useState('');
+  const [ fontVariationSettings, setFontVariationSettings ] = useState('');
+  const [ initialSettings, setInitialSettings ] = useState('');
   const [ shadow, setShadow ] = useState('');
-  const ref = useRef();
+  const [ gradient, setGradient ] = useState('');
+  const [ text, setText ] = useState('');
+
+  const headingRef = useRef();
+  const overflowRef = useRef();
 
   const width = controlWidth < 220 ? 220 : controlWidth;
 
   useEffect(() => {
-    const parseSettings = () => {
-      const settings = state.settings;
-      return Object.keys(settings)
-        .reduce((acc, prop) => {
-          acc = acc.concat(`"${prop}" ${settings[prop]}`);
-          return acc;
-        }, [])
-        .join(', ');
-    };
-    const css = parseSettings();
-    setCss(css);
+    const fontVariationSettings = parseSettings(state.settings);
+    const { settings } = getInitialSettings(state.font);
+    const defaultSettings = parseSettings(settings);
+
+    setFontVariationSettings(fontVariationSettings);
+    setInitialSettings(defaultSettings);
   }, [ state ]);
 
   useEffect(() => {
-    const config = getShadowConfig(state);
-    const shadow = makeShadow(config);
+    const shadow = makeShadow(state);
     setShadow(shadow);
   }, [ state, shadow ]);
 
-  const getCss = () => {
-    // const styles = window.getComputedStyle(ref.current);
-    const styleProps = [
-      'content',
-      'position',
-      'text-shadow',
-      'transform',
-      '-webkit-text-stroke-color',
-      '-webkit-text-stroke-width',
-      'z-index',
-    ];
-    const styles = getComputedStyle(ref.current, ':after');
+  useEffect(() => {
+    const gradient = makeGradient(state);
+    setGradient(gradient);
+  }, [ state, gradient ]);
 
-    const obj = styleProps.reduce((acc, prop) => {
-      let value = styles.getPropertyValue(prop);
-      if (prop === '-webkit-text-stroke-width') {
-        value = pxToEm(state.textStrokeWidth) + 'em';
-      }
-      if (prop === 'text-shadow') {
-        value = shadow;
-      }
-      if (prop === 'transform') {
-        value = 'translateX(-100%)';
-      }
-      acc[prop] = value;
-      return acc;
-    }, {});
-
-    console.log(obj);
-  };
+  useEffect(() => {
+    console.log(state.showCodeSnippet);
+  }, [ state.showCodeSnippet ]);
 
   return (
     <>
       <Head
-        title="Experiments with text"
+        title="Fancy Text Generator"
         description="Variable font and text shadow generator"
       />
-
-      <Grid style={{ '--controlWidth': `${width}px` }}>
-        <Wrapper>
-          <TextContent
-            style={{
-              '--fontSize': state.fontSize + 'vw',
-              '--fontFamily': state.font,
-              '--fontVariationSettings': css,
-              '--startColor': state.startColor,
-              '--endColor': state.endColor,
-            }}
-          >
-            <GradientText
-              ref={ref}
-              shadow={shadow}
-              strokeWidth={state.textStrokeWidth}
-              strokeColor={state.textStrokeColor}
-              startColor={state.startColor}
-              endColor={state.endColor}
-              style={{
-                '--shadow': shadow,
-              }}
-            >
-              Testing
-            </GradientText>
-          </TextContent>
-        </Wrapper>
+      <Container>
         <ControlWrapper>
           <FontControls
-            getCss={getCss}
             state={state}
             font={fontProperties[state.font]}
             dispatch={dispatch}
             setControlWidth={setControlWidth}
           />
         </ControlWrapper>
-      </Grid>
+
+        <Main ref={overflowRef} style={{ '--controlWidth': `${width}px` }}>
+          <Wrapper>
+            <AnimatePresence exitBeforeEnter>
+              <motion.div
+                key={state.font}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
+              >
+                <TextContent
+                  key={state.font}
+                  ref={headingRef}
+                  style={{
+                    '--fontSize': state.fontSize + 'vw',
+                    '--fontFamily': state.font,
+                  }}
+                >
+                  <Gradient
+                    style={{
+                      '--fontSize': `${state.fontSize}vw`,
+                    }}
+                    font={state.font}
+                    // ref={ref}
+                    shadow={shadow}
+                    gradient={gradient}
+                    fontSize={`${state.fontSize}vw`}
+                    strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
+                    strokeColor={state.textStrokeColor}
+                    startColor={state.startColor}
+                    endColor={state.endColor}
+                    fontVariationSettings={fontVariationSettings}
+                    initialSettings={initialSettings}
+                  >
+                    {text || 'Testing'}
+                  </Gradient>
+                </TextContent>
+              </motion.div>
+            </AnimatePresence>
+            <TextInput
+              spellCheck={false}
+              maxLength={50}
+              onChange={(e) => {
+                const text = e.target.value.replace(/'/g, '‘');
+                const final = text.replace(/[\\]+/g, '');
+                setText(final);
+              }}
+              style={{
+                '--fontSize': state.fontSize + 'vw',
+                '--fontFamily': state.font,
+                '--fontVariationSettings': state.fontVariationSettings,
+              }}
+            />
+          </Wrapper>
+          <AnimatePresence exitBeforeEnter>
+            {state.toggleCode && (
+              <CodeBlock
+                key={state.toggleCode}
+                state={state}
+                fontFamily={state.font}
+                shadow={shadow}
+                gradient={gradient}
+                fontSize={`${state.fontSize}vw`}
+                strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
+                strokeColor={state.textStrokeColor}
+                fontVariationSettings={fontVariationSettings}
+              />
+            )}
+          </AnimatePresence>
+        </Main>
+      </Container>
     </>
   );
 }
+const getCss = ({
+  shadow,
+  gradient,
+  fontVariationSettings,
+  fontSize,
+  strokeWidth,
+  strokeColor,
+  fontFamily,
+}) => {
+  const currentFont = data.fonts.find((font) => font.name === fontFamily);
+  const staticCSS = `
+/* 
 
-const Grid = styled(Layout)`
-  grid-template-columns: var(--controlWidth) 1fr;
-  grid-template-rows: var(--header-height) 1fr;
-  margin-bottom: 0;
-  padding: 0;
-`;
+${fontFamily}
+  homepage: ${currentFont.homepage}
+  github: ${currentFont.github}
 
-const TextContent = styled.h1`
+*/
+
+.fancy-text {
+  --shadow: ${shadow};
+  --gradient: ${gradient};
+  --fontFamily: ${fontFamily};
+  --fontSize: ${fontSize};
+  --fontVariationSettings: ${fontVariationSettings};
+  --strokeWidth: ${strokeWidth};
+  --strokeColor: ${strokeColor};
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  padding: 16px 0;
+
   font-family: var(--fontFamily);
   font-size: var(--fontSize);
-  ${'' /* font-variation-settings: var(--fontVariationSettings); */}
-  transition: all 1s linear;
+  font-variation-settings: var(--fontVariationSettings);
+  background-image: var(--gradient);
+}
+
+.fancy-text:before {
+  /* 
+    in your html: 
+      <div class="fancy-text" data-content="your text here">your text here</div> 
+  */
+  content: attr(data-content);
+  position: absolute;
+  z-index: -1;
+
+  text-shadow: var(--shadow);
+  -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
+}
+`;
+
+  return staticCSS;
+};
+
+const StaticCode = ({ children }) => {
+  return (
+    <div className="language-css" style={{ padding: '100px 0' }}>
+      <div className="language-css">{children}</div>
+    </div>
+  );
+};
+
+const CodeBlock = (props) => {
+  console.log(props.state);
+  const {
+    fontSize,
+    strokeWidth,
+    strokeColor,
+    shadow,
+    gradient,
+    fontVariationSettings,
+    fontFamily,
+  } = props;
+
+  // const cssString = shadow.replace(/ , /g, <br />);
+  // const shadowString = `--shadow: ${cssString}`;
+
+  return (
+    <CodeWrapper
+      initial={{ width: 0 }}
+      animate={{ paddingLeft: '16px', width: '100%' }}
+      exit={{ width: 0, transition: { duration: 0.3 } }}
+      transition={{ duration: 0.8, ease: 'anticipate' }}
+    >
+      <SyntaxHighlighter language="css">
+        <StaticCode>
+          {getCss({
+            fontSize,
+            strokeWidth,
+            strokeColor,
+            gradient,
+            shadow,
+            fontVariationSettings,
+            fontFamily,
+          })}
+        </StaticCode>
+      </SyntaxHighlighter>
+    </CodeWrapper>
+  );
+};
+
+const Container = styled.div``;
+
+const Main = styled.div`
+  position: absolute;
+  top: var(--header-height);
+  left: var(--controlWidth);
+  right: 0;
+  bottom: var(--footer-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${'' /* overflow: hidden; */}
+  overflow: auto;
+`;
+
+const CodeWrapper = styled(motion.div)`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+`;
+
+const TextContent = styled(motion.h1)`
+  font-family: var(--fontFamily);
+  padding: 32px;
+`;
+
+const TextInput = styled.input`
+  position: absolute;
+  background: transparent;
+  border: none;
+  outline: none;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+
+  &::selection {
+    background: transparent;
+  }
+
+  font-size: var(--fontSize);
+  font-family: var(--fontFamily);
+  font-variation-settings: var(--fontVariationSettings);
+  caret-color: transparent;
+  color: transparent;
+  ${'' /* white-space: nowrap; */}
 `;
 
 const Wrapper = styled.div`
+  ${'' /* background: purple; */}
   position: relative;
-  height: 100%;
-  width: 100%;
-  grid-row: 1 / -1;
-  grid-column: 2;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-
-  align-self: center;
-  display: grid;
-  grid-template-columns: 100%;
-  place-items: center;
 `;
 
 const ControlWrapper = styled.div`
@@ -372,3 +555,32 @@ const ControlWrapper = styled.div`
   overflow: auto;
   height: 0;
 `;
+
+const TextWrapper = styled(Text)`
+  ${'' /* background-image: ${(p) => p.gradient}; */}
+  ${'' /* -webkit-background-clip: text; */}
+  ${'' /* background-clip: text; */}
+  ${'' /* -webkit-text-fill-color: transparent; */}
+  ${'' /* color: transparent; */}
+  ${'' /* background-image: var(--gradient); */}
+  font-size: var(--fontSize);
+  font-variation-settings: var(--fontVariationSettings);
+  padding: 24px;
+`;
+
+const GradientText = (props) => {
+  return (
+    <TextWrapper
+      {...props}
+      variants={textGeneratorVariant}
+      initial="hidden"
+      animate="show"
+      close="close"
+      custom={props}
+    >
+      {props.children}
+    </TextWrapper>
+  );
+};
+
+const Gradient = withGradient(GradientText);

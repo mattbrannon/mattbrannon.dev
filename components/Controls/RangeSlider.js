@@ -1,46 +1,36 @@
 import styled from 'styled-components';
+import { motion, AnimatePresence } from 'framer-motion';
+import Color from 'color-tools';
 
-import { spaceToCamelCase as toCamelCase, toSnakeUpperCase } from '@utils/helpers';
+import {
+  spaceToCamelCase as toCamelCase,
+  toSnakeUpperCase,
+  debounce,
+  throttle,
+} from '@utils/helpers';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 const createLabel = (name) => {
-  const removeText = [ 'update', 'cube', 'shadow', 'translate', 'rotate', 'text stroke' ];
-
-  let label = name;
+  const removeText = [ 'update', 'cube', 'shadow', 'gradient', 'text stroke' ];
   removeText.forEach((str) => {
-    label = label.replace(str, '');
+    name = name.replace(str, '');
   });
-  return label;
+  return name;
 };
 
 export default function RangeSlider({ ...props }) {
   const { name, state, dispatch } = props;
-
-  // const replaceText = [ 'translate', 'rotate' ];
-  // const removeText = [ 'update', 'cube', 'shadow', 'translate', 'rotate' ];
-
-  // let label = name;
-  // for (let i = 0; i < removeText.length; i++) {
-  //   if (label.includes(removeText[i])) {
-  //     label = label.replace(removeText[i], '');
-  //   }
-  // }
-
   const label = createLabel(name);
-
-  // let label = name;
-  // removeText.forEach((str) => {
-  //   label = label.replace(str, '');
-  // });
-
-  // const label = replaceText.includes(props.name)
-  //   ? props.name.replace(/(translate|rotate) ([XYZ]$)/g, '$2 axis')
-  //   : removeText.includes(props.name)
-  //   ? props.name.replace(/update|cube|shadow/g, '')
-  //   : props.name;
-
-  // const thing = props.name.replace(/update|cube|(translate|rotate) ([XYZ]$)/g, '$2 axis');
-
   const key = toCamelCase(name);
+  // const defaultValue = state[key] || state.settings[key] || 0;
+
+  const defaultValue = state[key]
+    ? state[key]
+    : 'settings' in state
+    ? state.settings[key]
+    : 0;
+
+  // const [ value, setValue ] = useState(Number(defaultValue));
 
   const dispatchAction = (e) => {
     const type = name
@@ -48,8 +38,8 @@ export default function RangeSlider({ ...props }) {
       .map((v) => v.toUpperCase())
       .join('_');
 
-    const value = e.target.value;
-    console.log({ type, value });
+    const value = parseFloat(e.target.value);
+    // setValue(value);
     return dispatch({ type, value });
   };
 
@@ -60,38 +50,105 @@ export default function RangeSlider({ ...props }) {
         onChange={dispatchAction}
         type={props.type || 'range'}
         id={name}
-        value={state[key]}
         {...props}
+        value={props.value}
       />
     </Slider>
   );
 }
 
+const makeHex = (color) => {
+  // console.log({ color });
+
+  return new Color(color).hex.css();
+};
+
+const parseType = (type, value) => {
+  return type === 'color' ? makeHex(value) : value;
+};
+
+// function useThrottle(cb, delay) {
+//   const cbRef = useRef(cb);
+//   // use mutable ref to make useCallback/throttle not depend on `cb` dep
+//   useEffect(() => {
+//     cbRef.current = cb;
+//   });
+//   return useCallback(
+//     throttle((...args) => cbRef.current(...args), delay),
+//     [ delay ]
+//   );
+// }
+// function useDebounce(cb, delay) {
+//   // ...
+//   const inputsRef = useRef({ cb, delay }); // mutable ref like with useThrottle
+//   useEffect(() => {
+//     inputsRef.current = { cb, delay };
+//   }); //also track cur. delay
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+//   return useCallback(
+//     debounce((...args) => {
+//       // Debounce is an async callback. Cancel it, if in the meanwhile
+//       // (1) component has been unmounted (see isMounted in snippet)
+//       // (2) delay has changed
+//       if (inputsRef.current.delay === delay && typeof window !== 'undefined')
+//         inputsRef.current.cb(...args);
+//     }, delay),
+//     [ delay, debounce ]
+//   );
+// }
+
+// export const useDebouncedEffect = (effect, deps, delay) => {
+//   useEffect(() => {
+//     const handler = setTimeout(() => effect(), delay);
+
+//     return () => clearTimeout(handler);
+//     // eslint-disable-next-line react-hooks/exhaustive-deps
+//   }, [ ...(deps || []), delay ]);
+// };
+
+function useDebounce(value, delay) {
+  // State and setters for debounced value
+  const [ debouncedValue, setDebouncedValue ] = useState(value);
+  useEffect(
+    () => {
+      // Update debounced value after delay
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+      // Cancel the timeout if value changes (also on delay change or unmount)
+      // This is how we prevent debounced value from updating if value is changed ...
+      // .. within the delay period. Timeout gets cleared and restarted.
+      return () => {
+        clearTimeout(handler);
+      };
+    },
+    [ value, delay ] // Only re-call effect if value or delay changes
+  );
+  return debouncedValue;
+}
+
 export const CustomInput = ({ ...props }) => {
   const { name, state, dispatch, type } = props;
-  // const label = props.name.replace(/update|cube /g, '');
   const key = toCamelCase(name);
-
   const label = createLabel(name);
+  const value = parseType(type, state[key]);
 
-  const dispatchAction = (e) => {
+  const [ colorValue, setColorValue ] = useState(value);
+
+  const color = useDebounce(colorValue, 0);
+
+  useEffect(() => {
     const type = toSnakeUpperCase(name);
-    const value = e.target.value;
-
-    console.log({ type, value });
-    return dispatch({ type, value });
-  };
-
-  // console.log(state, key);
+    dispatch({ type, value: color });
+  }, [ color, dispatch, name ]);
 
   return (
     <Wrapper>
       <Label {...props}>{label}:</Label>
       <Input
-        onChange={dispatchAction}
-        // type={props.type || 'range'}
+        onChange={(e) => setColorValue(e.target.value)}
         id={name}
-        value={state[key]}
+        value={colorValue}
         {...props}
       />
     </Wrapper>
@@ -107,17 +164,24 @@ const Label = styled.label`
   margin-right: auto;
   flex: 1;
 `;
+
 const Slider = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
+const getMaxWidth = (props) => {
+  const type = props.type;
+  const maxWidth = type === 'number' || type === 'color' ? 50 : 100;
+  return `${maxWidth}px`;
+};
+
 export const Input = styled.input.attrs((props) => {
-  const maxWidth = props.type === 'number' || props.type === 'color' ? 50 : 100;
+  const maxWidth = getMaxWidth(props);
   return {
     style: {
-      '--maxWidth': maxWidth + 'px',
+      '--maxWidth': maxWidth,
     },
   };
 })`
@@ -126,10 +190,5 @@ export const Input = styled.input.attrs((props) => {
   min-width: 0;
 
   justify-self: flex-start;
-
   direction: ${(p) => (p.reverse ? 'rtl' : undefined)};
-`;
-
-const Color = styled(Input)`
-  min-width: 0;
 `;

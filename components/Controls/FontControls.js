@@ -1,7 +1,7 @@
 // import { useRef } from 'react';
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 import Select from '@components/Select';
-import Button from '@components/Button';
+import Button, { InvertedButton } from '@components/Button';
 import RangeSlider, { CustomInput } from './RangeSlider';
 import ControlsLayout, { ControlsContainer } from './Layout';
 
@@ -33,8 +33,11 @@ export function FontControls({ ...props }) {
         </Group>
         <Group>
           <Heading>Text Color</Heading>
-          <ColorInput type="color" name="start color" {...props} />
-          <ColorInput type="color" name="end color" {...props} />
+          <ColorInput type="color" name="gradient color start" {...props} />
+          <ColorInput type="color" name="gradient color end" {...props} />
+          <RangeSlider min={0} max={100} step={1} name="gradient blend" {...props} />
+          <RangeSlider min={0} max={100} step={1} name="gradient midpoint" {...props} />
+          <RangeSlider min={0} max={360} step={1} name="gradient angle" {...props} />
         </Group>
 
         <Group>
@@ -44,7 +47,7 @@ export function FontControls({ ...props }) {
         </Group>
         <Group>
           <Heading>Shadow Properties</Heading>
-          <RangeSlider type="range" min={1} max={20} name="shadow layers" {...props} />
+          <RangeSlider type="range" min={0} max={20} name="shadow layers" {...props} />
           <RangeSlider
             type="range"
             min={0}
@@ -99,7 +102,13 @@ export function FontControls({ ...props }) {
           })}
         </Group>
 
-        <Button onClick={() => props.getCss()}>Get CSS</Button>
+        <InvertedButton
+          onClick={() =>
+            props.dispatch({ type: 'TOGGLE_CODE', value: !state.toggleCode })
+          }
+        >
+          {state.toggleCode === true ? 'Back to Editor' : 'Get Css'}
+        </InvertedButton>
 
         <Button onClick={() => props.dispatch({ type: 'RESET' })}>Reset</Button>
       </ControlsContainer>

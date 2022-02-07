@@ -24,7 +24,7 @@ export default function MontyHallPage({ config }) {
   const sources = [ '/videos/demos/montyhall.mp4' ];
 
   return (
-    <Layout>
+    <article>
       <Head
         title="Monty Hall Experiment"
         description="Monty Hall Experiment discussion"
@@ -82,7 +82,7 @@ export default function MontyHallPage({ config }) {
       </div>
 
       <PageButtons prev="/apps/elbowroom" next="/apps/lets-make-a-gif" />
-    </Layout>
+    </article>
   );
 }
 

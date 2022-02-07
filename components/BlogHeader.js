@@ -1,21 +1,13 @@
 import { format, parseISO } from 'date-fns';
 import styled from 'styled-components';
-import { breakpoints } from '@constants/index';
-import GradientText from '@components/GradientText';
-import { H1 } from '@components/Headings';
-import { makeGradient } from '@utils/helpers';
-import { useFontSize } from '@hooks/useFontSize';
+import { mobile, blogHeader, blogVariant } from '@constants/index';
+import { withGradient, Text } from '@components/GradientText';
 
 export default function BlogHeader({ children, ...props }) {
-  const gradient = makeGradient('#a9fab3', '#88394a', 12);
-  const fontSize = useFontSize(32, 64, breakpoints.mobile, breakpoints.desktop);
-  // console.log(gradient);
-  console.log({ fontSize });
-
   return (
-    <Wrapper>
-      <Title style={{ '--fontSize': fontSize }}>
-        <GradientText gradient={gradient}>{children.title}</GradientText>
+    <Wrapper style={{ '--fontSize': blogHeader.fontSize }}>
+      <Title>
+        <Gradient custom={blogHeader}>{children.title}</Gradient>
       </Title>
       <Date date={children.date} />
     </Wrapper>
@@ -37,18 +29,17 @@ const Wrapper = styled.div`
   align-items: baseline;
   margin-top: 48px;
   margin-bottom: 2rem;
-
-  @media (max-width: ${breakpoints.mobile}px) {
-    margin-top: 0;
+  font-family: Recursive;
+  @media (max-width: ${mobile}px) {
+    margin-top: 24px;
   }
 `;
 
 const Title = styled.h1`
-  font-size: 64px;
+  ${'' /* font-size: 64px; */}
   margin-bottom: 0rem;
   flex: 1 0 100%;
-  ${'' /* font-size: var(--fontSize); */}
-  @media (max-width: ${breakpoints.mobile}px) {
+  @media (max-width: ${mobile}px) {
     font-size: var(--size40);
   }
 `;
@@ -59,3 +50,23 @@ const Time = styled.div`
   flex: 1;
   min-width: revert;
 `;
+
+const HeaderText = styled(Text)`
+  padding: 0;
+`;
+
+const GradientText = (props) => {
+  return (
+    <HeaderText
+      {...props}
+      variants={blogVariant}
+      initial="hidden"
+      animate="show"
+      exit="close"
+    >
+      {props.children}
+    </HeaderText>
+  );
+};
+
+const Gradient = withGradient(GradientText);

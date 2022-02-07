@@ -4,7 +4,7 @@ import Head from '@components/Head';
 import Button, { InvertedButton } from '@components/Button';
 // import GradientText from '@components/GradientText';
 
-import { H1, H2, H3, GradientHeading } from '@components/Headings';
+import { H1, H2, H3, H4, GradientHeading } from '@components/Headings';
 
 import Layout from '@components/Layout';
 import { publishedArticles, POSTS_PATH } from '@utils/mdxUtils.js';
@@ -41,6 +41,7 @@ const components = {
   Video: dynamic(() => import('@components/VideoPlayer').then((res) => res.FlatVideo)),
   ul: UnorderedList,
   li: ListItem,
+  Gap: dynamic(() => import('@components/Spacer').then((res) => res.Gap)),
 
   MiniGame: dynamic(() => import('@components/Minigame')),
   checkbox: dynamic(() => import('@components/Minigame').then((res) => res.Checkbox)),
@@ -48,16 +49,17 @@ const components = {
   Spacer: dynamic(() => import('@components/Spacer')),
   h2: H2,
   h3: H3,
+  h4: H4,
 };
 
 export default function PostPage({ source, frontMatter }) {
   const { title, description } = frontMatter;
   return (
-    <PageLayout>
+    <>
       <Head title={title} description={description} />
       <BlogHeader>{frontMatter}</BlogHeader>
       <MDXRemote {...source} components={components} />
-    </PageLayout>
+    </>
   );
 }
 

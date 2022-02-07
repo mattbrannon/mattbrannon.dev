@@ -25,7 +25,7 @@ export default function Index({ posts }) {
   // const placement = shouldCenter ? 'center' : 'left';
 
   return (
-    <Layout>
+    <main>
       <Head
         title="Another Developer Blog"
         description="Thoughts, opinions, criticisms, rantings, ravings, musings on all things great and small"
@@ -55,30 +55,28 @@ export default function Index({ posts }) {
         {posts.map((post) => {
           const href = `/blog/${post.filePath.replace(/\.mdx?$/, '')}`;
           return (
-            <MaxWidthWrapper key={post.filePath}>
-              <Card key={post.filePath}>
-                <Link passHref href={href}>
-                  <H2>{post.data.title}</H2>
-                </Link>
-                <Text>{post.data.description}</Text>
-              </Card>
-            </MaxWidthWrapper>
+            <Card key={post.filePath}>
+              <Link passHref href={href}>
+                <Title>{post.data.title}</Title>
+              </Link>
+              <Text>{post.data.description}</Text>
+            </Card>
           );
         })}
       </BlogList>
       <Spacer axis="vertical" size={32} />
-    </Layout>
+    </main>
   );
 }
 
-const MaxWidthWrapper = styled.div`
-  max-width: var(--max-width);
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  display: flex;
-  align-items: stretch;
-`;
+// const MaxWidthWrapper = styled.div`
+//   max-width: var(--max-width);
+//   width: 100%;
+//   height: 100%;
+//   margin: 0 auto;
+//   display: flex;
+//   align-items: stretch;
+// `;
 
 const Card = styled.div`
   border: 1px solid black;
@@ -91,6 +89,10 @@ const Card = styled.div`
   @media (prefers-color-scheme: light) {
     background: hsl(223 30% 88%);
   }
+`;
+
+const Title = styled(H2)`
+  margin-top: 16px;
 `;
 
 const IntroWrapper = styled.div`

@@ -22,7 +22,7 @@ export default function ElbowRoomPage({ config }) {
 
   const sources = [ '/videos/demos/elbowroom.mp4' ];
   return (
-    <Layout>
+    <article>
       <Head
         description="Discussion page concerning the making of elbowroom.dev"
         title="Elbow Room"
@@ -88,7 +88,7 @@ export default function ElbowRoomPage({ config }) {
       </div>
 
       <PageButtons prev="/apps/lets-make-a-gif" next="/apps/monty-hall" />
-    </Layout>
+    </article>
   );
 }
 

@@ -46,14 +46,14 @@ const Introduction = () => {
 
 export default function AppsPage() {
   return (
-    <PageLayout>
+    <section>
       <Head title="Apps" description="Apps built by Matt Brannon" />
       <PageTitle>Apps I've Built</PageTitle>
       <Introduction />
       <AppCard config={letsMakeAGifConfig} />
       <AppCard config={elbowRoomConfig} />
       <AppCard config={montyHallConfig} />
-    </PageLayout>
+    </section>
   );
 }
 

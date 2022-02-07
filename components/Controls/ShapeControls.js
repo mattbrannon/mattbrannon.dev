@@ -7,6 +7,7 @@ import Select from '@components/Select';
 import Button from '@components/Button';
 import RangeSlider, { CustomInput } from './RangeSlider';
 import ControlsLayout, { ControlsContainer } from './Layout';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ShapeControls({ ...props }) {
   const [ maxX, setMaxX ] = useState(0);
@@ -37,7 +38,9 @@ export default function ShapeControls({ ...props }) {
   }, [ props.cubeWidth, props.cubeHeight, windowSize, controlWidth ]);
 
   const handleShapeChange = (e) => {
-    props.dispatch({ type: 'SET_SHAPE', value: e.target.value });
+    // const sides = e.target.value === 'Cube' ? 6 : props.state.sides;
+    // props.dispatch({ type: 'SIDES', value: sides });
+    props.dispatch({ type: 'SHAPE', value: e.target.value });
   };
 
   const handleOpacityChange = (e) => {
@@ -115,44 +118,40 @@ export default function ShapeControls({ ...props }) {
           <RangeSlider name="speed" reverse min={0} max={10} {...props} />
         </Group>
 
-        {props.state.shape === 'Sphere' && (
-          <Group>
-            <Heading>Background</Heading>
+        {/* {props.state.shape === 'Sphere' && ( */}
+        <Group>
+          <Heading>Background</Heading>
 
-            <>
-              <Select value={props.state.backgroundType} onChange={changeBackgroundType}>
-                {displayOptions()}
-              </Select>
+          <>
+            <Select value={props.state.backgroundType} onChange={changeBackgroundType}>
+              {displayOptions()}
+            </Select>
 
-              {props.state.backgroundType === 'solid' ? (
-                <ColorWrapper>
-                  <CustomInput type="color" name="color" {...props} />
-                </ColorWrapper>
-              ) : props.state.backgroundType.includes('gradient') ? (
-                <ColorWrapper>
-                  <CustomInput type="color" name="start" {...props} />
-                  <CustomInput type="color" name="end" {...props} />
-                </ColorWrapper>
-              ) : null}
+            {props.state.backgroundType === 'solid' ? (
+              <ColorWrapper>
+                <CustomInput type="color" name="color" {...props} />
+              </ColorWrapper>
+            ) : props.state.backgroundType.includes('gradient') ? (
+              <ColorWrapper>
+                <CustomInput type="color" name="start" {...props} />
+                <CustomInput type="color" name="end" {...props} />
+              </ColorWrapper>
+            ) : null}
 
-              <RangeSlider
-                onChange={handleOpacityChange}
-                name="opacity"
-                min={0}
-                max={1}
-                step={0.01}
-                {...props}
-              />
-              <Checkbox
-                isChecked={isChecked}
-                onChange={handleOutlineToggle}
-                name="outline"
-              >
-                outline:
-              </Checkbox>
-            </>
-          </Group>
-        )}
+            <RangeSlider
+              onChange={handleOpacityChange}
+              name="opacity"
+              min={0}
+              max={1}
+              step={0.01}
+              {...props}
+            />
+            <Checkbox isChecked={isChecked} onChange={handleOutlineToggle} name="outline">
+              outline:
+            </Checkbox>
+          </>
+        </Group>
+        {/* )} */}
       </ControlsContainer>
 
       <ControlsContainer>

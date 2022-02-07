@@ -13,7 +13,7 @@ import { H3, H2 } from '@components/Headings';
 
 export default function Index({ posts }) {
   return (
-    <Layout>
+    <>
       <Head title="Oddities and revelations" description="secret shh..." />
 
       <PageTitle>Revelations & deprecations</PageTitle>
@@ -28,8 +28,16 @@ export default function Index({ posts }) {
           don't feed Fred after 9:00pm.
         </ColorText>
       </Text>
+      <List>
+        <Card>
+          <Link passHref href="/misc/variable-fonts">
+            <H2>Fancy Text Generator</H2>
+          </Link>
+          <Text>
+            Variable fonts + gradient backgrounds + layered text shadows = Fancy text
+          </Text>
+        </Card>
 
-      <MaxWidthWrapper>
         <Card>
           <Link passHref href="/misc/experiments">
             <H2>Experiments with a cube</H2>
@@ -40,43 +48,23 @@ export default function Index({ posts }) {
             fun to move the cube around.
           </Text>
         </Card>
-      </MaxWidthWrapper>
-      <MaxWidthWrapper>
-        <Card>
-          <Link passHref href="/misc/variable-fonts">
-            <H2>Fancy Text Generator</H2>
-          </Link>
-          <Text>
-            Variable fonts + gradient backgrounds + layered text shadows = Fancy text
-          </Text>
-        </Card>
-      </MaxWidthWrapper>
-
+      </List>
       <Spacer axis="vertical" size={32} />
-    </Layout>
+    </>
   );
 }
-const MaxWidthWrapper = styled.div`
-  max-width: var(--max-width);
-  width: 100%;
-  height: 100%;
-  margin: 0 auto 16px auto;
 
-  display: flex;
-
-  align-items: center;
-  padding: 0 16px;
-
-  &:nth-of-type(1) {
-    margin: 0 auto;
-  }
+const List = styled.ul`
+  list-style: none;
+  display: grid;
+  gap: 18px;
 `;
 
 const Card = styled.div`
   border: 1px solid black;
   border-radius: 6px;
   background: #222;
-  grid-column: 2;
+  ${'' /* grid-column: 2; */}
   width: 100%;
   padding: 0 16px;
 
