@@ -1,6 +1,6 @@
 import Head from '@components/Head';
 import Layout from '@components/Layout';
-import Text from '@components/Text';
+import Text, { ColorSpan } from '@components/Text';
 // import GradientText from '@components/GradientText';
 import styled, { keyframes, css } from 'styled-components';
 // import { H1 } from '@components/Headings';
@@ -13,6 +13,7 @@ import { InvertedButton } from '@components/Button';
 import { useEffect, useRef, useState } from 'react';
 import { breakpoints } from '@constants/index';
 import { useMediaQuery } from '@hooks/useMediaQuery';
+import { Link } from '@components/ExternalLink';
 
 export default function HomePage() {
   const container = useRef();
@@ -20,6 +21,7 @@ export default function HomePage() {
   const text = useRef();
   const [ startX, setStartX ] = useState(null);
   const [ stopX, setStopX ] = useState(null);
+  const [ containerRect, setContainerRect ] = useState({});
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
 
   useEffect(() => {
@@ -33,6 +35,7 @@ export default function HomePage() {
       const start = containerRect.width;
       setStartX(start);
       setStopX(stop);
+      setContainerRect(containerRect);
       console.log({ containerRect, textRect });
     }
   }, [ container, startX, text ]);
@@ -48,14 +51,53 @@ export default function HomePage() {
         </TitleWrapper>
 
         <CreatureWrapper ref={container}>
-          <CreatureHero ref={cubeRef} eyelid={42} blink startX={startX} stopX={stopX} />
+          <CreatureHero
+            containerRect={containerRect}
+            ref={cubeRef}
+            eyelid={42}
+            blink
+            startX={startX}
+            stopX={stopX}
+          />
         </CreatureWrapper>
       </Top>
 
-      <Text>
+      {/* <Text>
         Hey there. My name is Matt. I'm a software developer and musician. And as of
         recently, it seems I'm also a cube. Not quite sure how that happened but, I
         digress. <strong>Welcome to my little corner of the internet.</strong>
+      </Text> */}
+
+      <Text>
+        Hey there. I'm Fred! Matt created me to look after his website while he's off
+        doing human things. Matt's a pretty cool dude. He really enjoys making things and
+        breaking things with code. You should have seen the early versions of me. Even Dr
+        Frankestein would have been horrified. But in the end it turned out well. I mean,
+        yeah I'm a cube and he forgot to give me arms or legs but... it's fine.
+        Surprisingly enough, Matt's made quite a few other things that, for the most part,
+        work really well... unlike me. You can see some examples of those lucky programs
+        in the{' '}
+        <Link href="/apps">
+          <strong>Apps</strong>
+        </Link>{' '}
+        section of the site. I've also heard him recently tinkering around at night with
+        something. Then, the other day, a new{' '}
+        <Link href="/misc">
+          <strong>Misc</strong>
+        </Link>{' '}
+        link appeared above. So you might check that out as well. You may have also
+        noticed the{' '}
+        <Link href="/contact">
+          <strong>Contact</strong>
+        </Link>{' '}
+        link above. Just to be clear - That's for contacting Matt directly. If you do
+        reach out to him, could you also remind him that I'm still waiting for those arms
+        he promised me? I'd send him a message myself but, you know... no arms. Or, at the
+        very least, could he give me something new to read? I've read every article in his{' '}
+        <Link href="/blog">
+          {' '}
+          <strong>Blog</strong>
+        </Link>
       </Text>
 
       <Text>

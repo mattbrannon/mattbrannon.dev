@@ -60,7 +60,7 @@ export const Text = styled(motion.span)`
 
 
   &:before {
-    word-break: break-word;
+    ${'' /* word-break: break-word; */}
     content: '${(p) => p.children}';
     text-shadow: var(--shadow);
     position: absolute;
@@ -75,12 +75,12 @@ export const Text = styled(motion.span)`
 export const TextGradient = styled(Text)`
   background-image: var(--gradient);
   font-variation-settings: var(--fontVariationSettings);
-  word-break: break-word;
+  ${'' /* word-break: break-word; */}
 
   font-size: var(--fontSize);
 
   &:before {
-    word-break: break-word;
+    ${'' /* word-break: break-word; */}
     content: '${(p) => p.children}';
     text-shadow: var(--shadow);
     ${'' /* position: absolute; */}

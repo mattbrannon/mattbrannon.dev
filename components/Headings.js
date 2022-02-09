@@ -9,7 +9,7 @@ export const H1 = styled.h1`
   top: 0; */}
 
   @media (prefers-color-scheme: light) {
-    color: var(--pinkShadow);
+    color: var(--dark-pink);
   }
 
   @media (max-width: ${breakpoints.mobile}px) {
@@ -23,7 +23,7 @@ export const H2 = styled.h2`
   color: var(--orange);
 
   @media (prefers-color-scheme: light) {
-    color: var(--pinkShadow);
+    color: var(--dark-pink);
   }
 `;
 export const H3 = styled.h3`
@@ -32,7 +32,7 @@ export const H3 = styled.h3`
   color: var(--yellow);
 
   @media (prefers-color-scheme: light) {
-    color: var(--pinkShadow);
+    color: var(--dark-pink);
     color: #4051b5;
   }
 `;

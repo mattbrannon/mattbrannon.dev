@@ -72,9 +72,11 @@ const animateCube = (ref, context, props, isMobile) => {
     // console.log({ start: props.startX, stop: props.stopX });
     const start = props.startX;
     const stop = isMobile ? 0 : props.stopX * -1 + 24;
-    const duration = isMobile ? 4000 : 8000;
+    const duration = isMobile ? 4000 : 12000;
 
-    const setStepAmount = getWalkingAnimation(start, stop, isMobile);
+    console.log({ containerRectBalls: props.containerRect });
+
+    const setStepAmount = getWalkingAnimation(start, stop, isMobile, ref);
     const setAngles = setStepAmount(20);
     const transform = setAngles(5, -65);
 

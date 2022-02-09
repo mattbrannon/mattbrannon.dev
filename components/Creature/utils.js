@@ -482,38 +482,113 @@ function calculateDistance(start, stop) {
   return { totalDistance, direction };
 }
 
-export const getWalkingAnimation = (start, stop, isMobile) => {
+export const getWalkingAnimation = (start, stop, isMobile, ref) => {
   return function (stepDistance) {
     return function (x, y) {
-      const setForwardSteps = setPoints(start)(stop);
-      const setReverseSteps = setPoints(stop)(start);
+      const rect = ref.current.getBoundingClientRect();
+      console.log({ rectalProbe: rect });
+      const outsideRight = start;
+      const insideRight = rect.height - rect.width + rect.y;
+      const left = stop;
+      const middle = 0;
+
+      const setForwardSteps = setPoints(outsideRight)(left);
+      const setReverseSteps = setPoints(left)(insideRight);
+      const setReverseStepsToMiddle = setPoints(left)(left / 2);
+      const setForwardStepsFromMiddle = setPoints(middle)(left);
+      const setInsideRightToMiddleSteps = setPoints(insideRight)(left / 2);
+
+      // console.log({ start, stop });
 
       const forwardSteps = setForwardSteps(stepDistance).map((value) => `${value}px`);
       const reverseSteps = setReverseSteps(stepDistance).map((value) => `${value}px`);
+      const leftToMiddleSteps = setReverseStepsToMiddle(stepDistance).map(
+        (value) => `${value}px`
+      );
 
-      const xAngle = Array.from({ length: forwardSteps.length }, (_, i) => {
-        const value = i % 2 === 0 ? x : x * -1;
-        return `${value}deg`;
-      });
+      const rightToMiddleSteps = setInsideRightToMiddleSteps(stepDistance).map(
+        (value) => `${value}px`
+      );
 
-      const yAngleForward = Array(forwardSteps.length).fill(`${y}deg`);
-      const yAngleReverse = Array(reverseSteps.length).fill(`${y * -1}deg`);
+      // const reverseStepsToMiddle = setReverseStepsToMiddle(stepDistance).map(
+      //   (value) => `${value}px`
+      // );
+
+      const getAngleX = (stepArray) => {
+        const xAngles = Array.from({ length: stepArray.length }, (_, i) => {
+          const value = i % 2 === 0 ? x : x * -1;
+          return `${value}deg`;
+        });
+        return xAngles;
+      };
+
+      const getAngleY = (stepArray, direction = 1) => {
+        return Array(stepArray.length).fill(`${y * direction}deg`);
+      };
+
+      // const xAngle = Array.from({ length: forwardSteps.length }, (_, i) => {
+      //   const value = i % 2 === 0 ? x : x * -1;
+      //   return `${value}deg`;
+      // });
+
+      const walkAngleX = getAngleX(forwardSteps);
+      const walkLeftAngleY = getAngleY(forwardSteps);
+      const walkRightAngleY = getAngleY(reverseSteps, -1);
+      // const yAngleForward = Array(forwardSteps.length).fill(`${y}deg`);
+      // const yAngleReverse = Array(reverseSteps.length).fill(`${y * -1}deg`);
+      // const yAngleReverseToMiddle = Array(reverseStepsToMiddle.length).fill(
+      //   `${y * -1}deg`
+      // );
 
       const walkLeft = forwardSteps.map((step, i) => {
-        const rotateX = `rotateX(${xAngle[i]})`;
-        const rotateY = `rotateY(${yAngleForward[i]})`;
+        const rotateX = `rotateX(${walkAngleX[i]})`;
+        const rotateY = `rotateY(${walkLeftAngleY[i]})`;
         const translateX = `translateX(${step})`;
 
         return `${translateX} ${rotateX} ${rotateY}`;
       });
+
+      const walkFromLeftToMiddle = leftToMiddleSteps.map((step, i) => {
+        const rotateX = `rotateX(${walkAngleX[i]})`;
+        const rotateY = `rotateY(${walkLeftAngleY[i]})`;
+        const translateX = `translateX(${step})`;
+
+        return `${translateX} ${rotateX} ${rotateY}`;
+      });
+
+      const walkFromRightToMiddle = rightToMiddleSteps.map((step, i) => {
+        const rotateX = `rotateX(${walkAngleX[i]})`;
+        const rotateY = `rotateY(${walkLeftAngleY[i]})`;
+        const translateX = `translateX(${step})`;
+
+        return `${translateX} ${rotateX} ${rotateY}`;
+      });
+
+      const walkToMiddle = walkLeft.slice(0, Math.floor(walkLeft.length / 2));
 
       const walkRight = reverseSteps.map((step, i) => {
-        const rotateX = `rotateX(${xAngle[i]})`;
-        const rotateY = `rotateY(${yAngleReverse[i]})`;
+        const rotateX = `rotateX(${walkAngleX[i]})`;
+        const rotateY = `rotateY(${walkRightAngleY[i]})`;
         const translateX = `translateX(${step})`;
 
         return `${translateX} ${rotateX} ${rotateY}`;
       });
+
+      // const goRight = walkRight.filter((str) => {
+      //   return /translateX\(-\d.+px\)/g.test(str);
+      // });
+
+      // const walkToMiddleFromLeft = reverseStepsToMiddle.map((step, i) => {
+      //   const rotateX = `rotateX(${xAngle[i]})`;
+      //   const rotateY = `rotateY(${yAngleReverseToMiddle[i]})`;
+      //   const translateX = `translateX(${step})`;
+      //   return `${translateX} ${rotateX} ${rotateY}`;
+      // });
+
+      const walkToMiddleFromLeft = walkRight.slice(0, Math.floor(walkRight.length / 2));
+      const walkToMiddleFromRight = walkLeft.slice(0, Math.floor(walkLeft.length / 2));
+
+      // const walkToLeftFromMiddle =
 
       const faceCameraOnLeft = [
         walkLeft[walkLeft.length - 1],
@@ -522,31 +597,107 @@ export const getWalkingAnimation = (start, stop, isMobile) => {
 
       const faceCameraOnRight = [
         walkRight[walkRight.length - 1],
-        `translateX(${forwardSteps[0]}) rotateX(5deg) rotateY(-15deg)`,
+        `translateX(${
+          reverseSteps[reverseSteps.length - 1]
+        }) rotateX(5deg) rotateY(-15deg)`,
       ];
 
-      const faceRight = [ faceCameraOnLeft[faceCameraOnLeft.length - 1], walkRight[0] ];
-      const faceLeft = [ faceCameraOnRight[faceCameraOnRight.length - 1], walkLeft[0] ];
+      const faceRightFromLeft = [
+        faceCameraOnLeft[faceCameraOnLeft.length - 1],
+        walkRight[0],
+      ];
+
+      const faceLeftFromMiddle = [
+        `translateX(0px) rotateY(-15deg) rotateX(-3deg)`,
+        `translateX(0px) rotateY(-65deg) rotateX(-3deg)`,
+      ];
+
+      // const faceCameraFromMiddle = [
+      //   walkToMiddleFromLeft[walkToMiddleFromLeft.length - 1],
+      //   `translateX(0px) rotateY(-15deg) rotateX(-3deg)`,
+      // ];
+
+      const faceCameraFromMiddle = [];
 
       const standStillLeft = Array(stepDistance).fill(faceCameraOnLeft[1]);
-      const standStillRight = Array(stepDistance).fill(faceCameraOnRight[1]);
+      const standStillFacingRight = Array(stepDistance).fill(
+        walkRight[walkRight.length - 1]
+      );
+      const standStillFacingCameraOnRight = Array(stepDistance).fill(
+        faceCameraOnRight[faceCameraOnRight.length - 1]
+      );
 
-      const halfRight = walkRight.slice(0, Math.floor(walkRight.length / 2));
-      const halfReverseSeps = reverseSteps.slice(0, Math.floor(reverseSteps.length / 2));
+      const standStillMiddle = Array(stepDistance).fill(faceCameraFromMiddle[1]);
 
-      const faceCameraFromHalf = [
-        halfRight[halfRight.length - 1],
-        `translateX(0px) rotateY(-15deg) rotateX(-3deg)`,
+      const faceLeftFromRight = [
+        standStillFacingCameraOnRight[0],
+        `translateX(${
+          reverseSteps[reverseSteps.length - 1]
+        }) rotateY(-65deg) rotateX(-3deg)`,
       ];
 
+      const walkToMiddleFromInsideRight = [
+        `translateX(${
+          reverseSteps[reverseSteps.length - 1]
+        }) rotateY(-65deg) rotateX(-3deg)`,
+      ];
+
+      // const halfRight = walkRight.slice(0, Math.floor((walkRight.length - 1) / 2));
+      // const halfReverseSteps = reverseSteps.slice(0, Math.floor(reverseSteps.length / 2));
+
+      // const faceCameraFromHalf = [
+      //   halfRight[halfRight.length - 1],
+      //   `translateX(0px) rotateY(-15deg) rotateX(-3deg)`,
+      // ];
+
+      console.log({ reverseSteps });
+
+      const walkLeftFromMiddle = walkLeft.filter((str) => {
+        return /translateX\(-\d.+px\)/g.test(str);
+      });
+
+      // const goRight = walkRight.slice(0, 4);
+
       const mobileAnimation = [ walkLeft, faceCameraOnLeft ];
+      // const desktopAnimation = [
+      //   walkLeft,
+      //   faceCameraOnLeft,
+      //   standStillLeft,
+      //   faceRightFromLeft,
+      //   walkToMiddleFromLeft,
+      //   faceCameraFromMiddle,
+      //   standStillMiddle,
+      //   faceLeftFromMiddle,
+      //   walkLeftFromMiddle,
+      //   faceCameraOnLeft,
+      //   standStillLeft,
+      //   faceRightFromLeft,
+      //   walkRight,
+      //   faceCameraOnRight,
+      //   standStillRight,
+      //   faceLeftFromRight,
+      //   walkFromRightToMiddle,
+      //   faceCameraFromMiddle,
+      //   // walkToLeftFromMiddle,
+      //   // reverseStepsToMiddle,
+      //   // faceCameraFromHalf,
+      // ];
+
       const desktopAnimation = [
         walkLeft,
         faceCameraOnLeft,
         standStillLeft,
-        faceRight,
-        halfRight,
-        faceCameraFromHalf,
+        faceRightFromLeft,
+        walkRight,
+        faceCameraOnRight,
+        standStillFacingCameraOnRight,
+        faceLeftFromRight,
+        walkFromRightToMiddle,
+        faceCameraFromMiddle,
+        // standStillRight,
+        // faceCameraOnRight,
+        // faceLeftFromRight,
+        // walkToMiddle,
       ];
 
       const frames = isMobile ? mobileAnimation : desktopAnimation;

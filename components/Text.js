@@ -68,11 +68,11 @@ const getFontStyle = (props) => {
     .filter((key) => families.map((fontName) => fontName.toLowerCase()).includes(key))
     .join('');
 
-  const fontFamily = family.length ? family : undefined;
+  const fontFamily = family.length ? family : 'inherit';
   const fontColor = colorName ? colorName : props.color;
   const fontWeight = props.bold ? 'bold' : props.bolder ? 'bolder' : 'normal';
-  const fontSize = props.size ? `${props.size / 16}rem` : undefined;
-  const fontStyle = props.italic ? 'italic' : props.oblique ? 'oblique' : undefined;
+  const fontSize = props.size ? `${props.size / 16}rem` : 'inherit';
+  const fontStyle = props.italic ? 'italic' : props.oblique ? 'oblique' : 'inherit';
 
   const style = { fontFamily, fontColor, fontWeight, fontSize, fontStyle };
   return reduceStyles(style);
@@ -86,3 +86,20 @@ export const ColorText = (props) => {
     </Paragraph>
   );
 };
+
+export const ColorSpan = (props) => {
+  const style = getFontStyle(props);
+  return (
+    <Span style={style} {...props}>
+      {props.children}
+    </Span>
+  );
+};
+
+const Span = styled.span`
+  color: var(--fontColor);
+  font-weight: var(--fontWeight);
+  font-style: var(--fontStyle);
+  font-size: var(--fontSize);
+  font-family: var(--fontFamily);
+`;

@@ -16,7 +16,7 @@ const FancyTextItalic = styled.span`
   font-family: Recursive, sans-serif;
   font-variation-settings: var(--recursive2);
   --original: black;
-  --color: var(--pinkBg);
+  --color: var(--dark-pink);
   color: var(--color);
   animation: ${slantText} 1000ms ease both 300ms;
   @media (prefers-color-scheme: dark) {

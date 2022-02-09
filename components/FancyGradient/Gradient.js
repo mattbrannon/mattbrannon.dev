@@ -49,7 +49,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-export const Text = styled.span`
+export const Text = styled.div`
   display: block;
   font-size: var(--fontSize);
 
@@ -66,7 +66,7 @@ export const Text = styled.span`
 
 
   &:before {
-    word-break: break-word;
+    ${'' /* word-break: break-word; */}
     content: '${(p) => p.children}';
     text-shadow: var(--shadow);
     position: absolute;

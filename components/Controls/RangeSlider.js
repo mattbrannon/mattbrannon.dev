@@ -22,15 +22,7 @@ export default function RangeSlider({ ...props }) {
   const { name, state, dispatch } = props;
   const label = createLabel(name);
   const key = toCamelCase(name);
-  // const defaultValue = state[key] || state.settings[key] || 0;
-
-  const defaultValue = state[key]
-    ? state[key]
-    : 'settings' in state
-    ? state.settings[key]
-    : 0;
-
-  // const [ value, setValue ] = useState(Number(defaultValue));
+  const defaultValue = state[key] || state.settings[key] || 0;
 
   const dispatchAction = (e) => {
     const type = name
@@ -51,15 +43,13 @@ export default function RangeSlider({ ...props }) {
         type={props.type || 'range'}
         id={name}
         {...props}
-        value={props.value}
+        value={defaultValue}
       />
     </Slider>
   );
 }
 
 const makeHex = (color) => {
-  // console.log({ color });
-
   return new Color(color).hex.css();
 };
 
@@ -148,7 +138,7 @@ export const CustomInput = ({ ...props }) => {
       <Input
         onChange={(e) => setColorValue(e.target.value)}
         id={name}
-        value={colorValue}
+        value={props.state[key]}
         {...props}
       />
     </Wrapper>

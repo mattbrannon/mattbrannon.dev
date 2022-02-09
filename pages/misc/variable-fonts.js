@@ -11,6 +11,7 @@ import Head from '@components/Head';
 import { motion, AnimatePresence } from 'framer-motion';
 import { blogVariant } from '@constants/blog';
 import SyntaxHighlighter from '@components/SyntaxHighlighter';
+import Color from 'color-tools';
 
 const fontProperties = {
   Recursive: {
@@ -65,23 +66,6 @@ const data = {
 
     {
       name: 'Decovar',
-      // settings: {
-      // BLDA: 1000,
-      // TRMD: 0,
-      // TRMC: 0,
-      // SKLD: 455,
-      // TRML: 0,
-      // SKLA: 384,
-      // TRMF: 405,
-      // TRMK: 0,
-      // BLDB: 0,
-      // WMX2: 176,
-      // TRMB: 0,
-      // TRMA: 0,
-      // SKLB: 0,
-      // TRMG: 491,
-      // TRME: 0,
-      // },
       settings: {
         BLDA: 0,
         TRMD: 1000,
@@ -240,11 +224,31 @@ function reducer(state, action) {
     }
 
     case 'RESET': {
+      const colorKeys = [
+        'gradientColorStart',
+        'gradientColorEnd',
+        'shadowColorStart',
+        'shadowColorEnd',
+        'textStrokeColor',
+      ];
+      const initial = getInitialSettings(state.font).settings;
+
       const settings = state.settings;
       for (const key in settings) {
-        settings[key] = 0;
+        settings[key] = initial[key];
       }
-      return { ...initialState, settings, font: state.font };
+      for (const key in state) {
+        if (key !== 'font') {
+          if (colorKeys.includes(key)) {
+            state[key] = new Color(initialState[key]).hex.css();
+          }
+          else {
+            state[key] = initialState[key];
+          }
+        }
+      }
+
+      return { ...state, settings, font: state.font };
     }
     default:
       return { ...state };
@@ -260,6 +264,22 @@ const parseSettings = (settings) => {
     .join(', ');
 };
 
+const parseColors = (state) => {
+  const keys = [
+    'gradientColorStart',
+    'gradientColorEnd',
+    'shadowColorStart',
+    'shadowColorEnd',
+    'textStrokeColor',
+  ];
+
+  for (const key in state) {
+    if (keys.includes(key)) {
+      state[key] = new Color(state[key]).hex.css();
+    }
+  }
+};
+
 export default function VariableFontPlayground() {
   const [ state, dispatch ] = useReducer(reducer, initialState);
 
@@ -269,11 +289,21 @@ export default function VariableFontPlayground() {
   const [ shadow, setShadow ] = useState('');
   const [ gradient, setGradient ] = useState('');
   const [ text, setText ] = useState('');
+  const [ font, setFont ] = useState({});
 
   const headingRef = useRef();
   const overflowRef = useRef();
 
   const width = controlWidth < 220 ? 220 : controlWidth;
+
+  useEffect(() => {
+    const defaultFont = getDefaultFont();
+    const family = defaultFont.name;
+    const settings = parseSettings(defaultFont.settings);
+    const size = state.fontSize;
+    setFont({ ...font, family, settings, size });
+    parseColors();
+  }, []);
 
   useEffect(() => {
     const fontVariationSettings = parseSettings(state.settings);
@@ -348,7 +378,7 @@ export default function VariableFontPlayground() {
                     fontVariationSettings={fontVariationSettings}
                     initialSettings={initialSettings}
                   >
-                    {text || 'Testing'}
+                    {text || 'Click to edit'}
                   </Gradient>
                 </TextContent>
               </motion.div>
@@ -356,15 +386,16 @@ export default function VariableFontPlayground() {
             <TextInput
               spellCheck={false}
               maxLength={50}
+              state={state}
               onChange={(e) => {
                 const text = e.target.value.replace(/'/g, '‘');
                 const final = text.replace(/[\\]+/g, '');
                 setText(final);
               }}
               style={{
-                '--fontSize': state.fontSize + 'vw',
-                '--fontFamily': state.font,
-                '--fontVariationSettings': state.fontVariationSettings,
+                '--fontSize': state.fontSize + 'vw' || font.size + 'vw',
+                '--fontFamily': state.font || font.family,
+                '--fontVariationSettings': state.fontVariationSettings || font.settings,
               }}
             />
           </Wrapper>
@@ -408,7 +439,7 @@ ${fontFamily}
 */
 
 .fancy-text {
-  --shadow: ${shadow};
+  --shadow: ${shadow || 'none'};
   --gradient: ${gradient};
   --fontFamily: ${fontFamily};
   --fontSize: ${fontSize};
@@ -503,8 +534,7 @@ const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${'' /* overflow: hidden; */}
-  overflow: auto;
+  overflow: hidden;
 `;
 
 const CodeWrapper = styled(motion.div)`
@@ -519,10 +549,12 @@ const CodeWrapper = styled(motion.div)`
 
 const TextContent = styled(motion.h1)`
   font-family: var(--fontFamily);
-  padding: 32px;
+  white-space: nowrap;
 `;
 
-const TextInput = styled.input`
+const TextInput = styled.input.attrs((props) => {
+  console.log({ input: props });
+})`
   position: absolute;
   background: transparent;
   border: none;
@@ -533,16 +565,16 @@ const TextInput = styled.input`
   user-select: none;
   -webkit-user-select: none;
 
-  &::selection {
-    background: transparent;
-  }
-
   font-size: var(--fontSize);
   font-family: var(--fontFamily);
   font-variation-settings: var(--fontVariationSettings);
-  caret-color: transparent;
+  caret-color: black;
   color: transparent;
-  ${'' /* white-space: nowrap; */}
+  padding-left: 24px;
+
+  &::selection {
+    background: hsl(0 0% 20% / 0.3);
+  }
 `;
 
 const Wrapper = styled.div`
@@ -557,15 +589,9 @@ const ControlWrapper = styled.div`
 `;
 
 const TextWrapper = styled(Text)`
-  ${'' /* background-image: ${(p) => p.gradient}; */}
-  ${'' /* -webkit-background-clip: text; */}
-  ${'' /* background-clip: text; */}
-  ${'' /* -webkit-text-fill-color: transparent; */}
-  ${'' /* color: transparent; */}
-  ${'' /* background-image: var(--gradient); */}
   font-size: var(--fontSize);
   font-variation-settings: var(--fontVariationSettings);
-  padding: 24px;
+  padding: 8px 24px;
 `;
 
 const GradientText = (props) => {

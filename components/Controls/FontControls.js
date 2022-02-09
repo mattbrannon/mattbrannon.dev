@@ -57,8 +57,22 @@ export function FontControls({ ...props }) {
             {...props}
           />
           <RangeSlider type="range" min={0} max={10} step={0.1} name="blur" {...props} />
-          <RangeSlider type="range" min={-10} max={10} name="offset x" {...props} />
-          <RangeSlider type="range" min={-10} max={10} name="offset y" {...props} />
+          <RangeSlider
+            type="range"
+            min={-10}
+            max={10}
+            step={0.2}
+            name="offset x"
+            {...props}
+          />
+          <RangeSlider
+            type="range"
+            min={-10}
+            max={10}
+            step={0.2}
+            name="offset y"
+            {...props}
+          />
         </Group>
         <Group>
           <Heading>Text Outline</Heading>
@@ -78,7 +92,7 @@ export function FontControls({ ...props }) {
           <RangeSlider
             name="font size"
             min={4}
-            max={20}
+            max={10}
             value={state.fontSize}
             step={1}
             {...props}

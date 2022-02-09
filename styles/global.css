@@ -11,7 +11,8 @@
   --breathing-room: 48px;
   --max-width: 80ch;
 
-  --dark-mode-text-color: hsl(60, 56%, 91%);
+  /* --dark-mode-text-color: hsl(60, 56%, 91%); */
+  --dark-mode-text-color: hsl(60deg 100% 95%);
   --code-background: hsl(0, 0%, 85%);
 
   --tealBg: hsl(191, 50%, 34%);
@@ -58,7 +59,7 @@
   --header-background: #333333;
   --footer-background: var(--header-background);
 
-  --accent-color: var(--blue);
+  --accent-color: var(--dark-pink);
 
   --jost-hairline: "wght" 100, "ital" 0;
   --jost-heavy: "wght" 800, "ital" 0;
@@ -72,6 +73,9 @@
   --recursive7: "MONO" 0, "CRSV" 0, "CASL" 1, "wght" 400, "slnt" 0;
   --recursive8: "MONO" 0, "CRSV" 0, "CASL" 1, "wght" 700, "slnt" -10;
   --recursive9: "MONO" 0.5, "CASL" 1, "wght" 673.25, "slnt" 0, "CRSV" 0.38;
+
+  --monospace: "MONO" 1, "CASL" 0, "CRSV" 0.5, "wght" 500, "slnt" 0;
+  --monospace-light: "MONO" 1, "CASL" 0, "CRSV" 0.5, "wght" 100, "slnt" 0;
 
   --blue-main: hsl(195, 90%, 50%);
   --blue-main-light: hsl(195, 100%, 75%);
@@ -284,7 +288,7 @@ h4,
 h5,
 h6,
 p {
-  overflow-wrap: break-word;
+  /* overflow-wrap: break-word; */
 }
 
 small {
@@ -380,7 +384,9 @@ em {
 
 code {
   background: var(--code-background);
-  padding: 0 4px;
+  font-family: Recursive, monospace;
+  font-variation-settings: var(--monospace-light);
+  padding: 2px;
 }
 
 ::-webkit-scrollbar {
@@ -407,7 +413,7 @@ li,
 section {
   font-family: "OpenSans", system-ui, sans-serif;
   /* line-height: 1.5; */
-  font-variation-settings: "wght" 555, "wdth" 95;
+  font-variation-settings: "wght" 555, "wdth" 100;
 }
 
 /* a,
@@ -446,6 +452,8 @@ pre {
 
 pre > * {
   font-size: var(--size14) !important;
+  font-family: Recursive;
+  font-variation-settings: var(--monospace);
 }
 
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
@@ -477,7 +485,7 @@ pre > * {
     --body-background: hsl(0, 0%, 20%);
     --hero-background: hsl(225, 5%, 15%);
     --header-background: hsl(0, 0%, 7%);
-    --code-background: hsl(0, 0%, 10%);
+    --code-background: hsl(0, 0%, 5%);
 
     color: var(--dark-mode-text-color);
   }

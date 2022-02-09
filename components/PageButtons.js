@@ -45,7 +45,7 @@ const LinkContent = styled.button`
   letter-spacing: 0.03em;
 
   background: transparent;
-  color: var(--pinkShadow);
+  color: var(--dark-pink);
 
   border-radius: 6px;
   border: none;

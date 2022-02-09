@@ -98,7 +98,8 @@ const InnerWrapper = styled.div`
 const NameWrapper = styled.h1`
   font-size: var(--size24);
   font-family: recursive;
-  font-variation-settings: var(--recursive4);
+  font-variation-settings: 'MONO' 0, 'CRSV' 1, 'CASL' 0.65, 'wght' 875, 'slnt' -4;
+  ${'' /* var(--recursive4); */}
   color: hsl(44deg, 100%, 55%);
 
   transition: all 140ms ease-in-out;
