@@ -1,13 +1,12 @@
-import { Cube, Sphere } from '@components/Creature/Cube';
 import ShapeControls from '@components/Controls/ShapeControls';
-import styled from 'styled-components';
-import Layout, { FullBleed } from '@components/Layout';
-import { useEffect, useReducer, useRef, useState } from 'react';
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
-import Head from '@components/Head';
-import { snakeToCamel } from '@utils/helpers';
-// import { MyCube, MySide } from '@components/Creature/Cube';
 // import { Cube } from '@components/Creature/Cube';
+import { ForwardedCube as Cube } from '@components/Shapes/Cube';
+import Head from '@components/Head';
+import Globe from '@components/Shapes/Globe';
+import { snakeToCamel, loadFeatures } from '@utils/helpers.js';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useReducer, useRef, useState } from 'react';
+import styled from 'styled-components';
 
 const initialState = {
   rotateX: 155,
@@ -27,9 +26,10 @@ const initialState = {
   radius: 0,
   backgroundDisplay: true,
   backgroundType: 'linear-gradient',
-  start: '#00bfff',
-  end: '#050c6b',
+  gradientColorStart: '#00bfff',
+  gradientColorEnd: '#050c6b',
   color: '#9ba84a',
+  hairColor: '#654321',
   opacity: 1,
   outline: true,
 };
@@ -51,104 +51,49 @@ function reducer(state, action) {
     case 'SPEED':
     case 'SIDES':
     case 'OUTLINE':
-    case 'START':
-    case 'END':
+    case 'GRADIENT_COLOR_START':
+    case 'GRADIENT_COLOR_END':
+    case 'GRADIENT_BLEND':
+    case 'GRADIENT_MIDPOINT':
+    case 'GRADIENT_ANGLE':
     case 'COLOR':
+    case 'HAIR_COLOR':
     case 'BACKGROUND_TYPE':
     case 'OPACITY':
     case 'RADIUS':
     case 'PERSPECTIVE':
       return { ...state, [actionType]: action.value };
-    case 'RESET':
+    case 'RESET': {
       return {
         ...initialState,
         sides: state.sides,
         speed: state.speed,
         shape: state.shape,
-        start: state.start,
-        end: state.end,
+        start: state.gradientStart,
+        // width: resetDimensions().width,
+        // height: resetDimensions().height,
+        // depth: resetDimensions().depth,
+        // width: state.shape === 'Cube' ? state.width : initialState.width,
+        // height: state.shape === 'Cube' ? state.height : initialState.height,
+        // depth: state.shape === 'Cube' ? state.depth : initialState.depth,
+        end: state.gradientEnd,
         color: state.color,
         backgroundType: state.backgroundType,
         opacity: state.opacity,
         outline: state.outline,
       };
+    }
     default:
       return { ...state };
   }
 }
 
-// function reducer(state, action) {
-//   console.log({ state, action });
-//   switch (action.type) {
-//     case 'ROTATE_X':
-//       return { ...state, rotateX: action.value };
-//     case 'ROTATE_Y':
-//       return { ...state, rotateY: action.value };
-//     case 'ROTATE_Z':
-//       return { ...state, rotateZ: action.value };
-//     case 'TRANSLATE_X':
-//       return { ...state, translateX: action.value };
-//     case 'TRANSLATE_Y':
-//       return { ...state, translateY: action.value };
-//     case 'TRANSLATE_Z':
-//       return { ...state, translateZ: action.value };
-//     case 'WIDTH':
-//       return { ...state, width: action.value };
-//     case 'HEIGHT':
-//       return { ...state, height: action.value };
-//     case 'DEPTH':
-//       return { ...state, depth: action.value };
-//     case 'SET_SHAPE':
-//       return { ...state, shape: action.value };
-//     case 'SPEED':
-//       return { ...state, speed: action.value };
-//     case 'SIDES':
-//       return { ...state, sides: action.value };
-//     case 'OUTLINE':
-//       return { ...state, outline: action.value };
-//     case 'START':
-//       return { ...state, start: action.value };
-//     case 'END':
-//       return { ...state, end: action.value };
-//     case 'COLOR':
-//       return { ...state, color: action.value };
-//     case 'BACKGROUND_TYPE':
-//       return { ...state, backgroundType: action.value };
-//     case 'OPACITY':
-//       return { ...state, opacity: action.value };
-//     case 'RADIUS':
-//       return { ...state, radius: action.value };
-//     case 'PERSPECTIVE':
-//       return { ...state, perspective: action.value };
-//     case 'RESET':
-//       return {
-//         ...initialState,
-//         sides: state.sides,
-//         speed: state.speed,
-//         shape: state.shape,
-//         start: state.start,
-//         end: state.end,
-//         color: state.color,
-//         backgroundType: state.backgroundType,
-//         opacity: state.opacity,
-//         outline: state.outline,
-//       };
-//     default:
-//       return { ...state };
-//   }
-// }
-
-// const transition = {
-//   duration: 2.2,
-//   easing: [ 0.4, 0.32, 0.78, 0.55 ],
-// };
-
 const shapeVariants = {
   hidden: ({ shape, speed }) => {
     const scale = shape === 'Cube' ? 1 : 0;
     return {
-      opacity: 1,
-      scale,
+      opacity: 0,
+      scale: 0,
       transition: { duration: speed },
     };
   },
@@ -162,10 +107,9 @@ const shapeVariants = {
     const x = shape === 'Cube' ? 700 : 0;
     const opacity = shape === 'Cube' ? 0 : 1;
     return {
-      opacity,
-      scale,
-      x,
-      transition: { duration: speed },
+      opacity: 0,
+      x: 700,
+      transition: { duration: 1 },
     };
   },
 };
@@ -175,6 +119,9 @@ export default function Experiments() {
   const [ cubeWidth, setCubeWidth ] = useState(0);
   const [ cubeHeight, setCubeHeight ] = useState(0);
   const [ controlWidth, setControlWidth ] = useState(0);
+  const [ sides, setSides ] = useState(state.sides);
+  // const [ background, setBackground ] = useState('');
+  const [ average, setAverage ] = useState((cubeHeight + cubeWidth) / 2);
 
   const ref = useRef();
 
@@ -189,27 +136,31 @@ export default function Experiments() {
     }
   }, [ ref ]);
 
-  const Component = state.shape === 'Cube' ? Cube : Sphere;
+  useEffect(() => {
+    const sum = state.width + state.height;
+    const mean = sum / 2;
+    setAverage(mean);
+    // console.log({ average: mean });
+  }, [ state.width, state.height ]);
+
+  const Component = state.shape === 'Cube' ? Cube : Globe;
 
   const radius = Component === Cube ? 0 : 50;
   const width = controlWidth < 200 ? 200 : controlWidth;
 
-  // console.log(state.width, state.height);
-  const transitionProperties = state.shape === 'Sphere' ? 'all' : 'transform';
+  // const transitionProperties = state.shape === 'Sphere' ? 'all' : 'all';
 
-  const transition = `${transitionProperties} ${state.speed}s linear`;
+  // const transition = `${transitionProperties} ${state.speed}s linear`;
 
-  const m = (parseInt(state.width) + parseInt(state.height)) / 2;
-  const lid = m * 0.1 * 2.5;
-  console.log({ lid });
+  // const transition = '';
+  // const m = (parseInt(state.width) + parseInt(state.height)) / 2;
+  // const lid = m * 0.1 * 2.5;
+
+  // console.log({ hair: state.hairColor });
 
   return (
     <>
-      <Head
-        title="Experiments with a cube"
-        description="A tool for visualizing 3d transforms"
-      />
-
+      <Head title="Experiments with a cube" description="A tool for visualizing 3d transforms" />
       <div style={{ '--controlWidth': `${width}px` }}>
         <ControlWrapper>
           <ShapeControls
@@ -219,6 +170,7 @@ export default function Experiments() {
             state={state}
             dispatch={dispatch}
             setControlWidth={setControlWidth}
+            setSides={setSides}
           />
         </ControlWrapper>
 
@@ -236,20 +188,32 @@ export default function Experiments() {
                 ref={ref}
                 blink
                 state={state}
-                eyelid={lid}
+                hair={
+                  state.width === 300
+                    ? 'huge'
+                    : state.width < 300 && state.width >= 250
+                    ? 'large'
+                    : state.width < 250 && state.width >= 200
+                    ? 'medium'
+                    : state.width < 200 && state.width >= 150
+                    ? 'small'
+                    : 'long'
+                }
                 sides={state.sides}
                 backgroundDisplay={state.backgroundDisplay}
-                start={state.start}
-                end={state.end}
+                start={state.gradientStart}
+                end={state.gradientEnd}
                 color={state.color}
-                $backgroundType={state.backgroundType}
+                hairColor={state.hairColor}
+                backgroundType={state.backgroundType}
                 opacity={state.opacity}
-                $outline={state.outline}
+                outline={state.outline}
                 width={state.width}
                 height={state.height}
+                size={{ width: state.width, height: state.height }}
                 speed={state.speed}
                 shape={state.shape}
-                transition={transition}
+                // transition={transition}
                 style={{
                   '--rotateX': `${state.rotateX}deg`,
                   '--rotateY': `${state.rotateY}deg`,
@@ -263,20 +227,41 @@ export default function Experiments() {
                   '--perspective': `${state.perspective}px`,
                   '--translateEyeX': `${state.translateEyeX}px`,
                   '--translateEyeY': `${state.translateEyeY}px`,
-                  '--transition': transition,
+                  // '--transition': transition,
                   '--speed': `${state.speed}s`,
                   '--radius': `${radius}%`,
+                  '--outline': state.outline ? `1px solid black` : 'none',
+                  '--opacity': state.opacity,
+                  '--solidColor': state.color,
+                  '--gradientColorStart': state.gradientColorStart,
+                  '--gradientColorEnd': state.gradientColorEnd,
+
+                  // '--background': background,
                 }}
               />
             </Wrapper>
           </AnimatePresence>
         </Main>
       </div>
+      <NoScript>This tool requires javascript to work properly</NoScript>
     </>
   );
 }
 
-const Container = styled.div``;
+const NoScript = styled.noscript`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  display: grid;
+  place-items: center;
+  font-size: var(--size52);
+  font-family: recursive;
+  font-variation-settings: 'wght' 800, 'slnt' -6, 'CRSV' 0, 'CASL' 0, 'MONO' 0;
+  text-align: center;
+`;
 
 const Wrapper = styled(motion.div)`
   position: relative;
