@@ -21,15 +21,6 @@ const onlyPublishedArticles = (filename) => {
 
 export const publishedArticles = allFilePaths.filter(onlyPublishedArticles);
 
-// const fullPath = path.resolve(POSTS_PATH, 'custom-hooks.mdx');
-// console.log(fullPath);
-// const source = fs.readFileSync(fullPath, 'utf8');
-// // const { data } = matter(source);
-
-// const { code, frontmatter } = bundleMDX(source);
-
-// console.log(code, frontmatter);
-
 const articlesDirectory = path.join(process.cwd(), 'articles');
 
 const getArticleMetadata = (fileNames) => {
@@ -74,10 +65,3 @@ export async function getArticleData(slug) {
     code,
   };
 }
-
-// getPostData('why-i-want-to-die')
-//   .then(console.log)
-//   .catch(console.error);
-
-// const data = getSortedPostsData();
-// console.log(data);
