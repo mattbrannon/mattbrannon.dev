@@ -1,4 +1,4 @@
-import { makeGradient, makeShadow, makeFluidFontSize, pxToEm } from '@utils/helpers';
+import { makeGradient, makeShadow, makeFluidFontSize, pxToEm } from '@utils/helpers.js';
 import { fonts } from './fonts';
 import { breakpoints } from './breakpoints';
 
@@ -8,21 +8,40 @@ export const fontSize = makeFluidFontSize(36, 52, mobile, desktop);
 export const gradient1 = makeGradient({
   gradientColorStart: 'gold',
   gradientColorEnd: 'orange',
+  gradientBlend: 0,
 });
+
+// gradientColorStart,
+// gradientColorEnd,
+// gradientBlend = 10,
+// gradientMidpoint = 47,
+// gradientAngle = 0,
+
 export const gradient2 = makeGradient({
   gradientColorStart: 'orange',
   gradientColorEnd: 'darkorange',
+  gradientBlend: 50,
 });
 
 export const shadow = makeShadow({
   shadowColorStart: 'white',
   shadowColorEnd: '#111',
   shadowLayers: 24,
-  shadowOffset: 4,
-  offsetX: -1,
-  offsetY: -1,
+  shadowGap: 2,
+  offsetX: -2,
+  offsetY: -2,
   blur: 0,
 });
+
+// export const shadow = makeShadow({
+//   shadowColorStart: 'firebrick',
+//   shadowColorEnd: 'white',
+//   shadowLayers: 50,
+//   shadowGap: 10,
+//   offsetX: 0,
+//   offsetY: 0,
+//   blur: 6,
+// });
 
 export const strokeWidth = pxToEm(0.75) + 'em';
 export const strokeColor = '#000000';
@@ -58,11 +77,10 @@ export const blogVariant = {
       },
       '--gradient': {
         delay: 1,
-        duration: 3,
+        duration: 2,
       },
       '--fontVariationSettings': {
-        delay: 0,
-        duration: 2,
+        duration: 1,
       },
     },
   },
