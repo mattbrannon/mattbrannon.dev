@@ -1,13 +1,15 @@
-import { Creature404 } from '@components/Creature';
+// import { Creature404 } from '@components/Creature';
 import DocumentHead from '@components/Head';
 import { decovarValues } from '@constants/index.js';
-import { useFontSize } from '@hooks/useFontSize';
+// import { useFontSize } from '@hooks/useFontSize';
 import { motion } from 'framer-motion';
-import { useHasMounted } from 'hooks/useHasMounted';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
-import Layout from '@components/Layout';
+// import { loadFeatures } from '@utils/helpers';
+import { ForwardedCube as StandingCube } from '@components/Shapes/Cube';
+
+// const Cube = StandingCube
 
 const getTranslateXPoints = (start, end, divider) => {
   let total = Math.abs(start) + Math.abs(end);
@@ -52,8 +54,8 @@ const setRandomValues = () => {
 export default function Error404() {
   const ref = useRef();
   const textRef = useRef();
-  const fontSize = useFontSize(32, 7 * 16, 240, 1440);
-  const hasMounted = useHasMounted();
+  // const fontSize = useFontSize(32, 7 * 16, 240, 1440);
+  const fontSize = `clamp(var(--size21), 7vw, var(--size36))`;
 
   useEffect(() => {
     if (ref && ref.current) {
@@ -89,7 +91,7 @@ export default function Error404() {
   };
 
   return (
-    <main>
+    <>
       <DocumentHead title="Whoops" desc="We must have taken a wrong turn at Albuquerque">
         <link
           rel="preload"
@@ -101,22 +103,18 @@ export default function Error404() {
       </DocumentHead>
 
       <Container>
-        <Creature404 eyelid={50} blink ref={ref} />
+        <CubeWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <StandingCube width={150} height={150} eyes="Shifty" mouth="Smirk" blink ref={ref} />
+        </CubeWrapper>
         <Wrapper>
           <Link passHref href="/">
-            <P
-              variants={font}
-              animate={font.animate}
-              ref={textRef}
-              fontSize={fontSize}
-              href="/"
-            >
+            <P variants={font} animate={font.animate} ref={textRef} fontSize={fontSize} href="/">
               Go Back
             </P>
           </Link>
         </Wrapper>
       </Container>
-    </main>
+    </>
   );
 }
 
@@ -137,49 +135,50 @@ const Container = styled.div`
   align-items: center;
   align-content: center;
   justify-items: center;
+  height: 100%;
+  margin-top: -64px;
+`;
+
+const CubeWrapper = styled(motion.div)`
+  transform-style: preserve-3d;
 `;
 
 const Wrapper = styled(motion.div)`
   animation: ${fadeIn} 2s linear both 5s;
-  ${'' /* margin-top: -200px;
-  margin-bottom: -100px; */}
+  /* margin-top: -200px;
+  margin-bottom: -100px; */
 `;
 
-const shadow = (color, size = 0.0125) =>
-  `-${size}em -${size}em 0 ${color}, 
-  ${size}em -${size}em 0 ${color}, 
-  -${size}em ${size}em 0 ${color}, 
-  ${size}em ${size}em 0 ${color};`;
+// const shadow = (color, size = 0.0125) =>
+//   `-${size}em -${size}em 0 ${color},
+//   ${size}em -${size}em 0 ${color},
+//   -${size}em ${size}em 0 ${color},
+//   ${size}em ${size}em 0 ${color};`;
 
-const stroke = (color, size = 0.0125) => `${size}em ${color};`;
+// const stroke = (color, size = 0.0125) => `${size}em ${color};`;
 
 const P = styled(motion.p)`
   display: block;
   text-align: center;
   font-family: decovar;
   font-size: ${(p) => p.fontSize};
-  color: black;
-  text-shadow: ${() => shadow('purple')};
-  -webkit-text-stroke: ${() => stroke('deepskyblue')};
+  font-size: clamp(64px, 10vw, 128px);
+  color: var(--color-404);
+
+  text-shadow: -0.0125em -0.0125em 0 var(--shadow-404), 0.0125em -0.0125em 0 var(--shadow-404),
+    -0.0125em 0.0125em 0 var(--shadow-404), 0.0125em 0.0125em 0 var(--shadow-404);
+
+  -webkit-text-stroke: 0.0125em var(--stroke-404);
 
   transition: all 200ms linear;
 
-  @media (prefers-color-scheme: dark) {
-    text-shadow: ${() => shadow('red')};
-    -webkit-text-stroke: ${() => stroke('yellow')};
-  }
-
   &:hover {
     cursor: pointer;
-    color: var(--dark-pink);
-    color: black;
-    text-shadow: ${() => shadow('rebeccapurple')};
-    -webkit-text-stroke: ${() => stroke('lime')};
 
-    @media (prefers-color-scheme: dark) {
-      text-shadow: ${() => shadow('yellow')};
-      -webkit-text-stroke: ${() => stroke('deepskyblue')};
-      color: black;
-    }
+    text-shadow: -0.0125em -0.0125em 0 var(--shadow-404-hover),
+      0.0125em -0.0125em 0 var(--shadow-404-hover), -0.0125em 0.0125em 0 var(--shadow-404-hover),
+      0.0125em 0.0125em 0 var(--shadow-404-hover);
+
+    -webkit-text-stroke: 0.0125em var(--stroke-404-hover);
   }
 `;
