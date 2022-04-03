@@ -12,5 +12,6 @@
       "@animations/*": ["./animations/*"],
       "@styles/*": ["./styles/*"]
     }
-  }
+  },
+  "exclude": ["node_modules"]
 }
