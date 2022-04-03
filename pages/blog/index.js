@@ -1,31 +1,20 @@
-// import BlogCard from '@components/Blog/Card';
+import { Link } from '@components/ExternalLink';
 import Head from '@components/Head';
-import Layout from '@components/Layout';
+import { CardHeading } from '@components/Headings';
 import PageTitle from '@components/PageTitle';
 import Spacer from '@components/Spacer';
+import Text from '@components/Text';
 import { BlogVideo } from '@components/VideoPlayer';
 import { breakpoints } from '@constants/index';
-import { useFontSize } from '@hooks/useFontSize';
-import { useMediaQuery } from '@hooks/useMediaQuery';
-import { publishedArticles, POSTS_PATH } from '@utils/mdxUtils.js';
+import { POSTS_PATH, publishedArticles } from '@utils/mdxUtils.js';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
 import styled from 'styled-components';
-// import Creature from '@components/Creature';
-import Text from '@components/Text';
-// import Sidenote from '@components/SideNote';
-
-import { Link } from '@components/ExternalLink';
-import { H2 } from '@components/Headings';
 
 export default function Index({ posts }) {
-  // const fontSize = useFontSize(14, 20, 360, 1920);
-  const shouldCenter = useMediaQuery({ maxWidth: 795 });
-  // const placement = shouldCenter ? 'center' : 'left';
-
   return (
-    <main>
+    <div>
       <Head
         title="Another Developer Blog"
         description="Thoughts, opinions, criticisms, rantings, ravings, musings on all things great and small"
@@ -41,42 +30,23 @@ export default function Index({ posts }) {
       />
       <Spacer size={32} />
 
-      {/* <IntroWrapper>
-        <Text>
-          When I learn something, I've found that one of the best ways to make sure I
-          truly understand it, is to try and explain it to someone else so it makes sense
-          for them. So that's what I try and do here. I mostly write about Javascript and
-          CSS but you'll also occasionally find articles on things like deployment and
-          getting the most bang for your buck on your remote server. I hope you find the
-          content useful.
-        </Text>
-      </IntroWrapper> */}
-      <BlogList>
+      <BlogList id="main-content" tabIndex={-1}>
         {posts.map((post) => {
           const href = `/blog/${post.filePath.replace(/\.mdx?$/, '')}`;
           return (
             <Card key={post.filePath}>
-              <Link passHref href={href}>
-                <Title>{post.data.title}</Title>
-              </Link>
+              <CardHeading>
+                <Link href={href}>{post.data.title}</Link>
+              </CardHeading>
               <Text>{post.data.description}</Text>
             </Card>
           );
         })}
       </BlogList>
       <Spacer axis="vertical" size={32} />
-    </main>
+    </div>
   );
 }
-
-// const MaxWidthWrapper = styled.div`
-//   max-width: var(--max-width);
-//   width: 100%;
-//   height: 100%;
-//   margin: 0 auto;
-//   display: flex;
-//   align-items: stretch;
-// `;
 
 const Card = styled.div`
   border: 1px solid black;
@@ -85,47 +55,10 @@ const Card = styled.div`
   grid-column: 2;
   width: 100%;
   padding: 0 16px;
-
-  @media (prefers-color-scheme: light) {
-    background: hsl(223 30% 88%);
-  }
-`;
-
-const Title = styled(H2)`
-  margin-top: 16px;
-`;
-
-const IntroWrapper = styled.div`
-  max-width: calc(var(--max-width) / 1.25);
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  align-items: center;
-  padding: 0 16px;
-
-  @media (max-width: ${breakpoints.tablet}px) {
-    margin: 0 auto;
-    max-width: ${breakpoints.mobile}px;
-    padding-left: 32px;
-  }
-
-  @media (max-width: ${breakpoints.mobile}px) {
-    margin: 0 auto;
-    max-width: ${breakpoints.mobile}px;
-    padding-left: 16px;
-  }
+  background: var(--basic-card-background);
 `;
 
 const BlogList = styled.div`
-  ${'' /* display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
-  gap: 32px;
-  place-items: center; */}
-
   display: grid;
   display: flex;
   flex-direction: column;
