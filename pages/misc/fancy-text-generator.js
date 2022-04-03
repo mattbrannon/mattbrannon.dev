@@ -1,17 +1,24 @@
 import { FontControls } from '@components/Controls/FontControls';
 import styled from 'styled-components';
-// import Layout from '@components/Layout';
 import { useEffect, useReducer, useRef, useState } from 'react';
-// import GradientText, { gradientVariant } from '@components/GradientText';
-import TextGradient, { withGradient, Text } from '@components/GradientText';
+import { withGradient, Text } from '@components/GradientText';
 
 import { textGeneratorVariant } from '@animations/variants';
-import { makeShadow, makeGradient, snakeToCamel, pxToEm } from '@utils/helpers';
+import {
+  makeShadow,
+  makeGradient,
+  snakeToCamel,
+  pxToEm,
+  parseFontSettings,
+  loadFeatures,
+} from '@utils/helpers.js';
+
 import Head from '@components/Head';
 import { motion, AnimatePresence } from 'framer-motion';
-import { blogVariant } from '@constants/blog';
 import SyntaxHighlighter from '@components/SyntaxHighlighter';
 import Color from 'color-tools';
+
+import Help from '@components/Help';
 
 const fontProperties = {
   Recursive: {
@@ -55,8 +62,8 @@ const data = {
       settings: {
         wght: 800,
         slnt: -6,
-        CASL: 0.5,
-        CRSV: 1,
+        CASL: 0,
+        CRSV: 0,
         MONO: 0,
       },
       default: true,
@@ -125,33 +132,30 @@ const getInitialSettings = (function parseFonts(fonts) {
   };
 })(data.fonts);
 
-//  #a8bb1b
-//  #00612d
-//  #147500
-//  #081900
-//  #143800
-
 const initialState = {
   font: getDefaultFont().name,
   settings: Object.assign({}, getDefaultFont().settings),
 
   fonts: data.fonts,
   fontSize: 10,
-  gradientColorStart: 'hsl(157deg, 100%, 43%)', //'gold', //'hsl(67deg, 75%, 42%)',
-  gradientColorEnd: 'hsl(200deg, 100%, 65%)', //'darkorange', //'hsl(148deg 100% 19%)',
+  gradientColorStart: '#00db87', //'gold', //'hsl(67deg, 75%, 42%)',
+  gradientColorEnd: '#4dc4ff', //'darkorange', //'hsl(148deg 100% 19%)',
   gradientMidpoint: 50,
   gradientBlend: 50,
-  gradientAngle: 0,
-  shadowColorStart: 'hsl(280.3deg, 98.98%, 50.12%)', //'hsl(210 35% 85%)', //'hsl(173deg 100% 67%)',
-  shadowColorEnd: 'hsl(253deg, 59.2%, 15.8%)', // 'hsl(195 65% 20%)', //'hsl(227deg 100% 52%)',
+  gradientAngle: 180,
+  shadowColorStart: '#aa00ff', //'hsl(210 35% 85%)', //'hsl(173deg 100% 67%)',
+  shadowColorEnd: '#19103d', // 'hsl(195 65% 20%)', //'hsl(227deg 100% 52%)',
   shadowLayers: 20,
-  shadowOffset: 1,
+  shadowGap: 1,
   offsetX: -5,
   offsetY: -5,
-  textStrokeColor: 'black',
+  textStrokeColor: '#000000',
   textStrokeWidth: 0.35,
   blur: 1,
   toggleCode: false,
+  isChangingFonts: false,
+  showBackground: false,
+  help: false,
 };
 
 function reducer(state, action) {
@@ -163,7 +167,7 @@ function reducer(state, action) {
     case 'SHADOW_COLOR_START':
     case 'SHADOW_COLOR_END':
     case 'SHADOW_LAYERS':
-    case 'SHADOW_OFFSET':
+    case 'SHADOW_GAP':
     case 'OFFSET_X':
     case 'OFFSET_Y':
     case 'BLUR':
@@ -174,6 +178,9 @@ function reducer(state, action) {
     case 'GRADIENT_BLEND':
     case 'GRADIENT_ANGLE':
     case 'TOGGLE_CODE':
+    case 'HELP':
+    case 'IS_CHANGING_FONTS':
+    case 'SHOW_BACKGROUND':
       return { ...state, [actionType]: action.value };
     case 'MONO':
     case 'CRSV':
@@ -194,7 +201,10 @@ function reducer(state, action) {
     case 'TRMG':
     case 'TRME': {
       const settings = state.settings;
-      return { ...state, settings: { ...settings, [action.type]: action.value } };
+      return {
+        ...state,
+        settings: { ...settings, [action.type]: action.value },
+      };
     }
     case 'WGHT':
     case 'SLNT':
@@ -206,10 +216,8 @@ function reducer(state, action) {
     }
 
     case 'CHANGE_FONT': {
-      // const font = action.value;
       const previousFont = state.font;
       const previousFontSettings = Object.assign({}, state.settings);
-      // console.log({ previousFontSettings });
 
       let prev = state.fonts.find((font) => font.name === previousFont);
       prev.settings = previousFontSettings;
@@ -218,9 +226,14 @@ function reducer(state, action) {
         .filter((obj) => obj.name === nextFont)
         .map((obj) => obj.settings)[0];
 
-      // console.log({ previousFont, previousFontSettings, nextFont, settings });
-
-      return { ...state, settings, previousFontSettings, previousFont, font: nextFont };
+      return {
+        ...state,
+        settings,
+        previousFontSettings,
+        previousFont,
+        font: nextFont,
+        change: true,
+      };
     }
 
     case 'RESET': {
@@ -232,8 +245,8 @@ function reducer(state, action) {
         'textStrokeColor',
       ];
       const initial = getInitialSettings(state.font).settings;
-
       const settings = state.settings;
+
       for (const key in settings) {
         settings[key] = initial[key];
       }
@@ -255,31 +268,6 @@ function reducer(state, action) {
   }
 }
 
-const parseSettings = (settings) => {
-  return Object.keys(settings)
-    .reduce((acc, prop) => {
-      acc = acc.concat(`"${prop}" ${settings[prop]}`);
-      return acc;
-    }, [])
-    .join(', ');
-};
-
-const parseColors = (state) => {
-  const keys = [
-    'gradientColorStart',
-    'gradientColorEnd',
-    'shadowColorStart',
-    'shadowColorEnd',
-    'textStrokeColor',
-  ];
-
-  for (const key in state) {
-    if (keys.includes(key)) {
-      state[key] = new Color(state[key]).hex.css();
-    }
-  }
-};
-
 export default function VariableFontPlayground() {
   const [ state, dispatch ] = useReducer(reducer, initialState);
 
@@ -289,26 +277,15 @@ export default function VariableFontPlayground() {
   const [ shadow, setShadow ] = useState('');
   const [ gradient, setGradient ] = useState('');
   const [ text, setText ] = useState('');
-  const [ font, setFont ] = useState({});
+  const [ defaults, setDefaults ] = useState({ shadow: '', gradient: '' });
 
   const headingRef = useRef();
   const overflowRef = useRef();
 
-  const width = controlWidth < 220 ? 220 : controlWidth;
-
   useEffect(() => {
-    const defaultFont = getDefaultFont();
-    const family = defaultFont.name;
-    const settings = parseSettings(defaultFont.settings);
-    const size = state.fontSize;
-    setFont({ ...font, family, settings, size });
-    parseColors();
-  }, []);
-
-  useEffect(() => {
-    const fontVariationSettings = parseSettings(state.settings);
+    const fontVariationSettings = parseFontSettings(state.settings);
     const { settings } = getInitialSettings(state.font);
-    const defaultSettings = parseSettings(settings);
+    const defaultSettings = parseFontSettings(settings);
 
     setFontVariationSettings(fontVariationSettings);
     setInitialSettings(defaultSettings);
@@ -324,16 +301,19 @@ export default function VariableFontPlayground() {
     setGradient(gradient);
   }, [ state, gradient ]);
 
+  useEffect(() => {}, [ state.font ]);
+
   useEffect(() => {
-    console.log(state.showCodeSnippet);
-  }, [ state.showCodeSnippet ]);
+    const root = document.querySelector('html');
+    const styles = getComputedStyle(root);
+    const gradient = styles.getPropertyValue('--app-name-gradient');
+    const shadow = styles.getPropertyValue('--app-name-shadow');
+    setDefaults({ gradient, shadow });
+  }, []);
 
   return (
     <>
-      <Head
-        title="Fancy Text Generator"
-        description="Variable font and text shadow generator"
-      />
+      <Head title="Fancy Text Generator" description="Variable font and text shadow generator" />
       <Container>
         <ControlWrapper>
           <FontControls
@@ -344,7 +324,7 @@ export default function VariableFontPlayground() {
           />
         </ControlWrapper>
 
-        <Main ref={overflowRef} style={{ '--controlWidth': `${width}px` }}>
+        <Main ref={overflowRef} style={{ '--controlWidth': controlWidth }}>
           <Wrapper>
             <AnimatePresence exitBeforeEnter>
               <motion.div
@@ -366,15 +346,13 @@ export default function VariableFontPlayground() {
                     style={{
                       '--fontSize': `${state.fontSize}vw`,
                     }}
-                    font={state.font}
-                    // ref={ref}
+                    dispatch={dispatch}
+                    state={state}
                     shadow={shadow}
                     gradient={gradient}
                     fontSize={`${state.fontSize}vw`}
                     strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
                     strokeColor={state.textStrokeColor}
-                    startColor={state.startColor}
-                    endColor={state.endColor}
                     fontVariationSettings={fontVariationSettings}
                     initialSettings={initialSettings}
                   >
@@ -383,6 +361,7 @@ export default function VariableFontPlayground() {
                 </TextContent>
               </motion.div>
             </AnimatePresence>
+
             <TextInput
               spellCheck={false}
               maxLength={50}
@@ -393,14 +372,15 @@ export default function VariableFontPlayground() {
                 setText(final);
               }}
               style={{
-                '--fontSize': state.fontSize + 'vw' || font.size + 'vw',
-                '--fontFamily': state.font || font.family,
-                '--fontVariationSettings': state.fontVariationSettings || font.settings,
+                '--fontSize': state.fontSize + 'vw',
+                '--fontFamily': state.font,
+                '--fontVariationSettings': state.fontVariationSettings,
               }}
             />
           </Wrapper>
+
           <AnimatePresence exitBeforeEnter>
-            {state.toggleCode && (
+            {state.toggleCode ? (
               <CodeBlock
                 key={state.toggleCode}
                 state={state}
@@ -412,13 +392,39 @@ export default function VariableFontPlayground() {
                 strokeColor={state.textStrokeColor}
                 fontVariationSettings={fontVariationSettings}
               />
-            )}
+            ) : state.help ? (
+              <HelpContainer
+                initial={{ width: 0 }}
+                animate={{ width: '100%' }}
+                exit={{ width: 0, transition: { duration: 0.3 } }}
+                transition={{ duration: 0.8, ease: 'anticipate' }}
+              >
+                <Help key={state.help} />
+              </HelpContainer>
+            ) : null}
           </AnimatePresence>
         </Main>
       </Container>
+      <NoScript>This tool requires javascript to work properly</NoScript>
     </>
   );
 }
+
+const NoScript = styled.noscript`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  display: grid;
+  place-items: center;
+  font-size: var(--size52);
+  font-family: recursive;
+  font-variation-settings: 'wght' 800, 'slnt' -6, 'CRSV' 0, 'CASL' 0, 'MONO' 0;
+  text-align: center;
+`;
+
 const getCss = ({
   shadow,
   gradient,
@@ -462,7 +468,9 @@ ${fontFamily}
 .fancy-text:before {
   /* 
     in your html: 
-      <div class="fancy-text" data-content="your text here">your text here</div> 
+      <div class="fancy-text" data-content="your text here">
+        your text here
+      </div> 
   */
   content: attr(data-content);
   position: absolute;
@@ -485,7 +493,7 @@ const StaticCode = ({ children }) => {
 };
 
 const CodeBlock = (props) => {
-  console.log(props.state);
+  // console.log(props.state);
   const {
     fontSize,
     strokeWidth,
@@ -496,13 +504,10 @@ const CodeBlock = (props) => {
     fontFamily,
   } = props;
 
-  // const cssString = shadow.replace(/ , /g, <br />);
-  // const shadowString = `--shadow: ${cssString}`;
-
   return (
     <CodeWrapper
       initial={{ width: 0 }}
-      animate={{ paddingLeft: '16px', width: '100%' }}
+      animate={{ width: '100%' }}
       exit={{ width: 0, transition: { duration: 0.3 } }}
       transition={{ duration: 0.8, ease: 'anticipate' }}
     >
@@ -522,6 +527,80 @@ const CodeBlock = (props) => {
     </CodeWrapper>
   );
 };
+
+// const HelpPage = (props) => {
+//   return (
+//
+//       <HelpContainer
+//         initial={{ width: 0 }}
+//         animate={{ width: '100%' }}
+//         exit={{ width: 0, transition: { duration: 0.3 } }}
+//         transition={{ duration: 0.8, ease: 'anticipate' }}
+//       >
+//         <HelpWrapper>
+//           <ul style={{ marginLeft: '0px' }}>
+//             <h3 style={{ marginTop: 0, padding: '32px 0 0 0' }}>Text Color</h3>
+//             <li
+//               style={{
+//                 margin: '0 0 16px 32px',
+//                 display: 'grid',
+//                 gridTemplateColumns: '120px auto',
+//               }}
+//             >
+//               <strong>Angle</strong>
+//               <span>Control the direction of the gradient. Ranges from 0 - 360 degrees</span>
+//             </li>
+//             <li
+//               style={{
+//                 margin: '0 0 16px 32px',
+//                 display: 'grid',
+//                 gridTemplateColumns: '120px auto',
+//               }}
+//             >
+//               <strong>Midpoint</strong>
+//               <span>Controls where the the colors meet. Ranges from 0 - 100%</span>
+//             </li>
+//             <li
+//               style={{
+//                 margin: '0 0 16px 32px',
+//                 display: 'grid',
+//                 gridTemplateColumns: '120px auto',
+//               }}
+//             >
+//               <strong>Blend</strong>
+//               <span>
+//                 Controls how much or how little the colors blend together. Ranges from 0 - 100%
+//               </span>
+//             </li>
+//           </ul>
+
+//           <p style={{ margin: 0, padding: '32px' }}>
+//             For the most part, all the controls should feel pretty smooth. If you start to feel the
+//             controls get a bit sluggish when using the <strong>Decovar</strong> font, that's because
+//             it's a crazy complex font with a lot of options. Each time it renders, it has to do a
+//             lot more work than the other fonts. If you notice a drop in performance, try working on
+//             one thing at a time.
+//           </p>
+//           <ul style={{ marginLeft: '32px' }}>
+//             <li style={{ margin: '0 0 16px 32px' }}>
+//               If you're tweaking the font settings, <strong>remove the text shadow</strong> until
+//               you've got the font set how you want.
+//             </li>
+//             <li style={{ margin: '16px 32px' }}>
+//               If you're experimenting with shadows, try{' '}
+//               <strong>reducing the complexity of the font</strong> while you work on the shadows
+//             </li>
+//             <li style={{ margin: '16px 32px' }}>
+//               If you're using a Safari browser and the tips above didn't help, try{' '}
+//               <strong>using a Chrome browser</strong> instead. I'm not sure why but performance on
+//               Safari seems to be really poor. At least on older versions. Your mileage may vary.
+//             </li>
+//           </ul>
+//         </HelpWrapper>
+//       </HelpContainer>
+//
+//   );
+// };
 
 const Container = styled.div``;
 
@@ -547,14 +626,20 @@ const CodeWrapper = styled(motion.div)`
   top: 0;
 `;
 
+const HelpContainer = styled(CodeWrapper)``;
+
+// const HelpWrapper = styled.div`
+//   background: var(--help-background);
+//   color: var(--color-text);
+
+//   height: 100%;
+// `;
+
 const TextContent = styled(motion.h1)`
-  font-family: var(--fontFamily);
   white-space: nowrap;
 `;
 
-const TextInput = styled.input.attrs((props) => {
-  console.log({ input: props });
-})`
+const TextInput = styled.input`
   position: absolute;
   background: transparent;
   border: none;
@@ -562,8 +647,6 @@ const TextInput = styled.input.attrs((props) => {
   top: 0;
   bottom: 0;
   width: 100%;
-  user-select: none;
-  -webkit-user-select: none;
 
   font-size: var(--fontSize);
   font-family: var(--fontFamily);
@@ -578,12 +661,12 @@ const TextInput = styled.input.attrs((props) => {
 `;
 
 const Wrapper = styled.div`
-  ${'' /* background: purple; */}
+  /* background: purple; */
   position: relative;
 `;
 
 const ControlWrapper = styled.div`
-  ${'' /* margin-bottom: -96px; */}
+  /* margin-bottom: -96px; */
   overflow: auto;
   height: 0;
 `;
@@ -592,9 +675,17 @@ const TextWrapper = styled(Text)`
   font-size: var(--fontSize);
   font-variation-settings: var(--fontVariationSettings);
   padding: 8px 24px;
+  transition: font-size 0.3s linear;
 `;
 
 const GradientText = (props) => {
+  const handleFontChange = () => {
+    const { isChangingFonts } = props.state;
+    if (isChangingFonts) {
+      props.dispatch({ type: 'IS_CHANGING_FONTS', value: false });
+    }
+  };
+
   return (
     <TextWrapper
       {...props}
@@ -603,6 +694,7 @@ const GradientText = (props) => {
       animate="show"
       close="close"
       custom={props}
+      onAnimationComplete={handleFontChange}
     >
       {props.children}
     </TextWrapper>
