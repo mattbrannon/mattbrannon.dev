@@ -1,6 +1,6 @@
 import { makeGradient, makeShadow, makeFluidFontSize, pxToEm } from '@utils/helpers';
 import { fonts } from '@constants/fonts';
-import { breakpoints } from '@constants/breakpoints';
+import { breakpoints, gradients, shadows } from '@constants/index';
 
 const { mobile, desktop } = breakpoints;
 export const fontSize = makeFluidFontSize(36, 52, mobile, desktop);
@@ -10,17 +10,20 @@ export const gradient1 = makeGradient({
   gradientColorEnd: 'orange',
 });
 export const gradient2 = makeGradient({
-  gradientColorStart: 'green',
+  gradientColorStart: 'red',
   gradientColorEnd: 'gold',
+  gradientAngle: 180,
+  gradientMidpoint: 35,
+  gradientBlend: 24,
 });
 
 export const shadow = makeShadow({
-  shadowColorStart: 'white',
-  shadowColorEnd: '#111',
+  shadowColorStart: 'aqua',
+  shadowColorEnd: 'navy',
   shadowLayers: 24,
   shadowOffset: 4,
-  offsetX: -1,
-  offsetY: -1,
+  offsetX: -5,
+  offsetY: -5,
   blur: 0,
 });
 
@@ -32,62 +35,30 @@ export const textGeneratorVariant = {
   hidden: (props) => {
     return {
       '--fontSize': props.fontSize,
-      '--fontVariationSettings': fonts.presets.recursive3,
+      '--fontVariationSettings': props.initialSettings,
       '--strokeWidth': 0,
       '--shadow': 'none',
-      '--gradient': gradient1,
+      '--gradient': 'none',
       '--strokeColor': 'none',
     };
   },
   show: (props) => {
-    const {
-      fontSize,
-      fontVariationSettings,
-      strokeWidth,
-      strokeColor,
-      shadow,
-      gradient,
-    } = props;
-    if (fontVariationSettings.length) {
-      return {
-        '--fontSize': fontSize,
-        '--fontVariationSettings': fontVariationSettings,
-        '--strokeWidth': strokeWidth,
-        '--strokeColor': strokeColor,
-        '--shadow': shadow,
-        '--gradient': gradient,
-        transition: {
-          easing: 'linear',
-        },
-        // transition: {
-        //   '--strokeWidth': {
-        //     delay: 0,
-        //     duration: 0.1,
-        //     easing: 'linear',
-        //   },
-        //   '--strokeColor': {
-        //     delay: 0,
-        //     // duration: 0.05,
-        //     easing: 'linear',
-        //   },
-        //   '--shadow': {
-        //     delay: 0,
-        //     // duration: 0.05,
-        //     easing: 'linear',
-        //   },
-        //   '--gradient': {
-        //     delay: 0,
-        //     // duration: 0.05,
-        //     easing: 'linear',
-        //   },
-        //   '--fontVariationSettings': {
-        //     delay: 0,
-        //     duration: 0.1,
-        //     easing: 'linear',
-        //   },
-        // },
-      };
-    }
+    const { isChangingFonts } = props.state;
+    const duration = isChangingFonts ? 2 : 0.1;
+    const { fontSize, fontVariationSettings, strokeWidth, strokeColor, shadow, gradient } = props;
+
+    return {
+      '--fontSize': fontSize,
+      '--fontVariationSettings': fontVariationSettings,
+      '--strokeWidth': strokeWidth,
+      '--strokeColor': strokeColor,
+      '--shadow': shadow || 'none',
+      '--gradient': gradient,
+      transition: {
+        duration: duration,
+        delay: 0,
+      },
+    };
   },
   close: { '--fontVariationSettings': fonts.presets.recursive3 },
 };
@@ -102,81 +73,3 @@ export const textGenerator = {
   presets,
   textGeneratorVariant,
 };
-
-// export const textGeneratorVariant = {
-//   hidden: (props) => {
-//     console.log({ gen: props });
-//     return {
-//       '--fontSize': props.fontSize,
-//       '--gradient': makeGradient({ gradientColorStart: 'red', gradientColorEnd: 'blue' }),
-//       '--shadow': 'none',
-//       '--fontVariationSettings': 'none',
-//       '--strokeDelay': 4,
-//       opacity: 0,
-//       transition: {
-//         duration: 2,
-//       },
-//     };
-//   },
-//   show: (props) => {
-//     console.log({ ggggggg: props.gradient });
-//     return {
-//       '--delay': '0s',
-//       '--fontSize': props.fontSize,
-//       '--strokeDelay': '0s',
-//       '--strokeColor': props.strokeColor,
-//       '--strokeWidth': props.strokeWidth,
-//       '--shadow': props.shadow,
-//       '--gradient': props.gradient,
-//       '--shadowDelay': 4,
-//       '--fontVariationSettings': props.fontVariationSettings,
-//       opacity: 1,
-//       transition: {
-//         easing: 'linear',
-//         duration: 0.1,
-//       },
-//     };
-//   },
-//   close: (props) => {
-//     return {
-//       '--fontVariationSettings': props.initialSettings,
-//       '--gradient': makeGradient({ gradientColorStart: 'red', gradientColorEnd: 'blue' }),
-
-//       opacity: 0,
-//       transition: {
-//         duration: 2,
-//       },
-//     };
-//   },
-// };
-
-// // const initialSettings = props.initialSettings;
-// // console.log({ initialSettings });
-
-// // '--delay': '5s',
-
-// // transition: {
-// //   '--strokeWidth': {
-// //     easing: 'linear',
-// //   },
-// //   '--strokeColor': {
-// //     easing: 'linear',
-// //   },
-// //   '--gradient': {
-// //     delay: 0,
-// //     duration: 4,
-// //   },
-// //   '--shadow': {
-// //     delay: 'var(--shadowDelay)',
-// //     duration: 3,
-// //     type: 'tween',
-// //   },
-// //   '--fontVariationSettings': {
-// //     delay: 0,
-// //     duration: 1,
-// //   },
-// // },
-
-// // console.log({ show: props });
-
-// // console.log({ initialSettings });
