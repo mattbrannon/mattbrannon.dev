@@ -1,61 +1,67 @@
+import { Anchor } from '@components/Anchor';
+import { FullBleed } from '@components/Layout';
+import Spacer from '@components/Spacer';
 import VisuallyHidden from '@components/VisuallyHidden';
 import { breakpoints } from '@constants/index';
-import { useMediaQuery } from '@hooks/useMediaQuery';
 import FocusTrap from 'focus-trap-react';
-// import { useCssVariable } from 'hooks/useCssVariable';
-import Link from 'next/link';
-import { useContext, useEffect, useRef, useState } from 'react';
-import styled, { ThemeContext, keyframes, css } from 'styled-components';
+import NextLink from 'next/link';
+import { useContext, forwardRef } from 'react';
+import styled, { ThemeContext } from 'styled-components';
+import DarkModeToggle from './DarkModeToggle';
 import HamburgerMenu from './Hamburger';
 import MobileNav from './MobileNav';
 import NavLinks from './NavLinks';
 import { Overlay } from './Overlay';
-// import GradientText from '@components/GradientText';
-import { FullBleed } from '@components/Layout';
+import SkipLink from './SkipLink';
+import s from './header.module.css';
 
-// const arr = [ '--decovar-checkered', '--decovar-striped' ];
-
-export default function Header({ headerPosition }) {
+const Header = forwardRef((props, ref) => {
   const theme = useContext(ThemeContext);
-  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
-  const [ clickedHome, setClickedHome ] = useState(false);
-  const headerRef = useRef();
-  // const countRef = useRef(0);
 
   const isOpen = theme.isOpen;
-  // const showNothing = isOpen && isMobile;
-  const Navigation = isMobile ? HamburgerMenu : NavLinks;
+  const links = [ 'blog', 'apps', 'misc', 'contact' ];
 
   return (
-    <div>
-      <FullBleedWrapper ref={headerRef} headerPosition={headerPosition}>
+    <header ref={ref} style={{ height: 'var(--header-height)' }}>
+      <FullBleedWrapper className={props.isVisible ? s.visible : s.hidden}>
         <InnerWrapper>
           <Left>
-            <Link passHref href="/">
-              <NameWrapper tabIndex={0} onClick={() => setClickedHome(true)}>
-                <Button>Matt Brannon</Button>
-              </NameWrapper>
-            </Link>
+            <SkipLink>Skip to main content</SkipLink>
+
+            <NameWrapper>
+              <NextLink passHref href="/">
+                <A>
+                  <>Matt Brannon</>
+                </A>
+              </NextLink>
+            </NameWrapper>
           </Left>
+          <HamburgerMenu />
 
           <Right>
             <VisuallyHidden>
               <h2>Internal Navigation Links</h2>
             </VisuallyHidden>
-            <Navigation setClickedHome={setClickedHome} clickedHome={clickedHome} />
+            <NavLinks links={links} />
+            <ThemeButtonWrapper>
+              <DarkModeToggle mode={props.mode} />
+            </ThemeButtonWrapper>
           </Right>
         </InnerWrapper>
         <MobileMenu isOpen={isOpen} />
       </FullBleedWrapper>
-    </div>
+    </header>
   );
-}
+});
+
+Header.displayName = 'Header';
+export default Header;
 
 export const MobileMenu = ({ isOpen }) => {
   return (
     <FocusTrap active={isOpen} focusTrapOptions={{ preventScroll: true }}>
       <div>
-        {isOpen && <HamburgerMenu />}
+        {isOpen ? <HamburgerMenu /> : null}
         <Overlay />
         <MobileNav />
       </div>
@@ -63,9 +69,9 @@ export const MobileMenu = ({ isOpen }) => {
   );
 };
 
-const FullBleedWrapper = styled(FullBleed).attrs({ as: 'header' })`
-  ${'' /* grid-row: 1;
-  grid-column: 1 / -1; */}
+const FullBleedWrapper = styled(FullBleed)`
+  --color-outline: var(--azure-light);
+
   position: fixed;
   top: 0;
   left: 0;
@@ -84,10 +90,8 @@ const InnerWrapper = styled.div`
   grid-row: 1;
   grid-column: 1 / -1;
   background: var(--header-background);
-  transform: var(--header-position);
-  transition: transform 300ms ease-in-out;
 
-  max-width: var(--max-width);
+  max-width: var(--max-page-width);
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -98,15 +102,16 @@ const InnerWrapper = styled.div`
 const NameWrapper = styled.h1`
   font-size: var(--size24);
   font-family: recursive;
-  font-variation-settings: 'MONO' 0, 'CRSV' 1, 'CASL' 0.65, 'wght' 875, 'slnt' -4;
-  ${'' /* var(--recursive4); */}
-  color: hsl(44deg, 100%, 55%);
+  font-variation-settings: 'MONO' 0, 'CRSV' 0, 'CASL' 0.35, 'wght' 800, 'slnt' 0;
+  /* var(--recursive4); */
+  color: var(--myName);
 
-  transition: all 140ms ease-in-out;
+  transition: all 70ms ease;
   outline: none;
 
   &:hover {
-    color: hsl(50deg, 100%, 60%);
+    color: var(--myNameHover);
+    text-decoration: none;
     cursor: pointer;
   }
 
@@ -132,6 +137,7 @@ const Left = styled.div`
   display: flex;
   justify-content: flex-start;
   margin-right: var(--header-link-gap);
+  position: relative;
 `;
 
 const Right = styled.nav`
@@ -140,29 +146,17 @@ const Right = styled.nav`
   align-items: center;
   flex: 1;
   gap: var(--header-link-gap);
+  color: white;
+  /* position: relative; */
 `;
 
-const Button = styled.button`
-  background: transparent;
-  border: none;
-  font: inherit;
-  color: inherit;
+const A = styled(Anchor)`
   &:hover {
-    cursor: pointer;
+    text-decoration: none;
   }
 `;
 
-// const headerAnimation = keyframes`
-//   0% {
-//     opacity: 0;
-//     font-variation-settings: var(--decovar-open);
-//   }
-//   50% {
-//     opacity: 1;
-//     font-variation-settings: var(--decovar-open);
-//   }
-//   100% {
-//     opacity: 1;
-//     font-variation-settings: var(--decovar-default);
-//   }
-// `;
+const ThemeButtonWrapper = styled.div`
+  width: 32px;
+  height: inherit;
+`;

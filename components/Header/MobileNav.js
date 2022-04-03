@@ -26,7 +26,6 @@ export default function MobileNav() {
 
   useEffect(() => {
     if (isFirstPaint) {
-      // console.log({ isFirstPaint });
       context.setIsOpen(null);
       setIsFirstPaint(false);
     }
@@ -37,7 +36,7 @@ export default function MobileNav() {
       isOpen={context.isOpen}
       ref={ref}
       style={{
-        '--zIndex': context.isOpen ? '4' : '-10',
+        '--zIndex': context.isOpen ? '999994' : '-10',
       }}
     >
       <VisuallyHidden>
@@ -68,7 +67,6 @@ function NavLink({ children, ...props }) {
   const ref = useRef();
 
   useEffect(() => {
-    // console.log({ isOpen: context.isOpen });
     const frames = [
       { transform: 'translateX(-500px)', opacity: 0 },
       { transform: 'translateX(0)', opacity: 1 },
@@ -99,8 +97,6 @@ function NavLink({ children, ...props }) {
           animation.finished.then(() => {
             ref.current.style.setProperty('display', 'none');
           });
-          // ref.current.getAnimations()[0].playState = 'paused';
-          // console.log(ref.current.getAnimations()[0].playState);
         });
       }
     }
@@ -135,7 +131,7 @@ const MobileNavWrapper = styled.nav`
   z-index: var(--zIndex);
   top: calc(var(--header-height) + 64px);
   gap: 24px;
-  transition: ${(p) => setTransition(p)};
+  ${'' /* transition: ${(p) => setTransition(p)}; */}
 `;
 
 const ButtonLink = styled.button`

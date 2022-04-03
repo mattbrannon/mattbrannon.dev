@@ -32,7 +32,7 @@ const OverlayWrapper = styled.div`
   width: 100%;
 
   visibility: var(--visibility);
-  ${'' /* overflow: hidden; */}
+  /* overflow: hidden; */
 
   backdrop-filter: var(--blur);
   background: var(--background);
