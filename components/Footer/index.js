@@ -1,9 +1,9 @@
 import { FullBleed } from '@components/Layout';
 import VisuallyHidden from '@components/VisuallyHidden';
+import { breakpoints } from '@constants/index';
 import NextImage from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { breakpoints } from '@constants/index';
 
 export default function Footer() {
   return (
@@ -31,7 +31,7 @@ export default function Footer() {
         </Nav>
       </NavWrapper>
       <Copyright>
-        <Notice>&copy;&nbsp;2021 Matt Brannon.</Notice>
+        <Notice>&copy;&nbsp;2022 Matt Brannon.</Notice>
         <Notice>All rights reserved</Notice>
       </Copyright>
     </Container>
@@ -53,33 +53,12 @@ const Container = styled(FullBleed)`
   min-height: var(--footer-height);
   height: 100%;
   background: var(--footer-background);
+  --color-outline: var(--azure-light);
 
   grid-template-columns: 1fr;
   place-items: center;
   grid-row-gap: 21px;
   place-content: center;
-
-  @media (prefers-color-scheme: dark) {
-    background: #111;
-    border-bottom: 1px solid black;
-  }
-`;
-
-const FooterWrapper = styled.div`
-  width: 100%;
-  background: var(--footer-background);
-
-  @media (prefers-color-scheme: dark) {
-    background: #111;
-    border-bottom: 1px solid black;
-  }
-`;
-
-const MaxWidthFlexContainer = styled.div`
-  max-width: 80ch;
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
 `;
 
 const NavWrapper = styled.div`
@@ -89,17 +68,6 @@ const NavWrapper = styled.div`
   &:last-child {
     margin-right: 0;
   }
-`;
-
-const InnerWrapper = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 16px;
-  padding: 32px 0;
 `;
 
 const Copyright = styled.div`
