@@ -5,7 +5,7 @@ export const useWindowSize = () => {
   const hasMounted = useHasMounted();
   const [ size, setSize ] = useState({ width: 0, height: 0 });
 
-  function handleResize(e) {
+  function handleResize() {
     const width = window.innerWidth;
     const height = window.innerHeight;
     setSize({ width, height });

@@ -8,33 +8,32 @@ let randomNumber = (min, max) => {
 
 let random = (min) => (max) => randomNumber(min, max);
 
-export const useEye = (props) => {
-  const eyelid = props.eyelid || 150;
-  const blink = props.blink;
-  const closed = props.closed;
+export const useEye = ({ eyelid = 150, blink, closed }) => {
+  // console.log({ useEye: props });
+  // const eyelid = props.eyelid || 150;
+  // const blink = props.blink;
+  // const closed = props.closed;
   const [ margin, setMargin ] = useState(eyelid * -1);
 
   // const [ margin, setMargin ] = useState(eyelid * -1);
 
-  useEffect(() => {
-    let timeoutId;
+  const blinkEye = () => {
+    setMargin(0);
+    setTimeout(() => setMargin(-150), 300);
+  };
 
-    if (blink) {
-      const setMax = random(500);
-      const repeat = (callback) => {
-        const timeout = callback(10000);
-        setMargin(0);
-        setTimeout(() => setMargin(eyelid * -1), 300);
-        timeoutId = setTimeout(() => repeat(callback), timeout);
-      };
-      repeat(setMax);
-    }
-    if (closed) {
-      setMargin(0);
-    }
+  useEffect(() => {
+    const setMax = random(500);
+
+    const repeat = () => {
+      const randomTimeout = setMax(10000);
+      blinkEye();
+      return setTimeout(repeat, randomTimeout);
+    };
+    const timeoutId = repeat();
 
     return () => clearTimeout(timeoutId);
-  }, [ blink, eyelid, closed ]);
+  }, []);
 
   return margin;
 };
