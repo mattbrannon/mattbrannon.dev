@@ -1,5 +1,5 @@
 {
-  "printWidth": 80,
   "proseWrap": "always",
-  "embeddedLanguageFormatting": "auto"
+  "semi": false,
+  "printWidth": 100
 }
