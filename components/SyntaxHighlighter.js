@@ -1,5 +1,4 @@
 // eslint-disable-next-line no-unused-vars
-// import Prism from 'prismjs';
 import Highlight, { defaultProps } from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/nightOwl';
 import styled from 'styled-components';
@@ -7,8 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 
 const SyntaxHighlighter = ({ children, ...props }) => {
   const code = children.props.children;
-  const language =
-    props.language || children.props.className?.replace('language-', '').trim();
+  const language = props.language || children.props.className?.replace('language-', '').trim();
   const ref = useRef();
   const [ buttonText, setButtonText ] = useState('Copy Snippet');
 
@@ -28,7 +26,7 @@ const SyntaxHighlighter = ({ children, ...props }) => {
       copyText(selection.toString())
         .then(selection.removeAllRanges())
         .then(() => setButtonText('Copied to clipboard!'))
-        .catch(console.log);
+        .catch(console.error);
     }
   };
 
@@ -44,7 +42,9 @@ const SyntaxHighlighter = ({ children, ...props }) => {
         <Highlight {...defaultProps} code={code} language={language} theme={theme}>
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
             <>
-              <Button handleButtonClick={handleButtonClick}>{buttonText}</Button>
+              <Button tabIndex={-1} handleButtonClick={handleButtonClick}>
+                {buttonText}
+              </Button>
               <pre ref={ref} className={className} style={{ ...style, margin: 0 }}>
                 {tokens.slice(0, -1).map((line, i) => (
                   <div key={i} {...getLineProps({ line, key: i })}>
@@ -63,28 +63,31 @@ const SyntaxHighlighter = ({ children, ...props }) => {
 };
 
 const Container = styled.div`
-  ${'' /* margin-bottom: 32px; */}
   position: relative;
   --code-background: hsl(208, 86%, 8%);
-  ${'' /* margin-bottom: 80px;
-  margin-top: 48px; */}
-  ${'' /* margin-bottom: 32px; */}
 `;
 
 const CopyButton = styled.button`
   position: absolute;
   right: 0px;
-  top: -12px;
+  top: -10px;
   color: hsl(0, 0%, 60%);
   background: transparent;
   border: none;
   border-radius: 6px;
-  padding: 12px;
+  padding: 12px 24px;
+
   font-size: var(--size18);
 
   &:hover {
     cursor: pointer;
     color: hsl(0, 0%, 80%);
+  }
+
+  &:focus {
+    outline: 2px solid hsl(210, 100%, 75%, 1);
+    border-radius: 12px;
+    outline-offset: -12px;
   }
 
   transition: color 0.1s ease-in-out;
@@ -96,13 +99,11 @@ async function copyText(selectedText) {
   try {
     await navigator.clipboard.writeText(selectedText);
   } catch (err) {
-    // console.error('Failed to copy: ', err);
+    //
   }
 }
 
 const Button = ({ children, ...props }) => {
-  // useEffect(() => {});
-
   return (
     <CopyButton onClick={() => props.handleButtonClick()} {...props}>
       {children}
@@ -111,31 +112,3 @@ const Button = ({ children, ...props }) => {
 };
 
 // Source: http://stackoverflow.com/a/11128179/2757940
-
-// if (document.body.createTextRange) {
-//   // ms
-//   const range = document.body.createTextRange();
-//   range.moveToElementText(env.element);
-//   range.select();
-// }
-// else if (window.getSelection) {
-//   // moz, opera, webkit
-// const selection = window.getSelection();
-// const range = document.createRange();
-// range.selectNodeContents(env.element);
-// selection.removeAllRanges();
-// selection.addRange(range);
-// copyText(selection.toString())
-//   .then(selection.removeAllRanges())
-//   .then(() => {
-//     button.innerHTML = 'Snippet Copied to clipboard!';
-//     button.style.color = 'white';
-//     button.style.transition = 'all 0.3s ease';
-//   })
-//   .then(() =>
-//     setTimeout(() => {
-//       button.innerHTML = 'Copy snippet';
-//     }, 2000)
-//   )
-//   .catch(console.log);
-// }

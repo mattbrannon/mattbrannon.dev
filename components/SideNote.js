@@ -9,12 +9,14 @@ const AsideWrapper = styled.aside`
   margin: 1em 0;
   background: palegoldenrod;
   padding: 16px;
+  padding-right: 64px;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
   font-family: 'OpenSans', system-ui, sans-serif;
   font-variation-settings: 'wdth' 90, 'wght' 600;
   border-left: 6px solid gold;
-  ${'' /* font-size: var(--size16); */}
+
+  color: black;
 
   @media (prefers-color-scheme: dark) {
     color: #333;

@@ -10,19 +10,13 @@ const PageTitle = forwardRef((props, ref) => {
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const desktopFontSize = useFontSize(32, 40, breakpoints.mobile, breakpoints.desktop);
   const mobileFontSize = useFontSize(24, 32, 0, breakpoints.mobile);
-
-  // console.log(mobileFontSize);
-  // console.log(desktopFontSize);
-
   const fontSize = isMobile ? mobileFontSize : desktopFontSize;
-
-  // console.log({ isMobile });
 
   if (props.children.length) {
     const [ highlighted, ...rest ] = props.children.split(' ');
     return (
-      <TopRow>
-        <FluidHeading fontSize={fontSize}>
+      <TopRow style={{ '--fontSize': fontSize }}>
+        <FluidHeading id="main-content" tabIndex={-1}>
           <RecursiveText {...props}>{highlighted}&nbsp;</RecursiveText>
           <Span ref={ref} {...props}>
             {rest.join(' ')}
@@ -38,10 +32,10 @@ const RecursiveText = styled(FancyText)`
   font-size: var(--size40);
 `;
 
-const FluidHeading = styled.h3`
+const FluidHeading = styled.h2`
   font-family: Recursive, 'OpenSans', system-ui, sans-serif;
   font-variation-settings: var(--recursive6);
-  font-size: ${(p) => p.fontSize || 'var(--size24)}'};
+  font-size: var(--fontSize);
   line-height: 1.2;
   @media (max-width: ${breakpoints.mobile}px) {
     font-size: 24px;
@@ -57,10 +51,11 @@ const TopRow = styled.div`
   justify-content: center;
   flex-direction: column;
 
-  margin-top: 16px;
+  outline-offset: -12px;
+  outline: none;
+
   @media (min-width: ${breakpoints.mobile}px) {
-    margin-top: 64px;
-    margin-bottom: 32px;
+    margin-top: 32px;
   }
 `;
 
@@ -68,6 +63,7 @@ const Span = styled.span`
   @media (max-width: ${breakpoints.mobile}px) {
     display: ${(p) => (p.inline ? 'inline' : 'block')};
   }
+  outline: none;
 `;
 
 export default PageTitle;

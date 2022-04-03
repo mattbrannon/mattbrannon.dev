@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const RootContainer = styled.div`
+export const RootContainer = styled.div`
   --fontFamily: Recursive;
   --fontSize: 20vw;
   --fontVariationSettings: 'wght' 1000, 'slnt' -6, 'CASL' 0, 'CRSV' 1, 'MONO' 0;
@@ -8,12 +8,9 @@ const RootContainer = styled.div`
   --gradient: linear-gradient(0deg, hsl(0deg, 0%, 0%) 26%, hsl(154deg, 75%, 33%) 76%);
   --strokeColor: rgba(255, 193, 122, 1);
   --strokeWidth: 0.0125em;
-  --shadow: 0em 0em 0em hsl(46.3deg, 100%, 45.81%),
-    -0.01em -0.01em 0em hsl(45.6deg, 100%, 44.62%),
-    -0.01em -0.01em 0em hsl(44.9deg, 100%, 43.43%),
-    -0.01em -0.01em 0em hsl(44.2deg, 100%, 42.24%),
-    -0.02em -0.02em 0em hsl(43.5deg, 100%, 41.05%),
-    -0.02em -0.02em 0em hsl(42.8deg, 100%, 39.86%),
+  --shadow: 0em 0em 0em hsl(46.3deg, 100%, 45.81%), -0.01em -0.01em 0em hsl(45.6deg, 100%, 44.62%),
+    -0.01em -0.01em 0em hsl(44.9deg, 100%, 43.43%), -0.01em -0.01em 0em hsl(44.2deg, 100%, 42.24%),
+    -0.02em -0.02em 0em hsl(43.5deg, 100%, 41.05%), -0.02em -0.02em 0em hsl(42.8deg, 100%, 39.86%),
     -0.02em -0.02em 0em hsl(42.1deg, 100%, 38.67%),
     -0.03em -0.03em 0.01em hsl(41.4deg, 100%, 37.48%),
     -0.03em -0.03em 0.01em hsl(40.7deg, 100%, 36.29%),
@@ -36,19 +33,6 @@ const RootContainer = styled.div`
     -0.09em -0.09em 0.02em hsl(29deg, 100%, 16.06%);
 `;
 
-const Wrapper = styled.div`
-  position: relative;
-
-  font-variation-settings: var(--fontVariationSettings);
-  font-family: var(--fontFamily);
-  font-size: var(--fontSize);
-
-  padding: 24px 0;
-  -webkit-background-clip: text;
-
-  width: 100%;
-`;
-
 export const Text = styled.div`
   display: block;
   font-size: var(--fontSize);
@@ -66,7 +50,6 @@ export const Text = styled.div`
 
 
   &:before {
-    ${'' /* word-break: break-word; */}
     content: '${(p) => p.children}';
     text-shadow: var(--shadow);
     position: absolute;

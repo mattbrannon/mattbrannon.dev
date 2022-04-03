@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { InvertedButton as Button } from './Button';
+import Button from './Button';
 
 export default function ContactForm() {
   const [ name, setName ] = useState('');
@@ -18,14 +18,12 @@ export default function ContactForm() {
         email,
         message,
       })
-      // .then((res) => console.log(res.data))
       .catch((error) => console.error(error));
   };
 
   useEffect(() => {
     if (isSubmitted) {
       alert('Message sent');
-      // console.log({ name, email, message });
       setName('');
       setEmail('');
       setMessage('');
@@ -80,25 +78,24 @@ export default function ContactForm() {
 
 const Form = styled.form`
   padding: 32px;
-  background: hsl(55, 35%, 85%);
-  box-shadow: 0 0 0 2px #222;
+  background: var(--form-background);
+  box-shadow: 0 0 0 1px black;
   border-radius: 4px;
   margin: 32px 0;
+  ${'' /* color: #000; */}
 
-  @media (prefers-color-scheme: dark) {
-    color: #111;
-  }
+  --color-outline: var(--azure-light);
 `;
 
 const Fieldset = styled.fieldset`
   border: none;
-  border-top: 2px solid #222;
+  border-top: 2px solid black;
   margin: 0 auto;
 `;
 
 const Legend = styled.legend`
   margin: auto;
-  padding: 0px;
+  padding: 0px 44px;
   font-weight: 700;
 `;
 
@@ -114,6 +111,8 @@ const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  max-width: 200px;
+  margin: 16px auto 0 auto;
 `;
 
 const Label = styled.label`
@@ -133,8 +132,16 @@ const Input = styled.input`
   font-size: var(--size16);
   font-family: 'OpenSans', system-ui, sans-serif;
   flex-basis: 80%;
+  background: white;
+  color: black;
 
   transition: box-shadow 0.2s ease-in-out;
+
+  &:focus-visible {
+    outline-offset: unset;
+    outline: 2px solid var(--color-outline);
+    outline: 2px solid var(--color-outline-form);
+  }
 `;
 
 const MessageInput = styled(Input).attrs({

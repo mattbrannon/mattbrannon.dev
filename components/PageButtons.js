@@ -24,7 +24,7 @@ const BottomRow = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  ${'' /* margin-bottom: 48px; */}
+  /* margin-bottom: 48px; */
 
   margin: 32px 0 64px 0;
   @media (min-width: 480px) {
@@ -44,8 +44,9 @@ const LinkContent = styled.button`
   font-weight: 800;
   letter-spacing: 0.03em;
 
+  color: var(--page-buttons);
+
   background: transparent;
-  color: var(--dark-pink);
 
   border-radius: 6px;
   border: none;
@@ -53,15 +54,7 @@ const LinkContent = styled.button`
   &:hover {
     cursor: pointer;
     color: #a7005a;
+    color: var(--page-buttons-hover);
     text-decoration: underline;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    color: var(--orange2);
-    transition: color 198ms ease-out;
-
-    &:hover {
-      color: var(--yellow);
-    }
   }
 `;

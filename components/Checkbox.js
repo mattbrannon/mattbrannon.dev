@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useCssVariable } from '@hooks/useCssVariable';
 
 export default function InputCheckbox({ children, ...props }) {
   const ref = useRef();
@@ -20,9 +19,8 @@ export default function InputCheckbox({ children, ...props }) {
   return (
     <Wrapper onChange={handleChange} tabIndex={0}>
       <Span>{children}</Span>
-      <Label htmlFor={id} {...props}>
-        <Checkbox isChecked={isChecked} ref={ref} />
-      </Label>
+      <Label htmlFor={id} {...props}></Label>
+      <Checkbox isChecked={isChecked} ref={ref} />
       <Input id={id} {...props} checked={isChecked} />
     </Wrapper>
   );
@@ -33,6 +31,8 @@ const Span = styled.span`
   font-size: var(--size14);
   font-family: OpenSans;
   width: 72.44px;
+  width: fit-content;
+  margin-right: auto;
 `;
 
 const Wrapper = styled.label`
@@ -40,7 +40,8 @@ const Wrapper = styled.label`
   justify-content: flex-start;
   align-items: center;
   height: 48px;
-  width: fit-content;
+  /* width: fit-content; */
+  position: relative;
 `;
 
 const Input = styled.input.attrs({ type: 'checkbox' })`
@@ -56,7 +57,7 @@ const Label = styled.div`
   position: relative;
 
   height: 32px;
-  ${'' /* margin-bottom: 12px; */}
+  /* margin-bottom: 12px; */
   cursor: pointer;
   font-family: inherit;
   font-size: var(--size14);
@@ -68,10 +69,12 @@ const Label = styled.div`
 `;
 
 const Checkbox = styled.span`
-  position: absolute;
+  /* position: absolute;
   top: 0;
   left: 0;
-  transform: translate(-50%, 0);
+  right: 0;
+  bottom: 0; */
+
   --background: ${(p) => (p.isChecked ? 'var(--dark-pink)' : '#ddd')};
   --color: ${(p) => (p.isChecked ? 'white' : 'transparent')};
 
@@ -80,18 +83,23 @@ const Checkbox = styled.span`
   background: var(--background);
   border-radius: 6px;
   outline: 1px solid black;
-  transform: scale(0.7);
+  transform: scale(0.75);
   &:after {
     content: '';
-    position: relative;
+    position: absolute;
     display: block;
-    left: 12px;
-    top: 4px;
+    /* left: 12px;
+    top: 4px; */
+    top: 40%;
+    left: 50%;
+
+    /* margin-top: -2px; */
+
     width: 6px;
     height: 16px;
     border: solid var(--color);
     border-width: 0 4px 4px 0;
-    transform: rotate(45deg);
+    transform: translate(-50%, -50%) rotate(45deg);
   }
 
   transition: all 0.15s linear;

@@ -1,22 +1,33 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Checkbox from '@components/Checkbox';
 
 import { useWindowSize } from '@hooks/useWindowSize';
 import Select from '@components/Select';
 import Button from '@components/Button';
-import RangeSlider, { CustomInput } from './RangeSlider';
+import RangeSlider from './RangeSlider';
 import ControlsLayout, { ControlsContainer } from './Layout';
-import { motion, AnimatePresence } from 'framer-motion';
 
 export default function ShapeControls({ ...props }) {
   const [ maxX, setMaxX ] = useState(0);
   const [ maxY, setMaxY ] = useState(0);
   const windowSize = useWindowSize();
-  const [ isChecked, setIsChecked ] = useState(props.state.outline);
+  const [ currentSides, setCurrentSides ] = useState(props.state.sides);
+
   const ref = useRef();
 
   const [ controlWidth, setControlWidth ] = useState(0);
+
+  const {
+    state: { shape, sides },
+  } = props;
+
+  const { setSides } = props;
+
+  useEffect(() => {
+    const currentSides = shape === 'Cube' ? 6 : sides;
+    setSides(currentSides);
+    setCurrentSides(currentSides);
+  }, [ setSides, shape, sides ]);
 
   useEffect(() => {
     if (ref && ref.current) {
@@ -38,8 +49,6 @@ export default function ShapeControls({ ...props }) {
   }, [ props.cubeWidth, props.cubeHeight, windowSize, controlWidth ]);
 
   const handleShapeChange = (e) => {
-    // const sides = e.target.value === 'Cube' ? 6 : props.state.sides;
-    // props.dispatch({ type: 'SIDES', value: sides });
     props.dispatch({ type: 'SHAPE', value: e.target.value });
   };
 
@@ -47,33 +56,35 @@ export default function ShapeControls({ ...props }) {
     props.dispatch({ type: 'OPACITY', value: e.target.value });
   };
 
-  const changeBackgroundType = (e) => {
-    props.dispatch({ type: 'BACKGROUND_TYPE', value: e.target.value });
-  };
+  // const changeBackgroundType = (e) => {
+  //   props.dispatch({ type: 'BACKGROUND_TYPE', value: e.target.value });
+  // };
 
-  const handleOutlineToggle = (e) => {
-    setIsChecked(e.target.value);
-    props.dispatch({ type: 'OUTLINE', value: e.target.checked });
-  };
+  // const handleOutlineToggle = (e) => {
+  //   setIsChecked(e.target.value);
+  //   props.dispatch({ type: 'OUTLINE', value: e.target.checked });
+  // };
 
-  const backgrounds = [
-    'solid',
-    'linear-gradient',
-    'radial-gradient',
-    'conic-gradient',
-    'rainbow',
-    'transparent',
-  ];
+  // const backgrounds = [
+  //   'solid',
+  //   // 'linear-gradient',
+  //   // 'repeating-linear-gradient',
+  //   // 'radial-gradient',
+  //   // 'repeating-radial-gradient',
+  //   // 'conic-gradient',
+  //   'rainbow',
+  //   'transparent',
+  // ];
 
-  const displayOptions = () => {
-    return backgrounds.map((background, i) => {
-      return (
-        <Option key={i} value={background}>
-          {background}
-        </Option>
-      );
-    });
-  };
+  // const displayOptions = () => {
+  //   return backgrounds.map((background, i) => {
+  //     return (
+  //       <Option key={i} value={background}>
+  //         {background}
+  //       </Option>
+  //     );
+  //   });
+  // };
 
   return (
     <ControlsLayout ref={ref}>
@@ -89,13 +100,13 @@ export default function ShapeControls({ ...props }) {
           </Select>
 
           {props.state.shape === 'Sphere' ? (
-            <RangeSlider min={1} step={1} max={36} name="sides" {...props} />
+            <RangeSlider value={currentSides} min={0} step={1} max={36} name="sides" {...props} />
           ) : null}
         </Group>
         <Group>
           <Heading>Translate</Heading>
-          <RangeSlider name="translate X" min={maxX * -1} max={maxX} {...props} />
-          <RangeSlider name="translate Y" min={maxY * -1} max={maxY} {...props} />
+          <RangeSlider name="translate X" min={Math.round(maxX * -1)} max={maxX} {...props} />
+          <RangeSlider name="translate Y" min={Math.round(maxY * -1)} max={maxY} {...props} />
           <RangeSlider name="translate Z" min={-200} max={200} {...props} />
         </Group>
 
@@ -118,12 +129,11 @@ export default function ShapeControls({ ...props }) {
           <RangeSlider name="speed" reverse min={0} max={10} {...props} />
         </Group>
 
-        {/* {props.state.shape === 'Sphere' && ( */}
         <Group>
           <Heading>Background</Heading>
 
           <>
-            <Select value={props.state.backgroundType} onChange={changeBackgroundType}>
+            {/* <Select value={props.state.backgroundType} onChange={changeBackgroundType}>
               {displayOptions()}
             </Select>
 
@@ -133,10 +143,35 @@ export default function ShapeControls({ ...props }) {
               </ColorWrapper>
             ) : props.state.backgroundType.includes('gradient') ? (
               <ColorWrapper>
-                <CustomInput type="color" name="start" {...props} />
-                <CustomInput type="color" name="end" {...props} />
+                <CustomInput type="color" name="gradient color start" {...props} />
+                <CustomInput type="color" name="gradient color end" {...props} />
+                <RangeSlider
+                  min={0}
+                  max={100}
+                  step={1}
+                  name="gradient blend"
+                  {...props}
+                />
+                <RangeSlider
+                  min={0}
+                  max={100}
+                  step={1}
+                  name="gradient midpoint"
+                  {...props}
+                />
+                <RangeSlider
+                  min={0}
+                  max={360}
+                  step={1}
+                  name="gradient angle"
+                  {...props}
+                />
               </ColorWrapper>
-            ) : null}
+            ) : null} */}
+
+            {/* {props.state.shape === 'Cube' ? (
+              <CustomInput type="color" name="hair color" {...props} />
+            ) : null} */}
 
             <RangeSlider
               onChange={handleOpacityChange}
@@ -146,9 +181,9 @@ export default function ShapeControls({ ...props }) {
               step={0.01}
               {...props}
             />
-            <Checkbox isChecked={isChecked} onChange={handleOutlineToggle} name="outline">
+            {/* <Checkbox isChecked={isChecked} onChange={handleOutlineToggle} name="outline">
               outline:
-            </Checkbox>
+            </Checkbox> */}
           </>
         </Group>
         {/* )} */}

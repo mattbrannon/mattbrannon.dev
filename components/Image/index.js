@@ -2,12 +2,11 @@ import NextImage from 'next/image';
 import styled, { keyframes, css } from 'styled-components';
 import s from './image.module.css';
 import { breakpoints } from '@constants/index';
-import { getFluidSizes } from '@utils/helpers';
+import { getFluidSizes } from '@utils/helpers.js';
 import { motion } from 'framer-motion';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { useCssVariable } from '@hooks/useCssVariable';
 import { useEffect, useRef } from 'react';
-import Creature from '@components/Creature';
 
 function Picture({ sources, alt, ...props }) {
   const { sizes, types, name, folder } = sources;
@@ -27,7 +26,7 @@ function Picture({ sources, alt, ...props }) {
   );
 }
 
-const Image = styled.img`
+export const Image = styled.img`
   --radius: ${(p) => (p.rounded ? '50%' : undefined)};
   display: block;
   width: ${(p) => p.width + 'px' || '100%'};
@@ -68,7 +67,6 @@ export const CardImage = ({ ...props }) => {
 
 const CardImageWrapper = styled.div`
   --shadow-color: #333;
-
   filter: drop-shadow(1px 3px 6px var(--shadow-color));
   &:hover {
     cursor: pointer;
@@ -120,13 +118,7 @@ export const AnimatedImage = ({ ...props }) => {
           animate={image.animate}
           transition={image.transition}
         >
-          <Image
-            src="/images/hero/hero.png"
-            ref={imageRef}
-            rounded
-            {...props}
-            alt="photo of me"
-          />
+          <Image src="/images/hero/hero.png" ref={imageRef} rounded {...props} alt="photo of me" />
           <ImageOverylay
             variants={overlay}
             initial={overlay.initial}
@@ -159,12 +151,7 @@ export function StaticImage({ ...props }) {
     <ImageContainer {...props}>
       <Wrapper>
         <ImageWrapper>
-          <NextImage
-            src="/images/hero/hero.png"
-            alt="photo of me"
-            className={s.image}
-            {...props}
-          />
+          <NextImage src="/images/hero/hero.png" alt="photo of me" className={s.image} {...props} />
         </ImageWrapper>
       </Wrapper>
     </ImageContainer>

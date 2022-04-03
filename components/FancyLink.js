@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { Anchor } from './Anchor';
 
 export default function FancyLink({ children, ...props }) {
-  const [ isHovering, setIsHovering ] = useState(false);
   const [ isSelected, setIsSelected ] = useState(false);
 
   useEffect(() => {
@@ -13,25 +12,17 @@ export default function FancyLink({ children, ...props }) {
 
   return (
     <LinkWrapper
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onClick={() => setIsSelected(true)}
+      style={{
+        '--maxWidth': isSelected ? '100%' : '0%',
+        '--color': isSelected ? 'var(--orange0)' : 'white',
+      }}
     >
       <Link passHref {...props}>
-        <A
-          {...props}
-          style={{
-            '--color': isSelected ? 'var(--orange0)' : 'whitesmoke',
-          }}
-        >
-          {children}
-        </A>
+        <A {...props}>{children}</A>
       </Link>
 
-      <Underline
-        style={{
-          '--maxWidth': isSelected || isHovering ? '100%' : '0%',
-        }}
-      />
+      <Underline />
     </LinkWrapper>
   );
 }
@@ -40,13 +31,20 @@ const LinkWrapper = styled.span`
   position: relative;
   background: transparent;
   border: none;
-  font-family: Jost, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'OpenSans', 'Helvetica Neue', sans-serif;
+  font-family: Jost, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'OpenSans', 'Helvetica Neue', sans-serif;
   font-weight: 525;
+
+  --maxWidth: 0%;
+
+  &:hover {
+    --maxWidth: 100% !important;
+  }
 `;
 
 const A = styled(Anchor)`
   color: var(--color);
+
   letter-spacing: 0.8px;
   text-decoration: none;
   &:hover {
@@ -58,11 +56,11 @@ const A = styled(Anchor)`
 `;
 
 const Underline = styled.span`
-  --color: var(--pinkUnderline);
   height: 2px;
   width: 100%;
 
-  background: var(--color);
+  max-width: var(--maxWidth, var(--max));
+  background: var(--fancy-link-underline);
   position: absolute;
   bottom: -4px;
   left: 0;
@@ -70,10 +68,5 @@ const Underline = styled.span`
   margin-right: auto;
   margin-left: auto;
 
-  max-width: var(--maxWidth);
   transition: max-width 0.2s ease-in-out;
-
-  @media (prefers-color-scheme: dark) {
-    --color: var(--blueUnderline);
-  }
 `;

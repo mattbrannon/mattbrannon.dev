@@ -2,21 +2,23 @@ import styled from 'styled-components';
 import { Blockquote } from './SideNote';
 import Color from 'color-tools';
 import { fonts } from '@constants/index';
+import Help from '@components/Help';
 
 export default function Text({ children }) {
   return <P>{children}</P>;
 }
 
-const P = styled.p`
+export const P = styled.p`
   margin: 0 0 32px 0;
   font-size: clamp(var(--size16), 0.2vw + 1rem, var(--size20));
+  line-height: 1.7;
 
   ${Blockquote} & {
     background: palegoldenrod;
     color: #222;
     border-left: 8px solid gold;
-    padding: 8px 0;
-    padding-left: 16px;
+    padding: 8px 16px;
+    ${'' /* padding-left: 16px; */}
     border-radius: 0 6px 6px 0;
     line-height: 1.5;
     font-size: var(--size18);
@@ -25,14 +27,6 @@ const P = styled.p`
     width: 90%;
   }
 `;
-
-// const Paragraph = styled(P)`
-//   color: ${(p) => p.color || undefined};
-//   weight: ${(p) => (p.bold ? 'bold' : p.bolder ? 'bolder' : undefined)};
-//   font-style: ${(p) => (p.italic ? 'italic' : p.oblique ? 'oblique' : undefined)};
-//   font-size: ${(p) => (p.size ? `${p.size / 16}rem` : undefined)};
-//   margin: 0;
-// `;
 
 const Paragraph = styled(P)`
   margin: 0;
@@ -58,6 +52,11 @@ const reduceStyles = (style) => {
 
 const getFontStyle = (props) => {
   const { families } = fonts;
+  // const Color = dynamic(() => import('color-tools'));
+
+  // console.log(new Color('blue').hsl.css());
+
+  // const Color = dynamic(() => import 'color-tools')
 
   const colorName = Reflect.ownKeys(props)
     .filter((key) => Color.isNamedColor(key))
@@ -102,4 +101,26 @@ const Span = styled.span`
   font-style: var(--fontStyle);
   font-size: var(--fontSize);
   font-family: var(--fontFamily);
+`;
+
+export const Em = ({ children }) => {
+  return (
+    <strong>
+      <EmText>{children}</EmText>
+    </strong>
+  );
+};
+
+const EmText = styled.em`
+  font-style: normal;
+  color: var(--color-em);
+  font-weight: inherit;
+`;
+
+export const Strong = styled.strong`
+  color: var(--color-strong);
+
+  ${Help} & {
+    color: var(--sky);
+  }
 `;

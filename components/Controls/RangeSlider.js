@@ -1,53 +1,17 @@
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
 import Color from 'color-tools';
 
-import {
-  spaceToCamelCase as toCamelCase,
-  toSnakeUpperCase,
-  debounce,
-  throttle,
-} from '@utils/helpers';
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { spaceToCamelCase as toCamelCase, toSnakeUpperCase } from '@utils/helpers.js';
+import { useState, useEffect } from 'react';
+import { useDebounce } from '@hooks/useDebounce';
 
 const createLabel = (name) => {
   const removeText = [ 'update', 'cube', 'shadow', 'gradient', 'text stroke' ];
   removeText.forEach((str) => {
-    name = name.replace(str, '');
+    name = name.replace(str, '').trim();
   });
   return name;
 };
-
-export default function RangeSlider({ ...props }) {
-  const { name, state, dispatch } = props;
-  const label = createLabel(name);
-  const key = toCamelCase(name);
-  const defaultValue = state[key] || state.settings[key] || 0;
-
-  const dispatchAction = (e) => {
-    const type = name
-      .split(' ')
-      .map((v) => v.toUpperCase())
-      .join('_');
-
-    const value = parseFloat(e.target.value);
-    // setValue(value);
-    return dispatch({ type, value });
-  };
-
-  return (
-    <Slider>
-      <Label htmlFor={name}>{label}:</Label>
-      <Input
-        onChange={dispatchAction}
-        type={props.type || 'range'}
-        id={name}
-        {...props}
-        value={defaultValue}
-      />
-    </Slider>
-  );
-}
 
 const makeHex = (color) => {
   return new Color(color).hex.css();
@@ -57,64 +21,30 @@ const parseType = (type, value) => {
   return type === 'color' ? makeHex(value) : value;
 };
 
-// function useThrottle(cb, delay) {
-//   const cbRef = useRef(cb);
-//   // use mutable ref to make useCallback/throttle not depend on `cb` dep
-//   useEffect(() => {
-//     cbRef.current = cb;
-//   });
-//   return useCallback(
-//     throttle((...args) => cbRef.current(...args), delay),
-//     [ delay ]
-//   );
-// }
-// function useDebounce(cb, delay) {
-//   // ...
-//   const inputsRef = useRef({ cb, delay }); // mutable ref like with useThrottle
-//   useEffect(() => {
-//     inputsRef.current = { cb, delay };
-//   }); //also track cur. delay
-//   // eslint-disable-next-line react-hooks/exhaustive-deps
-//   return useCallback(
-//     debounce((...args) => {
-//       // Debounce is an async callback. Cancel it, if in the meanwhile
-//       // (1) component has been unmounted (see isMounted in snippet)
-//       // (2) delay has changed
-//       if (inputsRef.current.delay === delay && typeof window !== 'undefined')
-//         inputsRef.current.cb(...args);
-//     }, delay),
-//     [ delay, debounce ]
-//   );
-// }
+export default function RangeSlider({ ...props }) {
+  const { name, state, dispatch } = props;
+  const label = createLabel(name);
+  const key = toCamelCase(name);
 
-// export const useDebouncedEffect = (effect, deps, delay) => {
-//   useEffect(() => {
-//     const handler = setTimeout(() => effect(), delay);
+  const defaultValue = state[key]
+    ? state[key]
+    : 'settings' in state && state.settings[key]
+    ? state.settings[key]
+    : 0;
 
-//     return () => clearTimeout(handler);
-//     // eslint-disable-next-line react-hooks/exhaustive-deps
-//   }, [ ...(deps || []), delay ]);
-// };
+  const handleChange = (e) => {
+    const number = parseFloat(e.target.value);
 
-function useDebounce(value, delay) {
-  // State and setters for debounced value
-  const [ debouncedValue, setDebouncedValue ] = useState(value);
-  useEffect(
-    () => {
-      // Update debounced value after delay
-      const handler = setTimeout(() => {
-        setDebouncedValue(value);
-      }, delay);
-      // Cancel the timeout if value changes (also on delay change or unmount)
-      // This is how we prevent debounced value from updating if value is changed ...
-      // .. within the delay period. Timeout gets cleared and restarted.
-      return () => {
-        clearTimeout(handler);
-      };
-    },
-    [ value, delay ] // Only re-call effect if value or delay changes
+    dispatch({ type: toSnakeUpperCase(name), value: number });
+  };
+
+  return (
+    <Slider>
+      <Label htmlFor={name}>{label}:</Label>
+      <ValueDisplay>{defaultValue}</ValueDisplay>
+      <Input onChange={handleChange} type="range" id={name} value={defaultValue} {...props} />
+    </Slider>
   );
-  return debouncedValue;
 }
 
 export const CustomInput = ({ ...props }) => {
@@ -135,6 +65,7 @@ export const CustomInput = ({ ...props }) => {
   return (
     <Wrapper>
       <Label {...props}>{label}:</Label>
+      <ValueDisplay>{props.state[key]}</ValueDisplay>
       <Input
         onChange={(e) => setColorValue(e.target.value)}
         id={name}
@@ -152,18 +83,25 @@ const Wrapper = styled.div`
 const Label = styled.label`
   font-size: 14px;
   margin-right: auto;
-  flex: 1;
 `;
 
 const Slider = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+`;
+
+const ValueDisplay = styled.span`
+  display: block;
+  font-size: 14px;
+  margin-right: 16px;
+  font-family: Recursive;
+  font-variation-settings: 'MONO' 1, 'CASL' 0, 'CRSV' 0;
 `;
 
 const getMaxWidth = (props) => {
   const type = props.type;
-  const maxWidth = type === 'number' || type === 'color' ? 50 : 100;
+  const maxWidth = type === 'number' || type === 'color' ? 60 : 100;
   return `${maxWidth}px`;
 };
 
@@ -178,7 +116,9 @@ export const Input = styled.input.attrs((props) => {
   display: block;
   max-width: var(--maxWidth);
   min-width: 0;
+  width: 100%;
 
   justify-self: flex-start;
+
   direction: ${(p) => (p.reverse ? 'rtl' : undefined)};
 `;

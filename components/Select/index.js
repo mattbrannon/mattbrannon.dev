@@ -1,5 +1,5 @@
+import React from 'react';
 import styled from 'styled-components';
-import React, { useEffect, useRef, useState } from 'react';
 
 export function getDisplayedValue({ value, children }) {
   const childArray = React.Children.toArray(children);
@@ -46,17 +46,18 @@ const FancySelect = styled.div`
   font-size: var(--size16);
   padding: 2px 8px;
 
-  ${'' /* text-align: center; */}
+  /* text-align: center; */
   border-radius: 2px;
 
   display: flex;
   justify-content: space-between;
 
   ${NativeSelect}:focus + & {
-    ${'' /* outline: 1px dotted #212121; */}
-    ${'' /* outline: 5px auto -webkit-focus-ring-color; */}
-    outline: 1px solid deepskyblue;
-    ${'' /* outline-offset: 4px; */}
+    /* outline: 1px dotted #212121; */
+    /* outline: 5px auto -webkit-focus-ring-color; */
+    outline-offset: 2px;
+    outline: 2px solid white;
+    /* outline-offset: 4px; */
   }
 
   ${NativeSelect}:hover + & {

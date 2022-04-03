@@ -1,8 +1,9 @@
 import { useCssVariable } from '@hooks/useCssVariable';
 import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import InputCheckbox from '@components/Checkbox';
+import { loadFeatures } from '@utils/helpers';
 
 export default function MiniGame() {
   const [ isCorrect, setIsCorrect ] = useState(null);
@@ -13,11 +14,9 @@ export default function MiniGame() {
       {isCorrect !== null && <Results isCorrect={isCorrect} />}
     </motion.div>
   );
-  // return <Component isCorrect={isCorrect} setIsCorrect={setIsCorrect} />;
 }
 
 export function Inputs({ ...props }) {
-  // console.log(props);
   return (
     <InputsWrapper>
       <Checkbox correct {...props}>
@@ -46,8 +45,8 @@ export function Results({ isCorrect }) {
     <>
       <ResultWrapper ref={ref}>{result}</ResultWrapper>
       <P>
-        If you think about it in terms of a parent / child relationship, a good way to
-        remember this stuff to think - children inherit from their parents.
+        If you think about it in terms of a parent / child relationship, a good way to remember this
+        stuff to think - children inherit from their parents.
       </P>
     </>
   );
