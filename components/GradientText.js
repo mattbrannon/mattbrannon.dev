@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { forwardRef } from 'react';
 import styled from 'styled-components';
-import { loadFeatures } from '@utils/helpers';
+// import { loadFeatures } from '@utils/helpers';
 
 const MotionGradientWrapper = styled(motion.div)`
   @supports (background-image: paint(something)) {

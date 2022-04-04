@@ -1,7 +1,7 @@
 import VisuallyHidden from '@components/VisuallyHidden';
 import Link from 'next/link';
 import { useContext, useEffect, useRef, useState } from 'react';
-import styled, { css, ThemeContext } from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 /**
  *
  * * Mobile navigation menu
@@ -46,13 +46,7 @@ export default function MobileNav() {
         {labels.map((label, index) => {
           const href = index > 0 ? `/${labels[index].toLowerCase()}` : '/';
           return (
-            <NavLink
-              tabIndex={0}
-              href={href}
-              key={index}
-              i={index + 1}
-              isOpen={context.isOpen}
-            >
+            <NavLink tabIndex={0} href={href} key={index} i={index + 1} isOpen={context.isOpen}>
               {label}
             </NavLink>
           );
@@ -110,10 +104,6 @@ function NavLink({ children, ...props }) {
     </Link>
   );
 }
-
-const setTransition = (props) => {
-  return !props.isOpen ? css`z-index 1000ms linear` : undefined;
-};
 
 const MobileNavWrapper = styled.nav`
   display: ${(p) => (p.theme.isOpen ? 'grid' : 'none')};

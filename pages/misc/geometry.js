@@ -3,7 +3,7 @@ import ShapeControls from '@components/Controls/ShapeControls';
 import { ForwardedCube as Cube } from '@components/Shapes/Cube';
 import Head from '@components/Head';
 import Globe from '@components/Shapes/Globe';
-import { snakeToCamel, loadFeatures } from '@utils/helpers.js';
+import { snakeToCamel } from '@utils/helpers.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
@@ -89,8 +89,8 @@ function reducer(state, action) {
 }
 
 const shapeVariants = {
-  hidden: ({ shape, speed }) => {
-    const scale = shape === 'Cube' ? 1 : 0;
+  hidden: ({ speed }) => {
+    // const scale = shape === 'Cube' ? 1 : 0;
     return {
       opacity: 0,
       scale: 0,
@@ -102,15 +102,10 @@ const shapeVariants = {
     scale: 1,
     transition: { duration: 1 },
   },
-  close: ({ shape, speed }) => {
-    const scale = shape === 'Cube' ? 1 : 1;
-    const x = shape === 'Cube' ? 700 : 0;
-    const opacity = shape === 'Cube' ? 0 : 1;
-    return {
-      opacity: 0,
-      x: 700,
-      transition: { duration: 1 },
-    };
+  close: {
+    opacity: 0,
+    x: 700,
+    transition: { duration: 1 },
   },
 };
 
@@ -119,9 +114,6 @@ export default function Experiments() {
   const [ cubeWidth, setCubeWidth ] = useState(0);
   const [ cubeHeight, setCubeHeight ] = useState(0);
   const [ controlWidth, setControlWidth ] = useState(0);
-  const [ sides, setSides ] = useState(state.sides);
-  // const [ background, setBackground ] = useState('');
-  const [ average, setAverage ] = useState((cubeHeight + cubeWidth) / 2);
 
   const ref = useRef();
 
@@ -135,13 +127,6 @@ export default function Experiments() {
       setCubeHeight(Number(height));
     }
   }, [ ref ]);
-
-  useEffect(() => {
-    const sum = state.width + state.height;
-    const mean = sum / 2;
-    setAverage(mean);
-    // console.log({ average: mean });
-  }, [ state.width, state.height ]);
 
   const Component = state.shape === 'Cube' ? Cube : Globe;
 
@@ -170,7 +155,6 @@ export default function Experiments() {
             state={state}
             dispatch={dispatch}
             setControlWidth={setControlWidth}
-            setSides={setSides}
           />
         </ControlWrapper>
 

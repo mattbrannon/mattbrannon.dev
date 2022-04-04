@@ -1,6 +1,5 @@
 import { Anchor } from '@components/Anchor';
 import { FullBleed } from '@components/Layout';
-import Spacer from '@components/Spacer';
 import VisuallyHidden from '@components/VisuallyHidden';
 import { breakpoints } from '@constants/index';
 import FocusTrap from 'focus-trap-react';

@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { loadFeatures } from '@utils/helpers';
+// import { loadFeatures } from '@utils/helpers';
 
 const containerVariant = {
   hidden: { scale: 0, y: 30, opacity: 0 },

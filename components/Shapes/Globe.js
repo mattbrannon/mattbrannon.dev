@@ -1,98 +1,19 @@
-import { makeGradient } from '@utils/helpers.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { forwardRef } from 'react';
 import styled from 'styled-components';
 import { Shape } from './Shape';
-// import { loadFeatures } from '@utils/helpers.js';
-
-// export const getColors = (props, hue, i) => {
-//   const { color, backgroundType, state } = props;
-
-//   const h = state.sides * i;
-
-//   const gradientColorStart = `hsl(${h}deg, 100%, 50%)`;
-//   const gradientColorEnd = `hsl(${h + h}deg, 100%, 50%)`;
-
-//   const gradient = makeGradient({ gradientColorStart, gradientColorEnd });
-
-//   const solidColor = color;
-
-//   const linearGradient = gradient;
-//   // const repeatingLinearGradient = gradient;
-
-//   //`repeating-linear-gradient(${gradientStart}, ${gradientStop})`;
-
-//   const repeatingLinearGradient = `repeating-linear-gradient(
-//     180deg,
-//     ${gradientColorStart} 0%,
-//     ${gradientColorStart} 2%,
-//     ${gradientColorEnd} 2%,
-//     ${gradientColorEnd} 4%
-//   )`;
-
-//   const radialGradient = `radial-gradient(
-//     ellipse at 50% 50%,
-//     ${gradientColorStart} 0%,
-//     ${gradientColorStart} 2%,
-//     ${gradientColorEnd} 2%,
-//     ${gradientColorEnd} 4%
-//   )`;
-
-//   const repeatingRadialGradient = `repeating-radial-gradient(
-//     ellipse at 50% 50%,
-//     ${gradientColorStart} 0%,
-//     ${gradientColorStart} 2%,
-//     ${gradientColorEnd} 2%,
-//     ${gradientColorEnd} 4%
-//   )`;
-
-//   const conicGradient = `conic-gradient(
-//     from ${180}deg at 0% 100%,
-//     ${gradientColorStart},
-//     ${gradientColorEnd},
-//     ${gradientColorStart},
-//     ${gradientColorEnd},
-//     ${gradientColorStart}
-//   )`;
-
-//   const rainbow = `hsl(${hue}deg, 100%, 50%)`;
-//   const transparent = 'transparent';
-
-//   const background =
-//     backgroundType === 'solid'
-//       ? solidColor
-//       : backgroundType === 'transparent'
-//       ? transparent
-//       : backgroundType === 'linear-gradient'
-//       ? linearGradient
-//       : backgroundType === 'repeating-linear-gradient'
-//       ? repeatingLinearGradient
-//       : backgroundType === 'radial-gradient'
-//       ? radialGradient
-//       : backgroundType === 'repeating-radial-gradient'
-//       ? repeatingRadialGradient
-//       : backgroundType === 'conic-gradient'
-//       ? conicGradient
-//       : backgroundType === 'rainbow'
-//       ? rainbow
-//       : null;
-
-//   return background;
-// };
 
 const sideVariant = {
-  hidden: ({ i, state }) => {
-    return {
-      rotateX: 0,
-      rotateY: 0,
-      opacity: 1,
-      scale: 1,
-      background: '#00000000',
-      '--outline': '0px solid transparent',
-      boxShadow: '0 0 0 0 transparent',
-    };
+  hidden: {
+    rotateX: 0,
+    rotateY: 0,
+    opacity: 1,
+    scale: 1,
+    background: '#00000000',
+    '--outline': '0px solid transparent',
+    boxShadow: '0 0 0 0 transparent',
   },
-  show: ({ rotateX, rotateY, rotateZ, i, state, opacity, background }) => {
+  show: ({ rotateX, rotateY, i, state, background }) => {
     const speed = state.speed;
     const delay = (i + 1) / state.sides;
     return {
@@ -105,8 +26,6 @@ const sideVariant = {
 
       transition: {
         background: {
-          // delay: i * 0.1,
-          // duration: i * 0.1,
           delay: delay,
           duration: speed,
         },
@@ -129,7 +48,7 @@ const sideVariant = {
       },
     };
   },
-  close: ({ rotateX, rotateY, rotateZ, i, state, opacity, background }) => {
+  close: ({ i, state }) => {
     const delay = (i + 1) / state.sides;
     const speed = state.speed;
     return {

@@ -1,6 +1,6 @@
 import { format, parseISO } from 'date-fns';
 import styled from 'styled-components';
-import { mobile, blogHeader, blogVariant } from '@constants/index';
+import { mobile, blogHeader } from '@constants/index';
 // import { withGradient, Text } from '@components/GradientText';
 // import FancyTitle from './FancyTitle';
 // import { makeGradient, makeShadow } from '@utils/helpers';

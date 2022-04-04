@@ -1,5 +1,4 @@
 import FancyLink from '@components/FancyLink';
-import { useCookie } from '@hooks/useCookie';
 import { useContext, useEffect, useState } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
@@ -10,9 +9,7 @@ export default function NavLinks(props) {
   // const [ hasNavigated, setHasNavigated ] = useCookie('navigated');
 
   const handleLinkClick = (e) => {
-    const activeLink = props.clickedHome
-      ? ''
-      : e.target.attributes.href.value.slice(1);
+    const activeLink = props.clickedHome ? '' : e.target.attributes.href.value.slice(1);
     setActiveLink(activeLink);
     // if (!hasNavigated) {
     //   setHasNavigated();
@@ -37,11 +34,7 @@ export default function NavLinks(props) {
     <Container>
       {props.links.map((link, i) => (
         <LinkWrapper key={i}>
-          <FancyLink
-            activeLink={activeLink}
-            onClick={handleLinkClick}
-            href={`/${link}`}
-          >
+          <FancyLink activeLink={activeLink} onClick={handleLinkClick} href={`/${link}`}>
             {link.charAt(0).toUpperCase() + link.slice(1)}
           </FancyLink>
         </LinkWrapper>

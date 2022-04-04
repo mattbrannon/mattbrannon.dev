@@ -3,11 +3,10 @@ import Hero from '@components/Hero';
 import FancyTitle from '@components/FancyTitle';
 import Head from '@components/Head';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/breakpoints';
-import { useHasMounted } from '@hooks/useHasMounted';
 
 export default function HomePage() {
   // const hasMounted = useHasMounted();

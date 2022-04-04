@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import InputCheckbox from '@components/Checkbox';
-import { loadFeatures } from '@utils/helpers';
+// import { loadFeatures } from '@utils/helpers';
 
 export default function MiniGame() {
   const [ isCorrect, setIsCorrect ] = useState(null);

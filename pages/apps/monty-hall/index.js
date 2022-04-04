@@ -1,17 +1,16 @@
 import AppTitle from '@components/AppTitle';
-import StandardButton, { PinkButton, InvertedButton } from '@components/Button';
+import StandardButton from '@components/Button';
 import Head from '@components/Head';
 import { H3 } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
 import SideNote from '@components/SideNote';
 import Text from '@components/Text';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import image1 from '/public/images/monty-hall/monty-hall1.png';
 import image2 from '/public/images/monty-hall/monty-hall2.png';
 import image3 from '/public/images/monty-hall/monty-hall3.png';
-import { useTheme } from 'next-themes';
 
 export default function MontyHallPage() {
   const [ isCorrect, setIsCorrect ] = useState(null);

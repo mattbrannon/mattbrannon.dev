@@ -32,9 +32,7 @@ const MenuButton = styled.button`
   --burger-height: var(--size24);
   --thickness: calc((var(--burger-height) - var(--burger-width)) * -0.5);
   --offset: calc((var(--burger-height) - var(--thickness)) * -0.5);
-  --top: calc(
-    (var(--thickness) + var(--header-height) - var(--burger-height)) * 0.5
-  );
+  --top: calc((var(--thickness) + var(--header-height) - var(--burger-height)) * 0.5);
   --zIndex: ${(p) => (p.isOpen ? -1 : 99)};
 
   display: grid;

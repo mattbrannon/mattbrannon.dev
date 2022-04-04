@@ -21,13 +21,13 @@ export default function ShapeControls({ ...props }) {
     state: { shape, sides },
   } = props;
 
-  const { setSides } = props;
+  // const { setSides } = props;
 
   useEffect(() => {
     const currentSides = shape === 'Cube' ? 6 : sides;
-    setSides(currentSides);
+    // setSides(currentSides);
     setCurrentSides(currentSides);
-  }, [ setSides, shape, sides ]);
+  }, [ shape, sides ]);
 
   useEffect(() => {
     if (ref && ref.current) {
@@ -205,13 +205,6 @@ const Heading = styled.h2`
   font-size: 1rem;
   font-weight: 600;
   color: var(--orange);
-`;
-
-const ColorWrapper = styled.div`
-  margin-top: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 `;
 
 const Option = ({ ...props }) => {

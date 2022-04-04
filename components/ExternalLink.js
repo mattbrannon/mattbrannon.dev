@@ -46,17 +46,6 @@ const Container = styled.div`
   }
 `;
 
-const A = styled(Anchor)`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  &:focus-within {
-    outline: revert;
-    --opacity: 1;
-  }
-`;
-
 const External = styled(Anchor)`
   font-variation-settings: 'wght' 700;
 

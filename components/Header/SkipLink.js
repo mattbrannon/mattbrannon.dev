@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Link } from '@components/ExternalLink';
-import { usePathname } from '@hooks/usePathname';
 import { breakpoints } from '@constants/breakpoints';
 
 export default function SkipLink({ children, ...props }) {
@@ -23,11 +22,7 @@ export default function SkipLink({ children, ...props }) {
   };
 
   return (
-    <SkipWrapper
-      {...props}
-      onClick={handleScrollToContent}
-      onKeyPress={handleScrollToContent}
-    >
+    <SkipWrapper {...props} onClick={handleScrollToContent} onKeyPress={handleScrollToContent}>
       <Link {...props} passHref href="#main-content">
         <Span>{children}</Span>
       </Link>

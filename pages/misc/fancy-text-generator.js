@@ -10,7 +10,6 @@ import {
   snakeToCamel,
   pxToEm,
   parseFontSettings,
-  loadFeatures,
 } from '@utils/helpers.js';
 
 import Head from '@components/Head';
@@ -277,7 +276,7 @@ export default function VariableFontPlayground() {
   const [ shadow, setShadow ] = useState('');
   const [ gradient, setGradient ] = useState('');
   const [ text, setText ] = useState('');
-  const [ defaults, setDefaults ] = useState({ shadow: '', gradient: '' });
+  // const [ defaults, setDefaults ] = useState({ shadow: '', gradient: '' });
 
   const headingRef = useRef();
   const overflowRef = useRef();
@@ -303,13 +302,13 @@ export default function VariableFontPlayground() {
 
   useEffect(() => {}, [ state.font ]);
 
-  useEffect(() => {
-    const root = document.querySelector('html');
-    const styles = getComputedStyle(root);
-    const gradient = styles.getPropertyValue('--app-name-gradient');
-    const shadow = styles.getPropertyValue('--app-name-shadow');
-    setDefaults({ gradient, shadow });
-  }, []);
+  // useEffect(() => {
+  //   const root = document.querySelector('html');
+  //   const styles = getComputedStyle(root);
+  //   const gradient = styles.getPropertyValue('--app-name-gradient');
+  //   const shadow = styles.getPropertyValue('--app-name-shadow');
+  //   setDefaults({ gradient, shadow });
+  // }, []);
 
   return (
     <>

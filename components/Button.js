@@ -1,7 +1,7 @@
 import { breakpoints } from '@constants/index';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { loadFeatures } from '@utils/helpers';
+// import { loadFeatures } from '@utils/helpers';
 import { forwardRef } from 'react';
 
 const NormalButton = forwardRef((props, ref) => {

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { useTheme } from 'next-themes';
+
 import { breakpoints } from '@constants/breakpoints';
 
 import { useHasMounted } from '@hooks/useHasMounted';

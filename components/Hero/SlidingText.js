@@ -51,7 +51,7 @@ const container = {
   },
 };
 
-const AnimatedWords = ({ showWords, children, ...props }) => {
+const AnimatedWords = ({ showWords, children }) => {
   const wordControls = useAnimation();
   const containerControls = useAnimation();
   const [ isRunning, setIsRunning ] = useState(false);

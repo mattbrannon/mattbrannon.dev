@@ -1,9 +1,9 @@
 import { goofySmile } from '@animations/index';
-import { motion, useAnimation } from 'framer-motion';
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { makeClipPath, makeFrames, makePadding } from '../../unused/utils';
+import { makeClipPath } from '../../unused/utils';
 import { forwardRef } from 'react';
-import { loadFeatures } from '@utils/helpers';
+// import { loadFeatures } from '@utils/helpers';
 
 export const Mouth = styled(motion.div)`
   --unit: 16px;

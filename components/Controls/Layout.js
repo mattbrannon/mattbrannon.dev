@@ -2,7 +2,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { breakpoints } from '@constants/index';
 import { forwardRef, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { loadFeatures } from '@utils/helpers';
+// import { loadFeatures } from '@utils/helpers';
 
 const controlVariant = {
   initial: { opacity: 0 },
