@@ -127,10 +127,7 @@ export const GlobalStyle = createGlobalStyle`
   --beige: hsl(55deg, 35%, 85%);
 
   --color-404: black;
-  --color-outline: var(--azure);
-
-  --color-app-card: var(--orange);
-  --color-app-card-hover: var(--yellow);
+  --color-outline: var(--azure); 
 
 
 
