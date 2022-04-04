@@ -1,7 +1,7 @@
 import { goofySmile } from '@animations/index';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { makeClipPath } from '../../unused/utils';
+import { makeClipPath } from '@utils/index';
 import { forwardRef } from 'react';
 // import { loadFeatures } from '@utils/helpers';
 

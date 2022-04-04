@@ -409,3 +409,15 @@ export const getDistanceBetweenPoints = (p1, p2) => {
   const deltaY = Math.abs(p2.y - p1.y);
   return Math.sqrt(deltaX ** 2 + deltaY ** 2);
 };
+
+export const makeClipPath = (n) => {
+  return Array.from({ length: n }, (_, i) => {
+    const low = random(5);
+    const high = random(15);
+
+    const top = i % 2 === 0 ? low(25) : high(45);
+    const bottom = 100 - top;
+
+    return `polygon(0 ${top}%, 100% ${top}%, 100% ${bottom}%, 0 ${bottom}%)`;
+  });
+};
