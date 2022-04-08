@@ -7,7 +7,7 @@
     "start": "NODE_ENV=production next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "prod:start": "NODE_ENV=production pm2 restart yarn --name \"mattbrannon.dev\" -- run \"start\"",
+    "prod:start": "NODE_ENV=production pm2 restart mattbrannon.dev",
     "prod": "yarn build && yarn prod:start"
   },
   "dependencies": {
