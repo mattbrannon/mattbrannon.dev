@@ -8,7 +8,7 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "prod:start": "NODE_ENV=production pm2 restart yarn --name \"mattbrannon.dev\" -- run \"start\"",
-    "prod:": "yarn build && yarn prod:start"
+    "prod": "yarn build && yarn prod:start"
   },
   "dependencies": {
     "@next/bundle-analyzer": "^12.0.10",
