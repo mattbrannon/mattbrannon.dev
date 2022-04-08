@@ -14,6 +14,7 @@ import { MotionConfig } from 'framer-motion';
 import { ThemeProvider } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 import { ThemeProvider as ContextProvider, StyleSheetManager } from 'styled-components';
+import GoogleAnalytics from '@components/GoogleAnalytics';
 
 export default function Application({ Component, pageProps }) {
   const [ isOpen, setIsOpen ] = useState(null);
@@ -75,22 +76,25 @@ export default function Application({ Component, pageProps }) {
   }, [ isMobile, scroll ]);
 
   return (
-    <MotionConfig isValidProp={isValidProp}>
-      <StyleSheetManager disableVendorPrefixes>
-        <ThemeProvider defaultTheme="dark" enableSystem={false} enableColorScheme={true}>
-          <ContextProvider theme={theme}>
-            <GlobalStyle />
+    <>
+      <GoogleAnalytics />
+      <MotionConfig isValidProp={isValidProp}>
+        <StyleSheetManager disableVendorPrefixes>
+          <ThemeProvider defaultTheme="dark" enableSystem={false} enableColorScheme={true}>
+            <ContextProvider theme={theme}>
+              <GlobalStyle />
 
-            <Layout ref={ref}>
-              <Header isVisible={isVisible} ref={header} />
-              <Main>
-                <Component {...pageProps} />
-              </Main>
-              <Footer />
-            </Layout>
-          </ContextProvider>
-        </ThemeProvider>
-      </StyleSheetManager>
-    </MotionConfig>
+              <Layout ref={ref}>
+                <Header isVisible={isVisible} ref={header} />
+                <Main>
+                  <Component {...pageProps} />
+                </Main>
+                <Footer />
+              </Layout>
+            </ContextProvider>
+          </ThemeProvider>
+        </StyleSheetManager>
+      </MotionConfig>
+    </>
   );
 }
