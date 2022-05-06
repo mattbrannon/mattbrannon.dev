@@ -30,7 +30,9 @@ const ControlsLayout = forwardRef((props, ref) => {
           {...props}
           ref={ref}
         >
-          {props.children}
+          <Container>
+            <Section>{props.children}</Section>
+          </Container>
         </Wrapper>
       </motion.div>
     </AnimatePresence>
@@ -61,6 +63,8 @@ const Wrapper = styled.div`
 
   color: white;
 
+  ${'' /* visibility: hidden; */}
+
   @media (max-width: ${breakpoints.mobile}px) {
     top: 50px;
   }
@@ -83,3 +87,15 @@ const Section = styled.div`
 `;
 
 export default ControlsLayout;
+
+export const Group = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const Heading = styled.h2`
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--orange);
+`;
