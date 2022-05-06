@@ -12,6 +12,21 @@ export function FontControls({ ...props }) {
   const { state, font } = props;
   const ref = useRef();
 
+  const handleHelpButtonPressed = (e) => {
+    props.setShowHelp(true);
+    if (state.toggleCode) {
+      props.dispatch({ type: 'TOGGLE_CODE', value: false });
+    }
+    props.dispatch({ type: 'HELP', value: !state.help });
+  };
+  const handleGetCssButtonPressed = (e) => {
+    props.setShowCode(true);
+    if (state.help) {
+      props.dispatch({ type: 'HELP', value: false });
+    }
+    props.dispatch({ type: 'TOGGLE_CODE', value: !state.toggleCode });
+  };
+
   const handleFontSelection = (e) => {
     props.dispatch({ type: 'CHANGE_FONT', value: e.target.value });
     props.dispatch({ type: 'IS_CHANGING_FONTS', value: true });
@@ -113,19 +128,8 @@ export function FontControls({ ...props }) {
               })}
             </Group>
             <ButtonGroup>
-              <Button onClick={() => props.dispatch({ type: 'HELP', value: !state.help })}>
-                Help
-              </Button>
-              <Button
-                onClick={() =>
-                  props.dispatch({
-                    type: 'TOGGLE_CODE',
-                    value: !state.toggleCode,
-                  })
-                }
-              >
-                {toggleButtonText}
-              </Button>
+              <Button onClick={handleHelpButtonPressed}>Help</Button>
+              <Button onClick={handleGetCssButtonPressed}>{toggleButtonText}</Button>
               <PinkButton onClick={handleReset}>Reset</PinkButton>
             </ButtonGroup>
           </ControlsContainer>
