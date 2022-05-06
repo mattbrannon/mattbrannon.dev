@@ -60,7 +60,7 @@
     "editor.autoClosingQuotes": "never"
   },
 
-  "prettier.requireConfig": false,
+  "prettier.requireConfig": true,
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
