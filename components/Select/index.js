@@ -3,11 +3,15 @@ import styled from 'styled-components';
 
 export function getDisplayedValue({ value, children }) {
   const childArray = React.Children.toArray(children);
-  const selectedChild = childArray.find((child) => child.props.value === value);
+  const selectedChild = childArray.find((child) => child.props.value === value) ?? childArray[0];
+  console.log(childArray);
+  // return selectedChild;
   return selectedChild.props.children;
 }
 
 const Select = ({ ...props }) => {
+  console.log(props);
+  // const displayedValue = 'this';
   const displayedValue = getDisplayedValue({ ...props });
   return (
     <Wrapper>
