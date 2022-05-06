@@ -88,52 +88,50 @@ export default function ShapeControls({ ...props }) {
 
   return (
     <ControlsLayout ref={ref}>
-      <ControlsContainer>
-        <Group>
-          <Heading>Shape</Heading>
-          <Select value={props.state.shape} onChange={handleShapeChange}>
-            {[ 'Cube', 'Sphere' ].map((shape, i) => (
-              <Option key={i} value={shape}>
-                {shape}
-              </Option>
-            ))}
-          </Select>
+      {/* <ControlsContainer> */}
+      <Group>
+        <Heading>Shape</Heading>
+        <Select value={props.state.shape} onChange={handleShapeChange}>
+          {[ 'Cube', 'Sphere' ].map((shape, i) => (
+            <Option key={i} value={shape}>
+              {shape}
+            </Option>
+          ))}
+        </Select>
 
-          {props.state.shape === 'Sphere' ? (
-            <RangeSlider value={currentSides} min={0} step={1} max={36} name="sides" {...props} />
-          ) : null}
-        </Group>
-        <Group>
-          <Heading>Translate</Heading>
-          <RangeSlider name="translate X" min={Math.round(maxX * -1)} max={maxX} {...props} />
-          <RangeSlider name="translate Y" min={Math.round(maxY * -1)} max={maxY} {...props} />
-          <RangeSlider name="translate Z" min={-200} max={200} {...props} />
-        </Group>
+        {props.state.shape === 'Sphere' ? (
+          <RangeSlider value={currentSides} min={0} step={1} max={36} name="sides" {...props} />
+        ) : null}
+      </Group>
+      <Group>
+        <Heading>Translate</Heading>
+        <RangeSlider name="translate X" min={Math.round(maxX * -1)} max={maxX} {...props} />
+        <RangeSlider name="translate Y" min={Math.round(maxY * -1)} max={maxY} {...props} />
+        <RangeSlider name="translate Z" min={-200} max={200} {...props} />
+      </Group>
 
-        <Group>
-          <Heading>Rotate</Heading>
-          <RangeSlider name="rotate X" min={-45} max={360} {...props} />
-          <RangeSlider name="rotate Y" min={-45} max={360} {...props} />
-          <RangeSlider name="rotate Z" min={-45} max={360} {...props} />
-        </Group>
-        <Group>
-          <Heading>Dimensions</Heading>
-          <RangeSlider name="width" min={150} max={300} {...props} />
-          <RangeSlider name="height" min={150} max={300} {...props} />
-          {props.state.shape === 'Cube' && (
-            <RangeSlider name="depth" min={25} max={100} {...props} />
-          )}
-        </Group>
-        <Group>
-          <Heading>Transition</Heading>
-          <RangeSlider name="speed" reverse min={0} max={10} {...props} />
-        </Group>
+      <Group>
+        <Heading>Rotate</Heading>
+        <RangeSlider name="rotate X" min={-45} max={360} {...props} />
+        <RangeSlider name="rotate Y" min={-45} max={360} {...props} />
+        <RangeSlider name="rotate Z" min={-45} max={360} {...props} />
+      </Group>
+      <Group>
+        <Heading>Dimensions</Heading>
+        <RangeSlider name="width" min={150} max={300} {...props} />
+        <RangeSlider name="height" min={150} max={300} {...props} />
+        {props.state.shape === 'Cube' && <RangeSlider name="depth" min={25} max={100} {...props} />}
+      </Group>
+      <Group>
+        <Heading>Transition</Heading>
+        <RangeSlider name="speed" reverse min={0} max={10} {...props} />
+      </Group>
 
-        <Group>
-          <Heading>Background</Heading>
+      <Group>
+        <Heading>Background</Heading>
 
-          <>
-            {/* <Select value={props.state.backgroundType} onChange={changeBackgroundType}>
+        <>
+          {/* <Select value={props.state.backgroundType} onChange={changeBackgroundType}>
               {displayOptions()}
             </Select>
 
@@ -169,29 +167,29 @@ export default function ShapeControls({ ...props }) {
               </ColorWrapper>
             ) : null} */}
 
-            {/* {props.state.shape === 'Cube' ? (
+          {/* {props.state.shape === 'Cube' ? (
               <CustomInput type="color" name="hair color" {...props} />
             ) : null} */}
 
-            <RangeSlider
-              onChange={handleOpacityChange}
-              name="opacity"
-              min={0}
-              max={1}
-              step={0.01}
-              {...props}
-            />
-            {/* <Checkbox isChecked={isChecked} onChange={handleOutlineToggle} name="outline">
+          <RangeSlider
+            onChange={handleOpacityChange}
+            name="opacity"
+            min={0}
+            max={1}
+            step={0.01}
+            {...props}
+          />
+          {/* <Checkbox isChecked={isChecked} onChange={handleOutlineToggle} name="outline">
               outline:
             </Checkbox> */}
-          </>
-        </Group>
-        {/* )} */}
-      </ControlsContainer>
+        </>
+      </Group>
+      {/* )} */}
+      {/* </ControlsContainer> */}
 
-      <ControlsContainer>
-        <Button onClick={() => props.dispatch({ type: 'RESET' })}>reset</Button>
-      </ControlsContainer>
+      {/* <ControlsContainer> */}
+      <Button onClick={() => props.dispatch({ type: 'RESET' })}>reset</Button>
+      {/* </ControlsContainer> */}
     </ControlsLayout>
   );
 }
