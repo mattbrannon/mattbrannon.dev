@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import Color from 'color-tools';
 
-import { spaceToCamelCase as toCamelCase, toSnakeUpperCase } from '@utils/helpers.js';
-import { useState, useEffect } from 'react';
+import { spaceToCamelCase as toCamelCase, toSnakeUpperCase, toFloat } from '@utils/helpers.js';
+import { useState, useEffect, forwardRef } from 'react';
 import { useDebounce } from '@hooks/useDebounce';
 
 const createLabel = (name) => {
@@ -21,16 +21,18 @@ const parseType = (type, value) => {
   return type === 'color' ? makeHex(value) : value;
 };
 
-export default function RangeSlider({ ...props }) {
+const RangeSlider = forwardRef(({ ...props }, ref) => {
   const { name, state, dispatch } = props;
   const label = createLabel(name);
   const key = toCamelCase(name);
 
-  const defaultValue = state[key]
-    ? state[key]
-    : 'settings' in state && state.settings[key]
-    ? state.settings[key]
-    : 0;
+  // const defaultValue = state[key]
+  //   ? state[key]
+  //   : 'settings' in state && state.settings[key]
+  //   ? state.settings[key]
+  //   : 0;
+
+  const defaultValue = state && key ? state?.[key] ?? state?.settings?.[key] : 0;
 
   const handleChange = (e) => {
     const number = parseFloat(e.target.value);
@@ -41,11 +43,21 @@ export default function RangeSlider({ ...props }) {
   return (
     <Slider>
       <Label htmlFor={name}>{label}:</Label>
-      <ValueDisplay>{defaultValue}</ValueDisplay>
-      <Input onChange={handleChange} type="range" id={name} value={defaultValue} {...props} />
+      <ValueDisplay>{toFloat(defaultValue)}</ValueDisplay>
+      <Input
+        ref={ref}
+        onChange={handleChange}
+        type="range"
+        id={name}
+        value={defaultValue}
+        {...props}
+      />
     </Slider>
   );
-}
+});
+
+RangeSlider.displayName = 'RangeSlider';
+export default RangeSlider;
 
 export const CustomInput = ({ ...props }) => {
   const { name, state, dispatch, type } = props;
