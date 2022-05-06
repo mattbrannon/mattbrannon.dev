@@ -276,7 +276,6 @@ export default function VariableFontPlayground() {
   const [ shadow, setShadow ] = useState('');
   const [ gradient, setGradient ] = useState('');
   const [ text, setText ] = useState('');
-  // const [ defaults, setDefaults ] = useState({ shadow: '', gradient: '' });
 
   const headingRef = useRef();
   const overflowRef = useRef();
@@ -299,16 +298,6 @@ export default function VariableFontPlayground() {
     const gradient = makeGradient(state);
     setGradient(gradient);
   }, [ state, gradient ]);
-
-  useEffect(() => {}, [ state.font ]);
-
-  // useEffect(() => {
-  //   const root = document.querySelector('html');
-  //   const styles = getComputedStyle(root);
-  //   const gradient = styles.getPropertyValue('--app-name-gradient');
-  //   const shadow = styles.getPropertyValue('--app-name-shadow');
-  //   setDefaults({ gradient, shadow });
-  // }, []);
 
   return (
     <>
@@ -492,7 +481,6 @@ const StaticCode = ({ children }) => {
 };
 
 const CodeBlock = (props) => {
-  // console.log(props.state);
   const {
     fontSize,
     strokeWidth,
@@ -527,80 +515,6 @@ const CodeBlock = (props) => {
   );
 };
 
-// const HelpPage = (props) => {
-//   return (
-//
-//       <HelpContainer
-//         initial={{ width: 0 }}
-//         animate={{ width: '100%' }}
-//         exit={{ width: 0, transition: { duration: 0.3 } }}
-//         transition={{ duration: 0.8, ease: 'anticipate' }}
-//       >
-//         <HelpWrapper>
-//           <ul style={{ marginLeft: '0px' }}>
-//             <h3 style={{ marginTop: 0, padding: '32px 0 0 0' }}>Text Color</h3>
-//             <li
-//               style={{
-//                 margin: '0 0 16px 32px',
-//                 display: 'grid',
-//                 gridTemplateColumns: '120px auto',
-//               }}
-//             >
-//               <strong>Angle</strong>
-//               <span>Control the direction of the gradient. Ranges from 0 - 360 degrees</span>
-//             </li>
-//             <li
-//               style={{
-//                 margin: '0 0 16px 32px',
-//                 display: 'grid',
-//                 gridTemplateColumns: '120px auto',
-//               }}
-//             >
-//               <strong>Midpoint</strong>
-//               <span>Controls where the the colors meet. Ranges from 0 - 100%</span>
-//             </li>
-//             <li
-//               style={{
-//                 margin: '0 0 16px 32px',
-//                 display: 'grid',
-//                 gridTemplateColumns: '120px auto',
-//               }}
-//             >
-//               <strong>Blend</strong>
-//               <span>
-//                 Controls how much or how little the colors blend together. Ranges from 0 - 100%
-//               </span>
-//             </li>
-//           </ul>
-
-//           <p style={{ margin: 0, padding: '32px' }}>
-//             For the most part, all the controls should feel pretty smooth. If you start to feel the
-//             controls get a bit sluggish when using the <strong>Decovar</strong> font, that's because
-//             it's a crazy complex font with a lot of options. Each time it renders, it has to do a
-//             lot more work than the other fonts. If you notice a drop in performance, try working on
-//             one thing at a time.
-//           </p>
-//           <ul style={{ marginLeft: '32px' }}>
-//             <li style={{ margin: '0 0 16px 32px' }}>
-//               If you're tweaking the font settings, <strong>remove the text shadow</strong> until
-//               you've got the font set how you want.
-//             </li>
-//             <li style={{ margin: '16px 32px' }}>
-//               If you're experimenting with shadows, try{' '}
-//               <strong>reducing the complexity of the font</strong> while you work on the shadows
-//             </li>
-//             <li style={{ margin: '16px 32px' }}>
-//               If you're using a Safari browser and the tips above didn't help, try{' '}
-//               <strong>using a Chrome browser</strong> instead. I'm not sure why but performance on
-//               Safari seems to be really poor. At least on older versions. Your mileage may vary.
-//             </li>
-//           </ul>
-//         </HelpWrapper>
-//       </HelpContainer>
-//
-//   );
-// };
-
 const Container = styled.div``;
 
 const Main = styled.div`
@@ -626,13 +540,6 @@ const CodeWrapper = styled(motion.div)`
 `;
 
 const HelpContainer = styled(CodeWrapper)``;
-
-// const HelpWrapper = styled.div`
-//   background: var(--help-background);
-//   color: var(--color-text);
-
-//   height: 100%;
-// `;
 
 const TextContent = styled(motion.h1)`
   white-space: nowrap;
