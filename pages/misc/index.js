@@ -7,9 +7,12 @@ import Text from '@components/Text';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import SideNote from '@components/SideNote';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { breakpoints } from '@constants/breakpoints';
 
 export default function Index() {
   const [ isSafari, setIsSafari ] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
 
   useEffect(() => {
     const isSafariBrowser = () => {
@@ -24,31 +27,54 @@ export default function Index() {
     <>
       <Head title="Oddities and revelations" description="secret shh..." />
 
-      <PageTitle>Revelations & deprecations</PageTitle>
-
-      {/* <Text>
-        On this page you'll find various tools that I created and used when
-        building my site. Some of these tools are visual aids I use to help plot
-        the course of an animation. And some you can use to generate cool things
-        in your own projects.
-      </Text> */}
+      <PageTitle>Oddities and revelations</PageTitle>
 
       <Text>
-        On this page you'll find various tools that I created and used when building my site.
-        Sometimes I build a tool to help me visualize something. Other times I build a tool to
-        generate some markup and wind up using quite frequently. Basically, if I were a mad
-        scientist, this would be my secret lab. You're welcome to look around and turn some knobs.
-        Just please{' '}
+        I don't know how to describe this page. It's just things I'm working on. Some are useful,
+        others are not. While you're here, check out the Fancy Text Generator and let me know what
+        you think.
+      </Text>
+      <Text>
+        The most recent addition is the Fractals page. It's not really "finished" yet but it doesn't
+        need to be. It's just something fun to play around with.
+      </Text>
+      <Text>
+        Also, just so you're aware, my little cube friend likes to hang around these parts. If you
+        see him, please remember,{' '}
+        <strong>
+          <>don't feed the cube after midnight.</>
+        </strong>
+      </Text>
+
+      {/* <Text>
+        On this page you'll find various tools that I created and used when building my site. Some
+        of these tools are visual aids I use to help plot the course of an animation. And some you
+        can use to generate cool things in your own projects.
+      </Text>
+
+      <Text>On this page you'll find all kinds of weirdness.</Text>
+
+      <Text>
+        On this page you'll find various tools I created and used when building my site. Sometimes I
+        build a tool to help me visualize something. Other times I build a tool to generate some
+        markup and wind up using quite frequently. Basically, if I were a mad scientist, this would
+        be my secret lab. You're welcome to look around and turn some knobs. Just please{' '}
         <strong>
           <em>don't feed the cube after midnight</em>
         </strong>
-      </Text>
+      </Text> */}
       {isSafari ? (
         <SideNote>
           It seems like you're using Safari. The tools on this page don't do so great with Safari.
           They still work, but you might experience some performance issues and other odd little
           bugs. If the controls feel sluggish or things just seems a little off, I'd recommend using
           Chrome instead.
+        </SideNote>
+      ) : null}
+
+      {isMobile ? (
+        <SideNote>
+          The tools listed on this page are not setup for use with mobile devices.
         </SideNote>
       ) : null}
 
@@ -69,6 +95,17 @@ export default function Index() {
             </Link>
           </CardHeading>
           <Text>Without geometry life is pointless...</Text>
+        </Card>
+
+        <Card>
+          <CardHeading>
+            <Link passHref href="/misc/fractals">
+              Fractals
+            </Link>
+          </CardHeading>
+          <Text>
+            Still a work in progress but feel free to play around with what I've got so far.
+          </Text>
         </Card>
       </List>
       <Spacer axis="vertical" size={32} />
