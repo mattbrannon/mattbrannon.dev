@@ -13,14 +13,12 @@ export function FontControls({ ...props }) {
   const ref = useRef();
 
   const handleHelpButtonPressed = (e) => {
-    props.setShowHelp(true);
     if (state.toggleCode) {
       props.dispatch({ type: 'TOGGLE_CODE', value: false });
     }
     props.dispatch({ type: 'HELP', value: !state.help });
   };
   const handleGetCssButtonPressed = (e) => {
-    props.setShowCode(true);
     if (state.help) {
       props.dispatch({ type: 'HELP', value: false });
     }
