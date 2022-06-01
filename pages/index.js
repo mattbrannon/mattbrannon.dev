@@ -1,29 +1,19 @@
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import Hero from '@components/Hero';
 import FancyTitle from '@components/FancyTitle';
 import Head from '@components/Head';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/breakpoints';
 
 export default function HomePage() {
-  // const hasMounted = useHasMounted();
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const marginTop = isMobile ? 8 : 48;
+  const context = useContext(ThemeContext);
 
-  const [ hasCookie, setHasCookie ] = useState(false);
-
-  const [ showTitle, setShowTitle ] = useState(false);
-
-  useEffect(() => {
-    const hasCookie = !!document.cookie.length;
-    setHasCookie(hasCookie);
-    if (hasCookie) {
-      setShowTitle(true);
-    }
-  }, []);
+  const [ shouldRemove, setShouldRemove ] = useState(true);
 
   return (
     <Container>
@@ -31,13 +21,24 @@ export default function HomePage() {
       {!isMobile ? (
         <TopRow style={{ '--marginTop': `${marginTop}px` }}>
           <TitleWrapper>
-            <FancyTitle showTitle={showTitle} hasCookie={hasCookie} from="left" delay={4}>
+            <FancyTitle
+              showTitle={shouldRemove || context.hasRun}
+              hasCookie={false}
+              from="left"
+              delay={4}
+            >
               Welcome to my site!
             </FancyTitle>
           </TitleWrapper>
         </TopRow>
       ) : null}
-      <Hero setShowTitle={setShowTitle} hasCookie={hasCookie} setHasCookie={setHasCookie} />
+      <Hero
+        shouldRemove={shouldRemove}
+        setShouldRemove={setShouldRemove}
+        // setShowTitle={setShowTitle}
+        // hasCookie={hasCookie}
+        // setHasCookie={setHasCookie}
+      />
     </Container>
   );
 }

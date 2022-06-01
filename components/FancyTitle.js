@@ -26,6 +26,7 @@ function makeVariant() {
         };
       },
       show: ({ showTitle }) => {
+        console.log({ showTitle });
         hasCookie = checkForCookie();
         return {
           opacity: 1,
@@ -33,7 +34,7 @@ function makeVariant() {
           letterSpacing: '0.0195em',
           transition: {
             duration: hasCookie ? 1 : 1.5,
-            delay: hasCookie || showTitle ? 0 : typeof delay === 'number' ? delay : 3.7,
+            delay: showTitle ? 0 : typeof delay === 'number' ? delay : 3.7,
           },
         };
       },
@@ -53,7 +54,7 @@ export default function FancyTitle({ showTitle, children, ...props }) {
   const getVariant = makeVariant();
   const variant = getVariant(delay);
 
-  console.log(props);
+  // console.log(props);
 
   return (
     <ClientOnly>

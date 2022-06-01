@@ -2,38 +2,8 @@ import { breakpoints } from '@constants/index';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 // import { loadFeatures } from '@utils/helpers';
-import { forwardRef } from 'react';
-
-const NormalButton = forwardRef((props, ref) => {
-  return (
-    <Wrapper ref={ref} {...props}>
-      <Button>{props.children}</Button>
-    </Wrapper>
-  );
-});
-
-NormalButton.displayName = 'NormalButton';
-export default NormalButton;
-
-export function InvertedButton({ children, ...props }) {
-  return (
-    <InvertedWrapper {...props}>
-      <Button {...props}>{children}</Button>
-    </InvertedWrapper>
-  );
-}
-
-export function PinkButton({ children, ...props }) {
-  return (
-    <FancyWrapper {...props}>
-      <Button {...props}>{children}</Button>
-    </FancyWrapper>
-  );
-}
 
 const Wrapper = styled(motion.div)`
-  ${'' /* min-width: min(200px, 100%); */}
-  ${'' /* max-width: 220px; */}
   width: 100%;
   margin: 0 auto;
   border: none;
@@ -41,67 +11,56 @@ const Wrapper = styled(motion.div)`
   padding: 2px;
   margin: 0;
   border-radius: 6px;
+  box-shadow: none;
 
-  --innerBg: var(--tealBg);
-  --innerHover: var(--tealHover);
-  --innerFocus: var(--tealFocus);
-  --innerShadow: var(--tealShadow);
-  --outerShadow: var(--tealBg);
-
-  --background-outer: transparent;
-  --box-shadow-outer: none;
-
-  background: var(--background-outer);
-  box-shadow: var(--box-shadow-outer);
+  text-shadow: var(--button-shadow);
+  color: var(--button-color);
+  font-weight: var(--button-weight);
 
   &:active {
-    --box-shadow-outer: 0 0 0 1px var(--color-outline-button);
+    box-shadow: 0 0 0 1px var(--color-outline-button);
     background: var(--innerBg);
   }
 `;
 
-const Button = styled.button`
-  font-size: var(--size21);
+export const Button = styled(motion.button)`
+  --padding-top-bottom: clamp(0.125rem, 0.175rem + 0.5vw, 0.5rem);
+  --padding-left-right: clamp(0.25rem, 0.35rem + 1vw, 1rem);
+  --font-size: clamp(0.75rem, 1rem + 1vw, 1.25rem);
+  padding: var(--padding-top-bottom) var(--padding-left-right);
   display: block;
   width: 100%;
-
   border: none;
-  box-shadow: 0 0 0 1px white;
-  padding: clamp(0.125rem, 0.175rem + 0.5vw, 0.5rem) clamp(0.25rem, 0.35rem + 1vw, 1rem);
   border-radius: 3px;
-  color: var(--color-button, white);
+  background-color: var(--innerBg);
+  color: white;
+  text-shadow: -0.025em -0.025em 0.025em black;
+  font-weight: 600;
+  font-size: var(--font-size);
 
-  --defaultShadow: -0.025em -0.025em 0.025em black;
-
-  font-weight: var(--weight-button, 600);
-  font-size: clamp(0.75rem, 1rem + 1vw, 1.25rem);
-
-  background: var(--innerBg);
-  text-shadow: var(--shadow-button, var(--defaultShadow));
-
+  cursor: pointer;
   &:hover {
-    background: var(--innerShadow);
-    cursor: pointer;
-  }
-
-  &:active {
     background: var(--innerHover);
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--color-outline-button);
+  &:active {
+    background: var(--innerFocus);
   }
 
-  transition: text-shadow 1s linear var(--transition-delay), background 0s linear 0s,
+  transition: text-shadow 1s linear var(--transition-delay), background-color 0s linear 0s,
     color 1s linear var(--transition-delay);
 
   @media (max-width: ${breakpoints.mobile}px) {
     user-select: none;
   }
+`;
 
-  @media (max-width: ${breakpoints.mobile}px) {
-    user-select: none;
-  }
+const TealWrapper = styled(Wrapper)`
+  --innerBg: var(--tealBg);
+  --innerHover: var(--tealHover);
+  --innerFocus: var(--tealFocus);
+  --innerShadow: var(--tealShadow);
+  --outerShadow: var(--tealBg);
 `;
 
 const InvertedWrapper = styled(Wrapper)`
@@ -134,3 +93,17 @@ const FancyWrapper = styled(Wrapper)`
   --innerShadow: var(--pink-medium-dark);
   --outerShadow: var(--pink-dark);
 `;
+
+function withButton(Component, Wrapper) {
+  return function Button(props) {
+    return (
+      <Wrapper {...props}>
+        <Component>{props.children}</Component>
+      </Wrapper>
+    );
+  };
+}
+
+export const FancyButton = withButton(Button, FancyWrapper);
+export const InvertedButton = withButton(Button, InvertedWrapper);
+export const NormalButton = withButton(Button, TealWrapper);

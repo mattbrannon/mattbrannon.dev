@@ -412,8 +412,8 @@ export const getDistanceBetweenPoints = (p1, p2) => {
 
 export const makeClipPath = (n) => {
   return Array.from({ length: n }, (_, i) => {
-    const low = random(5);
-    const high = random(15);
+    const low = randomNumber(5);
+    const high = randomNumber(15);
 
     const top = i % 2 === 0 ? low(25) : high(45);
     const bottom = 100 - top;

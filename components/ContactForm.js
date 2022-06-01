@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Button from './Button';
+import { NormalButton as Button } from './Button';
 
 export default function ContactForm() {
   const [ name, setName ] = useState('');

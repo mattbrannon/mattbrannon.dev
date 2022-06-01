@@ -1,15 +1,11 @@
-// import { Creature404 } from '@components/Creature';
 import DocumentHead from '@components/Head';
 import { decovarValues } from '@constants/index.js';
-// import { useFontSize } from '@hooks/useFontSize';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 // import { loadFeatures } from '@utils/helpers';
 import { ForwardedCube as StandingCube } from '@components/Shapes/Cube';
-
-// const Cube = StandingCube
 
 const getTranslateXPoints = (start, end, divider) => {
   let total = Math.abs(start) + Math.abs(end);
@@ -54,7 +50,6 @@ const setRandomValues = () => {
 export default function Error404() {
   const ref = useRef();
   const textRef = useRef();
-  // const fontSize = useFontSize(32, 7 * 16, 240, 1440);
   const fontSize = `clamp(var(--size21), 7vw, var(--size36))`;
 
   useEffect(() => {
@@ -104,7 +99,7 @@ export default function Error404() {
 
       <Container>
         <CubeWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <StandingCube width={150} height={150} eyes="Shifty" mouth="Smirk" blink ref={ref} />
+          <StandingCube width={125} height={125} eyes="Shifty" mouth="Smirk" blink ref={ref} />
         </CubeWrapper>
         <Wrapper>
           <Link passHref href="/">
@@ -128,19 +123,30 @@ const fadeIn = keyframes`
   }
 `;
 
+// const Container = styled.div`
+//   display: grid;
+//   place-items: center;
+//   grid-template-rows: 200px 100px;
+//   align-items: center;
+//   align-content: center;
+//   justify-items: center;
+//   height: 100%;
+//   margin-top: -64px;
+// `;
+
 const Container = styled.div`
-  display: grid;
-  place-items: center;
-  grid-template-rows: 200px 100px;
-  align-items: center;
-  align-content: center;
-  justify-items: center;
   height: 100%;
-  margin-top: -64px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
 `;
 
-const CubeWrapper = styled(motion.div)`
+const CubeWrapper = styled(motion.span)`
   transform-style: preserve-3d;
+  margin-top: 64px;
 `;
 
 const Wrapper = styled(motion.div)`
@@ -149,21 +155,14 @@ const Wrapper = styled(motion.div)`
   margin-bottom: -100px; */
 `;
 
-// const shadow = (color, size = 0.0125) =>
-//   `-${size}em -${size}em 0 ${color},
-//   ${size}em -${size}em 0 ${color},
-//   -${size}em ${size}em 0 ${color},
-//   ${size}em ${size}em 0 ${color};`;
-
-// const stroke = (color, size = 0.0125) => `${size}em ${color};`;
-
 const P = styled(motion.p)`
   display: block;
   text-align: center;
   font-family: decovar;
   font-size: ${(p) => p.fontSize};
-  font-size: clamp(64px, 10vw, 128px);
+  font-size: clamp(60px, 10vw, 128px);
   color: var(--color-404);
+  margin: 0;
 
   text-shadow: -0.0125em -0.0125em 0 var(--shadow-404), 0.0125em -0.0125em 0 var(--shadow-404),
     -0.0125em 0.0125em 0 var(--shadow-404), 0.0125em 0.0125em 0 var(--shadow-404);

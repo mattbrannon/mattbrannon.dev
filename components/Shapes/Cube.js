@@ -1,7 +1,15 @@
 import Side from './Sides';
 import { Shape } from './Shape';
 import withEyes, * as Eyes from '@components/Creature/Eyes';
-import withMouth, * as Mouth from '@components/Creature/Mouth';
+import withMouth, {
+  Mouth,
+  Smirking,
+  Talking,
+  Smiling,
+  Frowning,
+  Open,
+  Closed,
+} from '@components/Creature/Mouth';
 import styled from 'styled-components';
 // import {} from 'framer-motion';
 // import { loadFeatures, compose, pipe } from '@utils/helpers';
@@ -9,15 +17,17 @@ import { forwardRef } from 'react';
 // import Walking from './Walking';
 // import { useRef } from 'react';
 // import { makeFrames } from '@components/Creature/utils';
+import { makeClipPath } from '@utils/helpers';
 
 function withFace(Eyes) {
-  return function makeFace(Mouth) {
+  return function makeFace(Mouth, mouthFeatures) {
     return function wrapper({ ...props }) {
-      console.log({ props });
+      const extended = { ...props, ...mouthFeatures };
+      // console.log({ withFace: props });
       return (
         <Wrapper {...props}>
           <Eyes {...props} />
-          <Mouth {...props} />
+          <Mouth {...extended} />
         </Wrapper>
       );
     };
@@ -25,19 +35,31 @@ function withFace(Eyes) {
 }
 
 const EyeComponent = withEyes(Eyes.AwkwardEyes);
-const MouthComponent = withMouth(Mouth.Smirk);
-const Face = withFace(EyeComponent)(MouthComponent);
+// const MouthComponent = withMouth(Mouth);
+const Face = withFace(EyeComponent)(Smirking);
 
-export const ForwardedCube = forwardRef(function Cube(props, ref) {
+function Cube(props, ref) {
+  // console.log('cube', props);
   return (
     <Shape ref={ref} {...props}>
       {Array.from({ length: 7 }, (_, i) => {
         const Component = i === 6 ? Face : Side;
-        return <Component hue={220} i={i} {...props} key={i}></Component>;
+        return (
+          <Component
+            style={{ transformStyle: 'preserve-3d' }}
+            hue={220}
+            i={i}
+            {...props}
+            custom={{ amount: 50 }}
+            key={i}
+          ></Component>
+        );
       })}
     </Shape>
   );
-});
+}
+
+export const ForwardedCube = forwardRef(Cube);
 
 // eslint-disable-next-line react/display-name
 // export const ForwardedCube = forwardRef((props, ref) => {

@@ -3,7 +3,7 @@ import { Hair150, Hair300 } from './Hair';
 
 export default function Side({ ...props }) {
   const index = props.i;
-  console.log({ props });
+  // console.log({ svg: props });
 
   const HairStyle = props.hair ? Hair300 : Hair150;
 
@@ -19,8 +19,9 @@ const Rect = styled.rect`
   height: inherit;
   width: inherit;
   position: absolute;
-  fill: var(--background, tan);
-  fill: ${(p) => (p.i === 5 ? '#654321' : 'tan')};
+  fill: ${(p) => (p.i === 5 ? '#654321' : 'hsl(34, 44%, 69%)')};
+  opacity: var(--opacity);
+  transition: opacity var(--speed, 0.2s) linear;
 `;
 
 export const SVG = styled.svg`
@@ -35,8 +36,11 @@ export const SVG = styled.svg`
   color: black;
   font-size: 32px;
   font-weight: 800;
+  opacity: var(--opacity);
+  box-shadow: 0 0 0 0.025em hsl(30, 51%, 26%, 0.2);
 
-  transition: width var(--speed) linear, height var(--speed) linear, transform var(--speed) linear;
+  transition: width var(--speed, 0.2s) linear, height var(--speed, 0.2s) linear,
+    transform var(--speed, 0.2s) linear, opacity var(--speed, 0.2s) linear;
 
   &:nth-of-type(1),
   &:nth-of-type(2) {

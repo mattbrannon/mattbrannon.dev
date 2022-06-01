@@ -83,7 +83,12 @@
   "emmet.triggerExpansionOnTab": true,
   "[dotenv]": {
     "editor.defaultFormatter": null
-  }
+  },
+  "editor.guides.bracketPairsHorizontal": false,
+  "editor.guides.highlightActiveBracketPair": true,
+  "editor.guides.bracketPairs": "active",
+  "eslint.codeActionsOnSave.mode": "problems",
+  "eslint.run": "onSave"
 
   // "path-intellisense.mappings": {
   //   "@components": "${workspaceRoot}/components",

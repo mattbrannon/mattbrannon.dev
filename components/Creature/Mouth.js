@@ -17,8 +17,10 @@ export const Mouth = styled(motion.div)`
   border-radius: var(--mouth-radius);
   padding: var(--mouth-padding);
   margin-bottom: var(--eye-margin);
+  ${'' /* opacity: var(--opacity);
 
-  transition: all var(--speed) linear;
+
+  transition: all var(--speed, 0.2s) linear; */}
 `;
 
 const ForwardedMouth = forwardRef((props, ref) => {
@@ -37,132 +39,156 @@ export const ClosedMouth = styled(ForwardedMouth)`
   border-radius: 80px;
 `;
 
+// style={{
+//   '--opacity': props.isVisible ? 1 : 0,
+// }}
+
 const withMouth = (Component) => {
   return function Mouth({ ...props }) {
     return <Component>{props.children}</Component>;
   };
 };
 
-const Smiling = () => {
-  const smiling = {
-    initial: {
-      '--mouth-padding': '1%',
-      borderRadius: '2px 2px 2px 2px',
-      width: '100%',
-    },
-    animate: {
-      '--mouth-padding': '6%',
-      borderRadius: '4px 4px 24px 24px',
-      width: '65%',
-    },
-  };
-  return (
-    <ForwardedMouth
-      variants={smiling}
-      initial="initial"
-      animate="animate"
-      transition={{
-        delay: 1,
-        duration: 0.6,
-        repeat: 1,
-        repeatType: 'mirror',
-        repeatDelay: 3,
-      }}
-    />
-  );
+// const smirking = {
+//   initial: {
+//     // '--mouth-padding': '1%',
+//     padding: '24px',
+//     borderRadius: '2px 2px 2px 2px',
+//     width: '100%',
+//     clipPath: 'polygon(0% 30%, 100% 30%, 100% 70%, 0% 70%)',
+//   },
+//   animate: {
+//     '--mouth-padding': '6%',
+//     borderRadius: '4px 4px 24px 24px',
+//     width: '65%',
+//     clipPath: 'polygon(4% 20%, 100% 20%, 80% 90%, 6% 80%)',
+//     transition: {
+//       delay: 1,
+//       duration: 0.6,
+//       repeat: 1,
+//       repeatType: 'mirror',
+//       repeatDelay: 3,
+//     },
+//   },
+// };
+
+const talking = {
+  initial: {
+    clipPath: 'polygon(0% 48%, 100% 48%, 100% 52%, 0% 52%)',
+    borderRadius: '1000px 1000px 1000px 1000px',
+  },
+  animate: ({ amount }) => ({
+    borderRadius: '1000px 1000px 1300px 1300px',
+    clipPath: makeClipPath(amount),
+    transition: { delay: 1, duration: amount / 8 },
+  }),
 };
 
-const Frowning = () => {
-  const frowning = {
-    initial: {
-      '--mouth-padding': '1%',
-      borderRadius: '2px 2px 2px 2px',
-      width: '100%',
-    },
-    animate: {
-      '--mouth-padding': '6%',
-      borderRadius: '24px 24px 4px 4px',
-      width: '65%',
-    },
-  };
-  return (
-    <ForwardedMouth
-      variants={frowning}
-      initial="initial"
-      animate="animate"
-      transition={{
-        delay: 1,
-        duration: 0.6,
-        repeat: 1,
-        repeatType: 'mirror',
-        repeatDelay: 3,
-      }}
-    />
-  );
+const smiling = {
+  initial: {
+    '--mouth-padding': '1%',
+    borderRadius: '2px 2px 2px 2px',
+    width: '100%',
+  },
+  animate: {
+    '--mouth-padding': '6%',
+    borderRadius: '4px 4px 24px 24px',
+    width: '65%',
+  },
+  transition: {
+    delay: 1,
+    duration: 0.6,
+    repeat: 1,
+    repeatType: 'mirror',
+    repeatDelay: 3,
+  },
 };
 
-const Smirking = () => {
-  const smirking = {
-    initial: {
-      '--mouth-padding': '1%',
-      borderRadius: '2px 2px 2px 2px',
-      width: '100%',
-      clipPath: 'polygon(0% 30%, 100% 30%, 100% 70%, 0% 70%)',
-    },
-    animate: {
-      '--mouth-padding': '6%',
-      borderRadius: '4px 4px 24px 24px',
-      width: '65%',
-      clipPath: 'polygon(4% 20%, 100% 20%, 80% 90%, 6% 80%)',
-    },
-  };
-  return (
-    <ForwardedMouth
-      variants={smirking}
-      initial="initial"
-      animate="animate"
-      transition={{
-        delay: 5,
-        duration: 0.6,
-        repeat: 1,
-        repeatType: 'mirror',
-        repeatDelay: 3,
-      }}
-    />
-  );
-};
-const Talking = ({ amount = 50 }) => {
-  const mouth = {
-    closed: {
-      clipPath: 'polygon(0% 48%, 100% 48%, 100% 52%, 0% 52%)',
-      borderRadius: '1000px 1000px 1000px 1000px',
-    },
-    talk: {
-      borderRadius: '1000px 1000px 1300px 1300px',
-      clipPath: makeClipPath(amount),
-      transition: { delay: 1, duration: amount / 8 },
-    },
-  };
-  return <ForwardedMouth variants={mouth} initial="closed" animate="talk" />;
+const frowning = {
+  initial: {
+    '--mouth-padding': '1%',
+    borderRadius: '2px 2px 2px 2px',
+    width: '100%',
+  },
+  animate: {
+    '--mouth-padding': '6%',
+    borderRadius: '24px 24px 4px 4px',
+    width: '65%',
+  },
+  transition: {
+    delay: 1,
+    duration: 0.6,
+    repeat: 1,
+    repeatType: 'mirror',
+    repeatDelay: 3,
+  },
 };
 
-// export const Frowning = styled(Mouth)`
-//   animation: ${frown} 1400ms ease 2000ms forwards;
+const smirking = {
+  initial: {
+    padding: '3% 0',
+    borderRadius: '24px 24px 24px 24px',
+    clipPath: 'polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%)',
+  },
+  animate: {
+    clipPath: [
+      'polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%)',
+      'polygon(0% 40%, 100% 40%, 100% 90%, 0% 90%)',
+      'polygon(4% 20%, 100% 20%, 80% 90%, 6% 80%)',
+    ],
+    padding: '6% 0',
+    borderRadius: '6px 6px 24px 24px',
+    transition: {
+      clipPath: {
+        repeat: Infinity,
+        repeatType: 'mirror',
+        repeatDelay: 10,
+        duration: 1,
+      },
+    },
+  },
+};
+
+const open = {
+  initial: { padding: '1%' },
+  animate: { padding: '5% 0', borderRadius: '80px' },
+};
+
+const closed = {
+  initial: { padding: '5% 0', borderRadius: '80px' },
+  animate: { padding: '1%' },
+};
+
+const withMouthVariant = (variants) => {
+  return function Component({ ...props }) {
+    return (
+      <Mouth {...props} variants={variants} initial="intial" animate="animate">
+        {props.children}
+      </Mouth>
+    );
+  };
+};
+
+// export const Goofy = styled(Mouth)`
+//   animation: ${goofySmile} 1200ms ease 4000ms forwards;
 // `;
 
-export const Goofy = styled(Mouth)`
-  animation: ${goofySmile} 1200ms ease 4000ms forwards;
-`;
-
-export const Closed = withMouth(ClosedMouth);
-export const Open = withMouth(OpenMouth);
+// export const Closed = withMouth(ClosedMouth);
+// export const Open = withMouth(OpenMouth);
 // export const Shocked = withMouth(Shocking);
-export const Talk = withMouth(Talking);
-export const Smile = withMouth(Smiling);
-export const Frown = withMouth(Frowning);
-export const Smirk = withMouth(Smirking);
+// export const Talk = withMouth(Talking);
+// export const Smile = withMouth(Smiling);
+// export const Frown = withMouth(Frowning);
+// export const Smirk = withMouth(Smirking);
 // export const Fidget = withMouth(Fidgeting);
 // export const Slow = withMouth(SlowMoving);
+
+export const Smirking = withMouthVariant(smirking);
+export const Talking = withMouthVariant(talking);
+export const Smiling = withMouthVariant(smiling);
+export const Frowning = withMouthVariant(frowning);
+export const Open = withMouthVariant(open);
+export const Closed = withMouthVariant(closed);
 
 export default withMouth;
 

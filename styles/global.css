@@ -219,11 +219,13 @@
 
   --shadow-opacity: 0.1;
 
-  --transparent-shadow: 2px 2px 4px hsl(var(--transparent-values)),
+  /* --transparent-shadow: 2px 2px 4px hsl(var(--transparent-values)),
     3px 3px 6px hsl(var(--transparent-values)), 4px 4px 8px hsl(var(--transparent-values)),
     5px 5px 10px hsl(var(--transparent-values)), 6px 6px 12px hsl(var(--transparent-values)),
     7px 7px 14px hsl(var(--transparent-values)), 8px 8px 16px hsl(var(--transparent-values)),
-    9px 9px 18px hsl(var(--transparent-values));
+    9px 9px 18px hsl(var(--transparent-values)); */
+
+  --transparent-shadow: 2px 2px 4px hsl(var(--transparent-values));
 
   --card-shadow: 2px 2px 4px hsl(var(--shadow-values), var(--shadow-opacity)),
     3px 3px 6px hsl(var(--shadow-values), var(--shadow-opacity)),

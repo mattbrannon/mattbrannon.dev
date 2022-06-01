@@ -1,5 +1,5 @@
 import AppTitle from '@components/AppTitle';
-import StandardButton from '@components/Button';
+import { NormalButton as StandardButton } from '@components/Button';
 import Head from '@components/Head';
 import { H3 } from '@components/Headings';
 import PageButtons from '@components/PageButtons';

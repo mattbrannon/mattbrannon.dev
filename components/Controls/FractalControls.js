@@ -30,13 +30,13 @@ const FractalControls = forwardRef(({ ...props }, ref) => {
   // const [ scaleValue, setScaleValue ] = useState(1);
   // const [ radianValue, setRadianValue ] = useState();
 
-  console.log(props);
+  // console.log(props);
 
   const handleRotate = (e) => {
     // const maxRadians = Math.PI * 2;
     // const maxScale = 1;
     const scale = (1 / (Math.PI * 2)) * e.target.value;
-    console.log({ scale, radians: e.target.value });
+    // console.log({ scale, radians: e.target.value });
     props.dispatch({ type: 'RADIANS', value: e.target.value });
     props.dispatch({ type: 'SCALE', value: scale });
   };

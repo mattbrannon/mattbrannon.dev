@@ -6,6 +6,7 @@ export const Shape = styled(motion.div)`
   --cube-width: ${(p) => p.width + 'px' || 'var(--cube-width)'};
   --cube-height: ${(p) => p.height + 'px' || 'var(--cube-height)'};
   --cube-depth: 50px;
+
   transform-style: preserve-3d;
 
   transform: translateX(var(--translateX)) translateY(var(--translateY)) rotateX(var(--rotateX))
@@ -14,5 +15,5 @@ export const Shape = styled(motion.div)`
   width: var(--cube-width);
   height: var(--cube-height);
 
-  transition: transform var(--speed) linear;
+  transition: transform var(--speed, 0.2s) linear;
 `;

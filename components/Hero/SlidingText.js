@@ -1,7 +1,8 @@
+import { ThemeContext } from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { motion, useAnimation } from 'framer-motion';
-import { useEffect, useState, Children } from 'react';
+import { useEffect, useState, Children, useContext } from 'react';
 
 const wordVariant = {
   hidden: ({ i }) => {
@@ -17,8 +18,9 @@ const wordVariant = {
       x: 0,
       transition: {
         x: {
-          delay: 4 + (i + 1) / 100,
-          duration: 1,
+          // delay: 4 + (i + 1) / 100,
+          delay: (i + 1) / 100,
+          duration: (i + 100) / 100,
           ease: 'easeInOut',
         },
       },
@@ -56,21 +58,37 @@ const AnimatedWords = ({ showWords, children }) => {
   const containerControls = useAnimation();
   const [ isRunning, setIsRunning ] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
+  const context = useContext(ThemeContext);
+
+  // console.log({ showWords, hasCookie: !!document.cookie.length, isRunning });
 
   useEffect(() => {
-    const hasCookie = !!document.cookie.length;
-    if (!showWords && !hasCookie && !isRunning) {
-      setIsRunning(true);
+    if (showWords && !context.hasRun) {
       wordControls.start('show');
     }
-    else if (showWords && hasCookie && !isRunning) {
+    else if (context.hasRun) {
       containerControls.start('show');
       wordControls.start('static');
     }
-  }, [ showWords, wordControls, containerControls, isRunning ]);
+  }, [ showWords, wordControls, containerControls, context.hasRun ]);
+
+  // useEffect(() => {
+  //   const hasCookie = !!document.cookie.length;
+  //   if (!showWords && !hasCookie && !isRunning) {
+  //     setIsRunning(true);
+  //     wordControls.start('show');
+  //   }
+  //   else if (showWords && hasCookie && !isRunning) {
+  //     containerControls.start('show');
+  //     wordControls.start('static');
+  //   }
+  //   else {
+  //     wordControls.start('static');
+  //   }
+  // }, [ showWords, wordControls, containerControls, isRunning ]);
 
   return (
-    <motion.div variants={container} animate={containerControls}>
+    <motion.div variants={container} animate={containerControls} style={{ marginTop: -8 }}>
       {Children.toArray(children.split(' ')).map((word, i) => (
         <motion.span
           variants={wordVariant}
@@ -79,10 +97,15 @@ const AnimatedWords = ({ showWords, children }) => {
           custom={{ i }}
           key={i}
           index={i + 1}
+          onAnimationComplete={() => {
+            if (i === children.length - 1) {
+              context.setHasRun(true);
+            }
+          }}
           style={{
             display: 'inline-block',
             fontWeight: 600,
-            lineHeight: isMobile ? 1.25 : 1.75,
+            lineHeight: isMobile ? 1.25 : 1.85,
           }}
         >
           {word}&nbsp;

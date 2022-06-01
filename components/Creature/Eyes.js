@@ -7,6 +7,8 @@ const TopRow = styled.div`
   display: flex;
   justify-content: center;
   gap: max(16px, 7%);
+  ${'' /* opacity: var(--opacity, 1);
+  transition: opacity var(--speed, 0.2s) linear; */}
 `;
 
 const ContainerWrapper = styled.div`
@@ -38,6 +40,10 @@ const Template = styled.div`
 export const Eye = styled(Template)`
   background: whitesmoke;
   position: relative;
+`;
+
+const RedEye = styled(Eye)`
+  background: hsl(0deg, 15%, 75%, 1);
 `;
 
 export const Eyeball = ({ ...props }) => {
@@ -116,9 +122,79 @@ export const Color = ({ ...props }) => {
   );
 };
 
+const xAwk = [
+  '0%',
+  '0%',
+  '45%',
+  '45%',
+  '0%',
+  '0%',
+  '0%',
+  '0%',
+  '-24%',
+  '-24%',
+  '0%',
+  '0%',
+  '0%',
+  '0%',
+  '-37%',
+  '-37%',
+  '0%',
+  '0%',
+  '0%',
+  '0%',
+  '0%',
+  '0%',
+  '0%',
+  '0%',
+];
+
+const xTimes = [
+  0,
+  0.03,
+  0.04,
+  0.09,
+  0.1,
+  0.16,
+  0.22,
+  0.29,
+  0.3,
+  0.36,
+  0.37,
+  0.45,
+  0.55,
+  0.6,
+  0.61,
+  0.68,
+  0.69,
+  0.74,
+  0.89,
+  0.96,
+  0.97,
+  0.98,
+  0.99,
+  1,
+];
+
+const awkward = {
+  initial: { x: 0, y: 0 },
+  animate: {
+    x: xAwk,
+    times: xTimes,
+    // y: [ '35%', '34%', '30%', '0%', '36%' ],
+    transition: {
+      duration: 30,
+      repeat: Infinity,
+      repeatType: 'alternate',
+      repeatDelay: 4,
+      ease: 'circInOut',
+    },
+  },
+};
+
 export const AwkwardEyes = styled(Color)`
   background: hsl(195deg, 35%, 65%);
-  animation: ${lookAround} 30000ms ease-in 6000ms infinite alternate;
+  animation: ${lookAround} 30000ms ease-in 4000ms infinite alternate;
 `;
 
 export const AwkwardEyes2 = styled(Color)`
@@ -127,6 +203,7 @@ export const AwkwardEyes2 = styled(Color)`
 
 const withEyes = (Component) => (props) => {
   const margin = useEye(props);
+  // console.log({ eyes: props });
   return (
     <TopRow>
       <Eyeball>
@@ -259,4 +336,37 @@ export default withEyes;
 // export const Blink = withEyes(BlinkEyes)(BlueEye)();
 // export const Closed = withEyes(Eye)(BlueEye);
 // export const Closed = withEyes(Eye)(BlueEye)(EyelidClosed);
-// export const Baked = withEyes(RedEye)(BlueEye)(HalfOpen);
+// export const Baked = withEyes(RedEye)(HalfOpen);
+
+//  translateX(0%);
+//  translateX(0%);
+//  translateX(0%);
+
+// [ '0%', '45%', '0%', '0%', '-24%', '0%', '0%', '-37%', '0%', '0%', '0%', '0%' ],
+//   [
+//     0,
+//     0.03,
+//     0.04,
+//     0.09,
+//     0.1,
+//     0.16,
+//     0.22,
+//     0.29,
+//     0.3,
+//     0.36,
+//     0.37,
+//     0.45,
+//     0.55,
+//     0.6,
+//     0.61,
+//     0.68,
+//     0.69,
+//     0.74,
+//     0.89,
+//     0.96,
+//     0.98,
+//     0.99,
+//     1,
+//   ]
+
+// [(0.17, 0.21, 0.46, 0.54, 0.75, 0.79, 0.8, 0.83, 0.84, 0.88)];

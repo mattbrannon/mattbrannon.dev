@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Select from '@components/Select';
-import Button, { PinkButton } from '@components/Button';
+import { NormalButton, FancyButton } from '@components/Button';
 import RangeSlider, { CustomInput } from './RangeSlider';
 import ControlsLayout, { ControlsContainer } from './Layout';
 import { useEffect, useRef } from 'react';
@@ -126,9 +126,9 @@ export function FontControls({ ...props }) {
               })}
             </Group>
             <ButtonGroup>
-              <Button onClick={handleHelpButtonPressed}>Help</Button>
-              <Button onClick={handleGetCssButtonPressed}>{toggleButtonText}</Button>
-              <PinkButton onClick={handleReset}>Reset</PinkButton>
+              <NormalButton onClick={handleHelpButtonPressed}>Help</NormalButton>
+              <NormalButton onClick={handleGetCssButtonPressed}>{toggleButtonText}</NormalButton>
+              <FancyButton onClick={handleReset}>Reset</FancyButton>
             </ButtonGroup>
           </ControlsContainer>
         </ControlsLayout>

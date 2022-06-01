@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useWindowSize } from '@hooks/useWindowSize';
 import Select from '@components/Select';
-import Button from '@components/Button';
+import { NormalButton } from '@components/Button';
 import RangeSlider from './RangeSlider';
 import ControlsLayout, { ControlsContainer } from './Layout';
 
@@ -188,7 +188,7 @@ export default function ShapeControls({ ...props }) {
       {/* </ControlsContainer> */}
 
       {/* <ControlsContainer> */}
-      <Button onClick={() => props.dispatch({ type: 'RESET' })}>reset</Button>
+      <NormalButton onClick={() => props.dispatch({ type: 'RESET' })}>reset</NormalButton>
       {/* </ControlsContainer> */}
     </ControlsLayout>
   );
