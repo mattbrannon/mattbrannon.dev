@@ -2,25 +2,33 @@ import styled from 'styled-components';
 import { Hair150, Hair300 } from './Hair';
 
 export default function Side({ ...props }) {
-  const index = props.i;
-  // console.log({ svg: props });
-
   const HairStyle = props.hair ? Hair300 : Hair150;
 
   return (
     <SVG>
       <Rect {...props}>{props.children}</Rect>
-      {index < 4 ? <HairStyle /> : null}
+      {props.i < 4 ? <HairStyle {...props} /> : null}
     </SVG>
   );
 }
 
-const Rect = styled.rect`
+const getFill = (props) => {
+  const { i, background, hairColor } = props;
+  return i === 5 ? hairColor || '#654321' : background ? background : 'hsl(34, 44%, 69%)';
+};
+
+const Rect = styled.rect.attrs((props) => {
+  const fill = getFill(props);
+  return {
+    style: {
+      fill: fill,
+      opacity: 'var(--opacity)',
+    },
+  };
+})`
   height: inherit;
   width: inherit;
   position: absolute;
-  fill: ${(p) => (p.i === 5 ? '#654321' : 'hsl(34, 44%, 69%)')};
-  opacity: var(--opacity);
   transition: opacity var(--speed, 0.2s) linear;
 `;
 

@@ -135,7 +135,7 @@ const CenterCircle = forwardRef(({ ...props }, ref) => {
         .then(() => controls.start('a'))
         .then(() => controls.start('b'));
     }
-  }, []);
+  }, [ controls ]);
 
   return (
     <AnimatePresence exitBeforeEnter>
@@ -145,12 +145,14 @@ const CenterCircle = forwardRef(({ ...props }, ref) => {
         animate={controls}
         exit="remove"
         onAnimationComplete={() => props.setCircleRun(true)}
-        style={{
-          // '--width': props.circleRun ? '0%' : '100%',
-          // '--height': props.circleRun ? '0%' : '100%',
-          // '--opacity': props.circleRun ? '0%' : '100%',
-          // '--padding': props.circleRun ? '32px' : 0,
-        }}
+        style={
+          {
+            // '--width': props.circleRun ? '0%' : '100%',
+            // '--height': props.circleRun ? '0%' : '100%',
+            // '--opacity': props.circleRun ? '0%' : '100%',
+            // '--padding': props.circleRun ? '32px' : 0,
+          }
+        }
         ref={ref}
         {...props}
         key={props.circleRun}

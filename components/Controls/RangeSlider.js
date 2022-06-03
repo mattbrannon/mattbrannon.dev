@@ -65,6 +65,8 @@ export const CustomInput = ({ ...props }) => {
   const label = createLabel(name);
   const value = parseType(type, state[key]);
 
+  // console.log(name, state, dispatch, type)
+
   const [ colorValue, setColorValue ] = useState(value);
 
   const color = useDebounce(colorValue, 0);

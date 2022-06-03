@@ -5,20 +5,11 @@ import { loadFeatures } from '@utils/helpers';
 import { useRef } from 'react';
 import ClientOnly from './ClientOnly';
 
-const checkForCookie = () => {
-  try {
-    return typeof document !== 'undefined' && !!document.cookie.length;
-  } catch {
-    return false;
-  }
-};
-
 function makeVariant() {
   let hasCookie;
   return function getVariant(delay) {
     return {
       hidden: () => {
-        hasCookie = checkForCookie();
         return {
           opacity: 0,
           clipPath: typeof delay === 'number' || hasCookie ? 'var(--center)' : 'var(--left)',
@@ -26,8 +17,6 @@ function makeVariant() {
         };
       },
       show: ({ showTitle }) => {
-        console.log({ showTitle });
-        hasCookie = checkForCookie();
         return {
           opacity: 1,
           clipPath: 'var(--visible)',
@@ -53,8 +42,6 @@ export default function FancyTitle({ showTitle, children, ...props }) {
 
   const getVariant = makeVariant();
   const variant = getVariant(delay);
-
-  // console.log(props);
 
   return (
     <ClientOnly>
@@ -106,7 +93,6 @@ const Span = styled.span`
   color: transparent;
 
   font-family: var(--fontFamily);
-  ${'' /* font-size: var(--fontSize); */}
   font-variation-settings: var(--fontVariationSettings);
   background-image: var(--gradient);
 
@@ -129,12 +115,9 @@ const Span = styled.span`
 `;
 
 const Heading = styled(H2)`
-  ${'' /* font-size: clamp(var(--size21), 10vw, var(--size48)); */}
   font-size: clamp(48px, 4vw, 60px);
-
   margin-bottom: 0;
   margin-top: 0;
-
   letter-spacing: var(--letterSpacing);
 `;
 

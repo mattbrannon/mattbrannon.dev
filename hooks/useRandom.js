@@ -13,6 +13,7 @@ export const useRandom = (min, max) => {
   const createRandomValue = useCallback(() => {
     const n = randomNumber(min, max);
     setValue(n);
+    // console.log({ n });
     const id = setTimeout(() => createRandomValue(), n * 1000);
     return id;
   }, [ min, max ]);

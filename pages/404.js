@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 // import { loadFeatures } from '@utils/helpers';
-import { ForwardedCube as StandingCube } from '@components/Shapes/Cube';
+import { SmirkingCube } from '@components/Creature';
 
 const getTranslateXPoints = (start, end, divider) => {
   let total = Math.abs(start) + Math.abs(end);
@@ -29,22 +29,28 @@ const walking = (start, end, amount, xdeg, ydeg) => {
   });
 };
 
-const frames = walking(-800, 0, 42, -5, 62);
+const random = (n) => Math.floor(Math.random() * (n + 1));
+
+const shuffle = (array) => {
+  const copy = [ ...array ];
+  const shuffledItems = [];
+  while (copy.length) {
+    let i = random(copy.length - 1);
+    let key = copy[i];
+    shuffledItems.push(key);
+    copy.splice(i, 1);
+  }
+  return shuffledItems;
+};
 
 const setRandomValues = () => {
-  const random = (n) => Math.floor(Math.random() * (n + 1));
-  const removeKeys = (key) => key !== 'default' && key !== 'sheared';
+  const removeKeys = (key) => key !== 'default'; // || key !== 'sheared';
 
   const keys = Object.keys(decovarValues);
-  const shuffledKeys = [];
-  while (keys.length) {
-    let i = random(keys.length - 1);
-    let key = keys[i];
-    shuffledKeys.push(key);
-    keys.splice(i, 1);
-  }
-
-  return shuffledKeys.filter(removeKeys).map((key) => decovarValues[key]);
+  const shuffledKeys = shuffle(keys);
+  const shuffledSettings = shuffledKeys.filter(removeKeys).map((key) => decovarValues[key]);
+  const fontSettings = [ decovarValues.default, ...shuffledSettings ];
+  return fontSettings;
 };
 
 export default function Error404() {
@@ -54,6 +60,8 @@ export default function Error404() {
 
   useEffect(() => {
     if (ref && ref.current) {
+      const frames = walking(-800, 0, 42, -5, 62);
+
       const walk = ref.current.animate(frames, {
         duration: 2000,
         fill: 'both',
@@ -74,12 +82,11 @@ export default function Error404() {
 
   const font = {
     animate: {
-      fontVariationSettings: [ decovarValues.default, ...setRandomValues() ],
-
+      fontVariationSettings: setRandomValues(),
       transition: {
-        delay: 9,
+        delay: 0,
         repeat: Infinity,
-        repeatType: 'reverse',
+        repeatType: 'mirror',
         duration: 120,
       },
     },
@@ -99,11 +106,18 @@ export default function Error404() {
 
       <Container>
         <CubeWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <StandingCube width={125} height={125} eyes="Shifty" mouth="Smirk" blink ref={ref} />
+          <SmirkingCube width={125} height={125} ref={ref} />
         </CubeWrapper>
         <Wrapper>
           <Link passHref href="/">
-            <P variants={font} animate={font.animate} ref={textRef} fontSize={fontSize} href="/">
+            <P
+              variants={font}
+              initial="initial"
+              animate="animate"
+              ref={textRef}
+              fontSize={fontSize}
+              href="/"
+            >
               Go Back
             </P>
           </Link>
@@ -123,17 +137,6 @@ const fadeIn = keyframes`
   }
 `;
 
-// const Container = styled.div`
-//   display: grid;
-//   place-items: center;
-//   grid-template-rows: 200px 100px;
-//   align-items: center;
-//   align-content: center;
-//   justify-items: center;
-//   height: 100%;
-//   margin-top: -64px;
-// `;
-
 const Container = styled.div`
   height: 100%;
 
@@ -149,10 +152,8 @@ const CubeWrapper = styled(motion.span)`
   margin-top: 64px;
 `;
 
-const Wrapper = styled(motion.div)`
-  animation: ${fadeIn} 2s linear both 5s;
-  /* margin-top: -200px;
-  margin-bottom: -100px; */
+const Wrapper = styled.div`
+  animation: ${fadeIn} 2s linear both 4s;
 `;
 
 const P = styled(motion.p)`

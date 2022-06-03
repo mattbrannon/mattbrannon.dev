@@ -2,7 +2,7 @@ import { ThemeContext } from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { motion, useAnimation } from 'framer-motion';
-import { useEffect, useState, Children, useContext } from 'react';
+import { useEffect, Children, useContext } from 'react';
 
 const wordVariant = {
   hidden: ({ i }) => {
@@ -56,7 +56,7 @@ const container = {
 const AnimatedWords = ({ showWords, children }) => {
   const wordControls = useAnimation();
   const containerControls = useAnimation();
-  const [ isRunning, setIsRunning ] = useState(false);
+  // const [ isRunning, setIsRunning ] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const context = useContext(ThemeContext);
 
@@ -97,11 +97,11 @@ const AnimatedWords = ({ showWords, children }) => {
           custom={{ i }}
           key={i}
           index={i + 1}
-          onAnimationComplete={() => {
-            if (i === children.length - 1) {
-              context.setHasRun(true);
-            }
-          }}
+          // onAnimationComplete={() => {
+          //   if (i === children.length - 1) {
+          //     context.setHasRun(true);
+          //   }
+          // }}
           style={{
             display: 'inline-block',
             fontWeight: 600,

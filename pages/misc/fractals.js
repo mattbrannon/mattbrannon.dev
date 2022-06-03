@@ -71,8 +71,8 @@ export default function Fractals() {
     canvas.width = width; //window.innerWidth - controlWidth;
     canvas.height = height; //window.innerHeight;
 
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height - 30;
+    // const centerX = canvas.width / 2;
+    // const centerY = canvas.height - 30;
 
     ctx.lineWidth = state.lineWidth;
     ctx.lineJoin = 'round';

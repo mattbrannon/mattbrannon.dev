@@ -1,6 +1,6 @@
 import ControlsLayout, { Group, Heading } from './Layout';
-import RangeSlider, { CustomInput } from './RangeSlider';
-import { useRef, useState, forwardRef } from 'react';
+import RangeSlider from './RangeSlider';
+import { useRef, forwardRef } from 'react';
 import Select from '@components/Select';
 
 const composites = [
@@ -32,35 +32,35 @@ const FractalControls = forwardRef(({ ...props }, ref) => {
 
   // console.log(props);
 
-  const handleRotate = (e) => {
-    // const maxRadians = Math.PI * 2;
-    // const maxScale = 1;
-    const scale = (1 / (Math.PI * 2)) * e.target.value;
-    // console.log({ scale, radians: e.target.value });
-    props.dispatch({ type: 'RADIANS', value: e.target.value });
-    props.dispatch({ type: 'SCALE', value: scale });
-  };
+  // const handleRotate = (e) => {
+  //   // const maxRadians = Math.PI * 2;
+  //   // const maxScale = 1;
+  //   const scale = (1 / (Math.PI * 2)) * e.target.value;
+  //   // console.log({ scale, radians: e.target.value });
+  //   props.dispatch({ type: 'RADIANS', value: e.target.value });
+  //   props.dispatch({ type: 'SCALE', value: scale });
+  // };
 
   const handleCompositeChange = (e) => {
     props.dispatch({ type: 'COMPOSITE', value: e.target.value });
   };
 
-  const handleSizeAndDepth = (e) => {
-    let maxSize = 144;
-    let maxDepth = 12;
-    const step = maxSize / maxDepth;
+  // const handleSizeAndDepth = (e) => {
+  //   let maxSize = 144;
+  //   let maxDepth = 12;
+  //   const step = maxSize / maxDepth;
 
-    if (e.target.name === 'size') {
-      props.dispatch({ type: 'SIZE', value: e.target.value });
-      if (e.target.value % step === 0) {
-        props.dispatch({ type: 'MAX_DEPTH', value: e.target.value / step });
-      }
-    }
-    if (e.target.name === 'max depth') {
-      props.dispatch({ type: 'MAX_DEPTH', value: e.target.value });
-      props.dispatch({ type: 'SIZE', value: e.target.value * step });
-    }
-  };
+  //   if (e.target.name === 'size') {
+  //     props.dispatch({ type: 'SIZE', value: e.target.value });
+  //     if (e.target.value % step === 0) {
+  //       props.dispatch({ type: 'MAX_DEPTH', value: e.target.value / step });
+  //     }
+  //   }
+  //   if (e.target.name === 'max depth') {
+  //     props.dispatch({ type: 'MAX_DEPTH', value: e.target.value });
+  //     props.dispatch({ type: 'SIZE', value: e.target.value * step });
+  //   }
+  // };
 
   return (
     <ControlsLayout ref={ref}>

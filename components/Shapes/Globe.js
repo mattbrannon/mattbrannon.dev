@@ -54,10 +54,10 @@ const sideVariant = {
     return {
       rotateX: 0,
       rotateY: 0,
-      // boxShadow: '0 0 0 0 #00000000',
+      boxShadow: '0 0 0 0 rgb(0, 0, 0, 0)',
       opacity: 0,
-      // background: '#00000000',
-      outline: 'none',
+      background: 'rgb(0, 0, 0, 0)',
+      // outline: '0px solid transparent',
       transition: {
         rotateX: {
           delay: delay,
@@ -69,15 +69,15 @@ const sideVariant = {
         },
 
         opacity: {
-          delay: delay + 4,
-          duration: speed,
+          delay: delay + 2,
+          duration: speed + 2,
         },
         background: {
           delay: delay + 4,
-          duration: speed,
+          duration: speed + 2,
         },
         boxShadow: {
-          delay: delay + 4,
+          delay: delay,
           duration: speed,
         },
       },
@@ -86,45 +86,44 @@ const sideVariant = {
 };
 
 const Globe = forwardRef(({ ...props }, ref) => {
-  const { style, state, sides } = props;
+  const { state, sides } = props;
   return (
-    <Container style={style}>
-      <RoundShape {...props}>
-        <AnimatePresence>
-          {Array.from({ length: sides }, (_, i) => {
-            const hue = (360 / sides) * i;
+    // <Container style={style}>
+    <RoundShape {...props}>
+      <AnimatePresence>
+        {Array.from({ length: sides }, (_, i) => {
+          const hue = (360 / sides) * i;
 
-            const background = `hsl(${hue} 100% 50% / ${props.opacity})`;
-            const { rotateX, rotateY } = getTransform({ i, sides });
-            const custom = { rotateX, rotateY, hue, i, state, background };
+          const background = `hsl(${hue} 100% 50% / ${props.opacity})`;
+          const { rotateX, rotateY } = getTransform({ i, sides });
+          const custom = { rotateX, rotateY, hue, i, state, background };
 
-            return (
-              <GlobeSide
-                ref={ref}
-                initial="hidden"
-                animate="show"
-                exit="close"
-                variants={sideVariant}
-                custom={custom}
-                key={i}
-              ></GlobeSide>
-            );
-          })}
-        </AnimatePresence>
-      </RoundShape>
-    </Container>
+          return (
+            <GlobeSide
+              ref={ref}
+              initial="hidden"
+              animate="show"
+              exit="close"
+              variants={sideVariant}
+              custom={custom}
+              key={i}
+            ></GlobeSide>
+          );
+        })}
+      </AnimatePresence>
+    </RoundShape>
+    // </Container>
   );
 });
 
 Globe.displayName = 'Globe';
 export default Globe;
 
-export const Container = styled.div`
-  font-size: 32px;
-  font-weight: 700;
-  transform-style: preserve-3d;
-  --eye-margin: calc(var(--mouth-padding) * -1);
-`;
+// export const Container = styled.div`
+//   font-size: 32px;
+//   font-weight: 700;
+//   transform-style: preserve-3d;
+// `;
 
 export const getTransform = ({ i, sides }) => {
   const angle = (360 / sides / 2) * i;

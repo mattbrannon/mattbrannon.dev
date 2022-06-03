@@ -10,7 +10,7 @@ export default function Contact() {
       <PageTitle inline>Contact Me</PageTitle>
 
       <Text>
-        Wanna get in touch? Send me a message using the form below. All messages go staight to my
+        Wanna get in touch? Send me a message using the form below. All messages go straight to my
         inbox.
       </Text>
       <ContactForm />

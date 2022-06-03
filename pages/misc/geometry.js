@@ -1,9 +1,10 @@
 import ShapeControls from '@components/Controls/ShapeControls';
 // import { Cube } from '@components/Creature/Cube';
-import { ForwardedCube as Cube } from '@components/Shapes/Cube';
+import { NormalCube as Cube } from '@components/Creature';
 import Head from '@components/Head';
 import Globe from '@components/Shapes/Globe';
 import { snakeToCamel } from '@utils/helpers.js';
+import { lighten } from '@utils/colors.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useReducer, useRef, useState } from 'react';
 import styled from 'styled-components';
@@ -20,7 +21,7 @@ const initialState = {
   depth: 100,
   translateEyeX: 0,
   translateEyeY: 0,
-  shape: 'Sphere',
+  shape: 'Cube',
   speed: 1,
   sides: 12,
   radius: 0,
@@ -32,6 +33,8 @@ const initialState = {
   hairColor: '#654321',
   opacity: 1,
   outline: true,
+  background: '#D2B48C',
+  eyeColor: '#8cbecf',
 };
 
 function reducer(state, action) {
@@ -62,6 +65,8 @@ function reducer(state, action) {
     case 'OPACITY':
     case 'RADIUS':
     case 'PERSPECTIVE':
+    case 'BACKGROUND':
+    case 'EYE_COLOR':
       return { ...state, [actionType]: action.value };
     case 'RESET': {
       return {
@@ -197,6 +202,9 @@ export default function Experiments() {
                 size={{ width: state.width, height: state.height }}
                 speed={state.speed}
                 shape={state.shape}
+                background={state.background}
+                eyelidColor={lighten(state.background, 30)}
+                eyeColor={state.eyeColor}
                 // transition={transition}
                 style={{
                   '--rotateX': `${state.rotateX}deg`,
@@ -219,6 +227,10 @@ export default function Experiments() {
                   '--solidColor': state.color,
                   '--gradientColorStart': state.gradientColorStart,
                   '--gradientColorEnd': state.gradientColorEnd,
+                  '--background': state.background,
+                  '--hairColor': state.hairColor,
+                  '--eyelidColor': lighten(state.background, 30),
+                  '--eyeColor': state.eyeColor,
 
                   // '--background': background,
                 }}

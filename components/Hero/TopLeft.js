@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { ForwardedCube as Cube } from '@components/Shapes/Cube';
+import { SmirkingCube } from '@components/Creature';
 import { breakpoints } from '@constants/breakpoints';
 import { useState, useEffect } from 'react';
 import { useRandom } from '@hooks/useRandom';
+import { motion } from 'framer-motion';
 
 const random = (n) => Math.floor(Math.random() * (n + 1));
 
@@ -17,16 +18,31 @@ export default function DropDeadFred() {
   }, [ randomAngle, randomTimeout ]);
 
   return (
-    <Scene randomAngle={randomAngle * direction}>
-      <CubeWrapper>
-        <Cube
-          style={{
-            '--cube-width': 'inherit',
-            '--cube-height': 'inherit',
-          }}
-        />
-      </CubeWrapper>
-    </Scene>
+    <>
+      <motion.div
+        style={{ transformStyle: 'preserve-3d' }}
+        initial={{ rotateY: 9999 }}
+        animate={{ rotateY: 0 }}
+        transition={{ delay: 0, duration: 3, ease: [ 0.17, 0.67, 0.55, 1.1 ] }}
+      >
+        <Scene randomAngle={randomAngle * direction}>
+          <CubeWrapper>
+            <SmirkingCube
+              style={{
+                '--cube-width': 'inherit',
+                '--cube-height': 'inherit',
+              }}
+            />
+          </CubeWrapper>
+        </Scene>
+      </motion.div>
+      <motion.div
+        style={{ height: 170, width: 180, position: 'absolute', top: 0 }}
+        initial={{ background: 'var(--basic-card-background)' }}
+        animate={{ opacity: 0 }}
+        transition={{ duration: 3, delay: 1 }}
+      ></motion.div>
+    </>
   );
 }
 

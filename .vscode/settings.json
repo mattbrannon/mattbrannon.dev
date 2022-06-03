@@ -88,7 +88,8 @@
   "editor.guides.highlightActiveBracketPair": true,
   "editor.guides.bracketPairs": "active",
   "eslint.codeActionsOnSave.mode": "problems",
-  "eslint.run": "onSave"
+  "eslint.run": "onSave",
+  "editor.hover.enabled": true
 
   // "path-intellisense.mappings": {
   //   "@components": "${workspaceRoot}/components",

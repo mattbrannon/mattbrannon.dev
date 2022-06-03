@@ -57,6 +57,7 @@ export function FontControls({ ...props }) {
   }, [ props, props.setControlWidth ]);
 
   const toggleButtonText = state.toggleCode === true ? 'Back to Editor' : 'Get Css';
+  const toggleHelpText = state.help ? 'Back to Editor' : 'Help';
 
   return (
     <AnimatePresence exitBeforeEnter>
@@ -126,7 +127,7 @@ export function FontControls({ ...props }) {
               })}
             </Group>
             <ButtonGroup>
-              <NormalButton onClick={handleHelpButtonPressed}>Help</NormalButton>
+              <NormalButton onClick={handleHelpButtonPressed}>{toggleHelpText}</NormalButton>
               <NormalButton onClick={handleGetCssButtonPressed}>{toggleButtonText}</NormalButton>
               <FancyButton onClick={handleReset}>Reset</FancyButton>
             </ButtonGroup>

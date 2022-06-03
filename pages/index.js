@@ -3,7 +3,7 @@ import Hero from '@components/Hero';
 import FancyTitle from '@components/FancyTitle';
 import Head from '@components/Head';
 
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/breakpoints';
@@ -45,6 +45,7 @@ export default function HomePage() {
 
 const Container = styled.div`
   display: grid;
+  row-gap: 8px;
 
   height: 100%;
   --fontFamily: Recursive;
@@ -53,7 +54,7 @@ const Container = styled.div`
   --strokeWidth: 0.021875em;
   --strokeColor: #000000;
 
-  padding-bottom: 32px;
+  padding-bottom: 16px;
 
   @media (max-width: ${breakpoints.mobile}px) {
     padding-bottom: 0;

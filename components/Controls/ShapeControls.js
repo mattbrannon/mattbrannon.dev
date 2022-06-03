@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { useWindowSize } from '@hooks/useWindowSize';
 import Select from '@components/Select';
 import { NormalButton } from '@components/Button';
-import RangeSlider from './RangeSlider';
-import ControlsLayout, { ControlsContainer } from './Layout';
+import RangeSlider, { CustomInput } from './RangeSlider';
+import ControlsLayout from './Layout';
 
 export default function ShapeControls({ ...props }) {
   const [ maxX, setMaxX ] = useState(0);
@@ -21,11 +21,8 @@ export default function ShapeControls({ ...props }) {
     state: { shape, sides },
   } = props;
 
-  // const { setSides } = props;
-
   useEffect(() => {
     const currentSides = shape === 'Cube' ? 6 : sides;
-    // setSides(currentSides);
     setCurrentSides(currentSides);
   }, [ shape, sides ]);
 
@@ -56,43 +53,12 @@ export default function ShapeControls({ ...props }) {
     props.dispatch({ type: 'OPACITY', value: e.target.value });
   };
 
-  // const changeBackgroundType = (e) => {
-  //   props.dispatch({ type: 'BACKGROUND_TYPE', value: e.target.value });
-  // };
-
-  // const handleOutlineToggle = (e) => {
-  //   setIsChecked(e.target.value);
-  //   props.dispatch({ type: 'OUTLINE', value: e.target.checked });
-  // };
-
-  // const backgrounds = [
-  //   'solid',
-  //   // 'linear-gradient',
-  //   // 'repeating-linear-gradient',
-  //   // 'radial-gradient',
-  //   // 'repeating-radial-gradient',
-  //   // 'conic-gradient',
-  //   'rainbow',
-  //   'transparent',
-  // ];
-
-  // const displayOptions = () => {
-  //   return backgrounds.map((background, i) => {
-  //     return (
-  //       <Option key={i} value={background}>
-  //         {background}
-  //       </Option>
-  //     );
-  //   });
-  // };
-
   return (
     <ControlsLayout ref={ref}>
-      {/* <ControlsContainer> */}
       <Group>
         <Heading>Shape</Heading>
         <Select value={props.state.shape} onChange={handleShapeChange}>
-          {[ 'Cube', 'Sphere' ].map((shape, i) => (
+          {[ 'Sphere', 'Cube' ].map((shape, i) => (
             <Option key={i} value={shape}>
               {shape}
             </Option>
@@ -129,6 +95,23 @@ export default function ShapeControls({ ...props }) {
 
       <Group>
         <Heading>Background</Heading>
+
+        <RangeSlider
+          onChange={handleOpacityChange}
+          name="opacity"
+          min={0}
+          max={1}
+          step={0.01}
+          {...props}
+        />
+
+        {props.state.shape === 'Cube' ? (
+          <ColorGroup>
+            <ColorInput name="background" type="color" {...props} />
+            <ColorInput name="hair color" type="color" {...props} />
+            <ColorInput name="eye color" type="color" {...props} />
+          </ColorGroup>
+        ) : null}
 
         <>
           {/* <Select value={props.state.backgroundType} onChange={changeBackgroundType}>
@@ -171,14 +154,6 @@ export default function ShapeControls({ ...props }) {
               <CustomInput type="color" name="hair color" {...props} />
             ) : null} */}
 
-          <RangeSlider
-            onChange={handleOpacityChange}
-            name="opacity"
-            min={0}
-            max={1}
-            step={0.01}
-            {...props}
-          />
           {/* <Checkbox isChecked={isChecked} onChange={handleOutlineToggle} name="outline">
               outline:
             </Checkbox> */}
@@ -199,10 +174,16 @@ const Group = styled.div`
   flex-direction: column;
 `;
 
+const ColorGroup = styled(Group)`
+  gap: 16px;
+  margin: 8px 0;
+`;
+
 const Heading = styled.h2`
   font-size: 1rem;
   font-weight: 600;
   color: var(--orange);
+  margin: 0;
 `;
 
 const Option = ({ ...props }) => {
@@ -212,3 +193,7 @@ const Option = ({ ...props }) => {
     </option>
   );
 };
+
+const ColorInput = styled(CustomInput)`
+  min-width: 0;
+`;
