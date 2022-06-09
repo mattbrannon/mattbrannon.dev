@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Shape } from './Shape';
 
 export default function Globe({ ...props }) {
-  const { state, sides } = props;
+  const { sides } = props;
   const transforms = getTransform(sides);
   return (
     <Scene {...props}>

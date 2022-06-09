@@ -1,14 +1,14 @@
 import styled, { ThemeContext } from 'styled-components';
 import { breakpoints } from '@constants/index';
 import { forwardRef, useContext } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+// import { motion, AnimatePresence } from 'framer-motion';
 // import { loadFeatures } from '@utils/helpers';
 
-const controlVariant = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-};
+// const controlVariant = {
+//   initial: { opacity: 0 },
+//   animate: { opacity: 1 },
+//   exit: { opacity: 0 },
+// };
 
 // eslint-disable-next-line react/display-name
 const ControlsLayout = forwardRef((props, ref) => {

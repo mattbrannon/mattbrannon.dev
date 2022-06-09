@@ -1,11 +1,11 @@
 import { ThemeContext } from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
-import { useMediaQuery } from '@hooks/useMediaQuery';
-import { motion, useAnimation } from 'framer-motion';
+// import { useMediaQuery } from '@hooks/useMediaQuery';
+// import { motion, useAnimation } from 'framer-motion';
 import { useEffect, Children, useContext, useState } from 'react';
 import styled from 'styled-components';
 
-export default function AnimatedWords({ showWords, children }) {
+export default function AnimatedWords({ children }) {
   const context = useContext(ThemeContext);
   const [ start, setStart ] = useState(context.hasRun);
   const words = children.split(' ');
@@ -16,9 +16,7 @@ export default function AnimatedWords({ showWords, children }) {
         setStart(true);
       }, 2000);
     }
-  }, []);
-
-  const handleTransitionEnd = (index) => {};
+  }, [ context.hasRun ]);
 
   useEffect(() => {
     console.log(context.hasRun);

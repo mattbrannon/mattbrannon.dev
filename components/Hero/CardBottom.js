@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
 import Link from 'next/link';
 import { NormalButton } from '@components/Button';
-import { motion, useAnimation } from 'framer-motion';
-import { useState, useReducer, useEffect } from 'react';
+import { motion } from 'framer-motion';
+// import { useState, useReducer, useEffect } from 'react';
 
 export default function CardBottom({ ...props }) {
   return (
