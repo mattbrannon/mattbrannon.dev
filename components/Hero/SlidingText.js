@@ -2,117 +2,81 @@ import { ThemeContext } from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { motion, useAnimation } from 'framer-motion';
-import { useEffect, Children, useContext } from 'react';
+import { useEffect, Children, useContext, useState } from 'react';
+import styled from 'styled-components';
 
-const wordVariant = {
-  hidden: ({ i }) => {
-    const index = i + 1;
-    return {
-      x: 700 + index * 2 + 'px',
-      opacity: 0,
-    };
-  },
-  show: ({ i }) => {
-    return {
-      opacity: 1,
-      x: 0,
-      transition: {
-        x: {
-          // delay: 4 + (i + 1) / 100,
-          delay: (i + 1) / 100,
-          duration: (i + 100) / 100,
-          ease: 'easeInOut',
-        },
-      },
-    };
-  },
-  static: {
-    x: 0,
-    opacity: 1,
-    transition: { x: { duration: 0, delay: 0 }, opacity: { duration: 1.5 } },
-  },
-};
-
-const container = {
-  hidden: {
-    x: 40,
-    opacity: 0,
-  },
-  show: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      delay: 0.5,
-      duration: 0.5,
-    },
-  },
-  static: {
-    x: 0,
-    opacity: 1,
-    transition: { duration: 0, delay: 0 },
-  },
-};
-
-const AnimatedWords = ({ showWords, children }) => {
-  const wordControls = useAnimation();
-  const containerControls = useAnimation();
-  // const [ isRunning, setIsRunning ] = useState(false);
-  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
+export default function AnimatedWords({ showWords, children }) {
   const context = useContext(ThemeContext);
-
-  // console.log({ showWords, hasCookie: !!document.cookie.length, isRunning });
+  const [ start, setStart ] = useState(context.hasRun);
+  const words = children.split(' ');
 
   useEffect(() => {
-    if (showWords && !context.hasRun) {
-      wordControls.start('show');
+    if (!context.hasRun) {
+      setTimeout(() => {
+        setStart(true);
+      }, 2000);
     }
-    else if (context.hasRun) {
-      containerControls.start('show');
-      wordControls.start('static');
-    }
-  }, [ showWords, wordControls, containerControls, context.hasRun ]);
+  }, []);
 
-  // useEffect(() => {
-  //   const hasCookie = !!document.cookie.length;
-  //   if (!showWords && !hasCookie && !isRunning) {
-  //     setIsRunning(true);
-  //     wordControls.start('show');
-  //   }
-  //   else if (showWords && hasCookie && !isRunning) {
-  //     containerControls.start('show');
-  //     wordControls.start('static');
-  //   }
-  //   else {
-  //     wordControls.start('static');
-  //   }
-  // }, [ showWords, wordControls, containerControls, isRunning ]);
+  const handleTransitionEnd = (index) => {};
+
+  useEffect(() => {
+    console.log(context.hasRun);
+  }, [ context.hasRun ]);
 
   return (
-    <motion.div variants={container} animate={containerControls} style={{ marginTop: -8 }}>
-      {Children.toArray(children.split(' ')).map((word, i) => (
-        <motion.span
-          variants={wordVariant}
-          initial="hidden"
-          animate={wordControls}
-          custom={{ i }}
-          key={i}
-          index={i + 1}
-          // onAnimationComplete={() => {
-          //   if (i === children.length - 1) {
-          //     context.setHasRun(true);
-          //   }
-          // }}
-          style={{
-            display: 'inline-block',
-            fontWeight: 600,
-            lineHeight: isMobile ? 1.25 : 1.85,
+    <Container>
+      {Children.toArray(words).map((word, i) => (
+        <Word
+          onTransitionEnd={() => {
+            if (i === words.length - 1) {
+              console.log('end');
+              context.setHasRun(true);
+            }
           }}
+          hasRun={context.hasRun}
+          start={start}
+          index={i + 1}
+          key={i}
         >
           {word}&nbsp;
-        </motion.span>
+        </Word>
       ))}
-    </motion.div>
+    </Container>
   );
-};
+}
 
-export default AnimatedWords;
+// onAnimationComplete={() => {
+//   if (i === children.length - 1) {
+//     context.setHasRun(true);
+//   }
+// }}
+
+const Container = styled.div`
+  margin-top: -8px;
+`;
+
+const Word = styled.span.attrs((props) => {
+  const translateX = props.start ? 0 : props.index * 2 + 700 + 'px';
+  const delay = props.hasRun ? 0 : (props.index + 1) / 100;
+  const duration = props.hasRun ? 0 : (props.index + 100) / 100;
+  return {
+    style: {
+      '--translateX': translateX,
+      '--delay': delay + 's',
+      '--duration': duration + 's',
+    },
+  };
+})`
+  display: inline-block;
+  font-weight: 600;
+  line-height: 1.85;
+
+  transform: translateX(var(--translateX));
+
+  transition: transform var(--duration) ease-in-out var(--delay);
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    line-height: 1.25;
+  }
+`;

@@ -50,12 +50,22 @@ export const SVG = styled.svg`
   transition: width var(--speed, 0.2s) linear, height var(--speed, 0.2s) linear,
     transform var(--speed, 0.2s) linear, opacity var(--speed, 0.2s) linear;
 
-  &:nth-of-type(1),
+  &:nth-of-type(1) {
+    --rotation: 0deg;
+    height: var(--cube-height);
+    width: var(--cube-width);
+    // set to 0.49999 because Safari is stupid
+    --transform: translate(-50%, -50%) rotateY(var(--rotation))
+      translateZ(calc(var(--cube-depth) * 0.49999));
+    fill: red !important;
+  }
+
+  /* &:nth-of-type(1), */
   &:nth-of-type(2) {
     height: var(--cube-height);
     width: var(--cube-width);
 
-    --rotation: 0deg;
+    --rotation: 180deg;
     --transform: translate(-50%, -50%) rotateY(var(--rotation))
       translateZ(calc(var(--cube-depth) * 0.5));
   }

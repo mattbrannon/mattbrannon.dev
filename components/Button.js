@@ -33,8 +33,8 @@ export const Button = styled(motion.button)`
   border: none;
   border-radius: 3px;
   background-color: var(--innerBg);
-  color: white;
-  text-shadow: -0.025em -0.025em 0.025em black;
+  color: inherit;
+  text-shadow: inherit;
   font-weight: 600;
   font-size: var(--font-size);
 

@@ -15,27 +15,21 @@ const ControlsLayout = forwardRef((props, ref) => {
   const context = useContext(ThemeContext);
   const zIndex = context.isOpen ? 0 : 1;
   return (
-    <AnimatePresence exitBeforeEnter>
-      <motion.div
-        key={props.children}
-        variants={controlVariant}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-      >
-        <Wrapper
-          style={{ '--zIndex': zIndex }}
-          id="main-content"
-          tabIndex={-1}
-          {...props}
-          ref={ref}
-        >
-          <Container>
-            <Section>{props.children}</Section>
-          </Container>
-        </Wrapper>
-      </motion.div>
-    </AnimatePresence>
+    // <AnimatePresence>
+    // <motion.div
+    //   key={props.children}
+    //   variants={controlVariant}
+    //   initial="initial"
+    //   animate="animate"
+    //   exit="exit"
+    // >
+    <Wrapper style={{ '--zIndex': zIndex }} id="main-content" tabIndex={-1} {...props} ref={ref}>
+      <Container>
+        <Section>{props.children}</Section>
+      </Container>
+    </Wrapper>
+    // </motion.div>
+    // </AnimatePresence>
   );
 });
 

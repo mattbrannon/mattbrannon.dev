@@ -4,7 +4,6 @@ export default Eyes;
 // // import Eye from './Eye';
 // import styled from 'styled-components';
 // import { NormalEye, RedEye } from './Eye';
-// import { useEye } from '@hooks/useEye';
 
 // // export default function Eyes({ ...props }) {
 // //   return (
@@ -17,7 +16,6 @@ export default Eyes;
 
 // function withEyes(Component) {
 //   return function MakeEyes({ ...props }) {
-//     const margin = useEye(props);
 //     return (
 //       <Container>
 //         <Component margin={margin} />

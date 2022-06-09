@@ -1,5 +1,5 @@
 import BlogHeader from '@components/BlogHeader';
-import Button, { InvertedButton } from '@components/Button';
+import { NormalButton, InvertedButton } from '@components/Button';
 import Head from '@components/Head';
 import { H2Link, H3Link, H4Link, H5Link } from '@components/Headings';
 
@@ -27,7 +27,7 @@ const ListItem = styled.li`
 
 const components = {
   blockquote: dynamic(() => import('@components/SideNote').then((res) => res.Blockquote)),
-  Button,
+  Button: NormalButton,
   InvertedButton,
   pre: SyntaxHighlighter,
   p: dynamic(() => import('@components/Text')),

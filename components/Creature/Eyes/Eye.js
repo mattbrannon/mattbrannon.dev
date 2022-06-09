@@ -131,31 +131,3 @@ export const RedEye = withEye({
 });
 
 export const NormalEye = withEye({});
-
-// function withEye(color) {
-//   return function Eye({ ...props }) {
-//     const margin = useEye(props);
-
-//     return (
-//       <TopRow {...props}>
-//         <EyeWrapper color={color} {...props}>
-//           <EyeWhite>
-//             <Cornea style={{ '--eyeColor': color }}>
-//               <Pupil />
-//             </Cornea>
-//             <Eyelid {...props} style={{ '--eyelid': `${margin}%` }} />
-//           </EyeWhite>
-//         </EyeWrapper>
-
-//         <EyeWrapper color={color} {...props}>
-//           <EyeWhite>
-//             <Cornea style={{ '--eyeColor': color }}>
-//               <Pupil />
-//             </Cornea>
-//             <Eyelid {...props} style={{ '--eyelid': `${margin}%` }} />
-//           </EyeWhite>
-//         </EyeWrapper>
-//       </TopRow>
-//     );
-//   };
-// }

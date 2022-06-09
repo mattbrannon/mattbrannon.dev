@@ -1,31 +1,42 @@
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import { SmirkingCube } from '@components/Creature';
 import { breakpoints } from '@constants/breakpoints';
-import { useState, useEffect } from 'react';
-import { useRandom } from '@hooks/useRandom';
+import { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
+import { useRandomInterval } from '@hooks/useRandomInterval';
+import { useHasMounted } from '@hooks/useHasMounted';
 
-const random = (n) => Math.floor(Math.random() * (n + 1));
+const random = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
 
 export default function DropDeadFred() {
-  const randomTimeout = useRandom(3, 8);
-  const randomAngle = useRandom(6, 35);
-  const [ direction, setDirection ] = useState(1);
+  const hasMounted = useHasMounted();
+  const repeat = useRandomInterval(1000, 10000);
+  const context = useContext(ThemeContext);
+  const [ angle, setAngle ] = useState(0);
 
   useEffect(() => {
-    const direction = random(1) ? 1 : -1;
-    setDirection(direction);
-  }, [ randomAngle, randomTimeout ]);
+    if (hasMounted) {
+      const direction = random(0, 1);
+      const randomAngle = random(6, 35);
+      const angle = direction ? randomAngle : randomAngle * -1;
+      setAngle(angle);
+      console.log({ angle });
+    }
+  }, [ repeat, hasMounted ]);
 
   return (
     <>
       <motion.div
         style={{ transformStyle: 'preserve-3d' }}
-        initial={{ rotateY: 9999 }}
+        initial={{ rotateY: context.hasRun ? 0 : 9999 }}
         animate={{ rotateY: 0 }}
         transition={{ delay: 0, duration: 3, ease: [ 0.17, 0.67, 0.55, 1.1 ] }}
       >
-        <Scene randomAngle={randomAngle * direction}>
+        <Scene angle={angle}>
           <CubeWrapper>
             <SmirkingCube
               style={{
@@ -47,7 +58,7 @@ export default function DropDeadFred() {
 }
 
 const Scene = styled.div`
-  --rotateY: ${(p) => p.randomAngle}deg;
+  --rotateY: ${(p) => p.angle}deg;
   transform: rotateY(var(--rotateY));
   transform-style: preserve-3d;
   transition: transform 0.4s linear;

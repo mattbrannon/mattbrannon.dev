@@ -1,141 +1,51 @@
-import { AnimatePresence, motion } from 'framer-motion';
-import { forwardRef } from 'react';
 import styled from 'styled-components';
 import { Shape } from './Shape';
 
-const sideVariant = {
-  hidden: {
-    rotateX: 0,
-    rotateY: 0,
-    opacity: 1,
-    scale: 1,
-    background: '#00000000',
-    '--outline': '0px solid transparent',
-    boxShadow: '0 0 0 0 transparent',
-  },
-  show: ({ rotateX, rotateY, i, state, background }) => {
-    const speed = state.speed;
-    const delay = (i + 1) / state.sides;
-    return {
-      opacity: 1,
-      rotateX,
-      rotateY,
-      background,
-      '--outline': '2px solid black',
-      boxShadow: '0 0 0 2px black',
-
-      transition: {
-        background: {
-          delay: delay,
-          duration: speed,
-        },
-        boxShadow: {
-          delay: delay,
-          duration: speed,
-        },
-        rotateX: {
-          delay: delay,
-          duration: speed,
-        },
-        rotateY: {
-          delay: delay,
-          duration: speed,
-        },
-        opacity: {
-          delay: delay,
-          duration: speed,
-        },
-      },
-    };
-  },
-  close: ({ i, state }) => {
-    const delay = (i + 1) / state.sides;
-    const speed = state.speed;
-    return {
-      rotateX: 0,
-      rotateY: 0,
-      boxShadow: '0 0 0 0 rgb(0, 0, 0, 0)',
-      opacity: 0,
-      background: 'rgb(0, 0, 0, 0)',
-      // outline: '0px solid transparent',
-      transition: {
-        rotateX: {
-          delay: delay,
-          duration: speed,
-        },
-        rotateY: {
-          delay: delay,
-          duration: speed,
-        },
-
-        opacity: {
-          delay: delay + 2,
-          duration: speed + 2,
-        },
-        background: {
-          delay: delay + 4,
-          duration: speed + 2,
-        },
-        boxShadow: {
-          delay: delay,
-          duration: speed,
-        },
-      },
-    };
-  },
-};
-
-const Globe = forwardRef(({ ...props }, ref) => {
+export default function Globe({ ...props }) {
   const { state, sides } = props;
+  const transforms = getTransform(sides);
   return (
-    // <Container style={style}>
-    <RoundShape {...props}>
-      <AnimatePresence>
-        {Array.from({ length: sides }, (_, i) => {
-          const hue = (360 / sides) * i;
-
-          const background = `hsl(${hue} 100% 50% / ${props.opacity})`;
-          const { rotateX, rotateY } = getTransform({ i, sides });
-          const custom = { rotateX, rotateY, hue, i, state, background };
-
-          return (
-            <GlobeSide
-              ref={ref}
-              initial="hidden"
-              animate="show"
-              exit="close"
-              variants={sideVariant}
-              custom={custom}
-              key={i}
-            ></GlobeSide>
-          );
-        })}
-      </AnimatePresence>
-    </RoundShape>
-    // </Container>
+    <Scene {...props}>
+      {Array.from({ length: 12 }, (_, i) => {
+        const transform = transforms[i];
+        return (
+          <GlobeSide i={i} transform={transform}>
+            <Thing sides={sides} i={i} color={'hsl(20, 75%, 50%, 0.1)'} size={300}>
+              <Thing sides={sides} i={i} color={'hsl(80, 75%, 50%, 0.1)'} size={150}>
+                <Thing sides={sides} i={i} color={'hsl(140, 75%, 50%, 0.1)'} size={75}></Thing>
+              </Thing>
+            </Thing>
+          </GlobeSide>
+        );
+      })}
+    </Scene>
   );
-});
+}
 
-Globe.displayName = 'Globe';
-export default Globe;
+const Thing = styled.div`
+  ${(p) => console.log('thing sides', p.sides, p.i)};
+  height: ${(p) => p.size}px;
+  width: ${(p) => p.size}px;
+  box-shadow: 0 0 0 1px ${(p) => p.color};
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  background: ${(p) => (p.i <= p.sides ? p.color : 'transparent')};
+  box-shadow: 0 0 0 2px black;
+  transition: all 5s linear;
+`;
 
-// export const Container = styled.div`
-//   font-size: 32px;
-//   font-weight: 700;
-//   transform-style: preserve-3d;
-// `;
-
-export const getTransform = ({ i, sides }) => {
-  const angle = (360 / sides / 2) * i;
-
-  const rotateX = i % 2 === 0 ? angle : 0;
-  const rotateY = i % 2 === 1 ? angle : 0;
-  const transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-
-  return { rotateX, rotateY, transform, angle };
+export const getTransform = (currentSides) => {
+  return Array.from({ length: currentSides }, (_, i) => {
+    const angle = (360 / currentSides / 2) * i;
+    const rotateX = i % 2 === 0 ? angle : 0;
+    const rotateY = i % 2 === 1 ? angle : 0;
+    const transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    return { rotateX, rotateY, transform, angle };
+  });
 };
 
-const RoundShape = styled(Shape)`
+const Scene = styled(Shape)`
   /* transform: rotateX(24deg) rotateY(32deg) rotateZ(0deg); */
 
   perspective: var(--perspective);
@@ -150,23 +60,30 @@ const RoundShape = styled(Shape)`
   transition: all var(--speed) linear;
 `;
 
-const GlobeSide = styled(motion.div).attrs((props) => {
-  // console.log({ globeSide: props });
+const GlobeSide = styled.div.attrs((props) => {
+  const delay = (props.i + 1) * 100;
+  const transform = props.transform;
+  // const background = transform ? 'rgb(0, 0, 255, 0.2)' : 'rgb(0, 0, 255, 0)';
   return {
     style: {
-      '--opacity': props.custom.state.opacity,
+      '--delay': delay + 'ms',
+      '--transform': transform?.transform,
+      // '--background': background,
     },
   };
 })`
   transform: var(--transform);
   position: absolute;
-  background: var(--background);
+  /* background: var(--background); */
   height: var(--cube-height);
   width: var(--cube-width);
-  outline: var(--outline);
-  opacity: var(--opacity);
+  /* opacity: var(--opacity); */
+  /* transition-delay: ; */
   border-radius: 50%;
-  box-shadow: 0 0 0 1px black;
-  transition: all 2s linear;
+  /* box-shadow: 0 0 0 2px black; */
   transform-style: preserve-3d;
+  color: white;
+  display: grid;
+  place-content: center;
+  transition: all 5s linear;
 `;

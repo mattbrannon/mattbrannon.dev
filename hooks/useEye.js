@@ -15,9 +15,10 @@ export const useEye = ({ eyelid = 250 }) => {
         setMargin(0);
         setTimeout(() => setMargin(eyelid * -1), 300);
       };
-      blinkEye();
 
-      return setTimeout(repeat, randomNumber(500, 10000));
+      blinkEye();
+      const timeout = randomNumber(500, 10000);
+      return setTimeout(repeat, timeout);
     };
 
     const timeoutId = repeat();

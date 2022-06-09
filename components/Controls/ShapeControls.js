@@ -66,7 +66,7 @@ export default function ShapeControls({ ...props }) {
         </Select>
 
         {props.state.shape === 'Sphere' ? (
-          <RangeSlider value={currentSides} min={0} step={1} max={36} name="sides" {...props} />
+          <RangeSlider value={currentSides} min={1} step={1} max={12} name="sides" {...props} />
         ) : null}
       </Group>
       <Group>
@@ -93,28 +93,28 @@ export default function ShapeControls({ ...props }) {
         <RangeSlider name="speed" reverse min={0} max={10} {...props} />
       </Group>
 
-      <Group>
-        <Heading>Background</Heading>
+      {props.state.shape === 'Cube' ? (
+        <Group>
+          <Heading>Background</Heading>
+          <RangeSlider
+            onChange={handleOpacityChange}
+            name="opacity"
+            min={0}
+            max={1}
+            step={0.01}
+            {...props}
+          />
 
-        <RangeSlider
-          onChange={handleOpacityChange}
-          name="opacity"
-          min={0}
-          max={1}
-          step={0.01}
-          {...props}
-        />
-
-        {props.state.shape === 'Cube' ? (
           <ColorGroup>
             <ColorInput name="background" type="color" {...props} />
             <ColorInput name="hair color" type="color" {...props} />
             <ColorInput name="eye color" type="color" {...props} />
           </ColorGroup>
-        ) : null}
+        </Group>
+      ) : null}
 
-        <>
-          {/* <Select value={props.state.backgroundType} onChange={changeBackgroundType}>
+      <>
+        {/* <Select value={props.state.backgroundType} onChange={changeBackgroundType}>
               {displayOptions()}
             </Select>
 
@@ -150,15 +150,14 @@ export default function ShapeControls({ ...props }) {
               </ColorWrapper>
             ) : null} */}
 
-          {/* {props.state.shape === 'Cube' ? (
+        {/* {props.state.shape === 'Cube' ? (
               <CustomInput type="color" name="hair color" {...props} />
             ) : null} */}
 
-          {/* <Checkbox isChecked={isChecked} onChange={handleOutlineToggle} name="outline">
+        {/* <Checkbox isChecked={isChecked} onChange={handleOutlineToggle} name="outline">
               outline:
             </Checkbox> */}
-        </>
-      </Group>
+      </>
       {/* )} */}
       {/* </ControlsContainer> */}
 
