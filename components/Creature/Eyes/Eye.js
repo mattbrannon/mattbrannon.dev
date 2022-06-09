@@ -24,14 +24,14 @@ const EyeWrapper = styled.div.attrs((props) => {
   const borderRadius = `${double}px ${double}px ${half}px ${half}px`;
   // const r = props.ratio * 2;
   const padding = `calc(((var(--cube-width) / 6) + (var(--cube-height) / 6)) / 2)`;
-  const { eyeWhiteColor, eyeColor, eyelidMargin, eyelidColor } = props;
+  const { eyeWhiteColor, eyeColor, eyelidTop, eyelidColor } = props;
   return {
     style: {
       '--borderRadius': borderRadius,
       '--padding': padding,
       '--eyeWhiteColor': eyeWhiteColor || 'whitesmoke',
       '--eyeColor': eyeColor,
-      '--eyelidMargin': `${eyelidMargin}%`,
+      '--eyelidTop': `${eyelidTop}%`,
       '--eyelidColor': eyelidColor || 'tan',
     },
   };
@@ -105,10 +105,10 @@ export const Eyelid = styled(EyeWhite)`
   background: var(--eyelidColor);
   z-index: 999;
   position: absolute;
-  margin-top: var(--eyelidMargin);
+  top: var(--eyelidTop);
   width: 200%;
   height: 200%;
-  transition: margin-top 70ms linear;
+  transition: top 70ms linear;
 `;
 
 function withEye(variants) {

@@ -6,8 +6,7 @@ import { useEye } from '@hooks/useEye';
 
 function withEyes(Component) {
   return function MakeEyes({ ...props }) {
-    const margin = useEye(props);
-    props.eyelidMargin = margin;
+    props.eyelidTop = useEye(props);
     return (
       <Container>
         <Component {...props} />

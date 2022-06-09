@@ -6,7 +6,7 @@ let randomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-export const useEye = ({ eyelid = 250 }) => {
+export const useEye = ({ eyelid = 175 }) => {
   const [ margin, setMargin ] = useState(eyelid * -1);
 
   useEffect(() => {
