@@ -23,7 +23,6 @@ export default function Globe({ ...props }) {
 }
 
 const Thing = styled.div`
-  ${(p) => console.log('thing sides', p.sides, p.i)};
   height: ${(p) => p.size}px;
   width: ${(p) => p.size}px;
   box-shadow: 0 0 0 1px ${(p) => p.color};

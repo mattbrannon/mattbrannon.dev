@@ -3,31 +3,16 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 module.exports = () => {
-  if (process.env.NODE_ENV === 'development') {
-    return {
-      compiler: {
-        styledComponents: true,
-      },
-      images: {
-        formats: [ 'image/avif', 'image/webp' ],
-      },
-      trailingSlash: true,
-      reactStrictMode: true,
-    };
-  }
-  if (process.env.NODE_ENV === 'production') {
-    console.log('starting in production environment');
-    return {
-      compiler: {
-        styledComponents: true,
-        removeConsole: { exclude: [] },
-      },
-      images: {
-        formats: [ 'image/avif', 'image/webp' ],
-      },
-      trailingSlash: true,
-      compress: true,
-      swcMinify: true,
-    };
-  }
+  return {
+    compiler: {
+      styledComponents: true,
+      removeConsole: process.env.NODE_ENV === 'production',
+    },
+    images: {
+      formats: [ 'image/avif', 'image/webp' ],
+    },
+    trailingSlash: true,
+    reactStrictMode: true,
+    swcMinify: process.env.NODE_ENV === 'production',
+  };
 };
