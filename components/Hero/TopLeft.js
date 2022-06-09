@@ -5,6 +5,7 @@ import { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { useRandomInterval } from '@hooks/useRandomInterval';
 import { useHasMounted } from '@hooks/useHasMounted';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 
 const random = (min, max) => {
   min = Math.ceil(min);
@@ -14,6 +15,7 @@ const random = (min, max) => {
 
 export default function DropDeadFred() {
   const hasMounted = useHasMounted();
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const repeat = useRandomInterval(1000, 10000);
   const context = useContext(ThemeContext);
   const [ angle, setAngle ] = useState(0);
@@ -32,7 +34,7 @@ export default function DropDeadFred() {
     <>
       <motion.div
         style={{ transformStyle: 'preserve-3d' }}
-        initial={{ rotateY: context.hasRun ? 0 : 9999 }}
+        initial={{ rotateY: context.hasRun ? 0 : isMobile ? 2222 : 9999 }}
         animate={{ rotateY: 0 }}
         transition={{ delay: 0, duration: 3, ease: [ 0.17, 0.67, 0.55, 1.1 ] }}
       >
