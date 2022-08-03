@@ -1,99 +1,12 @@
 {
-  "files.autoSave": "onFocusChange",
-  "files.exclude": {
-    "*babel*": false,
-    "*eslint*": false,
-    "*git*": false,
-    "*jsconfig*": false,
-    "*netlify*": false,
-    "*next*": false,
-    "*package*": false,
-    "*prettier*": false,
-    "node_modules": false,
-    "README.md": false,
-    "renovate.json": false
-  },
-
-  // "files.associations": {
-  //   "*.mdx": "markdown"
-  // },
-
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": false,
   "editor.formatOnSave": true,
-  "eslint.format.enable": true,
+  "editor.formatOnSaveMode": "file",
+  "files.autoSave": "onFocusChange",
+  "editor.wordWrap": "on",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": false,
-    "source.fixAll.eslint": true
-  },
-  "editor.acceptSuggestionOnCommitCharacter": false,
-  "eslint.options": {
-    "extensions": [".js", ".jsx", ".ts", ".tsx"]
-  },
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ],
-  "[javascript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[javascriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[markdown]": {
-    "editor.unicodeHighlight.ambiguousCharacters": false,
-    "editor.wordWrap": "on",
-    "editor.quickSuggestions": false,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-
-  "[mdx]": {
-    "editor.wordWrap": "bounded",
-    "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.autoClosingQuotes": "never"
-  },
-
-  "prettier.requireConfig": true,
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  },
-  "editor.fontFamily": "Fira Code",
-  "editor.fontLigatures": true,
-  "editor.acceptSuggestionOnEnter": "smart",
-  "editor.autoClosingBrackets": "beforeWhitespace",
-  "editor.autoClosingDelete": "always",
-  "editor.autoClosingOvertype": "always",
-  "editor.tabCompletion": "on",
-  "editor.bracketPairColorization.enabled": false,
-
-  "editor.autoClosingQuotes": "languageDefined",
-  "editor.autoIndent": "advanced",
-  "editor.autoSurround": "languageDefined",
-  "editor.cursorBlinking": "blink",
-  "editor.cursorStyle": "line",
-  "editor.guides.highlightActiveIndentation": false,
-  "editor.selectionHighlight": true,
-  "emmet.triggerExpansionOnTab": true,
-  "[dotenv]": {
-    "editor.defaultFormatter": null
-  },
-  "editor.guides.bracketPairsHorizontal": false,
-  "editor.guides.highlightActiveBracketPair": true,
-  "editor.guides.bracketPairs": "active",
-  "eslint.codeActionsOnSave.mode": "problems",
-  "eslint.run": "onSave",
-  "editor.hover.enabled": true
-
-  // "path-intellisense.mappings": {
-  //   "@components": "${workspaceRoot}/components",
-  //   "@hooks": "${workspaceRoot}/hooks"
-  // },
-  // "path-intellisense.absolutePathToWorkspace": true
+    "source.organizeImports": false
+  }
 }
