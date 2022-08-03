@@ -1,11 +1,11 @@
-import DocumentHead from "@components/Head";
-import { decovarValues } from "@constants/index.js";
-import { m as motion } from "framer-motion";
-import Link from "next/link";
-import { useEffect, useRef } from "react";
-import styled, { keyframes } from "styled-components";
+import DocumentHead from '@components/Head';
+import { decovarValues } from '@constants/index.js';
+import { m as motion } from 'framer-motion';
+import Link from 'next/link';
+import { useEffect, useRef } from 'react';
+import styled, { keyframes } from 'styled-components';
 // import { loadFeatures } from '@utils/helpers';
-import { SmirkingCube } from "@components/Creature";
+import { SmirkingCube } from '@components/Creature';
 
 const getTranslateXPoints = (start, end, divider) => {
   let total = Math.abs(start) + Math.abs(end);
@@ -22,7 +22,7 @@ const walking = (start, end, amount, xdeg, ydeg) => {
   return getTranslateXPoints(start, end, amount).map((frame, i) => {
     const rotateX = i % 2 === 0 ? xdeg : xdeg * -1;
     const rotateY = i % 2 === 0 ? ydeg : ydeg + 5;
-    const translateX = frame + "px";
+    const translateX = frame + 'px';
     return {
       transform: `translateX(${translateX}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
     };
@@ -44,7 +44,7 @@ const shuffle = (array) => {
 };
 
 const setRandomValues = () => {
-  const removeKeys = (key) => key !== "default"; // || key !== 'sheared';
+  const removeKeys = (key) => key !== 'default'; // || key !== 'sheared';
 
   const keys = Object.keys(decovarValues);
   const shuffledKeys = shuffle(keys);
@@ -56,7 +56,7 @@ const setRandomValues = () => {
 export default function Error404() {
   const ref = useRef();
   const textRef = useRef();
-  const fontSize = `clamp(var(--size21), 7vw, var(--size36))`;
+  const fontSize = 'clamp(var(--size21), 7vw, var(--size36))';
 
   useEffect(() => {
     if (ref && ref.current) {
@@ -64,17 +64,17 @@ export default function Error404() {
 
       const walk = ref.current.animate(frames, {
         duration: 2000,
-        fill: "both",
-        easing: "linear",
+        fill: 'both',
+        easing: 'linear',
       });
       walk.finished.then(() => {
         const lastFrame = frames.pop();
-        const spin = [lastFrame, { transform: "rotateY(-15deg)" }];
+        const spin = [lastFrame, { transform: 'rotateY(-15deg)' }];
         ref.current.animate(spin, {
           duration: 900,
           delay: 1400,
-          easing: "cubic-bezier(.79,-0.31,.05,1.4)",
-          fill: "forwards",
+          easing: 'cubic-bezier(.79,-0.31,.05,1.4)',
+          fill: 'forwards',
         });
       });
     }
@@ -86,7 +86,7 @@ export default function Error404() {
       transition: {
         delay: 0,
         repeat: Infinity,
-        repeatType: "mirror",
+        repeatType: 'mirror',
         duration: 120,
       },
     },

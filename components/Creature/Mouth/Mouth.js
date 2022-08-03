@@ -1,6 +1,6 @@
-import { m as motion } from "framer-motion";
-import styled from "styled-components";
-import * as variants from "./variants";
+import { m as motion } from 'framer-motion';
+import styled from 'styled-components';
+import * as variants from './variants';
 
 export const Mouth = styled(motion.div)`
   --mouth-padding: 2px;

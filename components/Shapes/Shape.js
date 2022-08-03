@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import { m as motion } from "framer-motion";
+import styled from 'styled-components';
+import { m as motion } from 'framer-motion';
 
 export const Shape = styled(motion.div)`
   position: relative;
-  --cube-width: ${(p) => p.width + "px" || "var(--cube-width)"};
-  --cube-height: ${(p) => p.height + "px" || "var(--cube-height)"};
+  --cube-width: ${(p) => p.width + 'px' || 'var(--cube-width)'};
+  --cube-height: ${(p) => p.height + 'px' || 'var(--cube-height)'};
   --cube-depth: 50px;
 
   transform-style: preserve-3d;

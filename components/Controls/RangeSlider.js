@@ -6,7 +6,7 @@ import { useState, useEffect, forwardRef } from 'react';
 import { useDebounce } from '@hooks/useDebounce';
 
 const createLabel = (name) => {
-  const removeText = [ 'update', 'cube', 'shadow', 'gradient', 'text stroke' ];
+  const removeText = ['update', 'cube', 'shadow', 'gradient', 'text stroke'];
   removeText.forEach((str) => {
     name = name.replace(str, '').trim();
   });
@@ -26,13 +26,9 @@ const RangeSlider = forwardRef(({ ...props }, ref) => {
   const label = createLabel(name);
   const key = toCamelCase(name);
 
-  // const defaultValue = state[key]
-  //   ? state[key]
-  //   : 'settings' in state && state.settings[key]
-  //   ? state.settings[key]
-  //   : 0;
+  const defaultValue = state?.[key] ?? state?.settings?.[key] ?? props.value ?? 0;
 
-  const defaultValue = state && key ? state?.[key] ?? state?.settings?.[key] : 0;
+  // const defaultValue = state && key ? state?.[key] ?? state?.settings?.[key] : 0;
 
   const handleChange = (e) => {
     const number = parseFloat(e.target.value);
@@ -67,14 +63,14 @@ export const CustomInput = ({ ...props }) => {
 
   // console.log(name, state, dispatch, type)
 
-  const [ colorValue, setColorValue ] = useState(value);
+  const [colorValue, setColorValue] = useState(value);
 
   const color = useDebounce(colorValue, 0);
 
   useEffect(() => {
     const type = toSnakeUpperCase(name);
     dispatch({ type, value: color });
-  }, [ color, dispatch, name ]);
+  }, [color, dispatch, name]);
 
   return (
     <Wrapper>

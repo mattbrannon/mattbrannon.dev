@@ -8,7 +8,7 @@ import montyHallImage from '/public/images/monty-hall/monty-hall1.png';
 
 const letsMakeAGifConfig = {
   href: '/apps/lets-make-a-gif',
-  title: "Let's Make a Gif",
+  title: 'Let\'s Make a Gif',
   description: 'Online photo & video editing application',
   src: letsMakeAGifImage,
   alt: 'desktop view of the app',

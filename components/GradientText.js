@@ -1,6 +1,6 @@
-import { m as motion, AnimatePresence } from "framer-motion";
-import { forwardRef } from "react";
-import styled from "styled-components";
+import { m as motion, AnimatePresence } from 'framer-motion';
+import { forwardRef } from 'react';
+import styled from 'styled-components';
 // import { loadFeatures } from '@utils/helpers';
 
 const MotionGradientWrapper = styled(motion.div)`
@@ -24,8 +24,8 @@ const MotionGradientWrapper = styled(motion.div)`
   font-family: var(--fontFamily);
   font-size: var(--fontSize);
 
-  background-clip: ${(p) => (p.state && p.state.showBackground ? undefined : "text")};
-  -webkit-background-clip: ${(p) => (p.state && p.state.showBackground ? undefined : "text")};
+  background-clip: ${(p) => (p.state && p.state.showBackground ? undefined : 'text')};
+  -webkit-background-clip: ${(p) => (p.state && p.state.showBackground ? undefined : 'text')};
 
   position: relative;
   width: 100%;
@@ -82,30 +82,30 @@ export const TextGradient = styled(Text)`
 export const gradientVariant = {
   hidden: (props) => {
     return {
-      "--fontSize": props.fontSize,
-      "--gradient": "transparent",
-      "--fontVariationSettings": "none",
-      "--strokeDelay": 4,
+      '--fontSize': props.fontSize,
+      '--gradient': 'transparent',
+      '--fontVariationSettings': 'none',
+      '--strokeDelay': 4,
       opacity: 0,
     };
   },
   show: (props) => {
     return {
-      "--delay": "0s",
-      "--strokeDelay": "0s",
-      "--strokeColor": props.strokeColor,
-      "--strokeWidth": props.strokeWidth,
-      "--shadow": props.shadow,
-      "--gradient": props.gradient,
-      "--shadowDelay": 4,
-      "--fontVariationSettings": props.fontVariationSettings,
+      '--delay': '0s',
+      '--strokeDelay': '0s',
+      '--strokeColor': props.strokeColor,
+      '--strokeWidth': props.strokeWidth,
+      '--shadow': props.shadow,
+      '--gradient': props.gradient,
+      '--shadowDelay': 4,
+      '--fontVariationSettings': props.fontVariationSettings,
       opacity: 1,
     };
   },
   close: (props) => {
     const initialSettings = props.initialSettings;
     return {
-      "--fontVariationSettings": initialSettings,
+      '--fontVariationSettings': initialSettings,
       opacity: 0,
     };
   },
@@ -123,6 +123,6 @@ export const withGradient = (Gradient) => {
       </AnimatePresence>
     );
   });
-  forwarded.displayName = "withGradient";
+  forwarded.displayName = 'withGradient';
   return forwarded;
 };

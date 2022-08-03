@@ -1,7 +1,7 @@
-import { m as motion } from "framer-motion";
-import { breakpoints } from "@constants/breakpoints";
-import { useMediaQuery } from "@hooks/useMediaQuery";
-import SlidingText from "./SlidingText";
+import { m as motion } from 'framer-motion';
+import { breakpoints } from '@constants/breakpoints';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import SlidingText from './SlidingText';
 
 const MobileText = ({ ...props }) => {
   return (

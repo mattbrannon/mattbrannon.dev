@@ -1,12 +1,12 @@
-import NextImage from "next/future/image";
-import styled, { keyframes, css } from "styled-components";
-import s from "./image.module.css";
-import { breakpoints } from "@constants/index";
-import { getFluidSizes } from "@utils/helpers.js";
-import { m as motion } from "framer-motion";
-import { useMediaQuery } from "@hooks/useMediaQuery";
-import { useCssVariable } from "@hooks/useCssVariable";
-import { useEffect, useRef } from "react";
+import NextImage from 'next/future/image';
+import styled, { keyframes, css } from 'styled-components';
+import s from './image.module.css';
+import { breakpoints } from '@constants/index';
+import { getFluidSizes } from '@utils/helpers.js';
+import { m as motion } from 'framer-motion';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { useCssVariable } from '@hooks/useCssVariable';
+import { useEffect, useRef } from 'react';
 
 function Picture({ sources, alt, ...props }) {
   const { sizes, types, name, folder } = sources;
@@ -18,7 +18,7 @@ function Picture({ sources, alt, ...props }) {
           .map((size) => {
             return `${folder}/${name}-${size}.${type} ${size}w`;
           })
-          .join(", ");
+          .join(', ');
         return <source key={i} srcSet={srcSet} type={mediaType} />;
       })}
       <Image {...props} src={`${folder}/${name}.png`} alt={alt} />
@@ -27,9 +27,9 @@ function Picture({ sources, alt, ...props }) {
 }
 
 export const Image = styled.img`
-  --radius: ${(p) => (p.rounded ? "50%" : undefined)};
+  --radius: ${(p) => (p.rounded ? '50%' : undefined)};
   display: block;
-  width: ${(p) => p.width + "px" || "100%"};
+  width: ${(p) => p.width + 'px' || '100%'};
   height: auto;
   object-fit: cover;
   border-radius: var(--radius);
@@ -81,30 +81,30 @@ export default Picture;
 export const AnimatedImage = ({ ...props }) => {
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const imageRef = useRef();
-  const setPosition = useCssVariable("--object-position", "-35px 0", imageRef);
+  const setPosition = useCssVariable('--object-position', '-35px 0', imageRef);
 
   useEffect(() => {
     if (isMobile) {
-      setPosition("-20px 0");
+      setPosition('-20px 0');
     }
   }, [isMobile, setPosition]);
 
   const image = {
-    initial: { clipPath: "circle(0% at 50% 50%)", filter: "blur(8px)" },
-    animate: { clipPath: "circle(100% at 50% 50%)", filter: "blur(0px)" },
+    initial: { clipPath: 'circle(0% at 50% 50%)', filter: 'blur(8px)' },
+    animate: { clipPath: 'circle(100% at 50% 50%)', filter: 'blur(0px)' },
     transition: { delay: 0, duration: 1 },
   };
 
   const overlay = {
     initial: {
-      clipPath: "circle(50% at 50% 50%)",
-      background: "hsl(0, 0%, 16%, 1)",
-      filter: "blur(8px)",
+      clipPath: 'circle(50% at 50% 50%)',
+      background: 'hsl(0, 0%, 16%, 1)',
+      filter: 'blur(8px)',
     },
     animate: {
-      clipPath: "circle(0% at 50% 50%)",
-      background: "hsl(0, 0%, 16%, 0)",
-      filter: "blur(0px)",
+      clipPath: 'circle(0% at 50% 50%)',
+      background: 'hsl(0, 0%, 16%, 0)',
+      filter: 'blur(0px)',
     },
     transition: { delay: 0, duration: 1 },
   };
@@ -160,9 +160,9 @@ export function StaticImage({ ...props }) {
 
 const ImageContainer = styled.div.attrs(({ width, round }) => ({
   style: {
-    "--clamp": getFluidSizes(width).clamp,
-    "--max": getFluidSizes(width).fallback,
-    "--radius": round ? "50%" : undefined,
+    '--clamp': getFluidSizes(width).clamp,
+    '--max': getFluidSizes(width).fallback,
+    '--radius': round ? '50%' : undefined,
   },
 }))`
   float: left;

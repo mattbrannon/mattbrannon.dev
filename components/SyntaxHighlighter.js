@@ -1,14 +1,14 @@
 // eslint-disable-next-line no-unused-vars
-import Highlight, { defaultProps } from "prism-react-renderer";
-import theme from "prism-react-renderer/themes/nightOwl";
-import styled from "styled-components";
-import { useState, useEffect, useRef } from "react";
+import Highlight, { defaultProps } from 'prism-react-renderer';
+import theme from 'prism-react-renderer/themes/nightOwl';
+import styled from 'styled-components';
+import { useState, useEffect, useRef } from 'react';
 
 const SyntaxHighlighter = ({ children, ...props }) => {
   const code = children.props.children;
-  const language = props.language || children.props.className?.replace("language-", "").trim();
+  const language = props.language || children.props.className?.replace('language-', '').trim();
   const ref = useRef();
-  const [buttonText, setButtonText] = useState("Copy Snippet");
+  const [buttonText, setButtonText] = useState('Copy Snippet');
 
   const handleButtonClick = () => {
     if (document.body.createTextRange) {
@@ -25,19 +25,19 @@ const SyntaxHighlighter = ({ children, ...props }) => {
       selection.addRange(range);
       copyText(selection.toString())
         .then(selection.removeAllRanges())
-        .then(() => setButtonText("Copied to clipboard!"))
+        .then(() => setButtonText('Copied to clipboard!'))
         .catch(console.error);
     }
   };
 
   useEffect(() => {
-    if (buttonText === "Copied to clipboard!") {
-      setTimeout(() => setButtonText("Copy Snippet"), 5000);
+    if (buttonText === 'Copied to clipboard!') {
+      setTimeout(() => setButtonText('Copy Snippet'), 5000);
     }
   }, [buttonText, setButtonText]);
 
   return (
-    <div style={{ margin: "0 0 32px 0" }}>
+    <div style={{ margin: '0 0 32px 0' }}>
       <Container>
         <Highlight {...defaultProps} code={code} language={language} theme={theme}>
           {({ className, style, tokens, getLineProps, getTokenProps }) => (

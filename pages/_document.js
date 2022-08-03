@@ -1,6 +1,8 @@
-/* eslint-disable @next/next/no-css-tags */
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+// import Script from 'next/script';
 import { ServerStyleSheet } from 'styled-components';
+// import GoogleAnalytics from '@components/GoogleAnalytics';
+import { SiteAnalytics } from '@lib/backend';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -33,9 +35,18 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <SiteAnalytics />
+
           <link
             rel="preload"
             href="/fonts/Jost-english-subset.woff2"
+            as="font"
+            crossOrigin=""
+            type="font/woff2"
+          />
+          <link
+            rel="preload"
+            href="/fonts/inter-variable-subset.woff2"
             as="font"
             crossOrigin=""
             type="font/woff2"
@@ -54,8 +65,6 @@ export default class MyDocument extends Document {
             crossOrigin=""
             type="font/woff2"
           />
-
-          <link rel="stylesheet" href="/styles/fonts.css" />
         </Head>
         <body>
           <div id="mobile-nav-portal"></div>

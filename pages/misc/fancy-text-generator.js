@@ -21,36 +21,40 @@ import Help from '@components/Help';
 
 const fontProperties = {
   Recursive: {
-    MONO: [ 0, 1 ],
-    CRSV: [ 0, 1 ],
-    CASL: [ 0, 1 ],
-    wght: [ 300, 1000 ],
-    slnt: [ -15, 0 ],
+    MONO: [0, 1],
+    CRSV: [0, 1],
+    CASL: [0, 1],
+    wght: [300, 1000],
+    slnt: [-15, 0],
+  },
+  Inter: {
+    wght: [100, 900],
+    slnt: [-10, 0],
   },
   OpenSans: {
-    wght: [ 300, 800 ],
-    wdth: [ 75, 100 ],
+    wght: [300, 800],
+    wdth: [75, 100],
   },
   Jost: {
-    wght: [ 100, 900 ],
-    ital: [ 0, 2 ],
+    wght: [100, 900],
+    ital: [0, 2],
   },
   Decovar: {
-    BLDA: [ 0, 1000 ],
-    TRMD: [ 0, 1000 ],
-    TRMC: [ 0, 1000 ],
-    SKLD: [ 0, 1000 ],
-    TRML: [ 0, 1000 ],
-    SKLA: [ 0, 1000 ],
-    TRMF: [ 0, 1000 ],
-    TRMK: [ 0, 1000 ],
-    BLDB: [ 0, 1000 ],
-    WMX2: [ 0, 1000 ],
-    TRMB: [ 0, 1000 ],
-    TRMA: [ 0, 1000 ],
-    SKLB: [ 0, 1000 ],
-    TRMG: [ 0, 1000 ],
-    TRME: [ 0, 1000 ],
+    BLDA: [0, 1000],
+    TRMD: [0, 1000],
+    TRMC: [0, 1000],
+    SKLD: [0, 1000],
+    TRML: [0, 1000],
+    SKLA: [0, 1000],
+    TRMF: [0, 1000],
+    TRMK: [0, 1000],
+    BLDB: [0, 1000],
+    WMX2: [0, 1000],
+    TRMB: [0, 1000],
+    TRMA: [0, 1000],
+    SKLB: [0, 1000],
+    TRMG: [0, 1000],
+    TRME: [0, 1000],
   },
 };
 
@@ -68,6 +72,16 @@ const data = {
       default: true,
       homepage: 'https://www.recursive.design/',
       github: 'https://github.com/arrowtype/recursive',
+    },
+    {
+      name: 'Inter',
+      settings: {
+        wght: 900,
+        slnt: 0,
+      },
+      default: false,
+      homepage: 'https://rsms.me/inter/',
+      github: 'https://github.com/rsms/inter',
     },
 
     {
@@ -123,7 +137,7 @@ const getDefaultFont = () => {
 };
 
 const getInitialSettings = (function parseFonts(fonts) {
-  const defaultSettings = [ ...fonts ].map((font) => {
+  const defaultSettings = [...fonts].map((font) => {
     return Object.assign({}, font);
   });
   return function getDefault(fontName) {
@@ -155,27 +169,64 @@ const initialState = {
   isChangingFonts: false,
   showBackground: false,
   help: false,
+  gradient: makeGradient({
+    gradientColorStart: '#00db87',
+    gradientColorEnd: '#4dc4ff',
+    gradientMidpoint: 50,
+    gradientBlend: 50,
+    gradientAngle: 0,
+  }),
+  shadow: makeShadow({
+    shadowColorStart: '#aa00ff',
+    shadowColorEnd: '#19103d',
+    shadowLayers: 20,
+    shadowGap: 1,
+    offsetX: -5,
+    offsetY: -5,
+  }),
+};
+
+const handleShadowUpdate = (state, action) => {
+  const actionType = snakeToCamel(action.type);
+  return {
+    ...state,
+    shadow: makeShadow({ ...state, [actionType]: action.value }),
+    [actionType]: action.value,
+  };
+};
+
+const handleGradientUpdate = (state, action) => {
+  const actionType = snakeToCamel(action.type);
+  return {
+    ...state,
+    gradient: makeGradient({ ...state, [actionType]: action.value }),
+    [actionType]: action.value,
+  };
 };
 
 function reducer(state, action) {
   const actionType = snakeToCamel(action.type);
 
   switch (action.type) {
-    case 'GRADIENT_COLOR_START':
-    case 'GRADIENT_COLOR_END':
     case 'SHADOW_COLOR_START':
     case 'SHADOW_COLOR_END':
     case 'SHADOW_LAYERS':
     case 'SHADOW_GAP':
     case 'OFFSET_X':
     case 'OFFSET_Y':
-    case 'BLUR':
+    case 'BLUR': {
+      return handleShadowUpdate(state, action);
+    }
+    case 'GRADIENT_COLOR_START':
+    case 'GRADIENT_COLOR_END':
+    case 'GRADIENT_MIDPOINT':
+    case 'GRADIENT_BLEND':
+    case 'GRADIENT_ANGLE': {
+      return handleGradientUpdate(state, action);
+    }
     case 'TEXT_STROKE_COLOR':
     case 'TEXT_STROKE_WIDTH':
     case 'FONT_SIZE':
-    case 'GRADIENT_MIDPOINT':
-    case 'GRADIENT_BLEND':
-    case 'GRADIENT_ANGLE':
     case 'TOGGLE_CODE':
     case 'HELP':
     case 'IS_CHANGING_FONTS':
@@ -268,14 +319,14 @@ function reducer(state, action) {
 }
 
 export default function VariableFontPlayground() {
-  const [ state, dispatch ] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const [ controlWidth, setControlWidth ] = useState(0);
-  const [ fontVariationSettings, setFontVariationSettings ] = useState('');
-  const [ initialSettings, setInitialSettings ] = useState('');
-  const [ shadow, setShadow ] = useState('');
-  const [ gradient, setGradient ] = useState('');
-  const [ text, setText ] = useState('');
+  const [controlWidth, setControlWidth] = useState(0);
+  const [fontVariationSettings, setFontVariationSettings] = useState('');
+  const [initialSettings, setInitialSettings] = useState('');
+  // const [ shadow, setShadow ] = useState('');
+  // const [ gradient, setGradient ] = useState('');
+  const [text, setText] = useState('');
 
   const headingRef = useRef();
   const overflowRef = useRef();
@@ -287,113 +338,115 @@ export default function VariableFontPlayground() {
 
     setFontVariationSettings(fontVariationSettings);
     setInitialSettings(defaultSettings);
-  }, [ state ]);
+  }, [state]);
 
-  useEffect(() => {
-    const shadow = makeShadow(state);
-    setShadow(shadow);
-  }, [ state, shadow ]);
+  // useEffect(() => {
+  //   const shadow = makeShadow(state);
+  //   setShadow(shadow);
+  // }, [ state, shadow ]);
 
-  useEffect(() => {
-    const gradient = makeGradient(state);
-    setGradient(gradient);
-  }, [ state, gradient ]);
+  // useEffect(() => {
+  //   const gradient = makeGradient(state);
+  //   setGradient(gradient);
+  // }, [ state, gradient ]);
 
-  return <>
-    <Head title="Fancy Text Generator" description="Variable font and text shadow generator" />
-    <Container>
-      <ControlWrapper>
-        <FontControls
-          state={state}
-          font={fontProperties[state.font]}
-          dispatch={dispatch}
-          setControlWidth={setControlWidth}
-        />
-      </ControlWrapper>
-
-      <Main ref={overflowRef} style={{ '--controlWidth': controlWidth }}>
-        <Wrapper>
-          <AnimatePresence exitBeforeEnter>
-            <motion.div
-              key={state.font}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-            >
-              <TextContent
-                key={state.font}
-                ref={headingRef}
-                style={{
-                  '--fontSize': state.fontSize + 'vw',
-                  '--fontFamily': state.font,
-                }}
-              >
-                <Gradient
-                  style={{
-                    '--fontSize': `${state.fontSize}vw`,
-                  }}
-                  dispatch={dispatch}
-                  state={state}
-                  shadow={shadow}
-                  gradient={gradient}
-                  fontSize={`${state.fontSize}vw`}
-                  strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
-                  strokeColor={state.textStrokeColor}
-                  fontVariationSettings={fontVariationSettings}
-                  initialSettings={initialSettings}
-                >
-                  {text || 'Click to edit'}
-                </Gradient>
-              </TextContent>
-            </motion.div>
-          </AnimatePresence>
-
-          <TextInput
-            spellCheck={false}
-            maxLength={50}
+  return (
+    <>
+      <Head title="Fancy Text Generator" description="Variable font and text shadow generator" />
+      <Container>
+        <ControlWrapper>
+          <FontControls
             state={state}
-            onChange={(e) => {
-              const text = e.target.value.replace(/'/g, '‘');
-              const final = text.replace(/[\\]+/g, '');
-              setText(final);
-            }}
-            style={{
-              '--fontSize': state.fontSize + 'vw',
-              '--fontFamily': state.font,
-              '--fontVariationSettings': state.fontVariationSettings,
-            }}
+            font={fontProperties[state.font]}
+            dispatch={dispatch}
+            setControlWidth={setControlWidth}
           />
-        </Wrapper>
+        </ControlWrapper>
 
-        <AnimatePresence exitBeforeEnter>
-          {state.toggleCode ? (
-            <CodeBlock
-              key={state.toggleCode}
+        <Main ref={overflowRef} style={{ '--controlWidth': controlWidth }}>
+          <Wrapper>
+            <AnimatePresence exitBeforeEnter>
+              <motion.div
+                key={state.font}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
+              >
+                <TextContent
+                  key={state.font}
+                  ref={headingRef}
+                  style={{
+                    '--fontSize': state.fontSize + 'vw',
+                    '--fontFamily': state.font,
+                  }}
+                >
+                  <Gradient
+                    style={{
+                      '--fontSize': `${state.fontSize}vw`,
+                    }}
+                    dispatch={dispatch}
+                    state={state}
+                    shadow={state.shadow}
+                    gradient={state.gradient}
+                    fontSize={`${state.fontSize}vw`}
+                    strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
+                    strokeColor={state.textStrokeColor}
+                    fontVariationSettings={fontVariationSettings}
+                    initialSettings={initialSettings}
+                  >
+                    {text || 'Click to edit'}
+                  </Gradient>
+                </TextContent>
+              </motion.div>
+            </AnimatePresence>
+
+            <TextInput
+              spellCheck={false}
+              maxLength={50}
               state={state}
-              fontFamily={state.font}
-              shadow={shadow}
-              gradient={gradient}
-              fontSize={`${state.fontSize}vw`}
-              strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
-              strokeColor={state.textStrokeColor}
-              fontVariationSettings={fontVariationSettings}
+              onChange={(e) => {
+                const text = e.target.value.replace(/'/g, '‘');
+                const final = text.replace(/[\\]+/g, '');
+                setText(final);
+              }}
+              style={{
+                '--fontSize': state.fontSize + 'vw',
+                '--fontFamily': state.font,
+                '--fontVariationSettings': state.fontVariationSettings,
+              }}
             />
-          ) : state.help ? (
-            <HelpContainer
-              initial={{ width: 0 }}
-              animate={{ width: '100%' }}
-              exit={{ width: 0, transition: { duration: 0.3 } }}
-              transition={{ duration: 0.8, ease: 'anticipate' }}
-            >
-              <Help key={state.help} />
-            </HelpContainer>
-          ) : null}
-        </AnimatePresence>
-      </Main>
-    </Container>
-    <NoScript>This tool requires javascript to work properly</NoScript>
-  </>;
+          </Wrapper>
+
+          <AnimatePresence exitBeforeEnter>
+            {state.toggleCode ? (
+              <CodeBlock
+                key={state.toggleCode}
+                state={state}
+                fontFamily={state.font}
+                shadow={state.shadow}
+                gradient={state.gradient}
+                fontSize={`${state.fontSize}vw`}
+                strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
+                strokeColor={state.textStrokeColor}
+                fontVariationSettings={fontVariationSettings}
+              />
+            ) : state.help ? (
+              <HelpContainer
+                initial={{ width: 0 }}
+                animate={{ width: '100%' }}
+                exit={{ width: 0, transition: { duration: 0.3 } }}
+                transition={{ duration: 0.8, ease: 'anticipate' }}
+              >
+                <Help key={state.help} />
+              </HelpContainer>
+            ) : null}
+          </AnimatePresence>
+        </Main>
+      </Container>
+      <NoScript>This tool requires javascript to work properly</NoScript>
+    </>
+  );
 }
 
 const NoScript = styled.noscript`

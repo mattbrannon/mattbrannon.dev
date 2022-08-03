@@ -23,7 +23,7 @@ const EyeWrapper = styled.div.attrs((props) => {
   const half = unit / 2;
   const borderRadius = `${double}px ${double}px ${half}px ${half}px`;
   // const r = props.ratio * 2;
-  const padding = `calc(((var(--cube-width) / 6) + (var(--cube-height) / 6)) / 2)`;
+  const padding = 'calc(((var(--cube-width) / 6) + (var(--cube-height) / 6)) / 2)';
   const { eyeWhiteColor, eyeColor, eyelidTop, eyelidColor } = props;
   return {
     style: {

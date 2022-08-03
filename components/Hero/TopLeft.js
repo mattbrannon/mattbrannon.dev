@@ -1,11 +1,11 @@
-import styled, { ThemeContext } from "styled-components";
-import { SmirkingCube } from "@components/Creature";
-import { breakpoints } from "@constants/breakpoints";
-import { useState, useEffect, useContext } from "react";
-import { m as motion } from "framer-motion";
-import { useRandomInterval } from "@hooks/useRandomInterval";
-import { useHasMounted } from "@hooks/useHasMounted";
-import { useMediaQuery } from "@hooks/useMediaQuery";
+import styled, { ThemeContext } from 'styled-components';
+import { SmirkingCube } from '@components/Creature';
+import { breakpoints } from '@constants/breakpoints';
+import { useState, useEffect, useContext } from 'react';
+import { m as motion } from 'framer-motion';
+import { useRandomInterval } from '@hooks/useRandomInterval';
+import { useHasMounted } from '@hooks/useHasMounted';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 
 const random = (min, max) => {
   min = Math.ceil(min);
@@ -33,7 +33,7 @@ export default function DropDeadFred() {
   return (
     <>
       <motion.div
-        style={{ transformStyle: "preserve-3d" }}
+        style={{ transformStyle: 'preserve-3d' }}
         initial={{ rotateY: context.hasRun ? 0 : isMobile ? 2222 : 9999 }}
         animate={{ rotateY: 0 }}
         transition={{ delay: 0, duration: 3, ease: [0.17, 0.67, 0.55, 1.1]}}
@@ -42,16 +42,16 @@ export default function DropDeadFred() {
           <CubeWrapper>
             <SmirkingCube
               style={{
-                "--cube-width": "inherit",
-                "--cube-height": "inherit",
+                '--cube-width': 'inherit',
+                '--cube-height': 'inherit',
               }}
             />
           </CubeWrapper>
         </Scene>
       </motion.div>
       <motion.div
-        style={{ height: 170, width: 180, position: "absolute", top: 0 }}
-        initial={{ background: "var(--basic-card-background)" }}
+        style={{ height: 170, width: 180, position: 'absolute', top: 0 }}
+        initial={{ background: 'var(--basic-card-background)' }}
         animate={{ opacity: 0 }}
         transition={{ duration: 3, delay: 1 }}
       ></motion.div>

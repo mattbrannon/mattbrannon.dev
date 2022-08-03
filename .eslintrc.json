@@ -26,6 +26,7 @@
   ],
   "plugins": ["react", "react-hooks", "@next/next"],
   "rules": {
+    "quotes": ["error", "single"],
     "no-unused-expressions": "off",
     "no-var": "error",
     "no-unused-vars": "warn",

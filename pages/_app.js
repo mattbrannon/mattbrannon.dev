@@ -1,23 +1,25 @@
-import Footer from "@components/Footer";
-import Layout, { Main } from "@components/Layout";
-import isValidProp from "@emotion/is-prop-valid";
-import { Banner } from "@components/Banner";
-import { HeaderGap } from "@components/Spacer";
+import Footer from '@components/Footer';
+import Layout, { Main } from '@components/Layout';
+import isValidProp from '@emotion/is-prop-valid';
+import { Banner } from '@components/Banner';
+import { HeaderGap } from '@components/Spacer';
+import { MobileMenu } from '@components/MobileMenu';
+import { PageAnalytics } from '@lib/frontend';
 
-import "@styles/global.css";
-import { GlobalStyle } from "@styles/index";
-import { MotionConfig, LazyMotion, domAnimation } from "framer-motion";
-import { ThemeProvider } from "next-themes";
-import { useEffect, useRef, useState } from "react";
-import { ThemeProvider as ContextProvider, StyleSheetManager } from "styled-components";
+import '@styles/global.css';
+import { GlobalStyle } from '@styles/index';
+import { MotionConfig, LazyMotion, domAnimation } from 'framer-motion';
+import { ThemeProvider } from 'next-themes';
+import { useEffect, useRef, useState } from 'react';
+import { ThemeProvider as ContextProvider, StyleSheetManager } from 'styled-components';
 
-import { useIsBannerVisible } from "@hooks/useIsBannerVisible";
-import { useActiveElement } from "@hooks/useActiveElement";
-import { useHasMounted } from "@hooks/useHasMounted";
+import { useIsBannerVisible } from '@hooks/useIsBannerVisible';
+import { useActiveElement } from '@hooks/useActiveElement';
+import { useHasMounted } from '@hooks/useHasMounted';
 
 export default function Application({ Component, pageProps }) {
   const [isOpen, setIsOpen] = useState(null);
-  // const [dialogIsOpen, setDialogIsOpen] = useState(false);
+  const [dialogIsOpen, setDialogIsOpen] = useState(false);
   const activeElement = useActiveElement();
   const hasMounted = useHasMounted();
   const [hasActiveElement, setHasActiveElement] = useState(false);
@@ -56,20 +58,21 @@ export default function Application({ Component, pageProps }) {
     // pathname,
   };
 
-  // useEffect(() => {
-  //   const nextNode = document.querySelector('#__next');
-  //   if (dialogIsOpen) {
-  //     document.body.style.setProperty('overflow', 'hidden');
-  //     nextNode.classList.add('blur');
-  //   }
-  //   else {
-  //     document.body.style.removeProperty('overflow');
-  //     nextNode.classList.remove('blur');
-  //   }
-  // }, [dialogIsOpen]);
+  useEffect(() => {
+    const nextNode = document.querySelector('#__next');
+    if (dialogIsOpen) {
+      document.body.style.setProperty('overflow', 'hidden');
+      nextNode.classList.add('blur');
+    }
+    else {
+      document.body.style.removeProperty('overflow');
+      nextNode.classList.remove('blur');
+    }
+  }, [dialogIsOpen]);
 
   return (
     <>
+      <PageAnalytics />
       <MotionConfig isValidProp={isValidProp}>
         <LazyMotion strict features={domAnimation}>
           {/* <GoogleAnalytics /> */}
@@ -77,10 +80,7 @@ export default function Application({ Component, pageProps }) {
             <ThemeProvider defaultTheme="dark" enableSystem={false} enableColorScheme={true}>
               <ContextProvider theme={theme}>
                 <GlobalStyle />
-                {/* <MobileMenu
-                  dialogIsOpen={dialogIsOpen}
-                  setDialogIsOpen={setDialogIsOpen}
-                /> */}
+                <MobileMenu dialogIsOpen={dialogIsOpen} setDialogIsOpen={setDialogIsOpen} />
                 <Banner ref={ref} isVisible={hasActiveElement || isBannerVisible} />
                 <Layout>
                   <HeaderGap />
