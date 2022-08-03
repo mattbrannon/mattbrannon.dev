@@ -14,15 +14,11 @@
   "dependencies": {
     "@next/bundle-analyzer": "^12.0.10",
     "axios": "^0.21.4",
-    "babel-plugin-macros": "^3.1.0",
-    "better-react-mathjax": "^1.0.3",
     "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
-    "esbuild": "^0.14.9",
     "focus-trap-react": "^8.5.1",
     "framer-motion": "~6.2.3",
     "gray-matter": "^4.0.2",
-    "mdx-bundler": "^8.0.1",
     "next": "latest",
     "next-mdx-remote": "^3.0.1",
     "next-remote-watch": "1.0.0",
@@ -38,16 +34,11 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^12.0.7",
-    "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-prismjs": "^2.1.0",
-    "babel-plugin-styled-components": "^2.0.1",
-    "babel-plugin-transform-remove-console": "^6.9.4",
     "color-tools": "/Users/admin/bin/node/color-tools",
     "eslint": "8.21.0",
-    "eslint-config-next": "^12.0.7",
-    "eslint-import-resolver-babel-module": "^5.3.1",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-module-resolver": "^1.4.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "prettier": "^2.7.1"
   }
 }
