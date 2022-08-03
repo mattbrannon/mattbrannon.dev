@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import Select from '@components/Select';
-import { NormalButton, FancyButton } from '@components/Button';
-import RangeSlider, { CustomInput } from './RangeSlider';
-import ControlsLayout, { ControlsContainer } from './Layout';
-import { useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import Checkbox from '@components/Checkbox';
+import styled from "styled-components";
+import Select from "@components/Select";
+import { NormalButton, FancyButton } from "@components/Button";
+import RangeSlider, { CustomInput } from "./RangeSlider";
+import ControlsLayout, { ControlsContainer } from "./Layout";
+import { useEffect, useRef } from "react";
+import { m as motion, AnimatePresence } from "framer-motion";
+import Checkbox from "@components/Checkbox";
 // import { loadFeatures } from '@utils/helpers';
 
 export function FontControls({ ...props }) {
@@ -14,29 +14,29 @@ export function FontControls({ ...props }) {
 
   const handleHelpButtonPressed = () => {
     if (state.toggleCode) {
-      props.dispatch({ type: 'TOGGLE_CODE', value: false });
+      props.dispatch({ type: "TOGGLE_CODE", value: false });
     }
-    props.dispatch({ type: 'HELP', value: !state.help });
+    props.dispatch({ type: "HELP", value: !state.help });
   };
   const handleGetCssButtonPressed = () => {
     if (state.help) {
-      props.dispatch({ type: 'HELP', value: false });
+      props.dispatch({ type: "HELP", value: false });
     }
-    props.dispatch({ type: 'TOGGLE_CODE', value: !state.toggleCode });
+    props.dispatch({ type: "TOGGLE_CODE", value: !state.toggleCode });
   };
 
   const handleFontSelection = (e) => {
-    props.dispatch({ type: 'CHANGE_FONT', value: e.target.value });
-    props.dispatch({ type: 'IS_CHANGING_FONTS', value: true });
+    props.dispatch({ type: "CHANGE_FONT", value: e.target.value });
+    props.dispatch({ type: "IS_CHANGING_FONTS", value: true });
   };
 
   const handleReset = () => {
-    props.dispatch({ type: 'RESET' });
-    props.dispatch({ type: 'IS_CHANGING_FONTS', value: true });
+    props.dispatch({ type: "RESET" });
+    props.dispatch({ type: "IS_CHANGING_FONTS", value: true });
   };
 
   const handleShowBackground = (e) => {
-    props.dispatch({ type: 'SHOW_BACKGROUND', value: e.target.checked });
+    props.dispatch({ type: "SHOW_BACKGROUND", value: e.target.checked });
   };
 
   const displayOptions = () => {
@@ -54,10 +54,10 @@ export function FontControls({ ...props }) {
       const minWidth = getComputedStyle(ref.current).minWidth;
       return props.setControlWidth(minWidth);
     }
-  }, [ props, props.setControlWidth ]);
+  }, [props, props.setControlWidth]);
 
-  const toggleButtonText = state.toggleCode === true ? 'Back to Editor' : 'Get Css';
-  const toggleHelpText = state.help ? 'Back to Editor' : 'Help';
+  const toggleButtonText = state.toggleCode === true ? "Back to Editor" : "Get Css";
+  const toggleHelpText = state.help ? "Back to Editor" : "Help";
 
   return (
     <AnimatePresence exitBeforeEnter>
@@ -108,9 +108,9 @@ export function FontControls({ ...props }) {
                 {...props}
               />
               {Object.keys(font).map((key, i) => {
-                const [ min, max ] = font[key];
+                const [min, max] = font[key];
 
-                const step = max - min > 2 ? 1 : key === 'CRSV' ? 0.5 : 0.01;
+                const step = max - min > 2 ? 1 : key === "CRSV" ? 0.5 : 0.01;
                 return (
                   <div key={i}>
                     <label>{props.value}</label>

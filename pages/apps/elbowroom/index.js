@@ -4,7 +4,7 @@ import { H3 } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
 import Text from '@components/Text';
 import { FlatVideo } from '@components/VideoPlayer';
-import Image from 'next/image';
+import Image from 'next/future/image';
 import styled from 'styled-components';
 import desktopImage from '/public/images/elbowroom/desktop.png';
 import mobileImage from '/public/images/elbowroom/mobile.png';

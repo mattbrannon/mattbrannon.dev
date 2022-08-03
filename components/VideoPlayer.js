@@ -2,7 +2,7 @@ import { breakpoints } from '@constants/index.js';
 import pause from '@public/images/pause.png';
 import play from '@public/images/play.png';
 import { useCssVariable } from 'hooks/useCssVariable';
-import NextImage from 'next/image';
+import NextImage from 'next/future/image';
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import VisuallyHidden from './VisuallyHidden';

@@ -1,17 +1,17 @@
-import DocumentHead from '@components/Head';
-import { decovarValues } from '@constants/index.js';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useEffect, useRef } from 'react';
-import styled, { keyframes } from 'styled-components';
+import DocumentHead from "@components/Head";
+import { decovarValues } from "@constants/index.js";
+import { m as motion } from "framer-motion";
+import Link from "next/link";
+import { useEffect, useRef } from "react";
+import styled, { keyframes } from "styled-components";
 // import { loadFeatures } from '@utils/helpers';
-import { SmirkingCube } from '@components/Creature';
+import { SmirkingCube } from "@components/Creature";
 
 const getTranslateXPoints = (start, end, divider) => {
   let total = Math.abs(start) + Math.abs(end);
   let multiplier = start < end ? 1 : -1;
   let steps = total / divider;
-  let arr = [ start ];
+  let arr = [start];
   for (let i = 0; i < steps; i++) {
     start += divider * multiplier;
     arr.push(start);
@@ -22,7 +22,7 @@ const walking = (start, end, amount, xdeg, ydeg) => {
   return getTranslateXPoints(start, end, amount).map((frame, i) => {
     const rotateX = i % 2 === 0 ? xdeg : xdeg * -1;
     const rotateY = i % 2 === 0 ? ydeg : ydeg + 5;
-    const translateX = frame + 'px';
+    const translateX = frame + "px";
     return {
       transform: `translateX(${translateX}) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
     };
@@ -32,7 +32,7 @@ const walking = (start, end, amount, xdeg, ydeg) => {
 const random = (n) => Math.floor(Math.random() * (n + 1));
 
 const shuffle = (array) => {
-  const copy = [ ...array ];
+  const copy = [...array];
   const shuffledItems = [];
   while (copy.length) {
     let i = random(copy.length - 1);
@@ -44,12 +44,12 @@ const shuffle = (array) => {
 };
 
 const setRandomValues = () => {
-  const removeKeys = (key) => key !== 'default'; // || key !== 'sheared';
+  const removeKeys = (key) => key !== "default"; // || key !== 'sheared';
 
   const keys = Object.keys(decovarValues);
   const shuffledKeys = shuffle(keys);
   const shuffledSettings = shuffledKeys.filter(removeKeys).map((key) => decovarValues[key]);
-  const fontSettings = [ decovarValues.default, ...shuffledSettings ];
+  const fontSettings = [decovarValues.default, ...shuffledSettings];
   return fontSettings;
 };
 
@@ -64,21 +64,21 @@ export default function Error404() {
 
       const walk = ref.current.animate(frames, {
         duration: 2000,
-        fill: 'both',
-        easing: 'linear',
+        fill: "both",
+        easing: "linear",
       });
       walk.finished.then(() => {
         const lastFrame = frames.pop();
-        const spin = [ lastFrame, { transform: 'rotateY(-15deg)' } ];
+        const spin = [lastFrame, { transform: "rotateY(-15deg)" }];
         ref.current.animate(spin, {
           duration: 900,
           delay: 1400,
-          easing: 'cubic-bezier(.79,-0.31,.05,1.4)',
-          fill: 'forwards',
+          easing: "cubic-bezier(.79,-0.31,.05,1.4)",
+          fill: "forwards",
         });
       });
     }
-  }, [ ref ]);
+  }, [ref]);
 
   const font = {
     animate: {
@@ -86,43 +86,45 @@ export default function Error404() {
       transition: {
         delay: 0,
         repeat: Infinity,
-        repeatType: 'mirror',
+        repeatType: "mirror",
         duration: 120,
       },
     },
   };
 
-  return <>
-    <DocumentHead title="Whoops" desc="We must have taken a wrong turn at Albuquerque">
-      <link
-        rel="preload"
-        href="/fonts/decovar.woff2"
-        as="font"
-        crossOrigin=""
-        type="font/woff2"
-      />
-    </DocumentHead>
+  return (
+    <>
+      <DocumentHead title="Whoops" desc="We must have taken a wrong turn at Albuquerque">
+        <link
+          rel="preload"
+          href="/fonts/decovar.woff2"
+          as="font"
+          crossOrigin=""
+          type="font/woff2"
+        />
+      </DocumentHead>
 
-    <Container>
-      <CubeWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-        <SmirkingCube width={125} height={125} ref={ref} />
-      </CubeWrapper>
-      <Wrapper>
-        <Link passHref href="/" legacyBehavior>
-          <P
-            variants={font}
-            initial="initial"
-            animate="animate"
-            ref={textRef}
-            fontSize={fontSize}
-            href="/"
-          >
-            Go Back
-          </P>
-        </Link>
-      </Wrapper>
-    </Container>
-  </>;
+      <Container>
+        <CubeWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <SmirkingCube width={125} height={125} ref={ref} />
+        </CubeWrapper>
+        <Wrapper>
+          <Link passHref href="/" legacyBehavior>
+            <P
+              variants={font}
+              initial="initial"
+              animate="animate"
+              ref={textRef}
+              fontSize={fontSize}
+              href="/"
+            >
+              Go Back
+            </P>
+          </Link>
+        </Wrapper>
+      </Container>
+    </>
+  );
 }
 
 const fadeIn = keyframes`

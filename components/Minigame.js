@@ -1,15 +1,15 @@
-import { useCssVariable } from '@hooks/useCssVariable';
-import { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import InputCheckbox from '@components/Checkbox';
+import { useCssVariable } from "@hooks/useCssVariable";
+import { useState, useEffect, useRef } from "react";
+import styled from "styled-components";
+import { m as motion } from "framer-motion";
+import InputCheckbox from "@components/Checkbox";
 // import { loadFeatures } from '@utils/helpers';
 
 export default function MiniGame() {
-  const [ isCorrect, setIsCorrect ] = useState(null);
+  const [isCorrect, setIsCorrect] = useState(null);
 
   return (
-    <motion.div style={{ height: '180px' }}>
+    <motion.div style={{ height: "180px" }}>
       <Inputs isCorrect={isCorrect} setIsCorrect={setIsCorrect} />
       {isCorrect !== null && <Results isCorrect={isCorrect} />}
     </motion.div>
@@ -29,17 +29,17 @@ export function Inputs({ ...props }) {
 }
 
 export function Results({ isCorrect }) {
-  const [ result, setResult ] = useState(null);
+  const [result, setResult] = useState(null);
   const ref = useRef();
-  const setColor = useCssVariable('--result-color', 'red', ref);
+  const setColor = useCssVariable("--result-color", "red", ref);
 
   useEffect(() => {
-    const result = isCorrect !== null ? (isCorrect ? "That's right!" : 'Wrong!') : null;
-    const color = isCorrect ? 'green' : 'red';
+    const result = isCorrect !== null ? (isCorrect ? "That's right!" : "Wrong!") : null;
+    const color = isCorrect ? "green" : "red";
 
     setResult(result);
     setColor(color);
-  }, [ isCorrect, setColor ]);
+  }, [isCorrect, setColor]);
 
   return (
     <>

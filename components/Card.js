@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { breakpoints } from '@constants/breakpoints';
 import { useHasMounted } from '@hooks/useHasMounted';
 import { useEffect, useState } from 'react';

@@ -1,7 +1,7 @@
 import { FullBleed } from '@components/Layout';
 import VisuallyHidden from '@components/VisuallyHidden';
 import { breakpoints } from '@constants/index';
-import NextImage from 'next/image';
+import NextImage from 'next/future/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 

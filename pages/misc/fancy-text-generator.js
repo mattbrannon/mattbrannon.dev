@@ -13,7 +13,7 @@ import {
 } from '@utils/helpers.js';
 
 import Head from '@components/Head';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion, AnimatePresence } from 'framer-motion';
 import SyntaxHighlighter from '@components/SyntaxHighlighter';
 import { Color } from 'color-tools';
 

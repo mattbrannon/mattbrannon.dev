@@ -1,6 +1,6 @@
 import { breakpoints } from '@constants/index';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 // import { loadFeatures } from '@utils/helpers';
 
 const Wrapper = styled(motion.div)`

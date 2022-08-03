@@ -1,13 +1,13 @@
-import ShapeControls from '@components/Controls/ShapeControls';
+import ShapeControls from "@components/Controls/ShapeControls";
 // import { Cube } from '@components/Creature/Cube';
-import { NormalCube as Cube } from '@components/Creature';
-import Head from '@components/Head';
-import Globe from '@components/Shapes/Globe';
-import { snakeToCamel } from '@utils/helpers.js';
-import { lighten } from '@utils/colors.js';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useReducer, useRef, useState } from 'react';
-import styled from 'styled-components';
+import { NormalCube as Cube } from "@components/Creature";
+import Head from "@components/Head";
+import Globe from "@components/Shapes/Globe";
+import { snakeToCamel } from "@utils/helpers.js";
+import { lighten } from "@utils/colors.js";
+import { AnimatePresence, m as motion } from "framer-motion";
+import { useEffect, useReducer, useRef, useState } from "react";
+import styled from "styled-components";
 
 const initialState = {
   rotateX: 155,
@@ -21,54 +21,54 @@ const initialState = {
   depth: 100,
   translateEyeX: 0,
   translateEyeY: 0,
-  shape: 'Cube',
+  shape: "Cube",
   speed: 1,
   sides: 12,
   radius: 0,
   backgroundDisplay: true,
-  backgroundType: 'linear-gradient',
-  gradientColorStart: '#00bfff',
-  gradientColorEnd: '#050c6b',
-  color: '#9ba84a',
-  hairColor: '#654321',
+  backgroundType: "linear-gradient",
+  gradientColorStart: "#00bfff",
+  gradientColorEnd: "#050c6b",
+  color: "#9ba84a",
+  hairColor: "#654321",
   opacity: 1,
   outline: true,
-  background: '#D2B48C',
-  eyeColor: '#8cbecf',
+  background: "#D2B48C",
+  eyeColor: "#8cbecf",
 };
 
 function reducer(state, action) {
   const actionType = snakeToCamel(action.type);
 
   switch (action.type) {
-    case 'ROTATE_X':
-    case 'ROTATE_Y':
-    case 'ROTATE_Z':
-    case 'TRANSLATE_X':
-    case 'TRANSLATE_Y':
-    case 'TRANSLATE_Z':
-    case 'WIDTH':
-    case 'HEIGHT':
-    case 'DEPTH':
-    case 'SHAPE':
-    case 'SPEED':
-    case 'SIDES':
-    case 'OUTLINE':
-    case 'GRADIENT_COLOR_START':
-    case 'GRADIENT_COLOR_END':
-    case 'GRADIENT_BLEND':
-    case 'GRADIENT_MIDPOINT':
-    case 'GRADIENT_ANGLE':
-    case 'COLOR':
-    case 'HAIR_COLOR':
-    case 'BACKGROUND_TYPE':
-    case 'OPACITY':
-    case 'RADIUS':
-    case 'PERSPECTIVE':
-    case 'BACKGROUND':
-    case 'EYE_COLOR':
+    case "ROTATE_X":
+    case "ROTATE_Y":
+    case "ROTATE_Z":
+    case "TRANSLATE_X":
+    case "TRANSLATE_Y":
+    case "TRANSLATE_Z":
+    case "WIDTH":
+    case "HEIGHT":
+    case "DEPTH":
+    case "SHAPE":
+    case "SPEED":
+    case "SIDES":
+    case "OUTLINE":
+    case "GRADIENT_COLOR_START":
+    case "GRADIENT_COLOR_END":
+    case "GRADIENT_BLEND":
+    case "GRADIENT_MIDPOINT":
+    case "GRADIENT_ANGLE":
+    case "COLOR":
+    case "HAIR_COLOR":
+    case "BACKGROUND_TYPE":
+    case "OPACITY":
+    case "RADIUS":
+    case "PERSPECTIVE":
+    case "BACKGROUND":
+    case "EYE_COLOR":
       return { ...state, [actionType]: action.value };
-    case 'RESET': {
+    case "RESET": {
       return {
         ...initialState,
         sides: state.sides,
@@ -115,25 +115,25 @@ const shapeVariants = {
 };
 
 export default function Experiments() {
-  const [ state, dispatch ] = useReducer(reducer, initialState);
-  const [ cubeWidth, setCubeWidth ] = useState(0);
-  const [ cubeHeight, setCubeHeight ] = useState(0);
-  const [ controlWidth, setControlWidth ] = useState(0);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [cubeWidth, setCubeWidth] = useState(0);
+  const [cubeHeight, setCubeHeight] = useState(0);
+  const [controlWidth, setControlWidth] = useState(0);
 
   const ref = useRef();
 
   useEffect(() => {
     if (ref && ref.current) {
       const styles = window.getComputedStyle(ref.current);
-      const width = styles.width.match(/\d+/g).join('');
-      const height = styles.height.match(/\d+/g).join('');
+      const width = styles.width.match(/\d+/g).join("");
+      const height = styles.height.match(/\d+/g).join("");
 
       setCubeWidth(Number(width));
       setCubeHeight(Number(height));
     }
-  }, [ ref ]);
+  }, [ref]);
 
-  const Component = state.shape === 'Cube' ? Cube : Globe;
+  const Component = state.shape === "Cube" ? Cube : Globe;
 
   const radius = Component === Cube ? 0 : 50;
   const width = controlWidth < 200 ? 200 : controlWidth;
@@ -151,7 +151,7 @@ export default function Experiments() {
   return (
     <>
       <Head title="Experiments with a cube" description="A tool for visualizing 3d transforms" />
-      <div style={{ '--controlWidth': `${width}px` }}>
+      <div style={{ "--controlWidth": `${width}px` }}>
         <ControlWrapper>
           <ShapeControls
             cubeHeight={cubeHeight}
@@ -179,14 +179,14 @@ export default function Experiments() {
                 state={state}
                 hair={
                   state.width === 300
-                    ? 'huge'
+                    ? "huge"
                     : state.width < 300 && state.width >= 250
-                    ? 'large'
+                    ? "large"
                     : state.width < 250 && state.width >= 200
-                    ? 'medium'
+                    ? "medium"
                     : state.width < 200 && state.width >= 150
-                    ? 'small'
-                    : 'long'
+                    ? "small"
+                    : "long"
                 }
                 sides={state.sides}
                 backgroundDisplay={state.backgroundDisplay}
@@ -207,30 +207,30 @@ export default function Experiments() {
                 eyeColor={state.eyeColor}
                 // transition={transition}
                 style={{
-                  '--rotateX': `${state.rotateX}deg`,
-                  '--rotateY': `${state.rotateY}deg`,
-                  '--rotateZ': `${state.rotateZ}deg`,
-                  '--translateX': `${state.translateX}px`,
-                  '--translateY': `${state.translateY}px`,
-                  '--translateZ': `${state.translateZ}px`,
-                  '--cube-width': `${state.width}px`,
-                  '--cube-height': `${state.height}px`,
-                  '--cube-depth': `${state.depth}px`,
-                  '--perspective': `${state.perspective}px`,
-                  '--translateEyeX': `${state.translateEyeX}px`,
-                  '--translateEyeY': `${state.translateEyeY}px`,
+                  "--rotateX": `${state.rotateX}deg`,
+                  "--rotateY": `${state.rotateY}deg`,
+                  "--rotateZ": `${state.rotateZ}deg`,
+                  "--translateX": `${state.translateX}px`,
+                  "--translateY": `${state.translateY}px`,
+                  "--translateZ": `${state.translateZ}px`,
+                  "--cube-width": `${state.width}px`,
+                  "--cube-height": `${state.height}px`,
+                  "--cube-depth": `${state.depth}px`,
+                  "--perspective": `${state.perspective}px`,
+                  "--translateEyeX": `${state.translateEyeX}px`,
+                  "--translateEyeY": `${state.translateEyeY}px`,
                   // '--transition': transition,
-                  '--speed': `${state.speed}s`,
-                  '--radius': `${radius}%`,
-                  '--outline': state.outline ? `1px solid black` : 'none',
-                  '--opacity': state.opacity,
-                  '--solidColor': state.color,
-                  '--gradientColorStart': state.gradientColorStart,
-                  '--gradientColorEnd': state.gradientColorEnd,
-                  '--background': state.background,
-                  '--hairColor': state.hairColor,
-                  '--eyelidColor': lighten(state.background, 30),
-                  '--eyeColor': state.eyeColor,
+                  "--speed": `${state.speed}s`,
+                  "--radius": `${radius}%`,
+                  "--outline": state.outline ? `1px solid black` : "none",
+                  "--opacity": state.opacity,
+                  "--solidColor": state.color,
+                  "--gradientColorStart": state.gradientColorStart,
+                  "--gradientColorEnd": state.gradientColorEnd,
+                  "--background": state.background,
+                  "--hairColor": state.hairColor,
+                  "--eyelidColor": lighten(state.background, 30),
+                  "--eyeColor": state.eyeColor,
 
                   // '--background': background,
                 }}
@@ -255,7 +255,7 @@ const NoScript = styled.noscript`
   place-items: center;
   font-size: var(--size52);
   font-family: recursive;
-  font-variation-settings: 'wght' 800, 'slnt' -6, 'CRSV' 0, 'CASL' 0, 'MONO' 0;
+  font-variation-settings: "wght" 800, "slnt" -6, "CRSV" 0, "CASL" 0, "MONO" 0;
   text-align: center;
 `;
 

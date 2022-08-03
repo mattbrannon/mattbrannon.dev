@@ -1,25 +1,25 @@
-import AppTitle from '@components/AppTitle';
-import { NormalButton as StandardButton } from '@components/Button';
-import Head from '@components/Head';
-import { H3 } from '@components/Headings';
-import PageButtons from '@components/PageButtons';
-import SideNote from '@components/SideNote';
-import Text from '@components/Text';
-import Image from 'next/image';
-import { useState } from 'react';
-import styled from 'styled-components';
-import image1 from '/public/images/monty-hall/monty-hall1.png';
-import image2 from '/public/images/monty-hall/monty-hall2.png';
-import image3 from '/public/images/monty-hall/monty-hall3.png';
+import AppTitle from "@components/AppTitle";
+import { NormalButton as StandardButton } from "@components/Button";
+import Head from "@components/Head";
+import { H3 } from "@components/Headings";
+import PageButtons from "@components/PageButtons";
+import SideNote from "@components/SideNote";
+import Text from "@components/Text";
+import Image from "next/future/image";
+import { useState } from "react";
+import styled from "styled-components";
+import image1 from "/public/images/monty-hall/monty-hall1.png";
+import image2 from "/public/images/monty-hall/monty-hall2.png";
+import image3 from "/public/images/monty-hall/monty-hall3.png";
 
 export default function MontyHallPage() {
-  const [ isCorrect, setIsCorrect ] = useState(null);
+  const [isCorrect, setIsCorrect] = useState(null);
 
   const links = {
-    github: 'https://github.com/mattbrannon/monty-hall-experiment',
-    liveSite: 'https://monty-hall-experiment.surge.sh/',
+    github: "https://github.com/mattbrannon/monty-hall-experiment",
+    liveSite: "https://monty-hall-experiment.surge.sh/",
   };
-  const sources = [ '/videos/demos/montyhall.mp4' ];
+  const sources = ["/videos/demos/montyhall.mp4"];
 
   return (
     <article>
@@ -71,7 +71,7 @@ export default function MontyHallPage() {
           <ResponsiveImage src={image1} alt="image1" />
           <ResponsiveImage src={image2} alt="image2" />
         </FlexContainer>
-        <div style={{ height: '4px' }}></div>
+        <div style={{ height: "4px" }}></div>
         <FlexContainer>
           <ResponsiveImage src={image3} alt="image3" />
         </FlexContainer>
@@ -91,11 +91,11 @@ const Results = ({ isCorrect }) => {
   const display =
     isCorrect !== null ? (isCorrect ? "That's correct!" : "Sorry, that's incorrect") : null;
 
-  const color = isCorrect ? 'var(--correct-answer)' : 'var(--wrong-answer)';
+  const color = isCorrect ? "var(--correct-answer)" : "var(--wrong-answer)";
 
   return (
     <ResultContainer>
-      <Result style={{ '--color': color }}>{display}</Result>
+      <Result style={{ "--color": color }}>{display}</Result>
       <div>
         <Small>You have about a 67% chance of winning if you switch doors</Small>
       </div>
@@ -160,7 +160,7 @@ const ResultContainer = styled.div`
   min-height: 140px;
   display: grid;
   place-content: center;
-  font-variation-settings: 'wdth' 120, 'wght' 700;
+  font-variation-settings: "wdth" 120, "wght" 700;
 `;
 
 const Result = styled.div`

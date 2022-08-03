@@ -1,8 +1,8 @@
-import styled from 'styled-components';
-import { breakpoints } from '@constants/breakpoints';
-import Link from 'next/link';
-import { NormalButton } from '@components/Button';
-import { motion } from 'framer-motion';
+import styled from "styled-components";
+import { breakpoints } from "@constants/breakpoints";
+import Link from "next/link";
+import { NormalButton } from "@components/Button";
+import { m as motion } from "framer-motion";
 // import { useState, useReducer, useEffect } from 'react';
 
 export default function CardBottom({ ...props }) {
@@ -32,18 +32,18 @@ export default function CardBottom({ ...props }) {
 const getCssValues = ({ side, isContainerVisible = true }) => {
   const translateX = isContainerVisible
     ? 0
-    : side === 'left'
-    ? 'calc(100% + 8px)'
-    : side === 'right'
-    ? 'calc(-100% - 8px)'
+    : side === "left"
+    ? "calc(100% + 8px)"
+    : side === "right"
+    ? "calc(-100% - 8px)"
     : 0;
 
-  const clipPath = isContainerVisible ? 'circle(100%)' : 'circle(0px)';
+  const clipPath = isContainerVisible ? "circle(100%)" : "circle(0px)";
 
-  const color = isContainerVisible ? 'rgb(255, 255, 255, 1)' : 'rgb(255, 255, 255, 0)';
+  const color = isContainerVisible ? "rgb(255, 255, 255, 1)" : "rgb(255, 255, 255, 0)";
   const textShadow = isContainerVisible
-    ? '-0.05em -0.05em 0.05em rgb(0, 0, 0, 1)'
-    : '0 0 0 rgb(0, 0, 0, 0)';
+    ? "-0.05em -0.05em 0.05em rgb(0, 0, 0, 1)"
+    : "0 0 0 rgb(0, 0, 0, 0)";
 
   const opacity = isContainerVisible ? 1 : 0;
 
@@ -54,11 +54,11 @@ const Wrapper = styled.div.attrs((props) => {
   const { translateX, clipPath, color, textShadow, opacity } = getCssValues(props);
   return {
     style: {
-      '--translateX': translateX,
-      '--clipPath': clipPath,
-      '--color': color,
-      '--textShadow': textShadow,
-      '--opacity': opacity,
+      "--translateX": translateX,
+      "--clipPath": clipPath,
+      "--color": color,
+      "--textShadow": textShadow,
+      "--opacity": opacity,
     },
   };
 })`

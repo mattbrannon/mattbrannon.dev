@@ -3,7 +3,7 @@ import { useRef, useEffect, useReducer, useState } from 'react';
 import Head from '@components/Head';
 import FractalControls from '@components/Controls/FractalControls';
 import { snakeToCamel } from '@utils/helpers.js';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 
 const initialState = {
   size: 120,
