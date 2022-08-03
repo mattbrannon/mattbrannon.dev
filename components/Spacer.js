@@ -6,7 +6,8 @@ function getHeight({ axis, size }) {
 function getWidth({ axis, size }) {
   return axis === 'vertical' ? 1 : size;
 }
-const Spacer = styled.span`
+
+export const Spacer = styled.span`
   display: block;
   width: ${getWidth}px;
   min-width: ${getWidth}px;
@@ -14,6 +15,10 @@ const Spacer = styled.span`
   min-height: ${getHeight}px;
 `;
 
+export const HeaderGap = styled.div`
+  height: var(--header-height);
+`;
+
 export const Gap = styled(Spacer).attrs({ axis: 'vertical' })``;
 
-export default Spacer;
+// export default Spacer;
