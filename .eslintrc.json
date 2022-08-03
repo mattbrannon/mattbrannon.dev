@@ -13,25 +13,10 @@
     "mdx/language-mapper": {},
     "react": {
       "version": "detect"
-    },
-    "prettierx": {
-      "usePrettierrc": true,
-      "editorconfig": false,
-      "ignorePath": ".prettierignore",
-      "proseWrap": "never",
-      "pluginSearchDirs": [],
-      "plugins": [],
-      "withNodeModules": false,
-      "useCache": true
     }
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:prettierx/default",
-    "next/core-web-vitals"
-  ],
-  "plugins": ["module-resolver", "import", "react", "prettierx"],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "next/core-web-vitals"],
+  "plugins": ["module-resolver", "import", "react"],
   "rules": {
     "no-unused-expressions": "off",
     "no-var": "error",
@@ -40,17 +25,30 @@
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off",
     "no-multiple-empty-lines": ["off", { "max": 8, "maxEOF": 2 }],
-    "prettierx/options": [
-      "warn",
+    "n/no-callback-literal": "off",
+    "brace-style": ["error", "stroustrup"],
+    "semi": ["error", "always"],
+    "space-before-function-paren": "off",
+    "comma-dangle": ["error", "only-multiline"],
+    "multiline-ternary": "off",
+    "indent": [
+      "error",
+      2,
       {
-        "arrayBracketSpacing": true,
-        "breakBeforeElse": true,
-        "semi": true,
-        "printWidth": 100,
-        "offsetTernaryExpressions": false,
-        "singleQuote": true,
-        "breakLongMethodChains": true
+        "ignoredNodes": ["ConditionalExpression > *"],
+        "SwitchCase": 1
       }
-    ]
+    ],
+    "object-curly-spacing": ["error", "always", { "arraysInObjects": false }]
+
+    // "array-bracket-spacing": [
+    //   "error",
+    //   "always",
+    //   {
+    //     "arraysInArrays": false,
+    //     "objectsInArrays": false,
+    //     "singleValue": true
+    //   }
+    // ]
   }
 }

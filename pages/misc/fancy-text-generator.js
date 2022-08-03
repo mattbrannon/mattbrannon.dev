@@ -15,7 +15,7 @@ import {
 import Head from '@components/Head';
 import { motion, AnimatePresence } from 'framer-motion';
 import SyntaxHighlighter from '@components/SyntaxHighlighter';
-import Color from 'color-tools';
+import { Color } from 'color-tools';
 
 import Help from '@components/Help';
 

@@ -1,4 +1,4 @@
-import Color from 'color-tools';
+import { Color } from 'color-tools';
 
 const randomInt = (min, max) => {
   min = Math.ceil(min);
@@ -289,7 +289,8 @@ export const toHeadingId = (str) => {
         .join('-')
         .replace(/-+/g, '-')
     );
-  } catch {
+  }
+  catch {
     return str;
   }
 };

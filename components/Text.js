@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Blockquote } from './SideNote';
-import Color from 'color-tools';
+import { Color } from 'color-tools';
 import { fonts } from '@constants/index';
 import Help from '@components/Help';
 

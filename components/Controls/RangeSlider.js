@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Color from 'color-tools';
+import { Color } from 'color-tools';
 
 import { spaceToCamelCase as toCamelCase, toSnakeUpperCase, toFloat } from '@utils/helpers.js';
 import { useState, useEffect, forwardRef } from 'react';
