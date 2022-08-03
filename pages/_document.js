@@ -23,7 +23,8 @@ export default class MyDocument extends Document {
           </>
         ),
       };
-    } finally {
+    }
+    finally {
       sheet.seal();
     }
   }
@@ -57,6 +58,7 @@ export default class MyDocument extends Document {
           <link rel="stylesheet" href="/styles/fonts.css" />
         </Head>
         <body>
+          <div id="mobile-nav-portal"></div>
           <Main />
           <NextScript />
         </body>
