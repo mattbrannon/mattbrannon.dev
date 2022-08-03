@@ -1,5 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
-import { breakpoints, shadows, gradients, decovarValues, fonts } from '../constants';
+import {
+  breakpoints,
+  shadows,
+  gradients,
+  decovarValues,
+  fonts,
+} from '../constants';
 
 export const GlobalStyle = createGlobalStyle`
 :root {
@@ -12,8 +18,8 @@ export const GlobalStyle = createGlobalStyle`
   --green-light: hsl(120, 100%, 65%);
   --green-dark: hsl(120, 100%, 25%);
 
-  --yellow: hsl(51, 100%, 50%);
-  --yellow-orange: hsl(44, 100%, 55%);
+  /* --yellow: hsl(51, 100%, 50%); */
+  /* --yellow-orange: hsl(44, 100%, 55%); */
   --yellow-orange: hsl(45, 100%, 60%);
   --amber: hsl(45, 100%, 50%);
   --orange-dark: hsl(22, 100%, 55%);
@@ -26,34 +32,34 @@ export const GlobalStyle = createGlobalStyle`
 
   --sky: hsl(195, 100%, 50%);
   --sky-light: hsl(195, 100%, 75%);
-  --sky-dark: hsl(195, 100%, 25%);
+  /* --sky-dark: hsl(195, 100%, 25%); */
 
   --azure: hsl(210, 100%, 50%);
   --azure-light: hsl(210, 100%, 74%);
   --azure-dark: hsl(210, 100%, 35%);
   --azure-heavy: hsl(210, 75%, 25%);
 
-  --azure-5: hsl(210, 100%, 5%);
+  /* --azure-5: hsl(210, 100%, 5%);
   --azure-10: hsl(210, 100%, 10%);
   --azure-15: hsl(210, 100%, 15%);
-  --azure-20: hsl(210, 100%, 20%);
+  --azure-20: hsl(210, 100%, 20%); */
   --azure-25: hsl(210, 100%, 25%);
-  --azure-30: hsl(210, 100%, 30%);
+  /* --azure-30: hsl(210, 100%, 30%); */
   --azure-35: hsl(210, 100%, 35%);
-  --azure-40: hsl(210, 100%, 40%);
-  --azure-45: hsl(210, 100%, 45%);
+  /* --azure-40: hsl(210, 100%, 40%); */
+  /* --azure-45: hsl(210, 100%, 45%);
   --azure-50: hsl(210, 100%, 50%);
   --azure-55: hsl(210, 100%, 55%);
   --azure-60: hsl(210, 100%, 60%);
   --azure-65: hsl(210, 100%, 65%);
-  --azure-70: hsl(210, 100%, 70%);
+  --azure-70: hsl(210, 100%, 70%); */
   --azure-75: hsl(210, 100%, 75%);
-  --azure-80: hsl(210, 100%, 80%);
+  /* --azure-80: hsl(210, 100%, 80%); */
   --azure-85: hsl(210, 100%, 85%);
-  --azure-90: hsl(210, 100%, 90%);
-  --azure-95: hsl(210, 100%, 95%);
+  /* --azure-90: hsl(210, 100%, 90%); */
+  /* --azure-95: hsl(210, 100%, 95%); */
 
-  --cyan-5: hsl(190, 100%, 5%);
+  /* --cyan-5: hsl(190, 100%, 5%);
   --cyan-10: hsl(190, 100%, 10%);
   --cyan-15: hsl(190, 100%, 15%);
   --cyan-20: hsl(190, 100%, 20%);
@@ -62,21 +68,21 @@ export const GlobalStyle = createGlobalStyle`
   --cyan-35: hsl(190, 100%, 35%);
   --cyan-40: hsl(190, 100%, 40%);
   --cyan-45: hsl(190, 100%, 45%);
-  --cyan-50: hsl(190, 100%, 50%);
+  --cyan-50: hsl(190, 100%, 50%); */
   --cyan-55: hsl(190, 100%, 55%);
-  --cyan-60: hsl(190, 100%, 60%);
+  /* --cyan-60: hsl(190, 100%, 60%);
   --cyan-65: hsl(190, 100%, 65%);
-  --cyan-70: hsl(190, 100%, 70%);
+  --cyan-70: hsl(190, 100%, 70%); */
   --cyan-75: hsl(190, 100%, 75%);
-  --cyan-80: hsl(190, 100%, 80%);
+  /* --cyan-80: hsl(190, 100%, 80%);
   --cyan-85: hsl(190, 100%, 85%);
   --cyan-90: hsl(190, 100%, 90%);
-  --cyan-95: hsl(190, 100%, 95%);
+  --cyan-95: hsl(190, 100%, 95%); */
 
   --blue3: hsl(236, 100%, 35%);
   --blue3-light: hsl(236, 100%, 45%);
 
-  --eye-color: hsl(240 35% 65%);
+  /* --eye-color: hsl(240 35% 65%); */
 
   --blue5: #001c3b;
   --blue6: #021f5f;
@@ -95,8 +101,8 @@ export const GlobalStyle = createGlobalStyle`
   --black1: hsl(0, 0%, 10%);
   --black2: hsl(0, 0%, 7%);
   --black3: hsl(0, 0%, 13%);
-  --black4: hsl(0, 0%, 19%);
-  --black5: hsl(0, 0%, 23%);
+  /* --black4: hsl(0, 0%, 19%); */
+  /* --black5: hsl(0, 0%, 23%); */
 
   --tealBg: hsl(191, 50%, 34%);
   --tealHover: hsl(191, 44%, 40%);
@@ -108,11 +114,11 @@ export const GlobalStyle = createGlobalStyle`
   --orange: hsl(36, 100%, 62%);
 
   --orange0: hsl(36, 65%, 90%);
-  --orange1: hsl(36, 65%, 72%);
-  --orange2: hsl(36, 100%, 62%);
+  /* --orange1: hsl(36, 65%, 72%); */
+  /* --orange2: hsl(36, 100%, 62%);
   --orange3: hsl(36, 63%, 42%);
   --orange4: hsl(36, 62%, 35%);
-  --orange5: hsl(36, 63%, 69%);
+  --orange5: hsl(36, 63%, 69%); */
 
   --pinkBg: var(--pink);
   --pinkHover: hsl(328, 88%, 60%);
@@ -121,7 +127,7 @@ export const GlobalStyle = createGlobalStyle`
   --pinkActive: hsl(328, 78%, 60%);
   --pinkUnderline: hsl(328, 100%, 74%);
   --dark-pink: var(--pink-dark);
-  --dark-faded-pink: hsl(330, 52%, 49%);
+  /* --dark-faded-pink: hsl(330, 52%, 49%); */
 
   --dark-faded-blue: hsl(195deg, 10%, 20%);
   --beige: hsl(55deg, 35%, 85%);
@@ -151,21 +157,21 @@ export const GlobalStyle = createGlobalStyle`
   --size56: ${fonts.sizes.size56};
   --size60: ${fonts.sizes.size60};
 
-  --jost-hairline: ${fonts.presets.jostHairline};
+  /* --jost-hairline: ${fonts.presets.jostHairline};
   --jost-heavy: ${fonts.presets.jostHeavy};
-  --jost-black: ${fonts.presets.jostBlack};
+  --jost-black: ${fonts.presets.jostBlack}; */
 
-  --recursive1: ${fonts.presets.recursive1};
+  /* --recursive1: ${fonts.presets.recursive1}; */
   --recursive2: ${fonts.presets.recursive2};
-  --recursive3: ${fonts.presets.recursive3};
+  /* --recursive3: ${fonts.presets.recursive3}; */
   --recursive4: ${fonts.presets.recursive4};
-  --recursive5: ${fonts.presets.recursive5};
+  /* --recursive5: ${fonts.presets.recursive5}; */
   --recursive6: ${fonts.presets.recursive6};
-  --recursive7: ${fonts.presets.recursive7};
+  /* --recursive7: ${fonts.presets.recursive7}; */
   --recursive8: ${fonts.presets.recursive8};
-  --recursive9: ${fonts.presets.recursive9};
+  /* --recursive9: ${fonts.presets.recursive9}; */
   --monospace: ${fonts.presets.monospace};
-  --monospace-light: ${fonts.presets.monospaceLight};
+  /* --monospace-light: ${fonts.presets.monospaceLight}; */
 
   --decovar-default: ${decovarValues.default};
   --decovar-open: ${decovarValues.open};
@@ -214,6 +220,7 @@ export const GlobalStyle = createGlobalStyle`
   --header-link-gap: clamp(0.5rem, 1rem + 3vw, 5rem);
 
   --breathing-room: 48px;
+  --gutter-size: 48px;
   --line-height: calc(1em + 0.625rem);
   --header-position: translateY(0%);
 
