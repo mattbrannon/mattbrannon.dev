@@ -40,15 +40,15 @@ const components = {
   MiniGame: dynamic(() => import('@components/Minigame')),
   checkbox: dynamic(() => import('@components/Minigame').then((res) => res.Checkbox)),
   strong: dynamic(() => import('@components/FancyText').then((res) => res.StrongText)),
-  Spacer: dynamic(() => import('@components/Spacer')),
+  Spacer: dynamic(() => import('@components/Spacer').then((res) => res.Spacer)),
   h2: H2Link,
   h3: H3Link,
   h4: H4Link,
   h5: H5Link,
   em: dynamic(() => import('@components/Text').then((res) => res.Em)),
-  a: dynamic(() => import('@components/ExternalLink').then((res) => res.ExternalLink)),
+  a: dynamic(() => import('@components/Links').then((res) => res.ExternalLink)),
   Math: dynamic(() => import('@components/Math')),
-  InternalLink: dynamic(() => import('@components/ExternalLink').then((res) => res.Link)),
+  InternalLink: dynamic(() => import('@components/Links').then((res) => res.Link)),
 };
 
 export default function PostPage({ source, frontMatter }) {

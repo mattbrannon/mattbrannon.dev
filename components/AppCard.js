@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { Link } from '@components/ExternalLink';
+import { Link } from '@components/Links';
 import { CardImage } from '@components/Image';
 import { breakpoints } from '@constants/index';
-import { AppCardHeading } from './Headings';
+import { AppCardHeading } from '@components/Headings';
 import { useRef } from 'react';
 
 export default function AppCard({ ...props }) {

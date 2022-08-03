@@ -1,6 +1,6 @@
 import { breakpoints } from '@constants/index';
 import styled from 'styled-components';
-import { BlogLink } from './ExternalLink';
+import { BlogLink } from '@components/Links';
 import { toHeadingId } from '@utils/helpers';
 
 export const H1 = styled.h1`

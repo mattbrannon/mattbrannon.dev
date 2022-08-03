@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FlatVideo } from '@components/VideoPlayer';
-import { ExternalLink } from '@components/ExternalLink';
+import { ExternalLink } from '@components/Links';
 import { breakpoints } from '@constants/index.js';
 import FancyTitle from '@components/FancyTitle';
 

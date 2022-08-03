@@ -1,8 +1,8 @@
-import { Link } from '@components/ExternalLink';
+import { Link } from '@components/Links';
 import Head from '@components/Head';
 import { CardHeading } from '@components/Headings';
 import PageTitle from '@components/PageTitle';
-import Spacer from '@components/Spacer';
+import { Spacer } from '@components/Spacer';
 import Text from '@components/Text';
 import { BlogVideo } from '@components/VideoPlayer';
 import { breakpoints } from '@constants/index';
