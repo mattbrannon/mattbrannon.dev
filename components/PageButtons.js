@@ -14,7 +14,7 @@ export default function PageButtons({ prev, next }) {
 
 export const PageButton = ({ href, children }) => {
   return (
-    <Link passHref href={href}>
+    <Link passHref href={href} legacyBehavior>
       <LinkContent>{children}</LinkContent>
     </Link>
   );

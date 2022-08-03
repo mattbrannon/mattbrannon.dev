@@ -280,15 +280,13 @@ export const getDataType = (data) => {
 
 export const toHeadingId = (str) => {
   try {
-    return (
-      str.slice(0, 1).toLowerCase() +
-      str
-        .slice(1)
-        .split(' ')
-        .map((s) => s.replace(/[A-Z]/g, (v) => '-' + v.toLowerCase()))
-        .join('-')
-        .replace(/-+/g, '-')
-    );
+    return str.slice(0, 1).toLowerCase() +
+    str
+      .slice(1)
+      .split(' ')
+      .map((s) => s.replace(/[A-Z]/g, (v) => '-' + v.toLowerCase()))
+      .join('-')
+      .replace(/-+/g, '-');
   }
   catch {
     return str;

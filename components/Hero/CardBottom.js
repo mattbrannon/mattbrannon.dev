@@ -9,19 +9,19 @@ export default function CardBottom({ ...props }) {
   return (
     <Container>
       <Wrapper side="left">
-        <Link passHref href="/blog/about-me">
+        <Link passHref href="/blog/about-me" legacyBehavior>
           <NormalButton {...props}>Who am I?</NormalButton>
         </Link>
       </Wrapper>
 
       <Wrapper side="center">
-        <Link passHref href="/apps">
+        <Link passHref href="/apps" legacyBehavior>
           <NormalButton {...props}>View my work</NormalButton>
         </Link>
       </Wrapper>
 
       <Wrapper side="right">
-        <Link passHref href="/contact">
+        <Link passHref href="/contact" legacyBehavior>
           <NormalButton {...props}>Get in touch</NormalButton>
         </Link>
       </Wrapper>

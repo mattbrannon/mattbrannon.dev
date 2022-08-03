@@ -18,7 +18,7 @@ export default function FancyLink({ children, ...props }) {
         '--color': isSelected ? 'var(--orange0)' : 'white',
       }}
     >
-      <Link passHref {...props}>
+      <Link passHref {...props} legacyBehavior>
         <A {...props}>{children}</A>
       </Link>
 

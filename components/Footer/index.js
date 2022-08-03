@@ -40,7 +40,7 @@ export default function Footer() {
 
 const ImageLink = ({ href, src, alt, ...props }) => {
   return (
-    <Link passHref {...props} href={href}>
+    <Link passHref {...props} href={href} >
       <LinkButton>
         <Image src={src} alt={alt} width={30} height={30} {...props} />
       </LinkButton>

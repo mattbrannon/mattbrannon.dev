@@ -6,7 +6,7 @@ import { AppCardHeading } from './Headings';
 
 export const ExternalLink = ({ href, children }) => {
   return (
-    <NextLink passHref href={href}>
+    <NextLink passHref href={href} legacyBehavior>
       <External newTab href={href} rel="noopener">
         {children}
       </External>
@@ -16,7 +16,7 @@ export const ExternalLink = ({ href, children }) => {
 
 export const Link = ({ href, children, ...props }) => {
   return (
-    <NextLink {...props} passHref href={href}>
+    <NextLink {...props} passHref href={href} legacyBehavior>
       <Internal {...props}>{children}</Internal>
     </NextLink>
   );
@@ -26,7 +26,13 @@ export const BlogLink = ({ href, children, ...props }) => {
   return (
     <Container {...props}>
       {children}
-      <NextLink {...props} scroll={false} shallow={true} href={href} passHref>
+      <NextLink
+        {...props}
+        scroll={false}
+        shallow={true}
+        href={href}
+        passHref
+        legacyBehavior>
         <LinkIcon as="a" {...props} href={href} />
       </NextLink>
     </Container>

@@ -97,7 +97,7 @@ function NavLink({ children, ...props }) {
   }, [ context, props.i ]);
 
   return (
-    <Link passHref href={props.href}>
+    <Link passHref href={props.href} legacyBehavior>
       <ButtonLink ref={ref} onClick={() => context.setIsOpen(false)} {...props}>
         {children}
       </ButtonLink>

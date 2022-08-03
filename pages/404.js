@@ -92,39 +92,37 @@ export default function Error404() {
     },
   };
 
-  return (
-    <>
-      <DocumentHead title="Whoops" desc="We must have taken a wrong turn at Albuquerque">
-        <link
-          rel="preload"
-          href="/fonts/decovar.woff2"
-          as="font"
-          crossOrigin=""
-          type="font/woff2"
-        />
-      </DocumentHead>
+  return <>
+    <DocumentHead title="Whoops" desc="We must have taken a wrong turn at Albuquerque">
+      <link
+        rel="preload"
+        href="/fonts/decovar.woff2"
+        as="font"
+        crossOrigin=""
+        type="font/woff2"
+      />
+    </DocumentHead>
 
-      <Container>
-        <CubeWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <SmirkingCube width={125} height={125} ref={ref} />
-        </CubeWrapper>
-        <Wrapper>
-          <Link passHref href="/">
-            <P
-              variants={font}
-              initial="initial"
-              animate="animate"
-              ref={textRef}
-              fontSize={fontSize}
-              href="/"
-            >
-              Go Back
-            </P>
-          </Link>
-        </Wrapper>
-      </Container>
-    </>
-  );
+    <Container>
+      <CubeWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <SmirkingCube width={125} height={125} ref={ref} />
+      </CubeWrapper>
+      <Wrapper>
+        <Link passHref href="/" legacyBehavior>
+          <P
+            variants={font}
+            initial="initial"
+            animate="animate"
+            ref={textRef}
+            fontSize={fontSize}
+            href="/"
+          >
+            Go Back
+          </P>
+        </Link>
+      </Wrapper>
+    </Container>
+  </>;
 }
 
 const fadeIn = keyframes`

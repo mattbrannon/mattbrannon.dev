@@ -299,103 +299,101 @@ export default function VariableFontPlayground() {
     setGradient(gradient);
   }, [ state, gradient ]);
 
-  return (
-    <>
-      <Head title="Fancy Text Generator" description="Variable font and text shadow generator" />
-      <Container>
-        <ControlWrapper>
-          <FontControls
-            state={state}
-            font={fontProperties[state.font]}
-            dispatch={dispatch}
-            setControlWidth={setControlWidth}
-          />
-        </ControlWrapper>
+  return <>
+    <Head title="Fancy Text Generator" description="Variable font and text shadow generator" />
+    <Container>
+      <ControlWrapper>
+        <FontControls
+          state={state}
+          font={fontProperties[state.font]}
+          dispatch={dispatch}
+          setControlWidth={setControlWidth}
+        />
+      </ControlWrapper>
 
-        <Main ref={overflowRef} style={{ '--controlWidth': controlWidth }}>
-          <Wrapper>
-            <AnimatePresence exitBeforeEnter>
-              <motion.div
-                key={state.font}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-              >
-                <TextContent
-                  key={state.font}
-                  ref={headingRef}
-                  style={{
-                    '--fontSize': state.fontSize + 'vw',
-                    '--fontFamily': state.font,
-                  }}
-                >
-                  <Gradient
-                    style={{
-                      '--fontSize': `${state.fontSize}vw`,
-                    }}
-                    dispatch={dispatch}
-                    state={state}
-                    shadow={shadow}
-                    gradient={gradient}
-                    fontSize={`${state.fontSize}vw`}
-                    strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
-                    strokeColor={state.textStrokeColor}
-                    fontVariationSettings={fontVariationSettings}
-                    initialSettings={initialSettings}
-                  >
-                    {text || 'Click to edit'}
-                  </Gradient>
-                </TextContent>
-              </motion.div>
-            </AnimatePresence>
-
-            <TextInput
-              spellCheck={false}
-              maxLength={50}
-              state={state}
-              onChange={(e) => {
-                const text = e.target.value.replace(/'/g, '‘');
-                const final = text.replace(/[\\]+/g, '');
-                setText(final);
-              }}
-              style={{
-                '--fontSize': state.fontSize + 'vw',
-                '--fontFamily': state.font,
-                '--fontVariationSettings': state.fontVariationSettings,
-              }}
-            />
-          </Wrapper>
-
+      <Main ref={overflowRef} style={{ '--controlWidth': controlWidth }}>
+        <Wrapper>
           <AnimatePresence exitBeforeEnter>
-            {state.toggleCode ? (
-              <CodeBlock
-                key={state.toggleCode}
-                state={state}
-                fontFamily={state.font}
-                shadow={shadow}
-                gradient={gradient}
-                fontSize={`${state.fontSize}vw`}
-                strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
-                strokeColor={state.textStrokeColor}
-                fontVariationSettings={fontVariationSettings}
-              />
-            ) : state.help ? (
-              <HelpContainer
-                initial={{ width: 0 }}
-                animate={{ width: '100%' }}
-                exit={{ width: 0, transition: { duration: 0.3 } }}
-                transition={{ duration: 0.8, ease: 'anticipate' }}
+            <motion.div
+              key={state.font}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <TextContent
+                key={state.font}
+                ref={headingRef}
+                style={{
+                  '--fontSize': state.fontSize + 'vw',
+                  '--fontFamily': state.font,
+                }}
               >
-                <Help key={state.help} />
-              </HelpContainer>
-            ) : null}
+                <Gradient
+                  style={{
+                    '--fontSize': `${state.fontSize}vw`,
+                  }}
+                  dispatch={dispatch}
+                  state={state}
+                  shadow={shadow}
+                  gradient={gradient}
+                  fontSize={`${state.fontSize}vw`}
+                  strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
+                  strokeColor={state.textStrokeColor}
+                  fontVariationSettings={fontVariationSettings}
+                  initialSettings={initialSettings}
+                >
+                  {text || 'Click to edit'}
+                </Gradient>
+              </TextContent>
+            </motion.div>
           </AnimatePresence>
-        </Main>
-      </Container>
-      <NoScript>This tool requires javascript to work properly</NoScript>
-    </>
-  );
+
+          <TextInput
+            spellCheck={false}
+            maxLength={50}
+            state={state}
+            onChange={(e) => {
+              const text = e.target.value.replace(/'/g, '‘');
+              const final = text.replace(/[\\]+/g, '');
+              setText(final);
+            }}
+            style={{
+              '--fontSize': state.fontSize + 'vw',
+              '--fontFamily': state.font,
+              '--fontVariationSettings': state.fontVariationSettings,
+            }}
+          />
+        </Wrapper>
+
+        <AnimatePresence exitBeforeEnter>
+          {state.toggleCode ? (
+            <CodeBlock
+              key={state.toggleCode}
+              state={state}
+              fontFamily={state.font}
+              shadow={shadow}
+              gradient={gradient}
+              fontSize={`${state.fontSize}vw`}
+              strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
+              strokeColor={state.textStrokeColor}
+              fontVariationSettings={fontVariationSettings}
+            />
+          ) : state.help ? (
+            <HelpContainer
+              initial={{ width: 0 }}
+              animate={{ width: '100%' }}
+              exit={{ width: 0, transition: { duration: 0.3 } }}
+              transition={{ duration: 0.8, ease: 'anticipate' }}
+            >
+              <Help key={state.help} />
+            </HelpContainer>
+          ) : null}
+        </AnimatePresence>
+      </Main>
+    </Container>
+    <NoScript>This tool requires javascript to work properly</NoScript>
+  </>;
 }
 
 const NoScript = styled.noscript`

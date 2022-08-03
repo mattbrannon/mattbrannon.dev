@@ -28,7 +28,7 @@ const Header = forwardRef((props, ref) => {
             <SkipLink>Skip to main content</SkipLink>
 
             <NameWrapper>
-              <NextLink passHref href="/">
+              <NextLink passHref href="/" legacyBehavior>
                 <A>
                   <>Matt Brannon</>
                 </A>
