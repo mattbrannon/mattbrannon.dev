@@ -30,7 +30,8 @@ const IconWrapper = styled.span`
   height: 24px;
   margin: 4px;
 
-  &:focus {
+  &:focus-visible {
+    outline: 4px solid lightblue;
     opacity: 1;
     outline-offset: 4px;
     border-radius: 2px;

@@ -4,7 +4,7 @@ import isValidProp from '@emotion/is-prop-valid';
 import { Banner } from '@components/Banner';
 import { HeaderGap } from '@components/Spacer';
 import { MobileMenu } from '@components/MobileMenu';
-import { PageAnalytics } from '@lib/frontend';
+import { GoogleAnalytics } from '@components/GoogleAnalytics';
 
 import '@styles/global.css';
 import { GlobalStyle } from '@styles/index';
@@ -72,7 +72,7 @@ export default function Application({ Component, pageProps }) {
 
   return (
     <>
-      <PageAnalytics />
+      <GoogleAnalytics />
       <MotionConfig isValidProp={isValidProp}>
         <LazyMotion strict features={domAnimation}>
           {/* <GoogleAnalytics /> */}

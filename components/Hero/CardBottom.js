@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
-import Link from 'next/link';
+// import Link from 'next/link';
+import { Link } from '@components/Links';
 import { NormalButton } from '@components/Button';
 import { m as motion } from 'framer-motion';
 // import { useState, useReducer, useEffect } from 'react';
@@ -8,23 +9,23 @@ import { m as motion } from 'framer-motion';
 export default function CardBottom({ ...props }) {
   return (
     <Container>
-      <Wrapper side="left">
-        <Link passHref href="/blog/about-me">
+      <Link href="/blog/about-me">
+        <Wrapper side="left">
           <NormalButton {...props}>Who am I?</NormalButton>
-        </Link>
-      </Wrapper>
+        </Wrapper>
+      </Link>
 
-      <Wrapper side="center">
-        <Link passHref href="/apps">
+      <Link passHref href="/apps">
+        <Wrapper side="center">
           <NormalButton {...props}>View my work</NormalButton>
-        </Link>
-      </Wrapper>
+        </Wrapper>
+      </Link>
 
-      <Wrapper side="right">
-        <Link passHref href="/contact">
+      <Link href="/contact">
+        <Wrapper side="right">
           <NormalButton {...props}>Get in touch</NormalButton>
-        </Link>
-      </Wrapper>
+        </Wrapper>
+      </Link>
     </Container>
   );
 }

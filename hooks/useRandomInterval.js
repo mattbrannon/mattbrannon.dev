@@ -8,20 +8,20 @@ const randomNumber = (min, max) => {
 
 export const useRandomInterval = (min, max) => {
   const initialState = randomNumber(min, max);
-  const [ value, setValue ] = useState(initialState);
+  const [value, setValue] = useState(initialState);
 
   useEffect(() => {
     const repeat = () => {
       const timeout = randomNumber(min, max);
       setValue(timeout);
-      console.log({ timeout });
+      // console.log({ timeout });
       return setTimeout(repeat, timeout);
     };
 
     const timeoutId = repeat();
 
     return () => clearTimeout(timeoutId);
-  }, [ max, min ]);
+  }, [max, min]);
 
   return value;
 };

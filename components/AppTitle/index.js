@@ -4,10 +4,29 @@ import { ExternalLink } from '@components/Links';
 import { breakpoints } from '@constants/index.js';
 import FancyTitle from '@components/FancyTitle';
 
+const appTitleVariant = {
+  hidden: {
+    opacity: 0,
+    clipPath: 'var(--center)',
+    letterSpacing: '0.2em',
+  },
+  show: {
+    opacity: 1,
+    clipPath: 'var(--visible)',
+    letterSpacing: '0.0195em',
+    transition: {
+      duration: 1.5,
+      delay: 0,
+    },
+  },
+};
+
 export default function AppTitle({ title, sources, links, children, ...props }) {
   return (
     <Top>
-      <FancyTitle delay={0}>{title}</FancyTitle>
+      <FancyTitle initial="hidden" animate="show" variants={appTitleVariant}>
+        {title}
+      </FancyTitle>
       <Caption>{children}</Caption>
       <FlatVideo center sources={sources} {...props} />
       <LinksWrapper>

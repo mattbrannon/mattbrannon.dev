@@ -1,4 +1,4 @@
-import { Link } from '@components/Links';
+import { InternalLink } from '@components/Links';
 import Head from '@components/Head';
 import { CardHeading } from '@components/Headings';
 import PageTitle from '@components/PageTitle';
@@ -11,7 +11,7 @@ import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/breakpoints';
 
 export default function Index() {
-  const [ isSafari, setIsSafari ] = useState(false);
+  const [isSafari, setIsSafari] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
 
   useEffect(() => {
@@ -81,27 +81,21 @@ export default function Index() {
       <List>
         <Card>
           <CardHeading>
-            <Link passHref href="/misc/fancy-text-generator">
-              Fancy Text Generator
-            </Link>
+            <InternalLink href="/misc/fancy-text-generator">Fancy Text Generator</InternalLink>
           </CardHeading>
           <Text>Variable fonts + gradient backgrounds + layered text shadows = Fancy text</Text>
         </Card>
 
         <Card>
           <CardHeading>
-            <Link passHref href="/misc/geometry">
-              Pushing squares through circles
-            </Link>
+            <InternalLink href="/misc/geometry">Pushing squares through circles</InternalLink>
           </CardHeading>
           <Text>Without geometry life is pointless...</Text>
         </Card>
 
         <Card>
           <CardHeading>
-            <Link passHref href="/misc/fractals">
-              Fractals
-            </Link>
+            <InternalLink href="/misc/fractals">Fractals</InternalLink>
           </CardHeading>
           <Text>
             Still a work in progress but feel free to play around with what I've got so far.

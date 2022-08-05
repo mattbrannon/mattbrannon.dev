@@ -13,10 +13,10 @@ const PageTitle = forwardRef((props, ref) => {
   const fontSize = isMobile ? mobileFontSize : desktopFontSize;
 
   if (props.children.length) {
-    const [ highlighted, ...rest ] = props.children.split(' ');
+    const [highlighted, ...rest] = props.children.split(' ');
     return (
       <TopRow style={{ '--fontSize': fontSize }}>
-        <FluidHeading id="main-content" tabIndex={-1}>
+        <FluidHeading tabIndex={-1}>
           <RecursiveText {...props}>{highlighted}&nbsp;</RecursiveText>
           <Span ref={ref} {...props}>
             {rest.join(' ')}

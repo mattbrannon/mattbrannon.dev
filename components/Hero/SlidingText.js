@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 export default function AnimatedWords({ children }) {
   const context = useContext(ThemeContext);
-  const [ start, setStart ] = useState(context.hasRun);
+  const [start, setStart] = useState(context.hasRun);
   const words = children.split(' ');
 
   useEffect(() => {
@@ -16,11 +16,11 @@ export default function AnimatedWords({ children }) {
         setStart(true);
       }, 2000);
     }
-  }, [ context.hasRun ]);
+  }, [context.hasRun]);
 
   useEffect(() => {
     console.log(context.hasRun);
-  }, [ context.hasRun ]);
+  }, [context.hasRun]);
 
   return (
     <Container>
@@ -33,7 +33,7 @@ export default function AnimatedWords({ children }) {
             }
           }}
           hasRun={context.hasRun}
-          start={start}
+          $start={start}
           index={i + 1}
           key={i}
         >
@@ -55,7 +55,7 @@ const Container = styled.div`
 `;
 
 const Word = styled.span.attrs((props) => {
-  const translateX = props.start ? 0 : props.index * 2 + 700 + 'px';
+  const translateX = props.$start ? 0 : props.index * 2 + 700 + 'px';
   const delay = props.hasRun ? 0 : (props.index + 1) / 100;
   const duration = props.hasRun ? 0 : (props.index + 100) / 100;
   return {

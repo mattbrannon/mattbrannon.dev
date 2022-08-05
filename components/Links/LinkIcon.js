@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { forwardRef } from 'react';
+import { InternalLink } from './InternalLink';
 
 function Icon(props, ref) {
   return (
@@ -26,18 +27,18 @@ const TopLink = styled.path`
   fill: var(--color-link-icon-top);
 `;
 
-const IconWrapper = styled.span`
+const IconWrapper = styled(InternalLink)`
   display: flex;
   width: 24px;
   height: 24px;
   margin: 4px;
 
-  &:focus {
+  &:focus-visible {
     opacity: 1;
     outline-offset: 4px;
     border-radius: 2px;
   }
 
-  opacity: var(--opacity);
+  opacity: 0;
   transition: opacity 0.2s ease;
 `;

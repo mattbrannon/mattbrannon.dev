@@ -1,7 +1,7 @@
 import AppTitle from '@components/AppTitle';
 import { ExternalLink } from '@components/Links';
 import Head from '@components/Head';
-import { H3 } from '@components/Headings';
+import { H3Link } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
 import { Spacer } from '@components/Spacer';
 import Text from '@components/Text';
@@ -14,7 +14,7 @@ export default function LetsMakeAGifpage() {
     github: 'https://github.com/mattbrannon/lets-make-a-gif',
   };
 
-  const sources = [ '/videos/demos/lets-make-a-gif.mp4' ];
+  const sources = ['/videos/demos/lets-make-a-gif.mp4'];
 
   return (
     <article>
@@ -24,16 +24,8 @@ export default function LetsMakeAGifpage() {
         A photo &amp; video editor built with React and Nodejs
       </AppTitle>
 
-      <div>
+      <section>
         <Heading>Motivation</Heading>
-        {/* <Text>
-          When I was a kid, my friends and I used to love making little animated movies
-          with my dad's camcorder. The camera had a stop motion feature that would film 1
-          frame every x number of seconds. We'd make videos of toys walking around the
-          room or bites being taken out of a sandwich. One of my buddies took a box of bee
-          bee pellets, poured the entire box out on the carpet and started drawing faces
-          out of the huge pile of bee bees. This app is an homage to those days.
-        </Text> */}
 
         <Text>
           I've always enjoyed making weird little video loops. When I was a kid, my friends and I
@@ -41,11 +33,9 @@ export default function LetsMakeAGifpage() {
           walking around the room, a sandwich that seemed to eat itself, and a pile of bee bees
           poured on the carpet that would morph into various faces, just to name a few. This app is
           an homage to those days.
-          {/* I wanted to make an app that could be used
-          for a similar purpose. So that's what I did. */}
         </Text>
-      </div>
-      <div>
+      </section>
+      <section>
         <Heading>Frontend: React</Heading>
         <Text>
           The coolest part of this app (in my opinion) is the wide range of effect filters
@@ -55,7 +45,7 @@ export default function LetsMakeAGifpage() {
         </Text>
 
         <FlexContainer max={548} column>
-          <VideoPlayer sources={[ '/videos/mp4/sammy-molly2.mp4' ]} />
+          <VideoPlayer sources={['/videos/mp4/sammy-molly2.mp4']} />
         </FlexContainer>
         <ImageCaption>Sammy is not too pleased with Molly being in his bed</ImageCaption>
         <Spacer size={32} />
@@ -67,33 +57,14 @@ export default function LetsMakeAGifpage() {
           in this vast collection that were just too cool to pass up. Currently the app sports a
           whopping 19 effect filters. There were 20 originally but one of them kept crashing the
           server.
-          {/* A few filters turned into a few more and before long, I had gone from 2
-          or 3 filters to 20. (There's actually 19 now because one of them kept crashing
-          the server) */}
         </Text>
 
-        {/* <Text>
-          Once I knew what I wanted to do, I had to come up with a data model for the
-          various effects and then build out the api for interacting with it. The
-          difficult part was in trying to future proof the model as much as possible so
-          that adding new effects can be done easliy without a lot of overhead.
-        </Text> */}
-
         <FlexContainer>
-          <VideoPlayer sources={[ '/videos/mp4/burning1.mp4' ]} />
-          <VideoPlayer sources={[ '/videos/mp4/burning3.mp4' ]} />
+          <VideoPlayer sources={['/videos/mp4/burning1.mp4']} />
+          <VideoPlayer sources={['/videos/mp4/burning3.mp4']} />
         </FlexContainer>
         <ImageCaption>Before and after applying a few filters to a video</ImageCaption>
         <Spacer size={32} />
-
-        {/* <Text>
-          The video and image processing happens on the server but it's the front end that
-          tells the server exactly how we want things to be. One of the neat the things I
-          like most about this app is that the order in which filters are applied matters.
-          If you upload video and apply the glitch filter followed by the tmix filter
-          followed by the vertigo filter, the result will be noticably different than if
-          you applied those same filters in the opposite order.
-        </Text> */}
 
         <Text>
           One of the biggest challenges was trying to come up with a design that worked well for
@@ -102,9 +73,9 @@ export default function LetsMakeAGifpage() {
           controls viewable via a button toggle. This frees up valuable screen space for mobile
           users and gives desktop users more options as well.
         </Text>
-      </div>
+      </section>
 
-      <div>
+      <section>
         <Heading>Backend: NodeJs</Heading>
         <Text>
           Most of the heavy lifting happens in the Nodejs backend. Video and image processing can be
@@ -119,13 +90,13 @@ export default function LetsMakeAGifpage() {
         </Text>
 
         <FlexContainer>
-          <VideoPlayer sources={[ '/videos/mp4/scary-clown.mp4' ]} />
-          <VideoPlayer sources={[ '/videos/mp4/scary-clown2.mp4' ]} />
+          <VideoPlayer sources={['/videos/mp4/scary-clown.mp4']} />
+          <VideoPlayer sources={['/videos/mp4/scary-clown2.mp4']} />
         </FlexContainer>
         <ImageCaption>A couple variations of a scary clown</ImageCaption>
-      </div>
+      </section>
 
-      <div>
+      <section>
         <Heading>Secret sauce: Ffmpeg</Heading>
         <Text>
           This app harnesses the power of a program called ffmpeg. Ffmpeg is an extremely powerful
@@ -135,9 +106,9 @@ export default function LetsMakeAGifpage() {
           of software and without it, this app wouldn't exist. To learn more about ffmpeg visit{' '}
           <ExternalLink href="https://ffmpeg.org">ffmpeg.org</ExternalLink>
         </Text>
-      </div>
+      </section>
 
-      <div>
+      <section>
         <Heading>Roadmap forward</Heading>
         <Text>
           This app was and still is a challenge on many levels. As mentioned earlier, video and
@@ -151,13 +122,7 @@ export default function LetsMakeAGifpage() {
           done that. We should be able to adjust the framerate without having to wait around for the
           same effects to be reapplied.
         </Text>
-        {/* <Text>
-          What I'd <FancyTextItalic>really</FancyTextItalic> like is to implement a live
-          preview when applying effects.
-        </Text> */}
-
-        <p></p>
-      </div>
+      </section>
 
       <PageButtons prev="/apps/monty-hall" next="/apps/elbowroom" />
     </article>
@@ -178,7 +143,8 @@ const ImageCaption = styled.small`
   margin-bottom: 32px;
 `;
 
-const Heading = styled(H3)`
-  margin: 64px 0 8px 0;
+const Heading = styled(H3Link)`
+  /* margin: 64px 0 8px 0; */
   font-size: var(--size28);
+  color: var(--h2);
 `;

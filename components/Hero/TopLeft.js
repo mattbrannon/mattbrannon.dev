@@ -26,7 +26,7 @@ export default function DropDeadFred() {
       const randomAngle = random(6, 35);
       const angle = direction ? randomAngle : randomAngle * -1;
       setAngle(angle);
-      console.log({ angle });
+      // console.log({ angle });
     }
   }, [repeat, hasMounted]);
 

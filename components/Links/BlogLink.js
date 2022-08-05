@@ -1,20 +1,15 @@
 import styled from 'styled-components';
 import { LinkIcon } from './LinkIcon';
-import NextLink from 'next/link';
+// import NextLink from 'next/link';
+import { InternalLink } from './InternalLink';
 
 export const BlogLink = ({ href, children, ...props }) => {
   return (
     <Container {...props}>
       {children}
-      <NextLink
-        {...props}
-        scroll={false}
-        shallow={true}
-        href={href}
-        passHref
-        legacyBehavior>
-        <LinkIcon as="a" {...props} href={href} />
-      </NextLink>
+      {/* <InternalLink {...props} scroll={false} shallow={true} href={href} passHref> */}
+      <LinkIcon scroll={false} shallow={true} passHref {...props} href={href} />
+      {/* </InternalLink> */}
     </Container>
   );
 };

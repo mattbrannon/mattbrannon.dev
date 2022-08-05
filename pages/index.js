@@ -2,18 +2,39 @@ import styled, { ThemeContext } from 'styled-components';
 import Hero from '@components/Hero';
 import FancyTitle from '@components/FancyTitle';
 import Head from '@components/Head';
-
-import { useState, useContext } from 'react';
-
+import { useState, useContext, useEffect } from 'react';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/breakpoints';
+
+const homePageVariant = {
+  hidden: {
+    opacity: 0,
+    clipPath: 'var(--left)',
+    letterSpacing: '0.2em',
+  },
+  show: ({ hasRun }) => {
+    return {
+      opacity: 1,
+      clipPath: 'var(--visible)',
+      letterSpacing: '0.0195em',
+      transition: {
+        duration: 1.5,
+        delay: hasRun ? 0 : 2,
+      },
+    };
+  },
+};
 
 export default function HomePage() {
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const marginTop = isMobile ? 8 : 48;
   const context = useContext(ThemeContext);
 
-  const [ shouldRemove, setShouldRemove ] = useState(true);
+  useEffect(() => {
+    console.log(context);
+  }, [context]);
+
+  const [shouldRemove, setShouldRemove] = useState(true);
 
   return (
     <Container>
@@ -22,10 +43,10 @@ export default function HomePage() {
         <TopRow style={{ '--marginTop': `${marginTop}px` }}>
           <TitleWrapper>
             <FancyTitle
-              showTitle={shouldRemove || context.hasRun}
-              hasCookie={false}
-              from="left"
-              delay={4}
+              variants={homePageVariant}
+              initial="hidden"
+              animate="show"
+              custom={{ hasRun: context.hasRun }}
             >
               Welcome to my site!
             </FancyTitle>

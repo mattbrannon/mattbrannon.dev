@@ -1,16 +1,55 @@
 import AppTitle from '@components/AppTitle';
 import { NormalButton as StandardButton } from '@components/Button';
 import Head from '@components/Head';
-import { H3 } from '@components/Headings';
+import { H3Link } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
 import SideNote from '@components/SideNote';
 import Text from '@components/Text';
-import Image from 'next/future/image';
+// import Image from 'next/future/image';
 import { useState } from 'react';
 import styled from 'styled-components';
-import image1 from '/public/images/monty-hall/monty-hall1.png';
-import image2 from '/public/images/monty-hall/monty-hall2.png';
-import image3 from '/public/images/monty-hall/monty-hall3.png';
+import { Picture } from '@components/Picture';
+
+import image1Png from '/public/images/monty-hall/monty-hall1.png';
+import image2Png from '/public/images/monty-hall/monty-hall2.png';
+import image3Png from '/public/images/monty-hall/monty-hall3.png';
+
+import image1Webp from '/public/images/monty-hall/monty-hall1.webp';
+import image2Webp from '/public/images/monty-hall/monty-hall2.webp';
+import image3Webp from '/public/images/monty-hall/monty-hall3.webp';
+
+import image1Avif from '/public/images/monty-hall/monty-hall1.avif';
+import image2Avif from '/public/images/monty-hall/monty-hall2.avif';
+import image3Avif from '/public/images/monty-hall/monty-hall3.avif';
+
+const makeSourceArray = (...images) => {
+  return images.map((image) => {
+    const { src, width, height, blurDataURL } = image;
+    return { src, width, height, blurDataURL };
+  });
+};
+
+const image1Sources = makeSourceArray(image1Avif, image1Webp, image1Png);
+const image2Sources = makeSourceArray(image2Avif, image2Webp, image2Png);
+const image3Sources = makeSourceArray(image3Avif, image3Webp, image3Png);
+
+// .map((image) => {
+//   const { src, width, height, blurDataURL } = image;
+//   console.log(image);
+//   return { src, width, height, blurDataURL };
+// });
+
+// const image2Sources = [image2Avif, image2Webp, image2Png].map((image) => {
+//   const { src, width, height, blurDataURL } = image;
+//   console.log(image);
+//   return { src, width, height, blurDataURL };
+// });
+
+// const image3Sources = [image3Avif, image3Webp, image3Png].map((image) => {
+//   const { src, width, height, blurDataURL } = image;
+//   console.log(image);
+//   return { src, width, height, blurDataURL };
+// });
 
 export default function MontyHallPage() {
   const [isCorrect, setIsCorrect] = useState(null);
@@ -41,20 +80,20 @@ export default function MontyHallPage() {
       <div>
         <Heading>Motivation</Heading>
         <Text>
-          Years ago when I first started learning javascript, one of the first things I made was a
-          little simulation of the monty hall problem. You'd tell it how many rounds to play and
-          whether to switch doors or stick with the original. Then, once it finished, it would tell
-          you the percentages of rounds won vs rounds lost. It was a cool program but it had no user
-          interface. Once I became a little more proficient at frontend development, I decided to go
-          ahead and create an actual game out of the simulation I'd programmed years ago.
+          When I first started learning javascript, one of the first things I made was a little
+          simulation of the monty hall problem. You'd tell it how many rounds to play and whether to
+          switch doors or stick with the original. Then, once it finished, it would tell you the
+          percentages of rounds won vs rounds lost. It was a cool program but it had no user
+          interface. After I got a little better at frontend development, I decided to go ahead and
+          create an actual game out of that simulation.
         </Text>
 
         <SideNote>
           If you played the little mini game above and got the wrong answer, don't feel bad. When
-          this question was first popularized, many people including mathematicians, physicists and
-          many others with advanced degrees actually got this wrong. And not only did they get it
-          wrong, a few of them were so sure they were right, they publicly berated others who
-          answered correctly.
+          the question first appeared in Marilyn Vos Savant's column in Parade magazine, many people
+          including mathematicians, physicists and many others with advanced degrees actually got
+          this wrong. And not only did they get it wrong, a few of them were so sure they were
+          right, they publicly berated others who answered correctly.
         </SideNote>
       </div>
 
@@ -68,12 +107,12 @@ export default function MontyHallPage() {
           easy.
         </Text>
         <FlexContainer>
-          <ResponsiveImage src={image1} alt="image1" />
-          <ResponsiveImage src={image2} alt="image2" />
+          <Picture sources={image1Sources} alt="image1" />
+          <Picture sources={image2Sources} alt="image2" />
         </FlexContainer>
         <div style={{ height: '4px' }}></div>
         <FlexContainer>
-          <ResponsiveImage src={image3} alt="image3" />
+          <Picture sources={image3Sources} alt="image3" />
         </FlexContainer>
       </div>
 
@@ -82,9 +121,9 @@ export default function MontyHallPage() {
   );
 }
 
-const Heading = styled(H3)`
-  margin: 64px 0 8px 0;
+const Heading = styled(H3Link)`
   font-size: var(--size28);
+  color: var(--h2);
 `;
 
 const Results = ({ isCorrect }) => {
@@ -160,7 +199,7 @@ const ResultContainer = styled.div`
   min-height: 140px;
   display: grid;
   place-content: center;
-  font-variation-settings: "wdth" 120, "wght" 700;
+  font-variation-settings: 'wdth' 120, 'wght' 700;
 `;
 
 const Result = styled.div`
@@ -198,18 +237,18 @@ const ButtonWrapper = styled.div`
   width: 100%;
 `;
 
-const ImageContainer = styled.div`
-  display: block;
-  width: 100%;
-`;
+// const ImageContainer = styled.div`
+//   display: block;
+//   width: 100%;
+// `;
 
-const ResponsiveImage = ({ ...props }) => {
-  return (
-    <ImageContainer>
-      <Image {...props} layout="responsive" alt={props.alt} />
-    </ImageContainer>
-  );
-};
+// const ResponsiveImage = ({ ...props }) => {
+//   return (
+//     <ImageContainer>
+//       <Image {...props} layout="responsive" alt={props.alt} />
+//     </ImageContainer>
+//   );
+// };
 
 const FlexContainer = styled.div`
   display: flex;

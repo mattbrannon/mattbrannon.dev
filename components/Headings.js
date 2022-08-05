@@ -66,6 +66,11 @@ export const AppCardHeading = styled(H3)`
   width: fit-content;
   transition: all 10ms;
   font-size: clamp(var(--size32), 7vw, var(--size40));
+  color: var(--h2);
+
+  &:hover {
+    color: var(--h3);
+  }
 
   margin: 0;
   @media (max-width: ${breakpoints.tablet}px) {
@@ -73,7 +78,7 @@ export const AppCardHeading = styled(H3)`
   }
 
   &:focus-visible {
-    outline: 2px solid var(--color-outline);
+    outline: 2px solid lightblue;
   }
 `;
 

@@ -8,9 +8,9 @@ export const UnstyledLink = styled(NextLink)`
   &:hover {
     text-decoration: none;
   }
-  &:focus {
+  /* &:focus {
     outline: none;
-  }
+  } */
 `;
 
 export const Link = ({ children, ...props }) => {

@@ -1,8 +1,9 @@
 import { FullBleed } from '@components/Layout';
 import VisuallyHidden from '@components/VisuallyHidden';
-import { breakpoints } from '@constants/index';
+// import { breakpoints } from '@constants/index';
 import NextImage from 'next/future/image';
-import Link from 'next/link';
+// import Link from 'next/link';
+import { InternalLink } from '@components/Links';
 import styled from 'styled-components';
 
 export default function Footer() {
@@ -38,13 +39,11 @@ export default function Footer() {
   );
 }
 
-const ImageLink = ({ href, src, alt, ...props }) => {
+const ImageLink = ({ ...props }) => {
   return (
-    <Link passHref {...props} href={href} >
-      <LinkButton>
-        <Image src={src} alt={alt} width={30} height={30} {...props} />
-      </LinkButton>
-    </Link>
+    <InternalLink {...props}>
+      <Image width={30} height={30} {...props} />
+    </InternalLink>
   );
 };
 
@@ -100,15 +99,15 @@ const Image = styled(NextImage)`
   }
 `;
 
-const LinkButton = styled.button`
-  background: transparent;
-  border: none;
-  @supports (-webkit-touch-callout: none) and (not (translate: none)) {
-    &:not(:last-child) {
-      margin-right: 32px;
-    }
-  }
-  @media (max-width: ${breakpoints.mobile}px) {
-    user-select: none;
-  }
-`;
+// const LinkButton = styled.button`
+//   background: transparent;
+//   border: none;
+//   @supports (-webkit-touch-callout: none) and (not (translate: none)) {
+//     &:not(:last-child) {
+//       margin-right: 32px;
+//     }
+//   }
+//   @media (max-width: ${breakpoints.mobile}px) {
+//     user-select: none;
+//   }
+// `;

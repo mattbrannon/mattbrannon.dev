@@ -33,10 +33,10 @@ export const getImageConfig = (appName) => {
       const hasValue = filename.match(/-\d+/g) !== null;
       const size = hasValue
         ? filename
-            .match(/-\d+/g)
-            .filter((value) => value)
-            .map((n) => Math.abs(n))
-            .join('')
+          .match(/-\d+/g)
+          .filter((value) => value)
+          .map((n) => Math.abs(n))
+          .join('')
         : null;
       const type = filename.slice(filename.lastIndexOf('.') + 1);
       const name = filename.slice(0, filename.lastIndexOf('-'));

@@ -23,7 +23,7 @@ const ControlsLayout = forwardRef((props, ref) => {
     //   animate="animate"
     //   exit="exit"
     // >
-    <Wrapper style={{ '--zIndex': zIndex }} id="main-content" tabIndex={-1} {...props} ref={ref}>
+    <Wrapper style={{ '--zIndex': zIndex }} tabIndex={-1} {...props} ref={ref}>
       <Container>
         <Section>{props.children}</Section>
       </Container>

@@ -11,4 +11,10 @@ export const Anchor = styled.a.attrs((props) => {
   &:hover {
     cursor: pointer;
   }
+
+  &:focus-visible {
+    border-radius: 1px;
+    outline-offset: 2px;
+    outline: 2px solid lightblue;
+  }
 `;

@@ -94,14 +94,12 @@ const ToggleButton = styled.button`
   min-width: 32px;
   max-width: 32px;
   width: 100%;
-  height: calc(var(--header-height) - 24px);
   border: none;
   position: relative;
   &:hover {
     cursor: pointer;
   }
   margin-bottom: -6px;
-  overflow: hidden;
   margin-left: auto;
 
   @media (max-width: ${breakpoints.mobile}px) {

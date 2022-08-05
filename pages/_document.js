@@ -2,7 +2,6 @@ import Document, { Head, Html, Main, NextScript } from 'next/document';
 // import Script from 'next/script';
 import { ServerStyleSheet } from 'styled-components';
 // import GoogleAnalytics from '@components/GoogleAnalytics';
-import { SiteAnalytics } from '@lib/backend';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -35,8 +34,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <SiteAnalytics />
-
           <link
             rel="preload"
             href="/fonts/Jost-english-subset.woff2"

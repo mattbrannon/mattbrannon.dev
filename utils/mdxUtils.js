@@ -1,10 +1,10 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
 // import { bundleMDX } from 'mdx-bundler';
 
 // POSTS_PATH is useful when you want to get the path to a specific file
-export const POSTS_PATH = path.join(process.cwd(), "articles");
+export const POSTS_PATH = path.join(process.cwd(), 'articles');
 
 // postFilePaths is the list of all mdx files inside the POSTS_PATH directory
 export const allFilePaths = fs
@@ -16,18 +16,18 @@ const onlyPublishedArticles = (filename) => {
   const fullPath = path.resolve(POSTS_PATH, filename);
   const source = fs.readFileSync(fullPath);
   const { data } = matter(source);
-  return data.status === "published";
+  return data.status === 'published';
 };
 
 export const publishedArticles = allFilePaths.filter(onlyPublishedArticles);
 
-const articlesDirectory = path.join(process.cwd(), "articles");
+const articlesDirectory = path.join(process.cwd(), 'articles');
 
 const getArticleMetadata = (fileNames) => {
   return fileNames.map((fileName) => {
-    const id = fileName.replace(/\.mdx?$/, "");
+    const id = fileName.replace(/\.mdx?$/, '');
     const fullPath = path.join(articlesDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
+    const fileContents = fs.readFileSync(fullPath, 'utf8');
     const matterResult = matter(fileContents);
     return { id, ...matterResult.data };
   });

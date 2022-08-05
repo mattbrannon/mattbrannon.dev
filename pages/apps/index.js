@@ -1,36 +1,58 @@
-import AppCard from '@components/AppCard';
+import { AppCard } from '@components/AppCard';
 import Head from '@components/Head';
 import PageTitle from '@components/PageTitle';
 import Text from '@components/Text';
-import elbowRoomImage from '/public/images/elbowroom/desktop.png';
-import letsMakeAGifImage from '/public/images/lets-make-a-gif/desktop.png';
-import montyHallImage from '/public/images/monty-hall/monty-hall1.png';
+// import elbowRoomImage from '/public/images/elbowroom/desktop.png';
+// import letsMakeAGifImage from '/public/images/lets-make-a-gif/desktop.png';
+
+const makeSourceArray = (...images) => {
+  return images.map((image) => {
+    const { src, width, height, blurDataURL } = image;
+    return { src, width, height, blurDataURL };
+  });
+};
+
+import elbowRoomAvif from '/public/images/elbowroom/desktop.avif';
+import elbowRoomWebp from '/public/images/elbowroom/desktop.webp';
+import elbowRoomPng from '/public/images/elbowroom/desktop.png';
+
+import letsMakeAGifAvif from '/public/images/lets-make-a-gif/desktop.avif';
+import letsMakeAGifWebp from '/public/images/lets-make-a-gif/desktop.webp';
+import letsMakeAGifPng from '/public/images/lets-make-a-gif/desktop.png';
+
+import montyHallAvif from '/public/images/monty-hall/monty-hall1.avif';
+import montyHallWebp from '/public/images/monty-hall/monty-hall1.webp';
+import montyHallPng from '/public/images/monty-hall/monty-hall1.png';
+
+const elbowRoomSources = makeSourceArray(elbowRoomAvif, elbowRoomWebp, elbowRoomPng);
+const letsMakeAGifSources = makeSourceArray(letsMakeAGifAvif, letsMakeAGifWebp, letsMakeAGifPng);
+const montyHallSources = makeSourceArray(montyHallAvif, montyHallWebp, montyHallPng);
 
 const letsMakeAGifConfig = {
   href: '/apps/lets-make-a-gif',
   title: 'Let\'s Make a Gif',
   description: 'Online photo & video editing application',
-  src: letsMakeAGifImage,
+  sources: letsMakeAGifSources,
   alt: 'desktop view of the app',
-  priority: true,
+  priority: false,
 };
 
 const elbowRoomConfig = {
   href: '/apps/elbowroom',
   title: 'Elbow Room',
   description: 'Fullstack realtime chat application',
-  src: elbowRoomImage,
+  sources: elbowRoomSources,
   alt: 'desktop view of the app',
-  priority: true,
+  priority: false,
 };
 
 const montyHallConfig = {
   href: '/apps/monty-hall',
   title: 'Monty Hall Experience',
   description: 'A game inspired by the monty hall problem',
-  src: montyHallImage,
+  sources: montyHallSources,
   alt: 'desktop view of the app',
-  priority: true,
+  priority: false,
 };
 
 const Introduction = () => {

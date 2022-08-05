@@ -3,7 +3,7 @@ import * as gtag from '@lib/gtag';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-export default function GoogleAnalytics() {
+export const GoogleAnalytics = () => {
   const router = useRouter();
 
   useEffect(() => {
@@ -11,10 +11,12 @@ export default function GoogleAnalytics() {
       gtag.pageview(url);
     };
     router.events.on('routeChangeComplete', handleRouteChange);
+    router.events.on('hashChangeComplete', handleRouteChange);
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
+      router.events.off('hashChangeComplete', handleRouteChange);
     };
-  }, [router?.events]);
+  }, [router.events]);
 
   return (
     <>
@@ -38,4 +40,4 @@ export default function GoogleAnalytics() {
       />
     </>
   );
-}
+};

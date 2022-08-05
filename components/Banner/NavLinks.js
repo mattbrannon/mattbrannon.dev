@@ -70,12 +70,6 @@ const LinkWrapper = styled.span`
   background: transparent;
   border: none;
   font-size: var(--size16);
-  /* margin: 0 clamp(0.5rem, 1rem + 2vw, 4rem);
-  min-height: 0vh;
-
-  &:last-child {
-    margin-right: 0;
-  } */
 
   margin-bottom: -6px;
 
@@ -84,14 +78,13 @@ const LinkWrapper = styled.span`
   }
 `;
 
-const NameWrapper = styled.span`
+const NameWrapper = styled.div`
   display: block;
   font-family: recursive;
   font-variation-settings: 'MONO' 0, 'CRSV' 0, 'CASL' 0.35, 'wght' 800, 'slnt' 0;
   /* var(--recursive4); */
   color: var(--myName);
 
-  margin: 0;
   transition: all 70ms ease;
   outline: none;
 
@@ -99,22 +92,6 @@ const NameWrapper = styled.span`
     color: var(--myNameHover);
     text-decoration: none;
     cursor: pointer;
-  }
-
-  @media (min-width: ${breakpoints.mobile}px) {
-    font-size: var(--size36);
-    --offset: 0.018em;
-    --positive-offset: calc(var(--offset) * 1);
-    --negative-offset: calc(var(--offset) * -1);
-
-    --color: var(--header-background);
-    --outline: hsl(210, 40%, 76%, 0.75);
-    --hover: ;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    --outline: hsl(210, 40%, 76%, 0.75);
-    --hover: #333444;
   }
 `;
 
@@ -125,6 +102,11 @@ const Left = styled.div`
   align-items: center;
   margin-right: var(--header-link-gap);
   position: relative;
+  margin-bottom: -8px;
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    margin-bottom: 0;
+  }
 `;
 
 const NameLink = styled(Link)`

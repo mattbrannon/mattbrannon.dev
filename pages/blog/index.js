@@ -1,4 +1,4 @@
-import { Link } from '@components/Links';
+import { InternalLink } from '@components/Links';
 import Head from '@components/Head';
 import { CardHeading } from '@components/Headings';
 import PageTitle from '@components/PageTitle';
@@ -26,17 +26,17 @@ export default function Index({ posts }) {
         rounded
         center
         size={360}
-        sources={[ '/videos/demos/mitm.webm', '/videos/demos/mitm.mp4' ]}
+        sources={['/videos/demos/mitm.webm', '/videos/demos/mitm.mp4']}
       />
       <Spacer size={32} />
 
-      <BlogList id="main-content" tabIndex={-1}>
+      <BlogList tabIndex={-1}>
         {posts.map((post) => {
           const href = `/blog/${post.filePath.replace(/\.mdx?$/, '')}`;
           return (
             <Card key={post.filePath}>
               <CardHeading>
-                <Link href={href}>{post.data.title}</Link>
+                <InternalLink href={href}>{post.data.title}</InternalLink>
               </CardHeading>
               <Text>{post.data.description}</Text>
             </Card>

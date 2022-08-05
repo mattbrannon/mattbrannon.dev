@@ -1,14 +1,12 @@
-import NextLink from 'next/link';
+// import NextLink from 'next/link';
 import styled from 'styled-components';
 import { Anchor } from './Anchor';
 
 export const ExternalLink = ({ href, children }) => {
   return (
-    <NextLink passHref href={href} legacyBehavior>
-      <External newTab href={href} rel="noopener">
-        {children}
-      </External>
-    </NextLink>
+    <External newTab href={href} rel="noopener">
+      {children}
+    </External>
   );
 };
 

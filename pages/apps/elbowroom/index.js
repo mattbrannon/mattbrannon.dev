@@ -1,21 +1,46 @@
 import AppTitle from '@components/AppTitle';
 import Head from '@components/Head';
-import { H3 } from '@components/Headings';
+import { H3Link } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
 import Text from '@components/Text';
 import { FlatVideo } from '@components/VideoPlayer';
-import Image from 'next/future/image';
+// import Image from 'next/future/image';
 import styled from 'styled-components';
-import desktopImage from '/public/images/elbowroom/desktop.png';
-import mobileImage from '/public/images/elbowroom/mobile.png';
+
+import { Picture } from '@components/Picture';
+// import path from 'path';
+// import fs from 'fs';
+// import dynamic from 'next/dynamic';
+
+import desktopImageAvif from '/public/images/elbowroom/desktop.avif';
+import desktopImageWebp from '/public/images/elbowroom/desktop.webp';
+import desktopImagePng from '/public/images/elbowroom/desktop.png';
+
+import mobileImageAvif from '/public/images/elbowroom/mobile.avif';
+import mobileImageWebp from '/public/images/elbowroom/mobile.webp';
+import mobileImagePng from '/public/images/elbowroom/mobile.png';
+
+const desktopImages = [desktopImageAvif, desktopImageWebp, desktopImagePng].map((image) => {
+  const { src, width, height, blurDataURL } = image;
+  console.log(image);
+  return { src, width, height, blurDataURL };
+});
+
+const mobileImages = [mobileImageAvif, mobileImageWebp, mobileImagePng].map((image) => {
+  const { src, width, height, blurDataURL } = image;
+  console.log(image);
+  return { src, width, height, blurDataURL };
+});
 
 export default function ElbowRoomPage() {
+  console.log(desktopImages, mobileImages);
   const links = {
     github: 'https://github.com/mattbrannon/elbowroom.dev',
     liveSite: 'https://elbowroom.dev',
   };
 
-  const sources = [ '/videos/demos/elbowroom.mp4' ];
+  const videoSources = ['/videos/demos/elbowroom.webm', '/videos/demos/elbowroom.mp4'];
+
   return (
     <article>
       <Head
@@ -23,7 +48,7 @@ export default function ElbowRoomPage() {
         title="Elbow Room"
       />
 
-      <AppTitle title="Elbow Room" sources={sources} links={links}>
+      <AppTitle title="Elbow Room" sources={videoSources} links={links}>
         Real time chatroom built with React and Firebase
       </AppTitle>
 
@@ -43,8 +68,9 @@ export default function ElbowRoomPage() {
       <div>
         <Heading>FrontEnd</Heading>
         <FlexContainer>
-          <Image src={desktopImage} alt="desktop view of the app" />
-          <Image src={mobileImage} alt="mobile view of the app" />
+          <Picture sources={desktopImages} />
+          <Picture sources={mobileImages} />
+          {/* <Image src={mobileImagePng} alt="mobile view of the app" /> */}
         </FlexContainer>
         <Text>
           The choice to use React for building out the frontend was, by far, the easiest decision of
@@ -62,9 +88,8 @@ export default function ElbowRoomPage() {
         <Heading>Backend</Heading>
         <FlexContainer>
           <FlatVideo
-            sources={[ '/videos/mp4/elbowroom-signup.mp4', '/videos/webm/elbowroom-signup.webm' ]}
+            sources={['/videos/mp4/elbowroom-signup.mp4', '/videos/webm/elbowroom-signup.webm']}
           />
-          {/* <Image src={signupGif} alt="demonstration of the signup process" /> */}
         </FlexContainer>
         <Text>
           I have to give credit where credit is due. Firebase was such a lifesaver on this app.
@@ -90,7 +115,7 @@ const FlexContainer = styled.div`
   margin: 16px 0 32px 0;
 `;
 
-const Heading = styled(H3)`
-  margin: 64px 0 8px 0;
+const Heading = styled(H3Link)`
   font-size: var(--size28);
+  color: var(--h2);
 `;

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { InternalLink } from './InternalLink';
 // import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 // import { Anchor } from './Anchor';
@@ -17,8 +18,8 @@ const LinkWrapper = styled.span`
   position: relative;
   background: transparent;
   border: none;
-  font-family: Jost, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    Oxygen, Ubuntu, Cantarell, 'OpenSans', 'Helvetica Neue', sans-serif;
+  font-family: Jost, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'OpenSans', 'Helvetica Neue', sans-serif;
   font-weight: 525;
 
   --maxWidth: ${(p) => (p.$isActive ? '100%' : '0%')};
@@ -29,7 +30,7 @@ const LinkWrapper = styled.span`
   }
 `;
 
-const A = styled(Link)`
+const A = styled(InternalLink)`
   color: var(--color);
 
   letter-spacing: 0.8px;
@@ -39,6 +40,7 @@ const A = styled(Link)`
     color: var(--orange0);
     cursor: pointer;
   }
+  color: white;
   transition: color 0.15s ease;
 `;
 
@@ -57,8 +59,6 @@ const Underline = styled.span`
 
   transition: max-width 0.2s ease-in-out;
 `;
-
-
 
 // import Link from 'next/link';
 // import { useEffect, useState } from 'react';
@@ -132,5 +132,3 @@ const Underline = styled.span`
 
 //   transition: max-width 0.2s ease-in-out;
 // `;
-
-
