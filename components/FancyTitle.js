@@ -1,37 +1,11 @@
 import styled from 'styled-components';
-import { H2 } from './Headings';
-import { m as motion, LazyMotion } from 'framer-motion';
-import { loadFeatures } from '@utils/helpers';
+import { H1 } from './Headings';
+import { m as motion } from 'framer-motion';
+// import { loadFeatures } from '@utils/helpers.js';
 import { useRef } from 'react';
 import ClientOnly from './ClientOnly';
 
-// function makeVariant() {
-//   let hasCookie;
-//   return function getVariant(delay) {
-//     return {
-//       hidden: () => {
-//         return {
-//           opacity: 0,
-//           clipPath: typeof delay === 'number' ? 'var(--center)' : 'var(--left)',
-//           letterSpacing: '0.2em',
-//         };
-//       },
-//       show: ({ showTitle }) => {
-//         return {
-//           opacity: 1,
-//           clipPath: 'var(--visible)',
-//           letterSpacing: '0.0195em',
-//           transition: {
-//             duration: hasCookie ? 1 : 1.5,
-//             delay: showTitle ? 0 : typeof delay === 'number' ? delay : 3.7,
-//           },
-//         };
-//       },
-//     };
-//   };
-// }
-
-export default function FancyTitle({ showTitle, children, ...props }) {
+export default function FancyTitle({ children, ...props }) {
   const gradient = props.gradient || 'var(--app-name-gradient)';
   const shadow = props.shadow || 'var(--app-name-shadow)';
   const strokeWidth = props.strokeWidth || 'var(--strokeWidth)';
@@ -45,30 +19,28 @@ export default function FancyTitle({ showTitle, children, ...props }) {
 
   return (
     <ClientOnly>
-      <LazyMotion features={loadFeatures} strict>
-        <motion.div variants={props.variants} {...props} style={{ padding: 'inherit' }}>
-          <Heading
-            ref={container}
-            tabIndex={-1}
-            style={{
-              '--gradient': gradient,
-              '--shadow': shadow,
-              '--strokeWidth': strokeWidth,
-              '--strokeColor': strokeColor,
-              '--letterSpacing': letterSpacing,
-            }}
-          >
-            {children.split(' ').map((word, i, collection) => {
-              const space = i < collection.length - 1;
-              return (
-                <Word space={space} key={i}>
-                  {word}
-                </Word>
-              );
-            })}
-          </Heading>
-        </motion.div>
-      </LazyMotion>
+      <motion.div variants={props.variants} {...props} style={{ padding: 'inherit' }}>
+        <Heading
+          ref={container}
+          tabIndex={-1}
+          style={{
+            '--gradient': gradient,
+            '--shadow': shadow,
+            '--strokeWidth': strokeWidth,
+            '--strokeColor': strokeColor,
+            '--letterSpacing': letterSpacing,
+          }}
+        >
+          {children.split(' ').map((word, i, collection) => {
+            const space = i < collection.length - 1;
+            return (
+              <Word space={space} key={i}>
+                {word}
+              </Word>
+            );
+          })}
+        </Heading>
+      </motion.div>
     </ClientOnly>
   );
 }
@@ -107,7 +79,7 @@ const Span = styled.span`
   }
 `;
 
-const Heading = styled(H2)`
+const Heading = styled(H1)`
   font-size: clamp(48px, 4vw, 60px);
   margin-bottom: 0;
   margin-top: 0;
