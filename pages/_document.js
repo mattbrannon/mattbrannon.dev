@@ -36,6 +36,13 @@ export default class MyDocument extends Document {
         <Head>
           <link
             rel="preload"
+            href="/fonts/decovar.woff2"
+            as="font"
+            crossOrigin=""
+            type="font/woff2"
+          />
+          <link
+            rel="preload"
             href="/fonts/Jost-english-subset.woff2"
             as="font"
             crossOrigin=""
