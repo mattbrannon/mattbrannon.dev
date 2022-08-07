@@ -69,15 +69,13 @@ const FontProperties = ({ state, font, ...props }) => {
   return (
     <Group>
       <Heading>Font Properties</Heading>
-      <RangeSlider name="font size" min={4} max={10} value={state.fontSize} step={0.1} {...props} />
+      <RangeSlider name="font size" min={4} max={9} value={state.fontSize} step={0.1} {...props} />
       {Object.keys(font).map((key, i) => {
         // console.log(key, font[key], state.settings);
         const [min, max] = font[key];
-
         const step = max - min > 2 ? 1 : key === 'CRSV' ? 0.5 : 0.01;
         return (
           <div key={i}>
-            <label>{props.value}</label>
             <RangeSlider
               name={key}
               min={min}
@@ -85,6 +83,7 @@ const FontProperties = ({ state, font, ...props }) => {
               value={state.settings[key] || 0}
               step={step}
               {...props}
+              state={state}
             />
           </div>
         );
