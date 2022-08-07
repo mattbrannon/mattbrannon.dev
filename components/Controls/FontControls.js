@@ -99,9 +99,9 @@ const ShadowProperties = ({ ...props }) => {
       <Heading>Shadow Properties</Heading>
       <RangeSlider min={0} max={20} name="shadow layers" {...props} />
       <RangeSlider min={1} max={20} step={0.2} name="shadow gap" {...props} />
-      <RangeSlider min={0} max={10} step={0.1} name="blur" {...props} />
-      <RangeSlider min={-10} max={10} step={0.2} name="offset x" {...props} />
-      <RangeSlider min={-10} max={10} step={0.2} name="offset y" {...props} />
+      <RangeSlider min={0} max={10} step={0.1} name="shadow blur" {...props} />
+      <RangeSlider min={-10} max={10} step={0.2} name="shadow offset x" {...props} />
+      <RangeSlider min={-10} max={10} step={0.2} name="shadow offset y" {...props} />
     </Group>
   );
 };
