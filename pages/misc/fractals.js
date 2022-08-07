@@ -53,8 +53,8 @@ export default function Fractals() {
   const canvasRef = useRef();
   const controlRef = useRef();
   const mainRef = useRef();
-  const [ state, dispatch ] = useReducer(reducer, initialState);
-  const [ controlWidth, setControlWidth ] = useState(0);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const [controlWidth, setControlWidth] = useState(0);
 
   useEffect(() => {
     const { width } = controlRef.current.getBoundingClientRect();
@@ -139,7 +139,7 @@ export default function Fractals() {
     }
 
     drawFractal();
-  }, [ state, controlWidth ]);
+  }, [state, controlWidth]);
 
   return (
     <>
