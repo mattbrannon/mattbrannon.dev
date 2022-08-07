@@ -23,7 +23,7 @@ const parseType = (type, value) => {
 
 const RangeSlider = forwardRef(({ ...props }, ref) => {
   const { name, state, dispatch } = props;
-  const label = createLabel(name);
+  const label = state?.labels?.[name] || createLabel(name);
   const key = toCamelCase(name);
 
   const defaultValue = state?.[key] ?? state?.settings?.[key] ?? props.value ?? 0;
@@ -74,7 +74,9 @@ export const CustomInput = ({ ...props }) => {
 
   return (
     <Wrapper>
-      <Label {...props}>{label}:</Label>
+      <Label htmlFor={props.name} {...props}>
+        {label}:
+      </Label>
       <ValueDisplay>{props.state[key]}</ValueDisplay>
       <Input
         onChange={(e) => setColorValue(e.target.value)}
