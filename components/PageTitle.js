@@ -1,9 +1,10 @@
 import { useFontSize } from '@hooks/useFontSize';
 import styled from 'styled-components';
-import FancyText from './FancyText';
+import FancyText from './Text/FancyText';
 import { breakpoints } from '@constants/index';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { forwardRef } from 'react';
+import { H1 } from '@components/Headings';
 
 // eslint-disable-next-line react/display-name
 const PageTitle = forwardRef((props, ref) => {
@@ -15,14 +16,14 @@ const PageTitle = forwardRef((props, ref) => {
   if (props.children.length) {
     const [highlighted, ...rest] = props.children.split(' ');
     return (
-      <TopRow style={{ '--fontSize': fontSize }}>
-        <FluidHeading tabIndex={-1}>
-          <RecursiveText {...props}>{highlighted}&nbsp;</RecursiveText>
-          <Span ref={ref} {...props}>
-            {rest.join(' ')}
-          </Span>
-        </FluidHeading>
-      </TopRow>
+      // <TopRow style={{ '--fontSize': fontSize }}>
+      <FluidHeading style={{ '--fontSize': fontSize }} tabIndex={-1}>
+        <RecursiveText {...props}>{highlighted}&nbsp;</RecursiveText>
+        <Span ref={ref} {...props}>
+          {rest.join(' ')}
+        </Span>
+      </FluidHeading>
+      // </TopRow>
     );
   }
   return null;
@@ -32,7 +33,7 @@ const RecursiveText = styled(FancyText)`
   font-size: var(--size40);
 `;
 
-const FluidHeading = styled.h2`
+const FluidHeading = styled(H1)`
   font-family: Recursive, 'OpenSans', system-ui, sans-serif;
   font-variation-settings: var(--recursive6);
   font-size: var(--fontSize);
@@ -46,18 +47,14 @@ const FluidHeading = styled.h2`
   }
 `;
 
-const TopRow = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+// const TopRow = styled.div`
+//   /* display: flex;
+//   justify-content: center;
+//   flex-direction: column;
 
-  outline-offset: -12px;
-  outline: none;
-
-  @media (min-width: ${breakpoints.mobile}px) {
-    margin-top: 32px;
-  }
-`;
+//   outline-offset: -12px;
+//   outline: none; */
+// `;
 
 const Span = styled.span`
   @media (max-width: ${breakpoints.mobile}px) {
