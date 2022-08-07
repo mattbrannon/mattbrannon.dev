@@ -255,7 +255,7 @@ const NoScript = styled.noscript`
   place-items: center;
   font-size: var(--size52);
   font-family: recursive;
-  font-variation-settings: "wght" 800, "slnt" -6, "CRSV" 0, "CASL" 0, "MONO" 0;
+  font-variation-settings: 'wght' 800, 'slnt' -6, 'CRSV' 0, 'CASL' 0, 'MONO' 0;
   text-align: center;
 `;
 
