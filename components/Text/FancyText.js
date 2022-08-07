@@ -42,6 +42,10 @@ export const StrongText = styled(FancyTextItalic)`
   font-variation-settings: var(--recursive8);
   animation: none;
   color: var(--color-strong);
+
+  ${Blockquote} & {
+    color: navy;
+  }
 `;
 
 export default FancyTextItalic;
