@@ -1,7 +1,7 @@
 import { FontControls } from '@components/Controls/FontControls';
 import styled from 'styled-components';
 import { useEffect, useReducer, useRef, useState } from 'react';
-import { withGradient, Text } from '@components/GradientText';
+import { withGradient, Text } from '@components/Text/GradientText';
 
 import { textGeneratorVariant } from '@animations/variants';
 import {
@@ -131,6 +131,15 @@ const data = {
   ],
 };
 
+const shadowProperties = {
+  shadowColorStart: '#aa00ff',
+  shadowColorEnd: '#19103d',
+  shadowLayers: 20,
+  shadowGap: 1,
+  shadowOffsetX: -5,
+  shadowOffsetY: -5,
+};
+
 const getDefaultFont = () => {
   const { name, settings } = data.fonts.find((font) => font.default);
   return { name, settings };
@@ -160,11 +169,11 @@ const initialState = {
   shadowColorEnd: '#19103d', // 'hsl(195 65% 20%)', //'hsl(227deg 100% 52%)',
   shadowLayers: 20,
   shadowGap: 1,
-  offsetX: -5,
-  offsetY: -5,
+  shadowOffsetX: -5,
+  shadowOffsetY: -5,
   textStrokeColor: '#000000',
   textStrokeWidth: 0.35,
-  blur: 1,
+  shadowBlur: 1,
   toggleCode: false,
   isChangingFonts: false,
   showBackground: false,
@@ -188,9 +197,10 @@ const initialState = {
 
 const handleShadowUpdate = (state, action) => {
   const actionType = snakeToCamel(action.type);
+  const shadow = makeShadow({ ...state, [actionType]: action.value });
   return {
     ...state,
-    shadow: makeShadow({ ...state, [actionType]: action.value }),
+    shadow,
     [actionType]: action.value,
   };
 };
@@ -212,9 +222,9 @@ function reducer(state, action) {
     case 'SHADOW_COLOR_END':
     case 'SHADOW_LAYERS':
     case 'SHADOW_GAP':
-    case 'OFFSET_X':
-    case 'OFFSET_Y':
-    case 'BLUR': {
+    case 'SHADOW_OFFSET_X':
+    case 'SHADOW_OFFSET_Y':
+    case 'SHADOW_BLUR': {
       return handleShadowUpdate(state, action);
     }
     case 'GRADIENT_COLOR_START':
@@ -250,19 +260,13 @@ function reducer(state, action) {
     case 'SKLB':
     case 'TRMG':
     case 'TRME': {
-      const settings = state.settings;
-      return {
-        ...state,
-        settings: { ...settings, [action.type]: action.value },
-      };
+      return handleCustomAxes(state, action);
     }
     case 'WGHT':
     case 'SLNT':
     case 'WDTH':
     case 'ITAL': {
-      const type = action.type.toLowerCase();
-      const settings = state.settings;
-      return { ...state, settings: { ...settings, [type]: action.value } };
+      return handleStandardAxes(state, action);
     }
 
     case 'CHANGE_FONT': {
@@ -317,6 +321,22 @@ function reducer(state, action) {
       return { ...state };
   }
 }
+
+const makeFontVariationHandlers = (isCustom = false) => {
+  return (state, action) => {
+    const type = isCustom ? action.type : action.type.toLowerCase();
+    const settings = { ...state.settings, [type]: action.value };
+    const fontVariationSettings = parseFontSettings(settings);
+    return {
+      ...state,
+      fontVariationSettings,
+      settings,
+    };
+  };
+};
+
+const handleStandardAxes = makeFontVariationHandlers();
+const handleCustomAxes = makeFontVariationHandlers(true);
 
 export default function VariableFontPlayground() {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -386,7 +406,8 @@ export default function VariableFontPlayground() {
                       '--fontSize': `${state.fontSize}vw`,
                     }}
                     dispatch={dispatch}
-                    state={state}
+                    // state={state}
+                    isChangingFonts={state.isChangingFonts}
                     shadow={state.shadow}
                     gradient={state.gradient}
                     fontSize={`${state.fontSize}vw`}
@@ -410,11 +431,11 @@ export default function VariableFontPlayground() {
                 const final = text.replace(/[\\]+/g, '');
                 setText(final);
               }}
-              style={{
-                '--fontSize': state.fontSize + 'vw',
-                '--fontFamily': state.font,
-                '--fontVariationSettings': state.fontVariationSettings,
-              }}
+              // style={{
+              //   '--fontSize': state.fontSize + 'vw',
+              //   '--fontFamily': state.font,
+              //   '--fontVariationSettings': state.fontVariationSettings,
+              // }}
             />
           </Wrapper>
 
@@ -637,7 +658,7 @@ const TextWrapper = styled(Text)`
 
 const GradientText = (props) => {
   const handleFontChange = () => {
-    const { isChangingFonts } = props.state;
+    const { isChangingFonts } = props?.state ?? props;
     if (isChangingFonts) {
       props.dispatch({ type: 'IS_CHANGING_FONTS', value: false });
     }

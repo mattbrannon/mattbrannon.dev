@@ -10,14 +10,21 @@ export const randomNumber = (min) => (max) => {
   return randomInt(min, max);
 };
 
-export const compose = (...fns) => (arg) => fns.reduceRight((acc, callback) => callback(acc), arg);
+export const compose =
+  (...fns) =>
+    (arg) =>
+      fns.reduceRight((acc, callback) => callback(acc), arg);
 
-export const pipe = (...fns) => (arg) => fns.reduce((acc, callback) => callback(acc), arg);
+export const pipe =
+  (...fns) =>
+    (arg) =>
+      fns.reduce((acc, callback) => callback(acc), arg);
 
 export const random = randomNumber(0);
 
 const makeFloat = (decimal) => (value) => Math.round(value * decimal) / decimal;
 export const toFloat = makeFloat(100);
+export const toPrecision = makeFloat(100000);
 
 export const emToPx = (size) => size / 0.0625;
 export const pxToEm = (size) => size * 0.0625;
@@ -67,16 +74,20 @@ const buildArray = (start, stepBy, steps) => {
   });
 };
 
-const getRotateXValues = (x1, x2 = x1 * -1) => (steps) => {
-  return Array.from({ length: steps }, (_, i) => {
-    return i % 2 === 0 ? x1 : x2;
-  });
-};
-const getRotateYValues = (y1, y2 = y1 - 5) => (steps) => {
-  return Array.from({ length: steps }, (_, i) => {
-    return i % 2 === 0 ? y1 : y2;
-  });
-};
+const getRotateXValues =
+  (x1, x2 = x1 * -1) =>
+    (steps) => {
+      return Array.from({ length: steps }, (_, i) => {
+        return i % 2 === 0 ? x1 : x2;
+      });
+    };
+const getRotateYValues =
+  (y1, y2 = y1 - 5) =>
+    (steps) => {
+      return Array.from({ length: steps }, (_, i) => {
+        return i % 2 === 0 ? y1 : y2;
+      });
+    };
 
 export function getAnimationValues(start, stop, steps) {
   return function (x1, x2) {
@@ -173,7 +184,7 @@ export function adjustCircularValues(start, stop, steps) {
   // const distance = getDistance(start, stop);
 
   const adjustBy = (distance / steps) * direction;
-  const hValues = [ start ];
+  const hValues = [start];
 
   for (let i = 0; i < steps; i++) {
     start += adjustBy;
@@ -188,44 +199,49 @@ export const makeShadow = ({
   shadowColorEnd,
   shadowLayers,
   shadowGap = 1,
-  offsetX = -1,
-  offsetY = -1,
-  blur = 1,
+  shadowOffsetX = -1,
+  shadowOffsetY = -1,
+  shadowBlur = 1,
 }) => {
   if (parseInt(shadowLayers) === 0) return;
 
-  let [ h1, s1, l1 ] = new Color(shadowColorStart).hsl.array();
-  let [ h2, s2, l2 ] = new Color(shadowColorEnd).hsl.array();
+  let [h1, s1, l1] = new Color(shadowColorStart).hsl.array();
+  let [h2, s2, l2] = new Color(shadowColorEnd).hsl.array();
 
   const { direction, distance } = getDirection(h1, h2);
 
   const hStepBy = (distance / (shadowLayers - 1)) * direction;
   const sStepBy = getLinearSteps(s1, s2, shadowLayers);
   const lStepBy = getLinearSteps(l1, l2, shadowLayers);
+  // const blurStepBy = getLinearSteps(0, shadowBlur, shadowLayers);
 
+  // console.log(blurStepBy);
+  // let blurValue = 0;
+  const blurs = [];
   const colors = [];
   for (let i = 0; i < shadowLayers; i++) {
-    const h = keepHueInRange(h1);
+    const h = toFloat(keepHueInRange(h1));
     const s = toFloat(s1);
     const l = toFloat(l1);
+    // const b = toFloat(blurValue);
+    // blurs.push(toPrecision(pxToEm(blurValue * 0.1)));
     colors.push(new Color({ h, s, l }).hsl.css());
     h1 += hStepBy;
     s1 += sStepBy;
     l1 += lStepBy;
+    // blurValue += blurStepBy;
   }
 
+  // console.log(blurs);
   // const offsetAmount = pxToEm(shadowGap * 0.25);
-  const blurAmount = pxToEm(blur * 0.1);
+  const blurAmount = pxToEm(shadowBlur * 0.1);
   const offsetAmount = pxToEm(shadowGap * 0.25);
 
   return colors
     .map((color, i) => {
       const blur = toFloat(blurAmount);
-      const xOffset = toFloat(pxToEm((i + 1) * offsetAmount * offsetX));
-      const yOffset = toFloat(pxToEm((i + 1) * offsetAmount * offsetY));
-      // const xOffset = pxToEm(toFloat((i + 1) * (shadowGap * offsetX)));
-      // const yOffset = pxToEm(toFloat((i + 1) * shadowGap * offsetY));
-      // const blur = toFloat(pxToEm(blurAmount * 0.1 * (i + 1)));
+      const xOffset = toFloat(pxToEm((i + 1) * offsetAmount * shadowOffsetX));
+      const yOffset = toFloat(pxToEm((i + 1) * offsetAmount * shadowOffsetY));
 
       return `${xOffset}em ${yOffset}em ${blur}em ${color}`;
     })
@@ -246,10 +262,7 @@ export function spaceToCamelCase(str) {
     return i === 0 ? v : v.charAt(0).toUpperCase() + v.slice(1);
   }
 
-  return str
-    .split(' ')
-    .map(camelCase)
-    .join('');
+  return str.split(' ').map(camelCase).join('');
 }
 
 export function toSnakeUpperCase(str) {
@@ -260,10 +273,7 @@ export function toSnakeUpperCase(str) {
 }
 
 export const spaceToKebab = (str) => {
-  return str
-    .toLocaleLowerCase()
-    .split(' ')
-    .join('-');
+  return str.toLocaleLowerCase().split(' ').join('-');
 };
 
 export const camelToKebab = (str) => {
@@ -280,13 +290,15 @@ export const getDataType = (data) => {
 
 export const toHeadingId = (str) => {
   try {
-    return str.slice(0, 1).toLowerCase() +
-    str
-      .slice(1)
-      .split(' ')
-      .map((s) => s.replace(/[A-Z]/g, (v) => '-' + v.toLowerCase()))
-      .join('-')
-      .replace(/-+/g, '-');
+    return (
+      str.slice(0, 1).toLowerCase() +
+      str
+        .slice(1)
+        .split(' ')
+        .map((s) => s.replace(/[A-Z]/g, (v) => '-' + v.toLowerCase()))
+        .join('-')
+        .replace(/-+/g, '-')
+    );
   }
   catch {
     return str;
@@ -331,14 +343,14 @@ export const makeGradient = ({
   gradientMidpoint = 47,
   gradientAngle = 0,
 }) => {
-  let [ h1, s1, l1 ] = new Color(gradientColorStart).hsl.array();
-  let [ h2, s2, l2 ] = new Color(gradientColorEnd).hsl.array();
+  let [h1, s1, l1] = new Color(gradientColorStart).hsl.array();
+  let [h2, s2, l2] = new Color(gradientColorEnd).hsl.array();
 
   const hValues = getRangeOfHues(h1, h2, 2);
   const sValues = adjustLinearValues(s1, s2, 2);
   const lValues = adjustLinearValues(l1, l2, 2);
 
-  const [ begin, end ] = getPoints(gradientBlend, gradientMidpoint);
+  const [begin, end] = getPoints(gradientBlend, gradientMidpoint);
   // console.log({ begin, end });
   const cssValues = hValues.reduce((acc, h, i) => {
     const s = sValues[i];
@@ -348,8 +360,8 @@ export const makeGradient = ({
   }, []);
 
   return `linear-gradient(
-      ${gradientAngle}deg, 
-      ${cssValues[0]} ${begin}%, 
+      ${gradientAngle}deg,
+      ${cssValues[0]} ${begin}%,
       ${cssValues[1]} ${end}%
     )`;
   // return `linear-gradient(${cssValues[0]} ${begin}%, ${cssValues.slice(1).join(',')})`;
@@ -419,4 +431,52 @@ export const makeClipPath = (n) => {
 
     return `polygon(0 ${top}%, 100% ${top}%, 100% ${bottom}%, 0 ${bottom}%)`;
   });
+};
+
+const getMultiPoints = (midpoint, gap, values) => {
+  const nums = [];
+  while (nums.length < values.length) {
+    const i = nums.length + 1;
+    const [a, b] = [midpoint - (gap / 2) * i, midpoint + (gap / 2) * i];
+    nums.unshift(a);
+    nums.push(b);
+  }
+  return nums;
+};
+
+export const createGradient = (values, gap, midpoint = 50, angle = 35) => {
+  const points = getMultiPoints(midpoint, gap, values);
+  const colors = values.map((color, i) => {
+    const location = points[i];
+    return `${color} ${location}%`;
+  });
+
+  const gradient = `linear-gradient(${angle}deg, ${colors.join(', ')})`;
+  return gradient;
+};
+
+// export const makeGradient = ({
+//   gradientColors,
+//   gradientBlend,
+//   gradientMidpoint,
+//   gradientAngle,
+// }) => {
+//   const points = getMultiPoints(gradientMidpoint, gradientBlend, gradientColors);
+//   const colors = gradientColors.map((color, i) => {
+//     const location = points[i];
+//     return `${color} ${location}%`;
+//   });
+
+//   const gradient = `linear-gradient(${gradientAngle}deg, ${colors.join(', ')})`;
+//   return gradient;
+// };
+
+export const createFullStopGradient = (values) => {
+  return values
+    .map((color, i) => {
+      const start = (i / values.length) * 100;
+      const stop = ((i + 1) / values.length) * 100;
+      return `${color} ${start}%, ${color} ${stop}%`;
+    })
+    .join(', ');
 };

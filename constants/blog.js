@@ -1,5 +1,5 @@
 import { makeGradient, makeShadow, makeFluidFontSize, pxToEm } from '@utils/helpers.js';
-import { fonts } from './fonts';
+import { fonts } from './fonts.js';
 import { breakpoints } from './breakpoints';
 
 const { mobile, desktop } = breakpoints;
@@ -28,9 +28,9 @@ export const shadow = makeShadow({
   shadowColorEnd: '#111',
   shadowLayers: 24,
   shadowGap: 2,
-  offsetX: -2,
-  offsetY: -2,
-  blur: 0,
+  shadowOffsetX: -2,
+  shadowOffsetY: -2,
+  shadowBlur: 0,
 });
 
 // export const shadow = makeShadow({
