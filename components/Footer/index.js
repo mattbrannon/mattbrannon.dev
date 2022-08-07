@@ -1,5 +1,5 @@
 import { FullBleed } from '@components/Layout';
-import VisuallyHidden from '@components/VisuallyHidden';
+import { VisuallyHidden } from '@components/VisuallyHidden';
 // import { breakpoints } from '@constants/index';
 import NextImage from 'next/future/image';
 // import Link from 'next/link';
@@ -32,7 +32,7 @@ export default function Footer() {
         </Nav>
       </NavWrapper>
       <Copyright>
-        <Notice>&copy;&nbsp;2022 Matt Brannon.</Notice>
+        <Notice>&copy;&nbsp;{new Date().getFullYear()} Matt Brannon.</Notice>
         <Notice>All rights reserved</Notice>
       </Copyright>
     </Container>
