@@ -15,6 +15,6 @@ export const Anchor = styled.a.attrs((props) => {
   &:focus-visible {
     border-radius: 1px;
     outline-offset: 2px;
-    outline: 2px solid lightblue;
+    outline: 2px solid var(--color-outline);
   }
 `;

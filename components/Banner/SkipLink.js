@@ -33,7 +33,7 @@ const Link = styled(Anchor)`
 
   &:focus-visible {
     margin-top: -12px;
-    outline: 2px solid lightblue;
+    outline: 2px solid var(--color-outline);
     padding: 24px 18px;
   }
 

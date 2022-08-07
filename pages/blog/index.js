@@ -3,7 +3,7 @@ import Head from '@components/Head';
 import { CardHeading } from '@components/Headings';
 import PageTitle from '@components/PageTitle';
 import { Spacer } from '@components/Spacer';
-import Text from '@components/Text';
+import Text from '@components/Text/Text';
 import { BlogVideo } from '@components/VideoPlayer';
 import { breakpoints } from '@constants/index';
 import { POSTS_PATH, publishedArticles } from '@utils/mdxUtils.js';
@@ -14,7 +14,7 @@ import styled from 'styled-components';
 
 export default function Index({ posts }) {
   return (
-    <div>
+    <>
       <Head
         title="Another Developer Blog"
         description="Thoughts, opinions, criticisms, rantings, ravings, musings on all things great and small"
@@ -44,11 +44,11 @@ export default function Index({ posts }) {
         })}
       </BlogList>
       <Spacer axis="vertical" size={32} />
-    </div>
+    </>
   );
 }
 
-const Card = styled.div`
+const Card = styled.li`
   border: 1px solid black;
   border-radius: 6px;
   background: #222;
@@ -56,13 +56,16 @@ const Card = styled.div`
   width: 100%;
   padding: 0 16px;
   background: var(--basic-card-background);
+  font-variation-settings: 'wght' 700;
+  list-style: none;
 `;
 
-const BlogList = styled.div`
+const BlogList = styled.ul`
   display: grid;
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding: 0;
 
   @media (min-width: ${breakpoints.mobile}px) {
     margin-top: 32px;

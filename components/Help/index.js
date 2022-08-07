@@ -121,7 +121,7 @@ const Heading = styled.h3`
 `;
 
 const SubHeading = styled.h4`
-  color: var(--h4);
+  color: var(--fancy-text-color);
   margin: 0 48px 16px 32px;
 `;
 

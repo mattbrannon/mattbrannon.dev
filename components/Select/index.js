@@ -46,7 +46,7 @@ const FancySelect = styled.div`
   color: hsl(0, 0%, 95%);
   font-family: Jost;
 
-  background-color: var(--dark-pink);
+  background-color: var(--pink-dark);
   font-size: var(--size16);
   padding: 2px 8px;
 

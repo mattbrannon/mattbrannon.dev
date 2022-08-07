@@ -32,7 +32,7 @@ export const fonts = {
     recursive8: '"MONO" 0, "CRSV" 0, "CASL" 1, "wght" 700, "slnt" -10',
     recursive9: '"MONO" 0.5, "CRSV" 0.38, "CASL" 1, "wght" 673.25, "slnt" 0',
 
-    monospace: '"MONO" 1, "CASL" 0, "CRSV" 0.5, "wght" 200, "slnt" 0',
+    monospace: '"MONO" 1, "CASL" 0, "CRSV" 0, "wght" 360, "slnt" 0',
     monospaceLight: '"MONO" 1, "CASL" 0, "CRSV" 0.5, "wght" 100, "slnt" 0',
 
     jostHairline: '"wght" 100, "ital" 0',
