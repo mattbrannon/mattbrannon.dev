@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export const useScroll = () => {
-  const [ scroll, setScroll ] = useState({ previous: 0, current: 0 });
+  const [scroll, setScroll] = useState({ previous: 0, current: 0 });
 
   useEffect(() => {
     let previousScroll;
