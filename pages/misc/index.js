@@ -3,7 +3,7 @@ import Head from '@components/Head';
 import { CardHeading } from '@components/Headings';
 import PageTitle from '@components/PageTitle';
 import { Spacer } from '@components/Spacer';
-import Text from '@components/Text';
+import Text from '@components/Text/Text';
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import SideNote from '@components/SideNote';
