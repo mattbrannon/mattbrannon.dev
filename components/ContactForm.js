@@ -140,7 +140,7 @@ const Contact = ({ state, dispatch }) => {
           />
         </InputGroup>
         <ButtonWrapper>
-          <SubmitButton value="Send Message">Send Message</SubmitButton>
+          <Button value="Send Message">Send Message</Button>
         </ButtonWrapper>
         {/* </Fieldset> */}
       </Form>
@@ -168,6 +168,7 @@ const Form = styled(motion.form)`
 
   font-family: Inter;
   font-variation-settings: 'wght' 600, 'slnt' 10;
+  border: 1px solid black;
 
   --color-outline: var(--azure-light);
 `;
@@ -199,6 +200,7 @@ const ButtonWrapper = styled.div`
   align-items: center;
   max-width: 200px;
   margin: 16px auto 0 auto;
+  color: white;
 `;
 
 const Label = styled.label`
