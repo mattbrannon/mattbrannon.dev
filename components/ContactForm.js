@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { useEffect, useReducer } from 'react';
+// import axios from 'axios';
+import { useReducer } from 'react';
 import styled from 'styled-components';
 import { NormalButton as Button } from './Button';
 import { MaxWidthWrapper } from './MaxWidthWrapper';
@@ -60,7 +60,7 @@ export default function ContactForm() {
   );
 }
 
-const Popup = ({ state, dispatch }) => {
+const Popup = () => {
   const router = useRouter();
   return (
     <div style={{ position: 'relative' }}>
@@ -173,17 +173,17 @@ const Form = styled(motion.form)`
   --color-outline: var(--azure-light);
 `;
 
-const Fieldset = styled.fieldset`
-  border: none;
-  border-top: 2px solid black;
-  margin: 0 auto;
-`;
+// const Fieldset = styled.fieldset`
+//   border: none;
+//   border-top: 2px solid black;
+//   margin: 0 auto;
+// `;
 
-const Legend = styled.legend`
-  margin: auto;
-  /* padding: 0px 44px; */
-  font-weight: 700;
-`;
+// const Legend = styled.legend`
+//   margin: auto;
+//   /* padding: 0px 44px; */
+//   font-weight: 700;
+// `;
 
 export const InputGroup = styled.div`
   flex: 1;
@@ -239,7 +239,7 @@ const MessageInput = styled(Input).attrs({
   resize: none;
 `;
 
-const SubmitButton = styled(Button)`
-  grid-column: 1 / -1;
-  margin: auto;
-`;
+// const SubmitButton = styled(Button)`
+//   grid-column: 1 / -1;
+//   margin: auto;
+// `;

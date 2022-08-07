@@ -5,6 +5,7 @@ import { breakpoints } from '@constants/index';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { forwardRef } from 'react';
 import { H1 } from '@components/Headings';
+// import { Spacer } from '@components/Spacer';
 
 // eslint-disable-next-line react/display-name
 const PageTitle = forwardRef((props, ref) => {
@@ -17,12 +18,14 @@ const PageTitle = forwardRef((props, ref) => {
     const [highlighted, ...rest] = props.children.split(' ');
     return (
       // <TopRow style={{ '--fontSize': fontSize }}>
-      <FluidHeading style={{ '--fontSize': fontSize }} tabIndex={-1}>
-        <RecursiveText {...props}>{highlighted}&nbsp;</RecursiveText>
-        <Span ref={ref} {...props}>
-          {rest.join(' ')}
-        </Span>
-      </FluidHeading>
+      <>
+        <FluidHeading style={{ '--fontSize': fontSize }} tabIndex={-1}>
+          <RecursiveText {...props}>{highlighted}&nbsp;</RecursiveText>
+          <Span ref={ref} {...props}>
+            {rest.join(' ')}
+          </Span>
+        </FluidHeading>
+      </>
       // </TopRow>
     );
   }
@@ -38,9 +41,11 @@ const FluidHeading = styled(H1)`
   font-variation-settings: var(--recursive6);
   font-size: var(--fontSize);
   line-height: 1.2;
+  margin-top: 64px;
   @media (max-width: ${breakpoints.mobile}px) {
     font-size: 24px;
     margin-bottom: 16px;
+    margin-top: 16px;
   }
   @media (max-width: ${breakpoints.tablet}px) {
     text-align: center;

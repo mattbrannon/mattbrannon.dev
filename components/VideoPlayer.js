@@ -5,7 +5,7 @@ import { useCssVariable } from 'hooks/useCssVariable';
 import NextImage from 'next/future/image';
 import { useRef, useState } from 'react';
 import styled from 'styled-components';
-import VisuallyHidden from './VisuallyHidden';
+import { VisuallyHidden } from './VisuallyHidden';
 
 function VideoPlayer({ sources, ...props }) {
   const ref = useRef();
@@ -234,12 +234,8 @@ const ImageWrapper = styled.span`
   height: 100%;
   background: white;
   border-radius: 50%;
-    opacity: ${(p) => (p.isHovering ? 1 : 0)};
-  ${'' /* opacity: ${(p) => (p.isHovering || !p.isPlaying ? 1 : 0)}; */}
-  ${'' /* opacity: ${(p) => (p.wasPaused ? 0 : p.isHovering && !p.wasPaused ? 1 : 0)}; */}
+  opacity: ${(p) => (p.isHovering ? 1 : 0)};
 
-  ${'' /* opacity: ${(p) => (p.isHovering || !p.isPlaying ? 1 : 0)}; */}
-  ${'' /* --delay: ${(p) => (p.isHovering ? '0s' : '0s')}; */}
   transition: opacity 0.1s linear;
 `;
 
@@ -258,11 +254,11 @@ const UnstyledButton = styled.button`
 
 export const FlatVideo = ({ ...props }) => {
   const ref = useRef();
-  const [ buttonText, setButtonText ] = useState('Pause video');
-  const [ isPlaying, setIsPlaying ] = useState(true);
-  const [ image, setImage ] = useState(pause);
-  const [ isHovering, setIsHovering ] = useState(false);
-  const [ wasPaused, setWasPaused ] = useState(false);
+  const [buttonText, setButtonText] = useState('Pause video');
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [image, setImage] = useState(pause);
+  const [isHovering, setIsHovering] = useState(false);
+  const [wasPaused, setWasPaused] = useState(false);
 
   const playVideo = () => {
     ref.current.play();

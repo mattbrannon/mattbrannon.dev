@@ -1,7 +1,6 @@
 import NextLink from 'next/link';
 import styled from 'styled-components';
 import { Anchor } from './Anchor';
-import { AppCardHeading } from '@components/Headings';
 import { forwardRef } from 'react';
 
 function Link({ href, children, ...props }, ref) {
