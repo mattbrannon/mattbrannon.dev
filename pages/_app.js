@@ -7,13 +7,13 @@ import { MobileMenu } from '@components/MobileMenu';
 import { GoogleAnalytics } from '@components/GoogleAnalytics';
 
 import '@styles/global.css';
-import { GlobalStyle } from '@styles/index';
+// import { GlobalStyle } from '@styles/global';
 import { MotionConfig, LazyMotion, domAnimation } from 'framer-motion';
 import { ThemeProvider } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 import { ThemeProvider as ContextProvider, StyleSheetManager } from 'styled-components';
 
-import { useIsBannerVisible } from '@hooks/useIsBannerVisible';
+// import { useIsBannerVisible } from '@hooks/useIsBannerVisible';
 import { useActiveElement } from '@hooks/useActiveElement';
 import { useHasMounted } from '@hooks/useHasMounted';
 
@@ -25,7 +25,7 @@ export default function Application({ Component, pageProps }) {
   const [hasActiveElement, setHasActiveElement] = useState(false);
 
   const [hasRun, setHasRun] = useState(null);
-  const isBannerVisible = useIsBannerVisible(400);
+  // const isBannerVisible = useIsBannerVisible(400);
 
   const ref = useRef();
 
@@ -79,9 +79,9 @@ export default function Application({ Component, pageProps }) {
           <StyleSheetManager disableVendorPrefixes>
             <ThemeProvider defaultTheme="dark" enableSystem={false} enableColorScheme={true}>
               <ContextProvider theme={theme}>
-                <GlobalStyle />
+                {/* <GlobalStyle /> */}
                 <MobileMenu dialogIsOpen={dialogIsOpen} setDialogIsOpen={setDialogIsOpen} />
-                <Banner ref={ref} isVisible={hasActiveElement || isBannerVisible} />
+                <Banner ref={ref} isVisible={hasActiveElement || true} />
                 <Layout>
                   <HeaderGap />
                   {/* <Header isVisible={isVisible} ref={header} /> */}
