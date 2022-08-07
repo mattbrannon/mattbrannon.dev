@@ -1,4 +1,4 @@
-import { makeClipPath } from '@utils/helpers';
+import { makeClipPath } from '@utils/helpers.js';
 
 export const talking = {
   initial: {

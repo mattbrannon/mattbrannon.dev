@@ -1,7 +1,6 @@
 import { breakpoints } from '@constants/index';
 import styled from 'styled-components';
 import { m as motion } from 'framer-motion';
-// import { loadFeatures } from '@utils/helpers';
 
 const Wrapper = styled(motion.div)`
   width: 100%;
@@ -12,10 +11,6 @@ const Wrapper = styled(motion.div)`
   margin: 0;
   border-radius: 6px;
   box-shadow: none;
-
-  text-shadow: var(--button-shadow);
-  color: var(--button-color);
-  font-weight: var(--button-weight);
 
   &:active {
     box-shadow: 0 0 0 1px var(--color-outline-button);

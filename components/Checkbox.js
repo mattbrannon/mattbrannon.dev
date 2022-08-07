@@ -3,11 +3,9 @@ import styled from 'styled-components';
 
 export default function InputCheckbox({ children, ...props }) {
   const ref = useRef();
-  const [ isChecked, setIsChecked ] = useState(props.isChecked || false);
+  const [isChecked, setIsChecked] = useState(props.isChecked || false);
 
-  const id = Math.random()
-    .toString(16)
-    .slice(2, 5);
+  const id = Math.random().toString(16).slice(2, 5);
 
   const handleChange = (e) => {
     if (props.handleChange) {
@@ -75,7 +73,7 @@ const Checkbox = styled.span`
   right: 0;
   bottom: 0; */
 
-  --background: ${(p) => (p.isChecked ? 'var(--dark-pink)' : '#ddd')};
+  --background: ${(p) => (p.isChecked ? 'var(--pink-dark)' : '#ddd')};
   --color: ${(p) => (p.isChecked ? 'white' : 'transparent')};
 
   height: 32px;
