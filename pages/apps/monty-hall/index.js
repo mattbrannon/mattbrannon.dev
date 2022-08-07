@@ -1,12 +1,12 @@
-import AppTitle from '@components/AppTitle';
+import { AppTitle } from '@components/AppTitle';
 import { NormalButton as StandardButton } from '@components/Button';
 import Head from '@components/Head';
-import { H3Link } from '@components/Headings';
+import { H2Link } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
 import SideNote from '@components/SideNote';
-import Text from '@components/Text';
+import Text from '@components/Text/Text';
 // import Image from 'next/future/image';
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import styled from 'styled-components';
 import { Picture } from '@components/Picture';
 
@@ -51,7 +51,7 @@ const image3Sources = makeSourceArray(image3Avif, image3Webp, image3Png);
 //   return { src, width, height, blurDataURL };
 // });
 
-export default function MontyHallPage() {
+export default memo(function MontyHallPage() {
   const [isCorrect, setIsCorrect] = useState(null);
 
   const links = {
@@ -68,16 +68,16 @@ export default function MontyHallPage() {
         A game inspired by the Monty Hall problem
       </AppTitle>
 
-      <div>
+      <section>
         <Heading>What is the Monty Hall Problem?</Heading>
 
         <MiniGame isCorrect={isCorrect} setIsCorrect={setIsCorrect} />
         {/* <Buttons isCorrect={isCorrect} setIsCorrect={setIsCorrect} /> */}
 
         {/* <Spacer axis="vertical" size={32} /> */}
-      </div>
+      </section>
 
-      <div>
+      <section>
         <Heading>Motivation</Heading>
         <Text>
           When I first started learning javascript, one of the first things I made was a little
@@ -95,9 +95,9 @@ export default function MontyHallPage() {
           this wrong. And not only did they get it wrong, a few of them were so sure they were
           right, they publicly berated others who answered correctly.
         </SideNote>
-      </div>
+      </section>
 
-      <div>
+      <section>
         <Heading>Frontend: React</Heading>
         <Text>
           One of the things that surprised me when making this game was the amount of state I needed
@@ -114,14 +114,14 @@ export default function MontyHallPage() {
         <FlexContainer>
           <Picture sources={image3Sources} alt="image3" />
         </FlexContainer>
-      </div>
+      </section>
 
       <PageButtons prev="/apps/elbowroom" next="/apps/lets-make-a-gif" />
     </article>
   );
-}
+});
 
-const Heading = styled(H3Link)`
+const Heading = styled(H2Link)`
   font-size: var(--size28);
   color: var(--h2);
 `;
@@ -235,6 +235,7 @@ const ButtonGroup = styled.div`
 const ButtonWrapper = styled.div`
   max-width: 160px;
   width: 100%;
+  color: white;
 `;
 
 // const ImageContainer = styled.div`

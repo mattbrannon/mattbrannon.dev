@@ -1,14 +1,15 @@
-import AppTitle from '@components/AppTitle';
+import { AppTitle } from '@components/AppTitle';
 import { ExternalLink } from '@components/Links';
 import Head from '@components/Head';
-import { H3Link } from '@components/Headings';
+import { H2Link } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
 import { Spacer } from '@components/Spacer';
-import Text from '@components/Text';
+import Text from '@components/Text/Text';
 import { FlatVideo as VideoPlayer } from '@components/VideoPlayer';
 import styled from 'styled-components';
+import { memo } from 'react';
 
-export default function LetsMakeAGifpage() {
+export default memo(function LetsMakeAGifpage() {
   const links = {
     liveSite: 'https://lets-make-a-gif.com/',
     github: 'https://github.com/mattbrannon/lets-make-a-gif',
@@ -127,7 +128,7 @@ export default function LetsMakeAGifpage() {
       <PageButtons prev="/apps/monty-hall" next="/apps/elbowroom" />
     </article>
   );
-}
+});
 
 const FlexContainer = styled.div`
   display: flex;
@@ -143,7 +144,7 @@ const ImageCaption = styled.small`
   margin-bottom: 32px;
 `;
 
-const Heading = styled(H3Link)`
+const Heading = styled(H2Link)`
   /* margin: 64px 0 8px 0; */
   font-size: var(--size28);
   color: var(--h2);

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { FullWidth, MaxWidthWrapper } from 'components/MaxWidthWrapper';
 import { NavLinks } from './NavLinks';
-import { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 
 function ForwardBanner({ ...props }, ref) {
   return (
@@ -15,7 +15,7 @@ function ForwardBanner({ ...props }, ref) {
   );
 }
 
-export const Banner = forwardRef(ForwardBanner);
+export const Banner = memo(forwardRef(ForwardBanner));
 
 const Header = styled.header.attrs(({ isVisible }) => {
   const translateY = isVisible ? '0%' : '-100%';

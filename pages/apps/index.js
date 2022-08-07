@@ -1,7 +1,8 @@
 import { AppCard } from '@components/AppCard';
 import Head from '@components/Head';
 import PageTitle from '@components/PageTitle';
-import Text from '@components/Text';
+import Text from '@components/Text/Text';
+import { memo } from 'react';
 // import elbowRoomImage from '/public/images/elbowroom/desktop.png';
 // import letsMakeAGifImage from '/public/images/lets-make-a-gif/desktop.png';
 
@@ -34,7 +35,7 @@ const letsMakeAGifConfig = {
   description: 'Online photo & video editing application',
   sources: letsMakeAGifSources,
   alt: 'desktop view of the app',
-  priority: false,
+  priority: true,
 };
 
 const elbowRoomConfig = {
@@ -67,15 +68,15 @@ const Introduction = () => {
   );
 };
 
-export default function AppsPage() {
+export default memo(function AppsPage() {
   return (
-    <section>
+    <>
       <Head title="Apps" description="Apps built by Matt Brannon" />
       <PageTitle>Apps I've Built</PageTitle>
       <Introduction />
       <AppCard config={letsMakeAGifConfig} />
       <AppCard config={elbowRoomConfig} />
       <AppCard config={montyHallConfig} />
-    </section>
+    </>
   );
-}
+});

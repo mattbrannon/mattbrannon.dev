@@ -3,6 +3,28 @@ import { FlatVideo } from '@components/VideoPlayer';
 import { ExternalLink } from '@components/Links';
 import { breakpoints } from '@constants/index.js';
 import FancyTitle from '@components/FancyTitle';
+import { memo } from 'react';
+import { m as motion } from 'framer-motion';
+
+export const AppTitle = memo(AppTitleComponent);
+
+function AppTitleComponent({ title, sources, links, children, ...props }) {
+  return (
+    <Top>
+      <FancyTitle initial="hidden" animate="show" variants={appTitleVariant}>
+        {title}
+      </FancyTitle>
+      <Caption>{children}</Caption>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+        <FlatVideo center sources={sources} {...props} />
+      </motion.div>
+      <LinksWrapper>
+        <ExternalLink href={links.liveSite}>Visit the live site</ExternalLink>
+        <ExternalLink href={links.github}>See the code</ExternalLink>
+      </LinksWrapper>
+    </Top>
+  );
+}
 
 const appTitleVariant = {
   hidden: {
@@ -20,22 +42,6 @@ const appTitleVariant = {
     },
   },
 };
-
-export default function AppTitle({ title, sources, links, children, ...props }) {
-  return (
-    <Top>
-      <FancyTitle initial="hidden" animate="show" variants={appTitleVariant}>
-        {title}
-      </FancyTitle>
-      <Caption>{children}</Caption>
-      <FlatVideo center sources={sources} {...props} />
-      <LinksWrapper>
-        <ExternalLink href={links.liveSite}>Visit the live site</ExternalLink>
-        <ExternalLink href={links.github}>See the code</ExternalLink>
-      </LinksWrapper>
-    </Top>
-  );
-}
 
 const Top = styled.div`
   text-align: center;

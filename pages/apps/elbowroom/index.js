@@ -1,8 +1,8 @@
-import AppTitle from '@components/AppTitle';
+import { AppTitle } from '@components/AppTitle';
 import Head from '@components/Head';
-import { H3Link } from '@components/Headings';
+import { H2Link } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
-import Text from '@components/Text';
+import Text from '@components/Text/Text';
 import { FlatVideo } from '@components/VideoPlayer';
 // import Image from 'next/future/image';
 import styled from 'styled-components';
@@ -11,6 +11,7 @@ import { Picture } from '@components/Picture';
 // import path from 'path';
 // import fs from 'fs';
 // import dynamic from 'next/dynamic';
+import { memo } from 'react';
 
 import desktopImageAvif from '/public/images/elbowroom/desktop.avif';
 import desktopImageWebp from '/public/images/elbowroom/desktop.webp';
@@ -32,7 +33,7 @@ const mobileImages = [mobileImageAvif, mobileImageWebp, mobileImagePng].map((ima
   return { src, width, height, blurDataURL };
 });
 
-export default function ElbowRoomPage() {
+export default memo(function ElbowRoomPage() {
   console.log(desktopImages, mobileImages);
   const links = {
     github: 'https://github.com/mattbrannon/elbowroom.dev',
@@ -52,7 +53,7 @@ export default function ElbowRoomPage() {
         Real time chatroom built with React and Firebase
       </AppTitle>
 
-      <div>
+      <section>
         <Heading>Motivation</Heading>
         <Text>
           Ever since I caught the programming bug, I've always wanted to build a chat room
@@ -63,9 +64,9 @@ export default function ElbowRoomPage() {
           super talented rockstar programmer. But I am a programmer and, I built a chat app to prove
           it. 😊
         </Text>
-      </div>
+      </section>
 
-      <div>
+      <section>
         <Heading>FrontEnd</Heading>
         <FlexContainer>
           <Picture sources={desktopImages} />
@@ -82,9 +83,9 @@ export default function ElbowRoomPage() {
           of the app uses CSS Modules for styling. SASS is also used here and there and there's even
           a few styled-components lying around.
         </Text>
-      </div>
+      </section>
 
-      <div>
+      <section>
         <Heading>Backend</Heading>
         <FlexContainer>
           <FlatVideo
@@ -101,12 +102,12 @@ export default function ElbowRoomPage() {
           function ensures a more pleasant user experience while at also providing instant feedback
           to the user.
         </Text>
-      </div>
+      </section>
 
       <PageButtons prev="/apps/lets-make-a-gif" next="/apps/monty-hall" />
     </article>
   );
-}
+});
 
 const FlexContainer = styled.div`
   display: flex;
@@ -115,7 +116,7 @@ const FlexContainer = styled.div`
   margin: 16px 0 32px 0;
 `;
 
-const Heading = styled(H3Link)`
+const Heading = styled(H2Link)`
   font-size: var(--size28);
   color: var(--h2);
 `;
