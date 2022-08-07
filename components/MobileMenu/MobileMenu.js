@@ -60,9 +60,7 @@ const getOverlayStyles = ({ dialogIsOpen }) => {
     display: dialogIsOpen ? 'block' : 'none',
     visibility: dialogIsOpen ? 'visible' : 'hidden',
     blur: dialogIsOpen ? 'blur(8px)' : 'blur(0px)',
-    background: dialogIsOpen
-      ? 'hsl(220, 35%, 6%, 0.93)'
-      : 'hsl(220, 35%, 6%, 0)',
+    background: dialogIsOpen ? 'hsl(220, 35%, 6%, 0.93)' : 'hsl(220, 35%, 6%, 0)',
   };
 };
 
@@ -98,8 +96,8 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
-  --transform: ${({ dialogIsOpen }) =>
-    dialogIsOpen ? 'translate(0)' : 'translate(-500px)'};
+  --transform: ${({ dialogIsOpen }) => (dialogIsOpen ? 'translate(0)' : 'translate(-500px)')};
+
   --delay: ${({ i }) => i * 100}ms;
 
   transform: var(--transform);
@@ -127,8 +125,7 @@ const NavContainer = styled.div`
   width: 100%;
 
   /* background: hsl(200, 14%, 90%, 0.6); */
-  transition: opacity 0.5s ease-out var(--timeout),
-    background-color 0.5s ease-out var(--timeout),
+  transition: opacity 0.5s ease-out var(--timeout), background-color 0.5s ease-out var(--timeout),
     visibility 0.5s linear var(--timeout);
 `;
 

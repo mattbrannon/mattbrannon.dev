@@ -235,7 +235,6 @@ const ImageWrapper = styled.span`
   background: white;
   border-radius: 50%;
   opacity: ${(p) => (p.isHovering ? 1 : 0)};
-
   transition: opacity 0.1s linear;
 `;
 
