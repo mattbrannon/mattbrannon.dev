@@ -22,8 +22,8 @@ export function FontControls({ ...props }) {
       <ControlsContainer>
         <FontSelection state={state} {...props} />
         <FontProperties state={state} font={font} {...props} />
-        <FontColor {...props} />
         <ShadowProperties {...props} />
+        <FontColor {...props} />
         <ShadowColor {...props} />
         <TextOutline {...props} />
         <Buttons state={state} {...props} />
