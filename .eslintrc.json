@@ -40,6 +40,17 @@
     "space-before-function-paren": "off",
     "comma-dangle": ["error", "only-multiline"],
     "multiline-ternary": "off",
+    "no-unneeded-ternary": "error",
+    "indent": [
+      2,
+      2,
+      {
+        "flatTernaryExpressions": true,
+        "ignoredNodes": ["ConditionalExpression > *"],
+        "SwitchCase": 1
+      }
+    ],
+
     "indent": [
       "error",
       2,
