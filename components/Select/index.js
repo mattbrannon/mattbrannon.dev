@@ -8,8 +8,6 @@ export function getDisplayedValue({ value, children }) {
 }
 
 const Select = ({ ...props }) => {
-  // console.log(props);
-  // const displayedValue = 'this';
   const displayedValue = getDisplayedValue({ ...props });
   return (
     <Wrapper>
@@ -48,7 +46,6 @@ const FancySelect = styled.div`
   font-size: var(--size16);
   padding: 2px 8px;
 
-  /* text-align: center; */
   border-radius: 2px;
 
   display: flex;
