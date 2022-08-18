@@ -93,7 +93,7 @@ function withButton(Component, Wrapper) {
   return function Button(props) {
     return (
       <Wrapper {...props}>
-        <Component>{props.children}</Component>
+        <Component {...props}>{props.children}</Component>
       </Wrapper>
     );
   };
