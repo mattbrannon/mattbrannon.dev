@@ -2,11 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 
 export function getDisplayedValue({ value, children }) {
-  const childArray = React.Children.toArray(children);
-  const selectedChild = childArray.find((child) => child.props.value === value) ?? childArray[0];
-  // console.log(childArray);
-  // return selectedChild;
-  return selectedChild.props.children;
+  return React.Children.toArray(children).find((child) => {
+    return child.props.value === value || child.props.children === value;
+  });
 }
 
 const Select = ({ ...props }) => {
