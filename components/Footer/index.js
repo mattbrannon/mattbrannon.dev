@@ -42,7 +42,7 @@ export default function Footer() {
 const ImageLink = ({ ...props }) => {
   return (
     <InternalLink {...props}>
-      <Image width={30} height={30} {...props} />
+      <Image alt="" width={30} height={30} {...props} />
     </InternalLink>
   );
 };
@@ -98,16 +98,3 @@ const Image = styled(NextImage)`
     cursor: pointer;
   }
 `;
-
-// const LinkButton = styled.button`
-//   background: transparent;
-//   border: none;
-//   @supports (-webkit-touch-callout: none) and (not (translate: none)) {
-//     &:not(:last-child) {
-//       margin-right: 32px;
-//     }
-//   }
-//   @media (max-width: ${breakpoints.mobile}px) {
-//     user-select: none;
-//   }
-// `;
