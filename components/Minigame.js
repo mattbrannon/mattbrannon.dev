@@ -74,7 +74,7 @@ const P = styled.p`
 
 export function Checkbox({ children, ...props }) {
   const handleClick = () => {
-    const isCorrect = props.correct ? true : false;
+    const isCorrect = !!props.correct;
     props.setIsCorrect(isCorrect);
   };
 
