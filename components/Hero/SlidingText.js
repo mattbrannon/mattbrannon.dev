@@ -1,7 +1,5 @@
 import { ThemeContext } from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
-// import { useMediaQuery } from '@hooks/useMediaQuery';
-// import { motion, useAnimation } from 'framer-motion';
 import { useEffect, Children, useContext, useState } from 'react';
 import styled from 'styled-components';
 
@@ -18,17 +16,12 @@ export default function AnimatedWords({ children }) {
     }
   }, [context.hasRun]);
 
-  useEffect(() => {
-    console.log(context.hasRun);
-  }, [context.hasRun]);
-
   return (
     <Container>
       {Children.toArray(words).map((word, i) => (
         <Word
           onTransitionEnd={() => {
             if (i === words.length - 1) {
-              console.log('end');
               context.setHasRun(true);
             }
           }}
@@ -43,12 +36,6 @@ export default function AnimatedWords({ children }) {
     </Container>
   );
 }
-
-// onAnimationComplete={() => {
-//   if (i === children.length - 1) {
-//     context.setHasRun(true);
-//   }
-// }}
 
 const Container = styled.div`
   margin-top: -8px;
