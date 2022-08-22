@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { LinkIcon } from './LinkIcon';
 // import NextLink from 'next/link';
-import { InternalLink } from './InternalLink';
+// import { InternalLink } from './InternalLink';
 
 export const BlogLink = ({ href, children, ...props }) => {
   return (

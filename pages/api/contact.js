@@ -3,6 +3,10 @@ require('dotenv').config();
 
 // async..await is not allowed in global scope, must use a wrapper
 export default async function main(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).redirect('/contact');
+  }
+
   try {
     const transporter = nodemailer.createTransport({
       service: 'gmail',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 export function withThrottle(callback, delay) {
   let isThrottled = false;
@@ -37,8 +37,10 @@ export function withThrottle(callback, delay) {
 //   return [ value, throttle ];
 // }
 
+// import { useDebounce } from './useDebounce';
+
 export function useThrottle(callback, delay) {
-  const [ isThrottled, setIsThrottled ] = useState(false);
+  const [isThrottled, setIsThrottled] = useState(false);
 
   const throttle = (...args) => {
     if (isThrottled) return;

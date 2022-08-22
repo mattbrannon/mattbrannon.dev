@@ -201,6 +201,24 @@ export const GlobalStyle = createGlobalStyle`
   --gradient-light-mode: linear-gradient(180deg, hsl(52, 100%, 50%) 25%, hsl(27, 100%, 50%) 75%);
   --gradient-dark-mode: linear-gradient(180deg, hsl(157, 100%, 43%) 25%, hsl(200, 100%, 65%) 75%);
 
+
+  --blog-shadow-dark-mode: -0.01em -0.01em 0.01em hsl(193deg, 34%, 75%),
+    -0.02em -0.02em 0.01em hsl(195.08deg, 32.23%, 70.92%),
+    -0.03em -0.03em 0.01em hsl(197.15deg, 30.46%, 66.85%),
+    -0.04em -0.04em 0.01em hsl(199.23deg, 28.69%, 62.77%),
+    -0.05em -0.05em 0.01em hsl(201.31deg, 26.92%, 58.69%),
+    -0.06em -0.06em 0.01em hsl(203.38deg, 25.15%, 54.62%),
+    -0.07em -0.07em 0.01em hsl(205.46deg, 23.38%, 50.54%),
+    -0.08em -0.08em 0.01em hsl(207.54deg, 21.62%, 46.46%),
+    -0.09em -0.09em 0.01em hsl(209.62deg, 19.85%, 42.38%),
+    -0.1em -0.1em 0.01em hsl(211.69deg, 18.08%, 38.31%),
+    -0.11em -0.11em 0.01em hsl(213.77deg, 16.31%, 34.23%),
+    -0.12em -0.12em 0.01em hsl(215.85deg, 14.54%, 30.15%),
+    -0.13em -0.13em 0.01em hsl(217.92deg, 12.77%, 26.08%),
+    -0.14em -0.14em 0.01em hsl(220deg, 11%, 22%);
+
+  --blog-shadow-light-mode: var(--blog-shadow-dark-mode);
+
   @media (max-width: 660px) {
     --breathing-room: 15px;
     --header-height: 50px;

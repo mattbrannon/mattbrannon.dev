@@ -30,9 +30,9 @@ export default function HomePage() {
   const marginTop = isMobile ? 8 : 48;
   const context = useContext(ThemeContext);
 
-  useEffect(() => {
-    console.log(context);
-  }, [context]);
+  // useEffect(() => {
+  //   console.log(context);
+  // }, [context]);
 
   const [shouldRemove, setShouldRemove] = useState(true);
 
@@ -43,6 +43,10 @@ export default function HomePage() {
         <TopRow style={{ '--marginTop': `${marginTop}px` }}>
           <TitleWrapper>
             <FancyTitle
+              style={{
+                '--gradient': 'var(--app-name-gradient)',
+                '--shadow': 'var(--app-name-shadow)',
+              }}
               variants={homePageVariant}
               initial="hidden"
               animate="show"
@@ -70,7 +74,7 @@ const Container = styled.div`
 
   height: 100%;
   --fontFamily: Recursive;
-  --fontSize: clamp(24px, 8vw, 80px);
+  --fontSize: clamp(24px, 8vw, 64px);
   --fontVariationSettings: 'wght' 974, 'slnt' -7, 'CASL' 0.42, 'CRSV' 0, 'MONO' 0;
   --strokeWidth: 0.021875em;
   --strokeColor: #000000;

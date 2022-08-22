@@ -1,7 +1,9 @@
-import ControlsLayout, { Group, Heading } from './Layout';
-import RangeSlider from './RangeSlider';
-import { useRef, forwardRef } from 'react';
+// import ControlsLayout, { Group, Heading } from './Layout';
+// import RangeSlider from './RangeSlider';
+import { useRef, forwardRef, useState } from 'react';
 import Select from '@components/Select';
+import { Range as RangeSlider } from './FontControls/Input';
+import { Group, Layout, SectionHeading } from './FontControls/Layout';
 
 const composites = [
   'source-over',
@@ -27,6 +29,8 @@ const composites = [
 
 const FractalControls = forwardRef(({ ...props }, ref) => {
   const scaleRef = useRef();
+  // console.log(props);
+  // const [selected, setSelected] = useState('');
   // const [ scaleValue, setScaleValue ] = useState(1);
   // const [ radianValue, setRadianValue ] = useState();
 
@@ -42,6 +46,7 @@ const FractalControls = forwardRef(({ ...props }, ref) => {
   // };
 
   const handleCompositeChange = (e) => {
+    // setSelected(e.target.value);
     props.dispatch({ type: 'COMPOSITE', value: e.target.value });
   };
 
@@ -63,9 +68,9 @@ const FractalControls = forwardRef(({ ...props }, ref) => {
   // };
 
   return (
-    <ControlsLayout ref={ref}>
+    <Layout ref={ref}>
       <Group>
-        <Heading>Fractal Settings</Heading>
+        <SectionHeading>Fractal Settings</SectionHeading>
 
         <Select value={props.state.composite} onChange={handleCompositeChange}>
           {composites.map((composite, i) => (
@@ -75,19 +80,32 @@ const FractalControls = forwardRef(({ ...props }, ref) => {
           ))}
         </Select>
 
-        <RangeSlider name="x" min={0} max={1000} {...props} />
-        <RangeSlider name="y" min={0} max={1000} {...props} />
+        <RangeSlider name="fractal x axis" min={0} max={1000} {...props} />
+        <RangeSlider name="fractal y axis" min={0} max={1000} {...props} />
 
-        {/* <RangeSlider name="limit" min={10} max={30} {...props} /> */}
-        <RangeSlider name="size" min={1} max={144} {...props} />
-        <RangeSlider name="sides" min={1} max={8} {...props} />
-        {/* <RangeSlider name="branches" min={1} max={2} {...props} /> */}
-        <RangeSlider name="max depth" min={1} max={12} {...props} />
+        {/* <RangeSlider name="fractal limit" min={10} max={30} {...props} /> */}
+        <RangeSlider name="fractal size" min={1} max={144} {...props} />
+        <RangeSlider name="fractal sides" min={1} max={8} {...props} />
+        {/* <RangeSlider name="fractal branches" min={1} max={2} {...props} /> */}
+        <RangeSlider name="fractal max depth" min={1} max={12} {...props} />
 
-        {/* <RangeSlider name="angle" min={45} max={315} step={1} {...props} /> */}
-        <RangeSlider ref={scaleRef} name="scale" min={-0.9} max={0.9} step={0.01} {...props} />
-        <RangeSlider name="radians" min={Math.PI * -2} max={Math.PI * 2} step={0.01} {...props} />
-        <RangeSlider name="line width" min={0.01} max={30} step={0.01} {...props} />
+        {/* <RangeSlider name="fractal angle" min={45} max={315} step={1} {...props} /> */}
+        <RangeSlider
+          ref={scaleRef}
+          name="fractal scale"
+          min={-0.9}
+          max={0.9}
+          step={0.01}
+          {...props}
+        />
+        <RangeSlider
+          name="fractal radians"
+          min={Math.PI * -2}
+          max={Math.PI * 2}
+          step={0.01}
+          {...props}
+        />
+        <RangeSlider name="fractal line width" min={0.01} max={30} step={0.01} {...props} />
       </Group>
       {/* <Group>
         <CustomInput type="color" name="shadow color" {...props} />
@@ -95,7 +113,7 @@ const FractalControls = forwardRef(({ ...props }, ref) => {
         <RangeSlider name="shadow offset y" min={-10} max={10} {...props} />
         <RangeSlider name="shadow blur" min={0} max={10} {...props} />
       </Group> */}
-    </ControlsLayout>
+    </Layout>
   );
 });
 

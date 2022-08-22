@@ -1,474 +1,347 @@
-import { FontControls } from '@components/Controls/FontControls';
 import styled from 'styled-components';
-import { useEffect, useReducer, useRef, useState } from 'react';
-import { withGradient, Text } from '@components/Text/GradientText';
+import { useState, useReducer, useEffect, useRef } from 'react';
+import { fonts, fancyTextInitialState } from '@constants/fancyTextGenerator';
+// import { fancyTextReducer } from '@utils/reducers';
 
-import { textGeneratorVariant } from '@animations/variants';
+import { FontControls } from '@components/Controls/FontControls';
+
+import { MainView, HelpView, CodeView } from 'views/FancyTextGenerator';
+
+import { AnimatePresence } from 'framer-motion';
 import {
-  makeShadow,
-  makeGradient,
-  snakeToCamel,
-  pxToEm,
   parseFontSettings,
-} from '@utils/helpers.js';
-
-import Head from '@components/Head';
-import { m as motion, AnimatePresence } from 'framer-motion';
-import SyntaxHighlighter from '@components/SyntaxHighlighter';
-import { Color } from 'color-tools';
-
-import Help from '@components/Help';
-
-const fontProperties = {
-  Recursive: {
-    MONO: [0, 1],
-    CRSV: [0, 1],
-    CASL: [0, 1],
-    wght: [300, 1000],
-    slnt: [-15, 0],
-  },
-  Inter: {
-    wght: [100, 900],
-    slnt: [-10, 0],
-  },
-  OpenSans: {
-    wght: [300, 800],
-    wdth: [75, 100],
-  },
-  Jost: {
-    wght: [100, 900],
-    ital: [0, 2],
-  },
-  Decovar: {
-    BLDA: [0, 1000],
-    TRMD: [0, 1000],
-    TRMC: [0, 1000],
-    SKLD: [0, 1000],
-    TRML: [0, 1000],
-    SKLA: [0, 1000],
-    TRMF: [0, 1000],
-    TRMK: [0, 1000],
-    BLDB: [0, 1000],
-    WMX2: [0, 1000],
-    TRMB: [0, 1000],
-    TRMA: [0, 1000],
-    SKLB: [0, 1000],
-    TRMG: [0, 1000],
-    TRME: [0, 1000],
-  },
-};
-
-const data = {
-  fonts: [
-    {
-      name: 'Recursive',
-      settings: {
-        wght: 800,
-        slnt: -6,
-        CASL: 0,
-        CRSV: 0,
-        MONO: 0,
-      },
-      default: true,
-      homepage: 'https://www.recursive.design/',
-      github: 'https://github.com/arrowtype/recursive',
-    },
-    {
-      name: 'Inter',
-      settings: {
-        wght: 900,
-        slnt: 0,
-      },
-      default: false,
-      homepage: 'https://rsms.me/inter/',
-      github: 'https://github.com/rsms/inter',
-    },
-
-    {
-      name: 'Decovar',
-      settings: {
-        BLDA: 0,
-        TRMD: 1000,
-        TRMC: 1000,
-        SKLD: 260,
-        TRML: 100,
-        SKLA: 612,
-        TRMF: 395,
-        TRMK: 394,
-        BLDB: 165,
-        WMX2: 163,
-        TRMB: 0,
-        TRMA: 0,
-        SKLB: 0,
-        TRMG: 0,
-        TRME: 204,
-      },
-      default: false,
-      homepage:
-        'https://www.typenetwork.com/brochure/decovar-a-decorative-variable-font-by-david-berlow',
-      github: 'https://github.com/sannorozco/Decovar',
-    },
-    {
-      name: 'Jost',
-      settings: {
-        wght: 600,
-        ital: 1,
-      },
-      default: false,
-      homepage: 'https://indestructibletype.com/Jost.html',
-      github: 'https://github.com/indestructible-type/Jost',
-    },
-    {
-      name: 'OpenSans',
-      settings: {
-        wght: 700,
-        wdth: 95,
-      },
-      default: false,
-      homepage: 'https://www.opensans.com/',
-      github: 'https://github.com/googlefonts/opensans',
-    },
-  ],
-};
-
-const shadowProperties = {
-  shadowColorStart: '#aa00ff',
-  shadowColorEnd: '#19103d',
-  shadowLayers: 20,
-  shadowGap: 1,
-  shadowOffsetX: -5,
-  shadowOffsetY: -5,
-};
-
-const getDefaultFont = () => {
-  const { name, settings } = data.fonts.find((font) => font.default);
-  return { name, settings };
-};
-
-const getInitialSettings = (function parseFonts(fonts) {
-  const defaultSettings = [...fonts].map((font) => {
-    return Object.assign({}, font);
-  });
-  return function getDefault(fontName) {
-    return defaultSettings.find((font) => font.name === fontName);
-  };
-})(data.fonts);
+  makeGradient,
+  makeShadow,
+  snakeToCamel,
+  toSnakeUpperCase,
+} from '@utils/helpers';
 
 const initialState = {
-  font: getDefaultFont().name,
-  settings: Object.assign({}, getDefaultFont().settings),
-
-  fonts: data.fonts,
-  fontSize: 10,
-  gradientColorStart: '#00db87', //'gold', //'hsl(67deg, 75%, 42%)',
-  gradientColorEnd: '#4dc4ff', //'darkorange', //'hsl(148deg 100% 19%)',
-  gradientMidpoint: 50,
-  gradientBlend: 50,
-  gradientAngle: 180,
-  shadowColorStart: '#aa00ff', //'hsl(210 35% 85%)', //'hsl(173deg 100% 67%)',
-  shadowColorEnd: '#19103d', // 'hsl(195 65% 20%)', //'hsl(227deg 100% 52%)',
-  shadowLayers: 20,
-  shadowGap: 1,
-  shadowOffsetX: -5,
-  shadowOffsetY: -5,
-  textStrokeColor: '#000000',
-  textStrokeWidth: 0.35,
-  shadowBlur: 1,
-  toggleCode: false,
-  isChangingFonts: false,
-  showBackground: false,
   help: false,
-  gradient: makeGradient({
-    gradientColorStart: '#00db87',
-    gradientColorEnd: '#4dc4ff',
+  code: false,
+  textContent: 'Blah blah blah',
+
+  shadow: {
+    shadowColorStart: '#cdbdb6',
+    shadowColorEnd: '#3e3532',
+    shadowLayers: 10,
+    shadowGap: 2,
+    shadowBlur: 1,
+    shadowOffsetX: -5,
+    shadowOffsetY: -5,
+  },
+  gradient: {
+    gradientColorStart: '#082640',
+    gradientColorEnd: '#97f7f1',
+    gradientAngle: 0,
     gradientMidpoint: 50,
     gradientBlend: 50,
-    gradientAngle: 0,
-  }),
-  shadow: makeShadow({
-    shadowColorStart: '#aa00ff',
-    shadowColorEnd: '#19103d',
-    shadowLayers: 20,
-    shadowGap: 1,
-    offsetX: -5,
-    offsetY: -5,
-  }),
+  },
+
+  fonts: {
+    Recursive: {
+      initialSettings: { wght: 300, slnt: -6, CASL: 1, CRSV: 0, MONO: 0.49 },
+      currentSettings: { wght: 1000, slnt: 0, CASL: 0, CRSV: 0, MONO: 0 },
+    },
+    Inter: {
+      initialSettings: { wght: 100, slnt: -10 },
+      currentSettings: { wght: 900, slnt: 0 },
+    },
+    OpenSans: {
+      initialSettings: { wght: 300, wdth: 95 },
+      currentSettings: { wght: 800, wdth: 75 },
+    },
+    Jost: {
+      initialSettings: { wght: 600, ital: 0 },
+      currentSettings: { wght: 900, ital: 2 },
+    },
+    Decovar: {
+      initialSettings: {
+        BLDA: 0,
+        BLDB: 0,
+        SKLA: 500,
+        SKLB: 0,
+        SKLD: 0,
+        TRMA: 0,
+        TRMB: 0,
+        TRMC: 0,
+        TRMD: 0,
+        TRME: 0,
+        TRMF: 0,
+        TRMG: 0,
+        TRMK: 0,
+        TRML: 0,
+        WMX2: 0,
+      },
+      currentSettings: {
+        BLDA: 0,
+        BLDB: 500,
+        SKLA: 0,
+        SKLB: 500,
+        SKLD: 0,
+        TRMA: 0,
+        TRMB: 0,
+        TRMC: 500,
+        TRMD: 0,
+        TRME: 0,
+        TRMF: 500,
+        TRMG: 0,
+        TRMK: 0,
+        TRML: 0,
+        WMX2: 0,
+      },
+    },
+  },
+
+  styles: {
+    fontFamily: 'Recursive',
+    fontSize: 96,
+    strokeWidth: 0.02,
+    strokeColor: '#536897',
+    letterSpacing: 0.05,
+    fontVariationSettings: parseFontSettings({ wght: 300, slnt: -6, CASL: 1, CRSV: 0, MONO: 0.49 }),
+    gradient: makeGradient({
+      gradientColorStart: '#082640',
+      gradientColorEnd: '#97f7f1',
+      gradientAngle: 0,
+      gradientMidpoint: 50,
+      gradientBlend: 50,
+    }),
+    shadow: makeShadow({
+      shadowColorStart: '#cdbdb6',
+      shadowColorEnd: '#3e3532',
+      shadowLayers: 10,
+      shadowGap: 2,
+      shadowBlur: 1,
+      shadowOffsetX: -5,
+      shadowOffsetY: -5,
+    }),
+  },
 };
 
-const handleShadowUpdate = (state, action) => {
-  const actionType = snakeToCamel(action.type);
-  const shadow = makeShadow({ ...state, [actionType]: action.value });
-  return {
-    ...state,
-    shadow,
-    [actionType]: action.value,
-  };
-};
+// const fancyTextReducer = (state, action) => {
+//   switch (action.type) {
+//     case 'gradient_Color_Start':
+//     case 'gradient_Color_End':
+//     case 'gradient_Angle':
+//     case 'gradient_Midpoint':
+//     case 'gradient_Blend': {
+//       const gradientState = { ...state.gradient, [action.type]: action.value };
+//       const gradient = makeGradient(gradientState);
+//       const styles = { ...state.styles };
+//       return {
+//         ...state,
+//         gradient: { ...gradientState },
+//         styles: { ...styles, gradient },
+//       };
+//     }
+//     case 'shadowColorStart':
+//     case 'shadowColorEnd':
+//     case 'shadowLayers':
+//     case 'shadowGap':
+//     case 'shadowBlur':
+//     case 'shadowOffsetX':
+//     case 'shadowOffsetY': {
+//       const shadowState = { ...state.shadow, [action.type]: action.value };
+//       const shadow = makeShadow(shadowState);
+//       const styles = { ...state.styles };
+//       return {
+//         ...state,
+//         shadow: { ...shadowState },
+//         styles: { ...styles, shadow },
+//       };
+//     }
+//     case 'wght':
+//     case 'slnt':
+//     case 'ital':
+//     case 'wdth':
+//     case 'CASL':
+//     case 'CRSV':
+//     case 'MONO':
+//     case 'BLDA':
+//     case 'BLDB':
+//     case 'SKLA':
+//     case 'SKLB':
+//     case 'SKLD':
+//     case 'TRMA':
+//     case 'TRMB':
+//     case 'TRMC':
+//     case 'TRMD':
+//     case 'TRME':
+//     case 'TRMF':
+//     case 'TRMG':
+//     case 'TRMK':
+//     case 'TRML':
+//     case 'WMX2': {
+//       const fontFamily = state.fontFamily;
+//       const currentFont = { ...state.fonts[fontFamily] };
+//       const { currentSettings, initialSettings } = currentFont;
+//       const updatedSettings = { ...currentSettings, [action.type]: action.value };
+//       const fontVariationSettings = parseFontSettings(updatedSettings);
+//       return {
+//         ...state,
+//         fonts: {
+//           ...state.fonts,
+//           [fontFamily]: {
+//             initialSettings,
+//             currentSettings: updatedSettings,
+//           },
+//         },
+//         styles: {
+//           ...state.styles,
+//           fontVariationSettings,
+//         },
+//       };
+//     }
+//     case 'fontFamily':
+//     case 'fontSize':
+//     case 'strokeWidth':
+//     case 'strokeColor':
+//     case 'letterSpacing': {
+//       const styles = { ...state.styles };
+//       return { ...state, styles: { ...styles, [action.type]: action.value } };
+//     }
+//   }
+// };
 
-const handleGradientUpdate = (state, action) => {
-  const actionType = snakeToCamel(action.type);
-  return {
-    ...state,
-    gradient: makeGradient({ ...state, [actionType]: action.value }),
-    [actionType]: action.value,
-  };
-};
-
-function reducer(state, action) {
-  const actionType = snakeToCamel(action.type);
-
+const fancyTextReducer = (state, action) => {
   switch (action.type) {
+    case 'GRADIENT_COLOR_START':
+    case 'GRADIENT_COLOR_END':
+    case 'GRADIENT_ANGLE':
+    case 'GRADIENT_MIDPOINT':
+    case 'GRADIENT_BLEND': {
+      const type = snakeToCamel(action.type);
+      console.log(type);
+      const gradientState = { ...state.gradient, [type]: action.value };
+      const gradient = makeGradient(gradientState);
+      const styles = { ...state.styles };
+      return {
+        ...state,
+        gradient: { ...gradientState },
+        styles: { ...styles, gradient },
+      };
+    }
     case 'SHADOW_COLOR_START':
     case 'SHADOW_COLOR_END':
     case 'SHADOW_LAYERS':
     case 'SHADOW_GAP':
+    case 'SHADOW_BLUR':
     case 'SHADOW_OFFSET_X':
-    case 'SHADOW_OFFSET_Y':
-    case 'SHADOW_BLUR': {
-      return handleShadowUpdate(state, action);
-    }
-    case 'GRADIENT_COLOR_START':
-    case 'GRADIENT_COLOR_END':
-    case 'GRADIENT_MIDPOINT':
-    case 'GRADIENT_BLEND':
-    case 'GRADIENT_ANGLE': {
-      return handleGradientUpdate(state, action);
-    }
-    case 'TEXT_STROKE_COLOR':
-    case 'TEXT_STROKE_WIDTH':
-    case 'FONT_SIZE':
-    case 'TOGGLE_CODE':
-    case 'HELP':
-    case 'IS_CHANGING_FONTS':
-    case 'SHOW_BACKGROUND':
-      return { ...state, [actionType]: action.value };
-    case 'MONO':
-    case 'CRSV':
-    case 'CASL':
-    case 'BLDA':
-    case 'TRMD':
-    case 'TRMC':
-    case 'SKLD':
-    case 'TRML':
-    case 'SKLA':
-    case 'TRMF':
-    case 'TRMK':
-    case 'BLDB':
-    case 'WMX2':
-    case 'TRMB':
-    case 'TRMA':
-    case 'SKLB':
-    case 'TRMG':
-    case 'TRME': {
-      return handleCustomAxes(state, action);
-    }
-    case 'WGHT':
-    case 'SLNT':
-    case 'WDTH':
-    case 'ITAL': {
-      return handleStandardAxes(state, action);
-    }
-
-    case 'CHANGE_FONT': {
-      const previousFont = state.font;
-      const previousFontSettings = Object.assign({}, state.settings);
-
-      let prev = state.fonts.find((font) => font.name === previousFont);
-      prev.settings = previousFontSettings;
-      const nextFont = action.value;
-      const settings = state.fonts
-        .filter((obj) => obj.name === nextFont)
-        .map((obj) => obj.settings)[0];
-
+    case 'SHADOW_OFFSET_Y': {
+      const type = snakeToCamel(action.type);
+      const shadowState = { ...state.shadow, [type]: action.value };
+      const shadow = makeShadow(shadowState);
+      const styles = { ...state.styles };
       return {
         ...state,
-        settings,
-        previousFontSettings,
-        previousFont,
-        font: nextFont,
-        change: true,
+        shadow: { ...shadowState },
+        styles: { ...styles, shadow },
       };
     }
-
-    case 'RESET': {
-      const colorKeys = [
-        'gradientColorStart',
-        'gradientColorEnd',
-        'shadowColorStart',
-        'shadowColorEnd',
-        'textStrokeColor',
-      ];
-      const initial = getInitialSettings(state.font).settings;
-      const settings = state.settings;
-
-      for (const key in settings) {
-        settings[key] = initial[key];
-      }
-      for (const key in state) {
-        if (key !== 'font') {
-          if (colorKeys.includes(key)) {
-            state[key] = new Color(initialState[key]).hex.css();
-          }
-          else {
-            state[key] = initialState[key];
-          }
-        }
-      }
-
-      return { ...state, settings, font: state.font };
+    case 'wght':
+    case 'slnt':
+    case 'ital':
+    case 'wdth':
+    case 'CASL':
+    case 'CRSV':
+    case 'MONO':
+    case 'BLDA':
+    case 'BLDB':
+    case 'SKLA':
+    case 'SKLB':
+    case 'SKLD':
+    case 'TRMA':
+    case 'TRMB':
+    case 'TRMC':
+    case 'TRMD':
+    case 'TRME':
+    case 'TRMF':
+    case 'TRMG':
+    case 'TRMK':
+    case 'TRML':
+    case 'WMX2': {
+      const fontFamily = state.styles.fontFamily;
+      const currentFont = { ...state.fonts[fontFamily] };
+      const { currentSettings, initialSettings } = currentFont;
+      const updatedSettings = { ...currentSettings, [action.type]: action.value };
+      const fontVariationSettings = parseFontSettings(updatedSettings);
+      return {
+        ...state,
+        fonts: {
+          ...state.fonts,
+          [fontFamily]: {
+            initialSettings,
+            currentSettings: updatedSettings,
+          },
+        },
+        styles: {
+          ...state.styles,
+          fontVariationSettings,
+        },
+      };
     }
-    default:
-      return { ...state };
+    case 'FONT_SIZE':
+    case 'STROKE_WIDTH':
+    case 'STROKE_COLOR':
+    case 'LETTER_SPACING': {
+      const type = snakeToCamel(action.type);
+      const { styles } = state;
+      return { ...state, styles: { ...styles, [type]: action.value } };
+    }
+    case 'FONT_FAMILY': {
+      const fontFamily = action.value;
+      const { currentSettings } = state.fonts[fontFamily];
+      return {
+        ...state,
+        styles: {
+          ...state.styles,
+          fontFamily,
+          fontVariationSettings: parseFontSettings(currentSettings),
+        },
+      };
+    }
   }
-}
-
-const makeFontVariationHandlers = (isCustom = false) => {
-  return (state, action) => {
-    const type = isCustom ? action.type : action.type.toLowerCase();
-    const settings = { ...state.settings, [type]: action.value };
-    const fontVariationSettings = parseFontSettings(settings);
-    return {
-      ...state,
-      fontVariationSettings,
-      settings,
-    };
-  };
 };
 
-const handleStandardAxes = makeFontVariationHandlers();
-const handleCustomAxes = makeFontVariationHandlers(true);
+export default function Page() {
+  const [state, dispatch] = useReducer(fancyTextReducer, initialState);
 
-export default function VariableFontPlayground() {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  const [controlWidth, setControlWidth] = useState(0);
-  const [fontVariationSettings, setFontVariationSettings] = useState('');
-  const [initialSettings, setInitialSettings] = useState('');
-  // const [ shadow, setShadow ] = useState('');
-  // const [ gradient, setGradient ] = useState('');
-  const [text, setText] = useState('');
-
-  const headingRef = useRef();
-  const overflowRef = useRef();
-
-  useEffect(() => {
-    const fontVariationSettings = parseFontSettings(state.settings);
-    const { settings } = getInitialSettings(state.font);
-    const defaultSettings = parseFontSettings(settings);
-
-    setFontVariationSettings(fontVariationSettings);
-    setInitialSettings(defaultSettings);
-  }, [state]);
-
-  // useEffect(() => {
-  //   const shadow = makeShadow(state);
-  //   setShadow(shadow);
-  // }, [ state, shadow ]);
-
-  // useEffect(() => {
-  //   const gradient = makeGradient(state);
-  //   setGradient(gradient);
-  // }, [ state, gradient ]);
+  const onChange = (e) => {
+    const type = toSnakeUpperCase(e.target.name);
+    dispatch({ type, value: e.target.value });
+  };
 
   return (
     <>
-      <Head title="Fancy Text Generator" description="Variable font and text shadow generator" />
-      <Container>
-        <ControlWrapper>
-          <FontControls
-            state={state}
-            font={fontProperties[state.font]}
-            dispatch={dispatch}
-            setControlWidth={setControlWidth}
-          />
-        </ControlWrapper>
+      <FontControls onChange={onChange} state={state} dispatch={dispatch} />
+      <Main style={{ '--controlWidth': 320 + 'px' }}>
+        <MainView state={state}>{state.textContent}</MainView>
 
-        <Main ref={overflowRef} style={{ '--controlWidth': controlWidth }}>
-          <Wrapper>
-            <AnimatePresence exitBeforeEnter>
-              <motion.div
-                key={state.font}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-              >
-                <TextContent
-                  key={state.font}
-                  ref={headingRef}
-                  style={{
-                    '--fontSize': state.fontSize + 'vw',
-                    '--fontFamily': state.font,
-                  }}
-                >
-                  <Gradient
-                    style={{
-                      '--fontSize': `${state.fontSize}vw`,
-                    }}
-                    dispatch={dispatch}
-                    // state={state}
-                    isChangingFonts={state.isChangingFonts}
-                    shadow={state.shadow}
-                    gradient={state.gradient}
-                    fontSize={`${state.fontSize}vw`}
-                    strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
-                    strokeColor={state.textStrokeColor}
-                    fontVariationSettings={fontVariationSettings}
-                    initialSettings={initialSettings}
-                  >
-                    {text || 'Click to edit'}
-                  </Gradient>
-                </TextContent>
-              </motion.div>
-            </AnimatePresence>
-
-            <TextInput
-              spellCheck={false}
-              maxLength={50}
-              state={state}
-              onChange={(e) => {
-                const text = e.target.value.replace(/'/g, '‘');
-                const final = text.replace(/[\\]+/g, '');
-                setText(final);
-              }}
-              // style={{
-              //   '--fontSize': state.fontSize + 'vw',
-              //   '--fontFamily': state.font,
-              //   '--fontVariationSettings': state.fontVariationSettings,
-              // }}
-            />
-          </Wrapper>
-
-          <AnimatePresence exitBeforeEnter>
-            {state.toggleCode ? (
-              <CodeBlock
-                key={state.toggleCode}
-                state={state}
-                fontFamily={state.font}
-                shadow={state.shadow}
-                gradient={state.gradient}
-                fontSize={`${state.fontSize}vw`}
-                strokeWidth={`${pxToEm(state.textStrokeWidth)}em`}
-                strokeColor={state.textStrokeColor}
-                fontVariationSettings={fontVariationSettings}
-              />
-            ) : state.help ? (
-              <HelpContainer
-                initial={{ width: 0 }}
-                animate={{ width: '100%' }}
-                exit={{ width: 0, transition: { duration: 0.3 } }}
-                transition={{ duration: 0.8, ease: 'anticipate' }}
-              >
-                <Help key={state.help} />
-              </HelpContainer>
-            ) : null}
-          </AnimatePresence>
-        </Main>
-      </Container>
-      <NoScript>This tool requires javascript to work properly</NoScript>
+        {/* <AnimatePresence exitBeforeEnter>
+          {state.help ? (
+            <HelpView key={state.help} />
+          ) : state.code ? (
+            <CodeView key={state.code} styles={state} />
+          ) : (
+            <MainView state={state}>{state.textContent}</MainView>
+          )}
+        </AnimatePresence> */}
+      </Main>
     </>
   );
 }
+const Main = styled.div`
+  position: absolute;
+  top: var(--header-height);
+  left: var(--controlWidth);
+  right: 0;
+  bottom: var(--footer-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+`;
 
 const NoScript = styled.noscript`
   position: absolute;
@@ -485,110 +358,131 @@ const NoScript = styled.noscript`
   text-align: center;
 `;
 
-const getCss = ({
-  shadow,
-  gradient,
-  fontVariationSettings,
-  fontSize,
-  strokeWidth,
-  strokeColor,
-  fontFamily,
-}) => {
-  const currentFont = data.fonts.find((font) => font.name === fontFamily);
-  const staticCSS = `
-/* 
+/*
 
-${fontFamily}
-  homepage: ${currentFont.homepage}
-  github: ${currentFont.github}
+import styled from 'styled-components';
+import { useState, useReducer, useEffect, useRef } from 'react';
+import {
+  fonts,
+  gradientDefault,
+  shadowDefault,
+  textDefault,
+  buttonDefault,
+} from '@constants/fancyTextGenerator';
 
-*/
+import { FontControls } from '@components/Controls/FontControls';
 
-.fancy-text {
-  --shadow: ${shadow || 'none'};
-  --gradient: ${gradient};
-  --fontFamily: ${fontFamily};
-  --fontSize: ${fontSize};
-  --fontVariationSettings: ${fontVariationSettings};
-  --strokeWidth: ${strokeWidth};
-  --strokeColor: ${strokeColor};
+import {
+  fontReducer,
+  gradientReducer,
+  shadowReducer,
+  initializeFontState,
+  textReducer,
+  buttonReducer,
+} from '@utils/reducers';
 
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  padding: 16px 0;
+import { MainView, HelpView, CodeView } from 'views/FancyTextGenerator';
 
-  font-family: var(--fontFamily);
-  font-size: var(--fontSize);
-  font-variation-settings: var(--fontVariationSettings);
-  background-image: var(--gradient);
-}
+import { AnimatePresence } from 'framer-motion';
+import { parseFontSettings } from '@utils/helpers';
+import FancyTitle from '@components/FancyTitle';
 
-.fancy-text:before {
-  /* 
-    in your html: 
-      <div class="fancy-text" data-content="your text here">
-        your text here
-      </div> 
-  */
-  content: attr(data-content);
-  position: absolute;
-  z-index: -1;
+export default function Page() {
+  const initialFontState = initializeFontState(fonts);
+  const [font, dispatch] = useReducer(fontReducer, initialFontState);
+  const [gradient, gradientDispatch] = useReducer(gradientReducer, gradientDefault);
+  const [shadow, shadowDispatch] = useReducer(shadowReducer, shadowDefault);
+  const [show, buttonDispatch] = useReducer(buttonReducer, buttonDefault);
+  const [text, textDispatch] = useReducer(textReducer, textDefault);
+  const [controlWidth, setControlWidth] = useState(0);
+  const controlRef = useRef();
+  const [styles, setStyles] = useState({});
 
-  text-shadow: var(--shadow);
-  -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
-}
-`;
+  // useEffect(() => {
+  //   if (show.reset) {
+  //     const { current, settings } = font.savedStates.find((savedState) => {
+  //       return savedState.name === font.fontName;
+  //     });
 
-  return staticCSS;
-};
+  //     font.css = parseFontSettings(settings);
 
-const StaticCode = ({ children }) => {
+  //     console.log(current, settings);
+  //   }
+  // }, [show.reset]);
+
+  useEffect(() => {
+    // font.find(font => font.f)
+    setStyles({
+      initial: font.initialCss,
+      current: font.currentCss,
+      gradient: gradient.css,
+      shadow: shadow.css,
+      letterSpacing: `${text.letterSpacing}em`,
+      fontSize: `${text.fontSize}px`,
+      strokeWidth: `${text.strokeWidth}em`,
+      strokeColor: `${text.strokeColor}`,
+      fontSettings: font.css,
+      fontFamily: font.fontName,
+    });
+  }, [gradient, shadow, font, text]);
+
+  useEffect(() => {
+    const { width } = controlRef.current.getBoundingClientRect();
+    // console.log(width);
+    setControlWidth(width);
+  }, []);
+
+  const onChange = (e) => {
+    const reducerType = e.target.name.slice(0, e.target.name.indexOf(' '));
+    const actionType = e.target.name.toUpperCase().split(' ').slice(1).join('_');
+
+    const callback =
+      reducerType === 'gradient'
+        ? gradientDispatch
+        : reducerType === 'shadow'
+        ? shadowDispatch
+        : reducerType === 'text'
+        ? textDispatch
+        : dispatch;
+
+    callback({ type: actionType, value: e.target.value });
+  };
+
+  const onClick = (e) => {
+    const name = e.target.name;
+    buttonDispatch({ type: name.toUpperCase(), value: !show[name] });
+  };
+
   return (
-    <div className="language-css" style={{ padding: '100px 0' }}>
-      <div className="language-css">{children}</div>
-    </div>
+    <>
+      <FontControls
+        ref={controlRef}
+        dispatch={dispatch}
+        onChange={onChange}
+        onClick={onClick}
+        setControlWidth={setControlWidth}
+        font={font}
+        gradient={gradient}
+        shadow={shadow}
+        text={text}
+        show={show}
+      />
+      <Main style={{ '--controlWidth': 320 + 'px' }}>
+        <AnimatePresence exitBeforeEnter>
+          {show.help ? (
+            <HelpView key={show.help} />
+          ) : show.code ? (
+            <CodeView key={show.code} styles={styles} />
+          ) : (
+            <MainView styles={styles} show={show}>
+              {text.content}
+            </MainView>
+          )}
+        </AnimatePresence>
+      </Main>
+    </>
   );
-};
-
-const CodeBlock = (props) => {
-  const {
-    fontSize,
-    strokeWidth,
-    strokeColor,
-    shadow,
-    gradient,
-    fontVariationSettings,
-    fontFamily,
-  } = props;
-
-  return (
-    <CodeWrapper
-      initial={{ width: 0 }}
-      animate={{ width: '100%' }}
-      exit={{ width: 0, transition: { duration: 0.3 } }}
-      transition={{ duration: 0.8, ease: 'anticipate' }}
-    >
-      <SyntaxHighlighter language="css">
-        <StaticCode>
-          {getCss({
-            fontSize,
-            strokeWidth,
-            strokeColor,
-            gradient,
-            shadow,
-            fontVariationSettings,
-            fontFamily,
-          })}
-        </StaticCode>
-      </SyntaxHighlighter>
-    </CodeWrapper>
-  );
-};
-
-const Container = styled.div``;
-
+}
 const Main = styled.div`
   position: absolute;
   top: var(--header-height);
@@ -598,85 +492,174 @@ const Main = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  overflow-x: hidden;
 `;
 
-const CodeWrapper = styled(motion.div)`
+const NoScript = styled.noscript`
   position: absolute;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  top: 0;
   left: 0;
-  right: 0;
-  top: 0;
+  z-index: -1;
+  display: grid;
+  place-items: center;
+  font-size: var(--size52);
+  font-family: recursive;
+  font-variation-settings: 'wght' 800, 'slnt' -6, 'CRSV' 0, 'CASL' 0, 'MONO' 0;
+  text-align: center;
 `;
 
-const HelpContainer = styled(CodeWrapper)``;
+// import styled from 'styled-components';
+// import { useState, useReducer, useEffect, useRef } from 'react';
+// import {
+//   fonts,
+//   gradientDefault,
+//   shadowDefault,
+//   textDefault,
+//   buttonDefault,
+//   fancyTextInitialState,
+// } from '@constants/fancyTextGenerator';
 
-const TextContent = styled(motion.h1)`
-  white-space: nowrap;
-`;
+// import { FontControls } from '@components/Controls/FontControls';
 
-const TextInput = styled.input`
-  position: absolute;
-  background: transparent;
-  border: none;
-  outline: none;
-  top: 0;
-  bottom: 0;
-  width: 100%;
+// import {
+//   fontReducer,
+//   gradientReducer,
+//   shadowReducer,
+//   initializeFontState,
+//   textReducer,
+//   buttonReducer,
+//   fancyTextReducer,
+// } from '@utils/reducers';
 
-  font-size: var(--fontSize);
-  font-family: var(--fontFamily);
-  font-variation-settings: var(--fontVariationSettings);
-  caret-color: black;
-  color: transparent;
-  padding-left: 24px;
+// import { MainView, HelpView, CodeView } from 'views/FancyTextGenerator';
 
-  &::selection {
-    background: hsl(0 0% 20% / 0.3);
-  }
-`;
+// import { AnimatePresence } from 'framer-motion';
+// import { parseFontSettings } from '@utils/helpers';
 
-const Wrapper = styled.div`
-  /* background: purple; */
-  position: relative;
-`;
+// export default function Page() {
+//   // const initialFontState = initializeFontState(fonts);
+//   // const [font, fontDispatch] = useReducer(fontReducer, initialFontState);
+//   // const [gradient, gradientDispatch] = useReducer(gradientReducer, gradientDefault);
+//   // const [shadow, shadowDispatch] = useReducer(shadowReducer, shadowDefault);
+//   // const [show, buttonDispatch] = useReducer(buttonReducer, buttonDefault);
+//   // const [text, textDispatch] = useReducer(textReducer, textDefault);
+//   const [state, dispatch] = useReducer(fancyTextReducer, fancyTextInitialState);
 
-const ControlWrapper = styled.div`
-  /* margin-bottom: -96px; */
-  overflow: auto;
-  height: 0;
-`;
+//   const [controlWidth, setControlWidth] = useState(0);
 
-const TextWrapper = styled(Text)`
-  font-size: var(--fontSize);
-  font-variation-settings: var(--fontVariationSettings);
-  padding: 8px 24px;
-  transition: font-size 0.3s linear;
-`;
+//   const controlRef = useRef();
 
-const GradientText = (props) => {
-  const handleFontChange = () => {
-    const { isChangingFonts } = props?.state ?? props;
-    if (isChangingFonts) {
-      props.dispatch({ type: 'IS_CHANGING_FONTS', value: false });
-    }
-  };
+//   useEffect(() => {
+//     const { width } = controlRef.current.getBoundingClientRect();
+//     // console.log(width);
+//     setControlWidth(width);
+//   }, []);
 
-  return (
-    <TextWrapper
-      {...props}
-      variants={textGeneratorVariant}
-      initial="hidden"
-      animate="show"
-      close="close"
-      custom={props}
-      onAnimationComplete={handleFontChange}
-    >
-      {props.children}
-    </TextWrapper>
-  );
-};
+//   // useEffect(() => {
+//   //   console.log(state);
+//   // }, [state]);
 
-const Gradient = withGradient(GradientText);
+//   // const onChange = (e) => {
+//   //   const reducerType = e.target.name.slice(0, e.target.name.indexOf(' '));
+//   //   const actionType = e.target.name.toUpperCase().split(' ').slice(1).join('_');
+
+//   //   const callback =
+//   //     reducerType === 'gradient'
+//   //       ? gradientDispatch
+//   //       : reducerType === 'shadow'
+//   //       ? shadowDispatch
+//   //       : reducerType === 'text'
+//   //       ? textDispatch
+//   //       : dispatch;
+
+//   //   callback({ type: actionType, value: e.target.value });
+//   // };
+
+//   const onChange = (e) => {
+//     // const type = e.target.name.toUpperCase().split(' ').join('_');
+//     const [actionType, actionProperty] = e.target.name
+//       .split(' ')
+//       .map((word) => word.replace('-', '_').toUpperCase());
+
+//     dispatch({ type: actionType, property: actionProperty, value: e.target.value });
+//     // console.log(t, e.target.value);
+//     // dispatch({ type, value: e.target.value });
+//   };
+
+//   const onClick = (e) => {
+//     const name = e.target.name;
+//     dispatch({ type: name.toUpperCase(), value: !state[name] });
+//   };
+
+//   // const onClick = (e) => {
+//   //   const name = e.target.name;
+//   //   buttonDispatch({ type: name.toUpperCase(), value: !show[name] });
+//   // };
+
+//   return (
+//     <>
+//       <FontControls
+//         ref={controlRef}
+//         dispatch={dispatch}
+//         onChange={onChange}
+//         // onClick={onClick}
+//         // setControlWidth={setControlWidth}
+//         // font={font}
+//         // show={show}
+//         state={state}
+//       />
+//       <Main style={{ '--controlWidth': 320 + 'px' }}>
+//         <AnimatePresence exitBeforeEnter>
+//           {state.help ? (
+//             <HelpView key={state.help} />
+//           ) : state.code ? (
+//             <CodeView key={state.code} styles={{ ...state.css }} />
+//           ) : (
+//             <MainView
+//               // font={font}
+//               // gradient={gradient.css}
+//               // shadow={shadow.css}
+//               // text={text}
+//               // show={show}
+//               state={state}
+//               // dispatch={textDispatch}
+//             >
+//               blah blah blah
+//             </MainView>
+//           )}
+//         </AnimatePresence>
+//       </Main>
+//     </>
+//   );
+// }
+// const Main = styled.div`
+//   position: absolute;
+//   top: var(--header-height);
+//   left: var(--controlWidth);
+//   right: 0;
+//   bottom: var(--footer-height);
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   overflow-x: hidden;
+// `;
+
+// const NoScript = styled.noscript`
+//   position: absolute;
+//   width: 100%;
+//   height: 100%;
+//   top: 0;
+//   left: 0;
+//   z-index: -1;
+//   display: grid;
+//   place-items: center;
+//   font-size: var(--size52);
+//   font-family: recursive;
+//   font-variation-settings: 'wght' 800, 'slnt' -6, 'CRSV' 0, 'CASL' 0, 'MONO' 0;
+//   text-align: center;
+// `;
+
+
+*/

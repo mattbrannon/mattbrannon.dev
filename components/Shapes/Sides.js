@@ -13,8 +13,8 @@ export default function Side({ ...props }) {
 }
 
 const getFill = (props) => {
-  const { i, background, hairColor } = props;
-  return i === 5 ? hairColor || '#654321' : background ? background : 'hsl(34, 44%, 69%)';
+  const { i, background, cubeHairColor } = props;
+  return i === 5 ? cubeHairColor || '#654321' : background ? background : 'hsl(34, 44%, 69%)';
 };
 
 const Rect = styled.rect.attrs((props) => {

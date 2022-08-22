@@ -1,5 +1,23 @@
+// const spawn = require('child_process').spawn;
 import fs from 'fs';
 import path from 'path';
+import { spawn } from 'child_process';
+import util from 'util';
+
+export const spawnCommand = function (command, options) {
+  let file, args;
+  if (process.platform === 'win32') {
+    file = 'cmd.exe';
+    args = ['/s', '/c', '"' + command + '"'];
+    options = util._extend({}, options);
+    options.windowsVerbatimArguments = true;
+  }
+  else {
+    file = '/bin/sh';
+    args = ['-c', command];
+  }
+  return spawn(file, args, options);
+};
 
 const PATH_TO_IMAGES = path.resolve(process.cwd(), 'public', 'images');
 
@@ -73,7 +91,7 @@ export const filterByName = (appName) => {
 
       types.map((type) => {
         const thing = base.map((file) => file + type).filter((filepath) => files.includes(filepath));
-        console.log(type, thing);
+        // console.log(type, thing);
       });
 
       return { name, files, types, base };
@@ -122,3 +140,13 @@ export const filterByName = (appName) => {
 //   // ];
 //   return acc;
 // }, {});
+
+const child = spawnCommand('echo "Hello spawn" | base64');
+
+child.stdout.on('data', function (data) {
+  console.log('data', data);
+});
+
+child.on('exit', function (exitCode) {
+  console.log('exit', exitCode);
+});

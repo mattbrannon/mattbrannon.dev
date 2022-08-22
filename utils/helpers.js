@@ -45,7 +45,7 @@ export function getDirection(start, end) {
       ? -1
       : start > end && normalWay > loopAround
       ? 1
-      : 1; // default direction value if distance is equal in both directions
+      : 0; // default direction value if distance is equal in both directions
 
   // default direction could possibly be set based on the start and ending hue
   // e.g. if start >= 180 && start <= 240 && end >= 0 && end <= 60 then direction = ... something
@@ -194,60 +194,6 @@ export function adjustCircularValues(start, stop, steps) {
   return hValues;
 }
 
-export const makeShadow = ({
-  shadowColorStart,
-  shadowColorEnd,
-  shadowLayers,
-  shadowGap = 1,
-  shadowOffsetX = -1,
-  shadowOffsetY = -1,
-  shadowBlur = 1,
-}) => {
-  if (parseInt(shadowLayers) === 0) return;
-
-  let [h1, s1, l1] = new Color(shadowColorStart).hsl.array();
-  let [h2, s2, l2] = new Color(shadowColorEnd).hsl.array();
-
-  const { direction, distance } = getDirection(h1, h2);
-
-  const hStepBy = (distance / (shadowLayers - 1)) * direction;
-  const sStepBy = getLinearSteps(s1, s2, shadowLayers);
-  const lStepBy = getLinearSteps(l1, l2, shadowLayers);
-  // const blurStepBy = getLinearSteps(0, shadowBlur, shadowLayers);
-
-  // console.log(blurStepBy);
-  // let blurValue = 0;
-  const blurs = [];
-  const colors = [];
-  for (let i = 0; i < shadowLayers; i++) {
-    const h = toFloat(keepHueInRange(h1));
-    const s = toFloat(s1);
-    const l = toFloat(l1);
-    // const b = toFloat(blurValue);
-    // blurs.push(toPrecision(pxToEm(blurValue * 0.1)));
-    colors.push(new Color({ h, s, l }).hsl.css());
-    h1 += hStepBy;
-    s1 += sStepBy;
-    l1 += lStepBy;
-    // blurValue += blurStepBy;
-  }
-
-  // console.log(blurs);
-  // const offsetAmount = pxToEm(shadowGap * 0.25);
-  const blurAmount = pxToEm(shadowBlur * 0.1);
-  const offsetAmount = pxToEm(shadowGap * 0.25);
-
-  return colors
-    .map((color, i) => {
-      const blur = toFloat(blurAmount);
-      const xOffset = toFloat(pxToEm((i + 1) * offsetAmount * shadowOffsetX));
-      const yOffset = toFloat(pxToEm((i + 1) * offsetAmount * shadowOffsetY));
-
-      return `${xOffset}em ${yOffset}em ${blur}em ${color}`;
-    })
-    .join(',\n    ');
-};
-
 export function makeCamelCase(re) {
   return function (s) {
     return s.toLocaleLowerCase().replace(re, (v) => v.slice(1).toUpperCase());
@@ -255,7 +201,18 @@ export function makeCamelCase(re) {
 }
 
 export const snakeToCamel = makeCamelCase(/(_[a-z]){1}/g);
-export const toCamelCase = makeCamelCase(/(-[a-z]){1}/g);
+// export const toCamelCase = makeCamelCase(/(-[a-z]){1}/g);
+
+export const toCamelCase = (s) => {
+  const re = /\s|_|-/g;
+  return s
+    .split(re)
+    .map((word, i) => {
+      word = word.toLowerCase();
+      return i > 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word;
+    })
+    .join('');
+};
 
 export function spaceToCamelCase(str) {
   function camelCase(v, i) {
@@ -267,7 +224,7 @@ export function spaceToCamelCase(str) {
 
 export function toSnakeUpperCase(str) {
   return str
-    .split(' ')
+    .split(/\s|-/)
     .map((v) => v.toUpperCase())
     .join('_');
 }
@@ -282,6 +239,20 @@ export const camelToKebab = (str) => {
 
 export const isCamelCase = (str) => {
   return /\s/.test(str) === false && /^[a-z]+[A-Z]+/.test(str);
+};
+
+export const kebabToLabel = (name) => {
+  return name
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+};
+
+const kebabToCamel = (name) => {
+  return name
+    .split('-')
+    .map((word, i) => (i > 0 ? word.charAt(0).toUpperCase() + word.slice(1) : word))
+    .join('');
 };
 
 export const getDataType = (data) => {
@@ -334,6 +305,37 @@ const getRangeOfHues = (start, end, steps) => {
   }
 
   return hues;
+};
+
+export const makeGradient2 = ({
+  colorStart = 'blue',
+  colorEnd = 'red',
+  blend = 10,
+  midPoint = 47,
+  angle = 0,
+}) => {
+  let [h1, s1, l1] = new Color(colorStart).hsl.array();
+  let [h2, s2, l2] = new Color(colorEnd).hsl.array();
+
+  const hValues = getRangeOfHues(h1, h2, 2);
+  const sValues = adjustLinearValues(s1, s2, 2);
+  const lValues = adjustLinearValues(l1, l2, 2);
+
+  const [begin, end] = getPoints(blend, midPoint);
+  // console.log({ begin, end });
+  const cssValues = hValues.reduce((acc, h, i) => {
+    const s = sValues[i];
+    const l = lValues[i];
+    acc = acc.concat(new Color({ h, s, l }).hsl.css());
+    return acc;
+  }, []);
+
+  return `linear-gradient(
+      ${angle}deg,
+      ${cssValues[0]} ${begin}%,
+      ${cssValues[1]} ${end}%
+    )`;
+  // return `linear-gradient(${cssValues[0]} ${begin}%, ${cssValues.slice(1).join(',')})`;
 };
 
 export const makeGradient = ({
@@ -390,7 +392,7 @@ export const parseFontSettings = (settings) => {
 // export const loadFeatures = () =>
 //   dynamic(() => import('@animations/features.js').then((res) => res.default));
 
-export const loadFeatures = () => import('@animations/features.js').then((res) => res.default);
+// export const loadFeatures = () => import('@animations/features.js').then((res) => res.default);
 
 // export const loadFeatures = dynamic(() =>
 //   import('@animations/features.js').then((res) => res.default)
@@ -479,4 +481,112 @@ export const createFullStopGradient = (values) => {
       return `${color} ${start}%, ${color} ${stop}%`;
     })
     .join(', ');
+};
+
+export const makeShadow2 = ({
+  colorStart,
+  colorEnd,
+  layers,
+  gap = 1,
+  offsetX = -1,
+  offsetY = -1,
+  blur = 1,
+}) => {
+  if (parseInt(layers) === 0) return 'none';
+
+  let [h1, s1, l1] = new Color(colorStart).hsl.array();
+  let [h2, s2, l2] = new Color(colorEnd).hsl.array();
+
+  const { direction, distance } = getDirection(h1, h2);
+
+  const hStepBy = (distance / (layers - 1)) * direction;
+  const sStepBy = getLinearSteps(s1, s2, layers);
+  const lStepBy = getLinearSteps(l1, l2, layers);
+  const blurStepBy = getLinearSteps(0, blur, layers);
+
+  // console.log(blurStepBy);
+  let blurValue = 0;
+  const blurs = [];
+  const colors = [];
+  for (let i = 0; i < layers; i++) {
+    const h = toFloat(keepHueInRange(h1));
+    const s = toFloat(s1);
+    const l = toFloat(l1);
+    // const b = toFloat(blurValue);
+    blurs.push(toPrecision(pxToEm(blurValue * 0.1)));
+    colors.push(new Color({ h, s, l }).hsl.css());
+    h1 += hStepBy;
+    s1 += sStepBy;
+    l1 += lStepBy;
+    blurValue += blurStepBy;
+  }
+
+  // console.log(blurs);
+  // const offsetAmount = pxToEm(gap * 0.25);
+  const blurAmount = pxToEm(blur * 0.1);
+  const offsetAmount = pxToEm(gap * 0.25);
+
+  return colors
+    .map((color, i) => {
+      const blur = toFloat(blurAmount);
+      const xOffset = toFloat(pxToEm((i + 1) * offsetAmount * offsetX));
+      const yOffset = toFloat(pxToEm((i + 1) * offsetAmount * offsetY));
+
+      return `${xOffset}em ${yOffset}em ${blur}em ${color}`;
+    })
+    .join(',\n    ');
+};
+
+export const makeShadow = ({
+  shadowColorStart,
+  shadowColorEnd,
+  shadowLayers,
+  shadowGap = 1,
+  shadowOffsetX = -1,
+  shadowOffsetY = -1,
+  shadowBlur = 1,
+}) => {
+  if (parseInt(shadowLayers) === 0) return 'none';
+
+  let [h1, s1, l1] = new Color(shadowColorStart).hsl.array();
+  let [h2, s2, l2] = new Color(shadowColorEnd).hsl.array();
+
+  const { direction, distance } = getDirection(h1, h2);
+
+  const hStepBy = (distance / (shadowLayers - 1)) * direction;
+  const sStepBy = getLinearSteps(s1, s2, shadowLayers);
+  const lStepBy = getLinearSteps(l1, l2, shadowLayers);
+  const blurStepBy = getLinearSteps(0, shadowBlur, shadowLayers);
+
+  // console.log(blurStepBy);
+  let blurValue = 0;
+  const blurs = [];
+  const colors = [];
+  for (let i = 0; i < shadowLayers; i++) {
+    const h = toFloat(keepHueInRange(h1));
+    const s = toFloat(s1);
+    const l = toFloat(l1);
+    // const b = toFloat(blurValue);
+    blurs.push(toPrecision(pxToEm(blurValue * 0.1)));
+    colors.push(new Color({ h, s, l }).hsl.css());
+    h1 += hStepBy;
+    s1 += sStepBy;
+    l1 += lStepBy;
+    blurValue += blurStepBy;
+  }
+
+  // console.log(blurs);
+  // const offsetAmount = pxToEm(shadowGap * 0.25);
+  const blurAmount = pxToEm(shadowBlur * 0.1);
+  const offsetAmount = pxToEm(shadowGap * 0.25);
+
+  return colors
+    .map((color, i) => {
+      const blur = toFloat(blurAmount);
+      const xOffset = toFloat(pxToEm((i + 1) * offsetAmount * shadowOffsetX));
+      const yOffset = toFloat(pxToEm((i + 1) * offsetAmount * shadowOffsetY));
+
+      return `${xOffset}em ${yOffset}em ${blur}em ${color}`;
+    })
+    .join(',\n    ');
 };

@@ -4,7 +4,7 @@ import theme from 'prism-react-renderer/themes/nightOwl';
 import styled from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 
-const SyntaxHighlighter = ({ children, ...props }) => {
+export const BlogHighlighter = ({ children, ...props }) => {
   const code = children.props.children;
   const language = props.language || children.props.className?.replace('language-', '').trim();
   const ref = useRef();
@@ -64,6 +64,7 @@ const SyntaxHighlighter = ({ children, ...props }) => {
 
 const Container = styled.div`
   position: relative;
+  margin: '0 0 32px 0';
   --code-background: hsl(208, 86%, 8%);
 `;
 
@@ -92,8 +93,6 @@ const CopyButton = styled.button`
 
   transition: color 0.1s ease-in-out;
 `;
-
-export default SyntaxHighlighter;
 
 async function copyText(selectedText) {
   try {

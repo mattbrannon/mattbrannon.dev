@@ -43,43 +43,36 @@ export const shadow = makeShadow({
 //   blur: 6,
 // });
 
-export const strokeWidth = pxToEm(0.75) + 'em';
+export const strokeWidth = pxToEm(0.85) + 'em';
 export const strokeColor = '#000000';
 export const presets = fonts.presets;
 
 export const blogVariant = {
   hidden: {
+    opacity: 0,
     '--fontSize': fontSize,
     '--fontVariationSettings': fonts.presets.recursive3,
     '--strokeWidth': 0,
-    '--shadow': 'none',
     '--gradient': gradient1,
+    y: -400,
   },
   show: {
-    // opacity: 1,
+    opacity: 1,
     '--fontVariationSettings': fonts.presets.recursive4,
     '--strokeWidth': strokeWidth,
     '--strokeColor': '#000000',
-    '--shadow': shadow,
     '--gradient': gradient2,
+    y: 0,
+
     transition: {
-      '--strokeWidth': {
-        delay: 2,
-        duration: 2,
-      },
-      '--strokeColor': {
-        delay: 1,
-        duration: 3,
-      },
-      '--shadow': {
-        delay: 2,
-        duration: 2,
-      },
-      '--gradient': {
-        delay: 1,
-        duration: 2,
-      },
+      duration: 1,
       '--fontVariationSettings': {
+        delay: 0.5,
+        duration: 0.75,
+        ease: 'easeInOut',
+      },
+      y: {
+        ease: 'backInOut',
         duration: 1,
       },
     },

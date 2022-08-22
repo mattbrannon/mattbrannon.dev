@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import '@reach/dialog/styles.css';
 import { Burger } from './Burger';
 import { Portal } from '@components/Portal';
-import Link from 'next/link';
+// import Link from 'next/link';
+import { InternalLink } from '@components/Links';
 import FocusTrap from 'focus-trap-react';
 // import { HamburgerButton } from './FluidBurger';
 
@@ -64,12 +65,6 @@ const getOverlayStyles = ({ dialogIsOpen }) => {
   };
 };
 
-// const setDisplay = ({dialogIsOpen}) => {
-
-// }
-
-// '--zIndex': isOpen ? '2' : '0',
-
 const Overlay = styled.div`
   --delay: ${(p) => getOverlayStyles(p).delay};
   --zIndex: ${(p) => getOverlayStyles(p).zIndex};
@@ -129,7 +124,7 @@ const NavContainer = styled.div`
     visibility 0.5s linear var(--timeout);
 `;
 
-const ButtonLink = styled(Link)`
+const ButtonLink = styled(InternalLink)`
   background: none;
   border: none;
   font-family: Recursive;

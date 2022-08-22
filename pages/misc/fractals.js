@@ -19,8 +19,8 @@ const initialState = {
   shadowOffsetX: 0,
   shadowOffsetY: 0,
   shadowBlur: 0,
-  x: 550,
-  y: 500,
+  xAxis: 550,
+  yAxis: 500,
   limit: 20,
   composite: 'source-over',
 };
@@ -28,8 +28,8 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case 'COMPOSITE':
-    case 'X':
-    case 'Y':
+    case 'X_AXIS':
+    case 'Y_AXIS':
     case 'LIMIT':
     case 'SIDES':
     case 'SIZE':
@@ -44,6 +44,7 @@ function reducer(state, action) {
     case 'SHADOW_OFFSET_Y':
     case 'SHADOW_BLUR': {
       const type = snakeToCamel(action.type);
+      console.log(type, action.value);
       return { ...state, [type]: action.value };
     }
   }
@@ -58,6 +59,7 @@ export default function Fractals() {
 
   useEffect(() => {
     const { width } = controlRef.current.getBoundingClientRect();
+    console.log(width);
     setControlWidth(width);
   }, []);
 
@@ -121,7 +123,7 @@ export default function Fractals() {
 
     function drawFractal() {
       ctx.save();
-      ctx.translate(state.x, state.y);
+      ctx.translate(state.xAxis, state.yAxis);
       ctx.rotate(Math.PI * 1.5);
       ctx.arc(size, size, size, -size * Math.PI, 0, true);
 
@@ -141,11 +143,21 @@ export default function Fractals() {
     drawFractal();
   }, [state, controlWidth]);
 
+  const onChange = (e) => {
+    const actionType = e.target.name
+      .split(' ')
+      .slice(1)
+      .map((s) => s.toUpperCase())
+      .join('_');
+
+    dispatch({ type: actionType, value: e.target.value });
+  };
+
   return (
     <>
       <Head title="Fractals" description="generative art" />
       <ControlWrapper>
-        <FractalControls ref={controlRef} dispatch={dispatch} state={state} />
+        <FractalControls onChange={onChange} ref={controlRef} dispatch={dispatch} state={state} />
       </ControlWrapper>
       <Container>
         <Main ref={mainRef} left={controlWidth}>

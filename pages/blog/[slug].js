@@ -3,7 +3,7 @@ import { NormalButton, InvertedButton } from '@components/Button';
 import Head from '@components/Head';
 import { H2Link, H3Link, H4Link, H5Link } from '@components/Headings';
 
-import SyntaxHighlighter from '@components/SyntaxHighlighter';
+import { BlogHighlighter } from '@components/SyntaxHighlighter';
 import { POSTS_PATH, publishedArticles } from '@utils/mdxUtils.js';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -29,7 +29,7 @@ const components = {
   blockquote: dynamic(() => import('@components/SideNote').then((res) => res.Blockquote)),
   Button: NormalButton,
   InvertedButton,
-  pre: SyntaxHighlighter,
+  pre: BlogHighlighter,
   p: dynamic(() => import('@components/Text').then((res) => res.P)),
   ColorText: dynamic(() => import('@components/Text/Text').then((res) => res.ColorText)),
   Video: dynamic(() => import('@components/VideoPlayer').then((res) => res.FlatVideo)),

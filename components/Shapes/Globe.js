@@ -1,18 +1,42 @@
 import styled from 'styled-components';
 import { Shape } from './Shape';
+// import { Theme } from 'color-tools';
+import { Theme, Color } from '@utils/colors';
+import { useEffect, useState } from 'react';
+import { useHasMounted } from '@hooks/useHasMounted';
 
-export default function Globe({ ...props }) {
-  const { sides } = props;
+export const Globe = ({ ...props }) => {
+  // const { sides } = props;
+  const { sphereOuter, sphereMiddle, sphereInner } = props.state;
+  const [colors, setColors] = useState([]);
+  const hasMounted = useHasMounted();
+
+  useEffect(() => {
+    if (hasMounted) {
+      const {
+        theme: { triadic },
+      } = new Theme(sphereOuter);
+
+      const colors = triadic.map((color) => {
+        return new Theme(color).saturation(100).hex.css();
+      });
+
+      setColors(colors);
+    }
+  }, [hasMounted, sphereOuter]);
+
+  const { sides } = props.state;
   const transforms = getTransform(sides);
+
   return (
     <Scene {...props}>
-      {Array.from({ length: 12 }, (_, i) => {
+      {Array.from({ length: props.state.max }, (_, i) => {
         const transform = transforms[i];
         return (
           <GlobeSide i={i} transform={transform}>
-            <Thing sides={sides} i={i} color={'hsl(20, 75%, 50%, 0.1)'} size={300}>
-              <Thing sides={sides} i={i} color={'hsl(80, 75%, 50%, 0.1)'} size={150}>
-                <Thing sides={sides} i={i} color={'hsl(140, 75%, 50%, 0.1)'} size={75}></Thing>
+            <Thing sides={sides} i={i} color={colors[0] + '1a'} size={300}>
+              <Thing sides={sides} i={i} color={colors[1] + '34'} size={150}>
+                <Thing sides={sides} i={i} color={colors[2]} size={75} />
               </Thing>
             </Thing>
           </GlobeSide>
@@ -20,18 +44,28 @@ export default function Globe({ ...props }) {
       })}
     </Scene>
   );
-}
+};
+// 'hsl(20, 75%, 50%, 0.1)'
+// 'hsl(80, 75%, 50%, 0.1)'
+// 'hsl(140, 75%, 50%, 0.1)'
 
-const Thing = styled.div`
+const Thing = styled.div.attrs(({ sides, i, color }) => {
+  return {
+    style: {
+      '--background': i <= sides ? color : 'transparent',
+    },
+  };
+})`
   height: ${(p) => p.size}px;
   width: ${(p) => p.size}px;
   box-shadow: 0 0 0 1px ${(p) => p.color};
   border-radius: 50%;
   display: grid;
   place-content: center;
-  background: ${(p) => (p.i <= p.sides ? p.color : 'transparent')};
+  /* background: ${(p) => (p.i <= p.sides ? p.color : 'transparent')}; */
+  background: var(--background);
   box-shadow: 0 0 0 2px black;
-  transition: all 5s linear;
+  transition: all var(--speed) linear;
 `;
 
 export const getTransform = (currentSides) => {
@@ -84,5 +118,5 @@ const GlobeSide = styled.div.attrs((props) => {
   color: white;
   display: grid;
   place-content: center;
-  transition: all 5s linear;
+  transition: all var(--speed) linear;
 `;

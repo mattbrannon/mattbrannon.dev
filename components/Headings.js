@@ -5,6 +5,7 @@ import { toHeadingId } from '@utils/helpers.js';
 
 export const H1 = styled.h1`
   color: var(--h1);
+  font-size: var(--fontSize);
   @media (max-width: ${breakpoints.mobile}px) {
     margin: 16px 0 16px 0;
   }

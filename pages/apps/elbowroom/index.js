@@ -23,18 +23,18 @@ import mobileImagePng from '/public/images/elbowroom/mobile.png';
 
 const desktopImages = [desktopImageAvif, desktopImageWebp, desktopImagePng].map((image) => {
   const { src, width, height, blurDataURL } = image;
-  console.log(image);
+  // console.log(image);
   return { src, width, height, blurDataURL };
 });
 
 const mobileImages = [mobileImageAvif, mobileImageWebp, mobileImagePng].map((image) => {
   const { src, width, height, blurDataURL } = image;
-  console.log(image);
+  // console.log(image);
   return { src, width, height, blurDataURL };
 });
 
 export default memo(function ElbowRoomPage() {
-  console.log(desktopImages, mobileImages);
+  // console.log(desktopImages, mobileImages);
   const links = {
     github: 'https://github.com/mattbrannon/elbowroom.dev',
     liveSite: 'https://elbowroom.dev',

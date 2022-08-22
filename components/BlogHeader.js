@@ -20,8 +20,10 @@ export default function BlogHeader({ children: { title, date } }) {
   return (
     <BlogTitleWrapper>
       <FancyTitle
-        gradient={theme === 'dark' && gradient}
-        shadow={theme === 'dark' && shadow}
+        style={{
+          '--gradient': gradient,
+          '--shadow': 'none',
+        }}
         variants={blogHeader.blogVariant}
         initial="hidden"
         animate="show"

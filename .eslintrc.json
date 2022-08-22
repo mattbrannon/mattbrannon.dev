@@ -26,7 +26,7 @@
   ],
   "plugins": ["react", "react-hooks", "@next/next"],
   "rules": {
-    "quotes": ["error", "single"],
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "no-unused-expressions": "off",
     "no-var": "error",
     "no-unused-vars": "warn",
@@ -41,16 +41,6 @@
     "comma-dangle": ["error", "only-multiline"],
     "multiline-ternary": "off",
     "no-unneeded-ternary": "error",
-    "indent": [
-      2,
-      2,
-      {
-        "flatTernaryExpressions": true,
-        "ignoredNodes": ["ConditionalExpression > *"],
-        "SwitchCase": 1
-      }
-    ],
-
     "indent": [
       "error",
       2,
