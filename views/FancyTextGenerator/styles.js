@@ -82,62 +82,62 @@ export const ViewWrapper = styled(motion.div)`
 //   );
 // };
 
-export const P = styled.p`
-  height: 100%;
-  width: calc(100vw - var(--controlWidth));
-  margin: 0;
-  padding: 32px;
-  outline: none;
-  font-family: var(--fontFamily);
-  font-variation-settings: var(--fontSettings);
-  font-size: var(--fontSize);
-  letter-spacing: var(--letterSpacing);
+// export const P = styled.p`
+//   height: 100%;
+//   width: calc(100vw - var(--controlWidth));
+//   margin: 0;
+//   padding: 32px;
+//   outline: none;
+//   font-family: var(--fontFamily);
+//   font-variation-settings: var(--fontSettings);
+//   font-size: var(--fontSize);
+//   letter-spacing: var(--letterSpacing);
 
-  background-image: var(--gradient);
-  text-shadow: var(--shadow);
+//   background-image: var(--gradient);
+//   text-shadow: var(--shadow);
 
-  &:before {
-    ${
-  '' /* background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
-    content: '${({ children }) => children}';
-    position: absolute;
-    z-index: -1;
+//   &:before {
+//     ${
+//   '' /* background-clip: text;
+//     -webkit-background-clip: text;
+//     color: transparent;
+//     -webkit-text-fill-color: transparent;
+//     content: '${({ children }) => children}';
+//     position: absolute;
+//     z-index: -1;
 
-    text-shadow: var(--shadow);
-    -webkit-text-stroke: var(--strokeWidth) var(--strokeColor); */
-}
-  }
+//     text-shadow: var(--shadow);
+//     -webkit-text-stroke: var(--strokeWidth) var(--strokeColor); */
+// }
+//   }
 
-  &:after {
-    text-shadow: none;
-    color: red;
-    content: '${({ children }) => children}';
-    position: absolute;
-    top: 0;
-    padding: 32px;
-  }
-`;
+//   &:after {
+//     text-shadow: none;
+//     color: red;
+//     content: '${({ children }) => children}';
+//     position: absolute;
+//     top: 0;
+//     padding: 32px;
+//   }
+// `;
 
-export const FancyText = ({ children, ...props }) => {
-  return (
-    <>
-      <div style={{ height: '120px' }}></div>
-      <div style={{ top: '48px', padding: '120px 48px' }}>
-        {children.split(' ').map((word, i, collection) => {
-          const space = i < collection.length - 1;
-          return (
-            <Word space={space} key={i}>
-              {word}
-            </Word>
-          );
-        })}
-      </div>
-    </>
-  );
-};
+// export const FancyText = ({ children, ...props }) => {
+//   return (
+//     <>
+//       <div style={{ height: '120px' }}></div>
+//       <div style={{ top: '48px', padding: '120px 48px' }}>
+//         {children.split(' ').map((word, i, collection) => {
+//           const space = i < collection.length - 1;
+//           return (
+//             <Word space={space} key={i}>
+//               {word}
+//             </Word>
+//           );
+//         })}
+//       </div>
+//     </>
+//   );
+// };
 
 export const Span = styled(motion.span)`
   font-family: var(--fontFamily);
@@ -145,7 +145,7 @@ export const Span = styled(motion.span)`
   font-size: var(--fontSize);
   position: relative;
   display: inline-block;
-  width: max-content;
+  /* width: max-content; */
 
   -webkit-background-clip: text;
   background-clip: text;
@@ -157,7 +157,7 @@ export const Span = styled(motion.span)`
   background-image: var(--gradient);
   letter-spacing: var(--letterSpacing);
 
-  white-space: nowrap;
+  /* white-space: nowrap; */
 
   &:before {
     content: '${({ children }) => children}';
@@ -198,11 +198,17 @@ const Word = ({ children, ...props }) => {
 };
 
 export const FancyGradient = ({ ...props }) => {
-  const [text, setText] = useState('fuck you');
+  const [text, setText] = useState(props.children);
+
+  const handleChange = (e) => {
+    const text = e.target.value.replace(/\s+/g, '\u{00a0}');
+    setText(text);
+  };
+
   return (
     <>
-      {/* <FancyInput onChange={(e) => setText(e.target.value)} /> */}
-      <Span>{text}</Span>
+      <FancyInput onChange={handleChange} />
+      <Span {...props}>{text}</Span>
     </>
   );
 };
@@ -247,13 +253,14 @@ export const FancyInput = styled.input.attrs(() => {
   bottom: 0;
   background: transparent;
   letter-spacing: var(--letterSpacing);
-  ${'' /* text-align: center; */}
-  font-weight: 900;
+  text-align: center;
+  /* font-weight: 900; */
   font-family: var(--fontFamily);
-  font-variation-settings: var(--fontVariationSettings);
+  font-variation-settings: var(--fontSettings);
   caret-color: red;
-  color: transparent;
-  outline: none;
+  color: red;
+  /* color: transparent; */
+  /* outline: none; */
   border: none;
 `;
 
