@@ -99,7 +99,7 @@ const initialState = {
     strokeWidth: 0.02,
     strokeColor: '#536897',
     letterSpacing: 0.05,
-    fontVariationSettings: parseFontSettings({ wght: 300, slnt: -6, CASL: 1, CRSV: 0, MONO: 0.49 }),
+    fontVariationSettings: parseFontSettings({ wght: 1000, slnt: 0, CASL: 0, CRSV: 0, MONO: 0 }),
     gradient: makeGradient({
       gradientColorStart: '#082640',
       gradientColorEnd: '#97f7f1',

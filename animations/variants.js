@@ -52,17 +52,17 @@ export const textGeneratorVariant = {
   hidden: ({ ...state }) => {
     const fontSettings = parseFontSettings(state.fonts[state.styles.fontFamily].initialSettings);
 
-    // console.log(fontSettings);
+    console.log(fontSettings);
     return {
       opacity: 0,
       '--fontFamily': state.styles.fontFamily,
       '--fontSize': state.styles.fontSize + 'px',
-      '--fontSettings': fontSettings,
-      '--strokeWidth': '0em',
-      '--shadow': 'none',
-      '--gradient': 'none',
-      '--strokeColor': 'none',
-      '--letterSpacing': 'none',
+      '--fontSettings': 0,
+      '--strokeWidth': 0,
+      '--shadow': 0,
+      '--gradient': 0,
+      '--strokeColor': 0,
+      '--letterSpacing': 0,
     };
   },
   show: ({ duration, ...state }) => {

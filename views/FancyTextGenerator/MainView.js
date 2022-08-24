@@ -1,37 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, m as motion, useAnimation } from 'framer-motion';
 import { textGeneratorVariant } from '@animations/variants';
 import { FancyText, FancyInput, FancyGradient, ContentEditable, Span } from './styles';
+import { useHasMounted } from '@hooks/useHasMounted';
 
 export const FancyAnimatedGradient = ({ state, children, ...props }) => {
   const [duration, setDuration] = useState(0);
-  const [names, setNames] = useState({ previous: '', current: '' });
+  const hasMounted = useHasMounted();
+  const ref = useRef(false);
 
   const handleAnimationStart = (name) => {
-    // console.log('starting', name);
+    console.log('starting', name);
+    // if (!ref.current) {
+    //   console.log(state);
+    //   setDuration(2);
+    //   ref.current = true;
+    //   return;
+    // }
     // setNames({ previous: names.current, current: name });
     // const current = name;
     // const previous = names.current;
     // console.log({ previous, current });
-    console.log(name);
     if (name === 'close') {
       setDuration(2);
     }
     else {
-      setDuration(0);
+      setDuration(5);
     }
   };
 
   return (
     <AnimatePresence exitBeforeEnter>
-      <Span
-        key={state.styles.fontFamily}
+      <motion.div
         initial="hidden"
         animate="show"
         exit="close"
-        variants={textGeneratorVariant}
-        onAnimationStart={handleAnimationStart}
         custom={{ duration, ...state }}
+        variants={textGeneratorVariant}
+        key={state.styles.fontFamily}
         style={{
           '--fontFamily': state.styles.fontFamily,
           '--fontSize': state.styles.fontSize + 'px',
@@ -43,8 +49,19 @@ export const FancyAnimatedGradient = ({ state, children, ...props }) => {
           '--letterSpacing': state.styles.letterSpacing + 'em',
         }}
       >
-        fuck you
-      </Span>
+        <Span
+          // contentEditable={true}
+          key={state.styles.fontFamily}
+          initial="hidden"
+          animate="show"
+          exit="close"
+          variants={textGeneratorVariant}
+          onAnimationStart={handleAnimationStart}
+          custom={{ duration, ...state }}
+        >
+          Click to edit
+        </Span>
+      </motion.div>
     </AnimatePresence>
   );
 };
