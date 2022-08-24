@@ -582,9 +582,9 @@ export const makeShadow = ({
 
   return colors
     .map((color, i) => {
-      const blur = toFloat(blurAmount);
-      const xOffset = toFloat(pxToEm((i + 1) * offsetAmount * shadowOffsetX));
-      const yOffset = toFloat(pxToEm((i + 1) * offsetAmount * shadowOffsetY));
+      const blur = toPrecision(blurAmount);
+      const xOffset = toPrecision(pxToEm((i + 1) * offsetAmount * shadowOffsetX));
+      const yOffset = toPrecision(pxToEm((i + 1) * offsetAmount * shadowOffsetY));
 
       return `${xOffset}em ${yOffset}em ${blur}em ${color}`;
     })

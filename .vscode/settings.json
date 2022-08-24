@@ -8,5 +8,7 @@
   "editor.wordWrap": "on",
   "editor.codeActionsOnSave": {
     "source.organizeImports": false
-  }
+  },
+  "eslint.run": "onSave",
+  "eslint.codeActionsOnSave.mode": "problems"
 }

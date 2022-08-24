@@ -1,6 +1,7 @@
 import { Basic } from '@components/SyntaxHighlighter';
 import { ViewWrapper } from './styles';
-import { fonts } from '@constants/fonts';
+import { fonts } from '@constants/fancyTextGenerator';
+import { AnimatePresence } from 'framer-motion';
 
 const formatDecovar = (str) => {
   const arr = str.split(',').map((s) => s.trim());
@@ -20,6 +21,14 @@ const formatDecovar = (str) => {
   return formatted;
 };
 
+const getFontLink = (fontFamily) => {
+  const currentFont = fonts.find((font) => font.name === fontFamily);
+  return {
+    github: currentFont.github,
+    homepage: currentFont.homepage,
+  };
+};
+
 const getCss = ({ styles }) => {
   console.log(styles);
   const strokeWidth = styles.strokeWidth;
@@ -31,45 +40,62 @@ const getCss = ({ styles }) => {
   const fontFamily = styles.fontFamily;
   // const fontSettings = props.css;
 
-  const fontSettings = fontFamily === 'Decovar' ? formatDecovar(styles.current) : styles.current;
+  const { homepage, github } = getFontLink(fontFamily);
+
+  const fontSettings =
+    fontFamily === 'Decovar'
+      ? formatDecovar(styles.fontVariationSettings)
+      : styles.fontVariationSettings;
 
   // console.log(fontSettings.split(','));
 
   const staticCSS = `
-.fancy-text {
-  --fontFamily: ${fontFamily};
-  --fontSize: ${fontSize};
-  --fontVariationSettings: ${fontSettings};
+
+  /*
+
+  ${fontFamily}
+    homepage: ${homepage}
+    github: ${github}
   
-  --letterSpacing: ${letterSpacing};
-  --strokeWidth: ${strokeWidth};
-  --strokeColor: ${strokeColor};
+  */
 
-  --gradient: ${gradient};
 
-  --shadow: ${shadow};
+  .fancy-text {
+    --fontFamily: ${fontFamily};
+    --fontSize: ${fontSize}px;
+    --fontVariationSettings: ${fontSettings};
+    
+    --letterSpacing: ${letterSpacing}em;
+    --strokeWidth: ${strokeWidth}em;
+    --strokeColor: ${strokeColor};
 
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+    --gradient: ${gradient};
 
-  font-family: var(--fontFamily);
-  font-size: var(--fontSize);
-  font-variation-settings: var(--fontSettings);
-  letter-spacing: var(--letterSpacing);
-  background-image: var(--gradient);
-}
+    --shadow: ${shadow};
 
-.fancy-text:before {
-  content: attr(data-content);
-  position: absolute;
-  z-index: -1;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
 
-  text-shadow: var(--shadow);
-  -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
-}
-`;
+    font-family: var(--fontFamily);
+    font-size: var(--fontSize);
+    font-variation-settings: var(--fontVariationSettings);
+    letter-spacing: var(--letterSpacing);
+    background-image: var(--gradient);
+  }
+
+  .fancy-text:before {
+    content: attr(data-content);
+    position: absolute;
+    z-index: -1;
+
+    text-shadow: var(--shadow);
+    -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
+  }
+
+
+  `;
 
   return staticCSS;
 };
@@ -77,13 +103,16 @@ const getCss = ({ styles }) => {
 export const CodeView = ({ styles }) => {
   console.log(styles);
   return (
-    <ViewWrapper
-      initial={{ width: 0 }}
-      animate={{ width: '100%' }}
-      exit={{ width: 0, transition: { duration: 0.3 } }}
-      transition={{ duration: 0.8, ease: 'anticipate' }}
-    >
-      <Basic language="css" code={getCss({ styles })} />
-    </ViewWrapper>
+    <AnimatePresence exitBeforeEnter>
+      <ViewWrapper
+        initial={{ width: 0 }}
+        animate={{ width: '100%' }}
+        exit={{ width: 0, transition: { duration: 0.3 } }}
+        transition={{ duration: 0.8, ease: 'anticipate' }}
+        key={styles.fontFamily}
+      >
+        <Basic language="css" code={getCss({ styles })} />
+      </ViewWrapper>
+    </AnimatePresence>
   );
 };

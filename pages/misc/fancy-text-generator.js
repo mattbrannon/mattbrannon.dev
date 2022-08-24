@@ -7,7 +7,7 @@ import { FontControls } from '@components/Controls/FontControls';
 
 import { MainView, HelpView, CodeView } from 'views/FancyTextGenerator';
 
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, m as motion } from 'framer-motion';
 import {
   parseFontSettings,
   makeGradient,
@@ -19,20 +19,21 @@ import {
 const initialState = {
   help: false,
   code: false,
+  reset: false,
   textContent: 'Blah blah blah',
 
   shadow: {
-    shadowColorStart: '#cdbdb6',
-    shadowColorEnd: '#3e3532',
-    shadowLayers: 10,
-    shadowGap: 2,
-    shadowBlur: 1,
-    shadowOffsetX: -5,
-    shadowOffsetY: -5,
+    shadowColorStart: '#80e5ff',
+    shadowColorEnd: '#110c1d',
+    shadowLayers: 30,
+    shadowGap: 3.9,
+    shadowBlur: 0,
+    shadowOffsetX: -1,
+    shadowOffsetY: -0.5,
   },
   gradient: {
-    gradientColorStart: '#082640',
-    gradientColorEnd: '#97f7f1',
+    gradientColorStart: '#6b257e',
+    gradientColorEnd: '#ff8fe7',
     gradientAngle: 0,
     gradientMidpoint: 50,
     gradientBlend: 50,
@@ -73,136 +74,52 @@ const initialState = {
         TRML: 0,
         WMX2: 0,
       },
+
       currentSettings: {
-        BLDA: 0,
-        BLDB: 500,
-        SKLA: 0,
-        SKLB: 500,
-        SKLD: 0,
+        BLDA: 443,
+        BLDB: 0,
+        SKLA: 176,
+        SKLB: 1000,
+        SKLD: 311,
         TRMA: 0,
         TRMB: 0,
-        TRMC: 500,
+        TRMC: 0,
         TRMD: 0,
         TRME: 0,
-        TRMF: 500,
+        TRMF: 247,
         TRMG: 0,
-        TRMK: 0,
+        TRMK: 389,
         TRML: 0,
-        WMX2: 0,
+        WMX2: 407,
       },
     },
   },
 
   styles: {
     fontFamily: 'Recursive',
-    fontSize: 96,
-    strokeWidth: 0.02,
-    strokeColor: '#536897',
-    letterSpacing: 0.05,
+    fontSize: 144,
+    strokeWidth: 0.011,
+    strokeColor: '#f3ff99',
+    letterSpacing: -0.012,
     fontVariationSettings: parseFontSettings({ wght: 1000, slnt: 0, CASL: 0, CRSV: 0, MONO: 0 }),
     gradient: makeGradient({
-      gradientColorStart: '#082640',
-      gradientColorEnd: '#97f7f1',
+      gradientColorStart: '#6b257e',
+      gradientColorEnd: '#ff8fe7',
       gradientAngle: 0,
       gradientMidpoint: 50,
       gradientBlend: 50,
     }),
     shadow: makeShadow({
-      shadowColorStart: '#cdbdb6',
-      shadowColorEnd: '#3e3532',
-      shadowLayers: 10,
-      shadowGap: 2,
-      shadowBlur: 1,
-      shadowOffsetX: -5,
-      shadowOffsetY: -5,
+      shadowColorStart: '#80e5ff',
+      shadowColorEnd: '#110c1d',
+      shadowLayers: 30,
+      shadowGap: 3.9,
+      shadowBlur: 0,
+      shadowOffsetX: -1,
+      shadowOffsetY: -0.5,
     }),
   },
 };
-
-// const fancyTextReducer = (state, action) => {
-//   switch (action.type) {
-//     case 'gradient_Color_Start':
-//     case 'gradient_Color_End':
-//     case 'gradient_Angle':
-//     case 'gradient_Midpoint':
-//     case 'gradient_Blend': {
-//       const gradientState = { ...state.gradient, [action.type]: action.value };
-//       const gradient = makeGradient(gradientState);
-//       const styles = { ...state.styles };
-//       return {
-//         ...state,
-//         gradient: { ...gradientState },
-//         styles: { ...styles, gradient },
-//       };
-//     }
-//     case 'shadowColorStart':
-//     case 'shadowColorEnd':
-//     case 'shadowLayers':
-//     case 'shadowGap':
-//     case 'shadowBlur':
-//     case 'shadowOffsetX':
-//     case 'shadowOffsetY': {
-//       const shadowState = { ...state.shadow, [action.type]: action.value };
-//       const shadow = makeShadow(shadowState);
-//       const styles = { ...state.styles };
-//       return {
-//         ...state,
-//         shadow: { ...shadowState },
-//         styles: { ...styles, shadow },
-//       };
-//     }
-//     case 'wght':
-//     case 'slnt':
-//     case 'ital':
-//     case 'wdth':
-//     case 'CASL':
-//     case 'CRSV':
-//     case 'MONO':
-//     case 'BLDA':
-//     case 'BLDB':
-//     case 'SKLA':
-//     case 'SKLB':
-//     case 'SKLD':
-//     case 'TRMA':
-//     case 'TRMB':
-//     case 'TRMC':
-//     case 'TRMD':
-//     case 'TRME':
-//     case 'TRMF':
-//     case 'TRMG':
-//     case 'TRMK':
-//     case 'TRML':
-//     case 'WMX2': {
-//       const fontFamily = state.fontFamily;
-//       const currentFont = { ...state.fonts[fontFamily] };
-//       const { currentSettings, initialSettings } = currentFont;
-//       const updatedSettings = { ...currentSettings, [action.type]: action.value };
-//       const fontVariationSettings = parseFontSettings(updatedSettings);
-//       return {
-//         ...state,
-//         fonts: {
-//           ...state.fonts,
-//           [fontFamily]: {
-//             initialSettings,
-//             currentSettings: updatedSettings,
-//           },
-//         },
-//         styles: {
-//           ...state.styles,
-//           fontVariationSettings,
-//         },
-//       };
-//     }
-//     case 'fontFamily':
-//     case 'fontSize':
-//     case 'strokeWidth':
-//     case 'strokeColor':
-//     case 'letterSpacing': {
-//       const styles = { ...state.styles };
-//       return { ...state, styles: { ...styles, [action.type]: action.value } };
-//     }
-//   }
-// };
 
 const fancyTextReducer = (state, action) => {
   switch (action.type) {
@@ -212,7 +129,6 @@ const fancyTextReducer = (state, action) => {
     case 'GRADIENT_MIDPOINT':
     case 'GRADIENT_BLEND': {
       const type = snakeToCamel(action.type);
-      console.log(type);
       const gradientState = { ...state.gradient, [type]: action.value };
       const gradient = makeGradient(gradientState);
       const styles = { ...state.styles };
@@ -301,181 +217,51 @@ const fancyTextReducer = (state, action) => {
         },
       };
     }
+    case 'help':
+    case 'code':
+    case 'reset': {
+      return { ...state, [action.type]: action.value };
+    }
+    case 'textContent': {
+      return { ...state, textContent: action.value };
+    }
   }
 };
 
 export default function Page() {
   const [state, dispatch] = useReducer(fancyTextReducer, initialState);
+  const ref = useRef();
+  const [view, setView] = useState('main');
 
   const onChange = (e) => {
     const type = toSnakeUpperCase(e.target.name);
     dispatch({ type, value: e.target.value });
   };
 
-  return (
-    <>
-      <FontControls onChange={onChange} state={state} dispatch={dispatch} />
-      <Main style={{ '--controlWidth': 320 + 'px' }}>
-        <MainView state={state}>{state.textContent}</MainView>
-
-        {/* <AnimatePresence exitBeforeEnter>
-          {state.help ? (
-            <HelpView key={state.help} />
-          ) : state.code ? (
-            <CodeView key={state.code} styles={state} />
-          ) : (
-            <MainView state={state}>{state.textContent}</MainView>
-          )}
-        </AnimatePresence> */}
-      </Main>
-    </>
-  );
-}
-const Main = styled.div`
-  position: absolute;
-  top: var(--header-height);
-  left: var(--controlWidth);
-  right: 0;
-  bottom: var(--footer-height);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-x: hidden;
-`;
-
-const NoScript = styled.noscript`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: -1;
-  display: grid;
-  place-items: center;
-  font-size: var(--size52);
-  font-family: recursive;
-  font-variation-settings: 'wght' 800, 'slnt' -6, 'CRSV' 0, 'CASL' 0, 'MONO' 0;
-  text-align: center;
-`;
-
-/*
-
-import styled from 'styled-components';
-import { useState, useReducer, useEffect, useRef } from 'react';
-import {
-  fonts,
-  gradientDefault,
-  shadowDefault,
-  textDefault,
-  buttonDefault,
-} from '@constants/fancyTextGenerator';
-
-import { FontControls } from '@components/Controls/FontControls';
-
-import {
-  fontReducer,
-  gradientReducer,
-  shadowReducer,
-  initializeFontState,
-  textReducer,
-  buttonReducer,
-} from '@utils/reducers';
-
-import { MainView, HelpView, CodeView } from 'views/FancyTextGenerator';
-
-import { AnimatePresence } from 'framer-motion';
-import { parseFontSettings } from '@utils/helpers';
-import FancyTitle from '@components/FancyTitle';
-
-export default function Page() {
-  const initialFontState = initializeFontState(fonts);
-  const [font, dispatch] = useReducer(fontReducer, initialFontState);
-  const [gradient, gradientDispatch] = useReducer(gradientReducer, gradientDefault);
-  const [shadow, shadowDispatch] = useReducer(shadowReducer, shadowDefault);
-  const [show, buttonDispatch] = useReducer(buttonReducer, buttonDefault);
-  const [text, textDispatch] = useReducer(textReducer, textDefault);
-  const [controlWidth, setControlWidth] = useState(0);
-  const controlRef = useRef();
-  const [styles, setStyles] = useState({});
-
-  // useEffect(() => {
-  //   if (show.reset) {
-  //     const { current, settings } = font.savedStates.find((savedState) => {
-  //       return savedState.name === font.fontName;
-  //     });
-
-  //     font.css = parseFontSettings(settings);
-
-  //     console.log(current, settings);
-  //   }
-  // }, [show.reset]);
-
   useEffect(() => {
-    // font.find(font => font.f)
-    setStyles({
-      initial: font.initialCss,
-      current: font.currentCss,
-      gradient: gradient.css,
-      shadow: shadow.css,
-      letterSpacing: `${text.letterSpacing}em`,
-      fontSize: `${text.fontSize}px`,
-      strokeWidth: `${text.strokeWidth}em`,
-      strokeColor: `${text.strokeColor}`,
-      fontSettings: font.css,
-      fontFamily: font.fontName,
-    });
-  }, [gradient, shadow, font, text]);
-
-  useEffect(() => {
-    const { width } = controlRef.current.getBoundingClientRect();
-    // console.log(width);
-    setControlWidth(width);
-  }, []);
-
-  const onChange = (e) => {
-    const reducerType = e.target.name.slice(0, e.target.name.indexOf(' '));
-    const actionType = e.target.name.toUpperCase().split(' ').slice(1).join('_');
-
-    const callback =
-      reducerType === 'gradient'
-        ? gradientDispatch
-        : reducerType === 'shadow'
-        ? shadowDispatch
-        : reducerType === 'text'
-        ? textDispatch
-        : dispatch;
-
-    callback({ type: actionType, value: e.target.value });
-  };
-
-  const onClick = (e) => {
-    const name = e.target.name;
-    buttonDispatch({ type: name.toUpperCase(), value: !show[name] });
-  };
+    if (state.help) {
+      setView('help');
+    }
+    else if (state.code) {
+      setView('code');
+    }
+    else {
+      setView('main');
+    }
+  }, [state.help, state.code]);
 
   return (
     <>
-      <FontControls
-        ref={controlRef}
-        dispatch={dispatch}
-        onChange={onChange}
-        onClick={onClick}
-        setControlWidth={setControlWidth}
-        font={font}
-        gradient={gradient}
-        shadow={shadow}
-        text={text}
-        show={show}
-      />
+      <FontControls ref={ref} onChange={onChange} state={state} dispatch={dispatch} />
       <Main style={{ '--controlWidth': 320 + 'px' }}>
         <AnimatePresence exitBeforeEnter>
-          {show.help ? (
-            <HelpView key={show.help} />
-          ) : show.code ? (
-            <CodeView key={show.code} styles={styles} />
+          {state.help ? (
+            <HelpView state={state} key={state.help} />
+          ) : state.code ? (
+            <CodeView key={state.code} styles={state.styles} />
           ) : (
-            <MainView styles={styles} show={show}>
-              {text.content}
+            <MainView key={!state.code && !state.help} state={state}>
+              {state.textContent}
             </MainView>
           )}
         </AnimatePresence>
@@ -509,157 +295,3 @@ const NoScript = styled.noscript`
   font-variation-settings: 'wght' 800, 'slnt' -6, 'CRSV' 0, 'CASL' 0, 'MONO' 0;
   text-align: center;
 `;
-
-// import styled from 'styled-components';
-// import { useState, useReducer, useEffect, useRef } from 'react';
-// import {
-//   fonts,
-//   gradientDefault,
-//   shadowDefault,
-//   textDefault,
-//   buttonDefault,
-//   fancyTextInitialState,
-// } from '@constants/fancyTextGenerator';
-
-// import { FontControls } from '@components/Controls/FontControls';
-
-// import {
-//   fontReducer,
-//   gradientReducer,
-//   shadowReducer,
-//   initializeFontState,
-//   textReducer,
-//   buttonReducer,
-//   fancyTextReducer,
-// } from '@utils/reducers';
-
-// import { MainView, HelpView, CodeView } from 'views/FancyTextGenerator';
-
-// import { AnimatePresence } from 'framer-motion';
-// import { parseFontSettings } from '@utils/helpers';
-
-// export default function Page() {
-//   // const initialFontState = initializeFontState(fonts);
-//   // const [font, fontDispatch] = useReducer(fontReducer, initialFontState);
-//   // const [gradient, gradientDispatch] = useReducer(gradientReducer, gradientDefault);
-//   // const [shadow, shadowDispatch] = useReducer(shadowReducer, shadowDefault);
-//   // const [show, buttonDispatch] = useReducer(buttonReducer, buttonDefault);
-//   // const [text, textDispatch] = useReducer(textReducer, textDefault);
-//   const [state, dispatch] = useReducer(fancyTextReducer, fancyTextInitialState);
-
-//   const [controlWidth, setControlWidth] = useState(0);
-
-//   const controlRef = useRef();
-
-//   useEffect(() => {
-//     const { width } = controlRef.current.getBoundingClientRect();
-//     // console.log(width);
-//     setControlWidth(width);
-//   }, []);
-
-//   // useEffect(() => {
-//   //   console.log(state);
-//   // }, [state]);
-
-//   // const onChange = (e) => {
-//   //   const reducerType = e.target.name.slice(0, e.target.name.indexOf(' '));
-//   //   const actionType = e.target.name.toUpperCase().split(' ').slice(1).join('_');
-
-//   //   const callback =
-//   //     reducerType === 'gradient'
-//   //       ? gradientDispatch
-//   //       : reducerType === 'shadow'
-//   //       ? shadowDispatch
-//   //       : reducerType === 'text'
-//   //       ? textDispatch
-//   //       : dispatch;
-
-//   //   callback({ type: actionType, value: e.target.value });
-//   // };
-
-//   const onChange = (e) => {
-//     // const type = e.target.name.toUpperCase().split(' ').join('_');
-//     const [actionType, actionProperty] = e.target.name
-//       .split(' ')
-//       .map((word) => word.replace('-', '_').toUpperCase());
-
-//     dispatch({ type: actionType, property: actionProperty, value: e.target.value });
-//     // console.log(t, e.target.value);
-//     // dispatch({ type, value: e.target.value });
-//   };
-
-//   const onClick = (e) => {
-//     const name = e.target.name;
-//     dispatch({ type: name.toUpperCase(), value: !state[name] });
-//   };
-
-//   // const onClick = (e) => {
-//   //   const name = e.target.name;
-//   //   buttonDispatch({ type: name.toUpperCase(), value: !show[name] });
-//   // };
-
-//   return (
-//     <>
-//       <FontControls
-//         ref={controlRef}
-//         dispatch={dispatch}
-//         onChange={onChange}
-//         // onClick={onClick}
-//         // setControlWidth={setControlWidth}
-//         // font={font}
-//         // show={show}
-//         state={state}
-//       />
-//       <Main style={{ '--controlWidth': 320 + 'px' }}>
-//         <AnimatePresence exitBeforeEnter>
-//           {state.help ? (
-//             <HelpView key={state.help} />
-//           ) : state.code ? (
-//             <CodeView key={state.code} styles={{ ...state.css }} />
-//           ) : (
-//             <MainView
-//               // font={font}
-//               // gradient={gradient.css}
-//               // shadow={shadow.css}
-//               // text={text}
-//               // show={show}
-//               state={state}
-//               // dispatch={textDispatch}
-//             >
-//               blah blah blah
-//             </MainView>
-//           )}
-//         </AnimatePresence>
-//       </Main>
-//     </>
-//   );
-// }
-// const Main = styled.div`
-//   position: absolute;
-//   top: var(--header-height);
-//   left: var(--controlWidth);
-//   right: 0;
-//   bottom: var(--footer-height);
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   overflow-x: hidden;
-// `;
-
-// const NoScript = styled.noscript`
-//   position: absolute;
-//   width: 100%;
-//   height: 100%;
-//   top: 0;
-//   left: 0;
-//   z-index: -1;
-//   display: grid;
-//   place-items: center;
-//   font-size: var(--size52);
-//   font-family: recursive;
-//   font-variation-settings: 'wght' 800, 'slnt' -6, 'CRSV' 0, 'CASL' 0, 'MONO' 0;
-//   text-align: center;
-// `;
-
-
-*/

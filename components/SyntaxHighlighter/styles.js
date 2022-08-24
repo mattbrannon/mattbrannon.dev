@@ -13,8 +13,8 @@ export const Pre = styled.pre`
   /* overflow: scroll; */
 
   & .token-line {
-    line-height: 1.3em;
-    height: 1.3em;
+    line-height: 1.5em;
+    height: 1.5em;
   }
   margin: 0;
 `;

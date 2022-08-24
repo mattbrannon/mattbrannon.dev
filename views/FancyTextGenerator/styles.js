@@ -157,17 +157,6 @@ export const Span = styled(motion.span)`
   background-image: var(--gradient);
   letter-spacing: var(--letterSpacing);
 
-  /* white-space: nowrap; */
-
-  &:before {
-    content: '${({ children }) => children}';
-    position: absolute;
-    z-index: -1;
-
-    text-shadow: var(--shadow);
-    -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
-  }
-
   &:after {
     content: '${(p) => p.children}';
     padding: 24px;
@@ -206,12 +195,35 @@ export const FancyGradient = ({ ...props }) => {
   };
 
   return (
-    <>
+    <div style={{ maxWidth: '1000%', margin: '0 auto' }}>
       <FancyInput onChange={handleChange} />
       <Span {...props}>{text}</Span>
-    </>
+    </div>
   );
 };
+
+const Editable = styled.div.attrs(() => {
+  return { contentEditable: true };
+})`
+  font-size: var(--fontSize);
+  padding: 16px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  letter-spacing: var(--letterSpacing);
+  text-align: center;
+  /* font-weight: 900; */
+  font-family: var(--fontFamily);
+  font-variation-settings: var(--fontSettings);
+  caret-color: red;
+  color: red;
+  /* color: transparent; */
+  /* outline: none; */
+  border: none;
+`;
 
 export const FancyHeading = styled.span`
   background-clip: text;
@@ -247,20 +259,18 @@ export const FancyInput = styled.input.attrs(() => {
   font-size: var(--fontSize);
   padding: 16px;
   position: absolute;
-  top: 0;
+  /* top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 0; */
   background: transparent;
   letter-spacing: var(--letterSpacing);
   text-align: center;
-  /* font-weight: 900; */
   font-family: var(--fontFamily);
   font-variation-settings: var(--fontSettings);
-  caret-color: red;
-  color: red;
-  /* color: transparent; */
-  /* outline: none; */
+  caret-color: white;
+  color: transparent;
+  outline: none;
   border: none;
 `;
 
@@ -330,9 +340,9 @@ export const FancyInput = styled.input.attrs(() => {
 
 // /// MainView
 
-// // export const FancyText = ({ children, ...props }) => {
-// //   return <FancyHeading>{children}</FancyHeading>;
-// // };
+export const FancyText = ({ children, ...props }) => {
+  return <FancyHeading {...props}>{children}</FancyHeading>;
+};
 
 // export const FancyText = styled.h1`
 //   background-clip: text;

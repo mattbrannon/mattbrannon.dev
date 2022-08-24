@@ -2,18 +2,35 @@ import styled from 'styled-components';
 import { NormalButton, FancyButton } from '@components/Button';
 
 export const Buttons = ({ state, ...props }) => {
-  const showCodeText = props.show.code ? 'Back to Editor' : 'Get Css';
-  const showHelpText = props.show.help ? 'Back to Editor' : 'Help';
+  // const showCodeText = props.show.code ? 'Back to Editor' : 'Get Css';
+  // const showHelpText = props.show.help ? 'Back to Editor' : 'Help';
+
+  const handleToggle = (e) => {
+    const type = e.target.name;
+    const value = !state[type];
+    if (type === 'help') {
+      props.dispatch({ type, value });
+      props.dispatch({ type: 'code', value: false });
+    }
+    else if (type === 'code') {
+      props.dispatch({ type, value });
+      props.dispatch({ type: 'help', value: false });
+    }
+  };
 
   return (
     <ButtonGroup>
-      <NormalButton name="help" {...props}>
-        {showHelpText}
+      <NormalButton onClick={handleToggle} name="help" {...props}>
+        {state.help ? 'Back to Editor' : 'Help'}
       </NormalButton>
-      <NormalButton name="code" {...props}>
-        {showCodeText}
+      <NormalButton onClick={handleToggle} name="code" {...props}>
+        {state.code ? 'Back to Editor' : 'Get Css'}
       </NormalButton>
-      <FancyButton name="reset" {...props}>
+      <FancyButton
+        onClick={() => props.dispatch({ type: 'reset', value: !state.reset })}
+        name="reset"
+        {...props}
+      >
         Reset
       </FancyButton>
     </ButtonGroup>

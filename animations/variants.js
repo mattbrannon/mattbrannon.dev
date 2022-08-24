@@ -28,7 +28,8 @@ export const shadow = makeShadow({
 });
 
 export const textGeneratorVariant = {
-  hidden: ({ ...state }) => {
+  hidden: ({ state, ...props }) => {
+    console.log(state);
     const fontVariationSettings = parseFontSettings(
       state.fonts[state.styles.fontFamily].initialSettings
     );
@@ -44,7 +45,7 @@ export const textGeneratorVariant = {
       '--letterSpacing': 0,
     };
   },
-  show: ({ duration, ...state }) => {
+  show: ({ state, duration, ...props }) => {
     return {
       '--fontSize': parseInt(state.styles.fontSize) + 'px',
       '--fontFamily': state.styles.fontFamily,

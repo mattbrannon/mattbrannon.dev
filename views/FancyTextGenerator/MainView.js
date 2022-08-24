@@ -35,16 +35,18 @@ export const FancyAnimatedGradient = ({ state, children, ...props }) => {
           '--letterSpacing': state.styles.letterSpacing + 'em',
         }}
       >
-        <FancyGradient
+        <Span
           initial="hidden"
           animate="show"
           exit="close"
           variants={textGeneratorVariant}
           onAnimationStart={handleAnimationStart}
-          custom={{ duration, ...state }}
+          custom={{ duration, state }}
+          state={state}
+          {...props}
         >
           Click to edit
-        </FancyGradient>
+        </Span>
       </motion.div>
     </AnimatePresence>
   );
