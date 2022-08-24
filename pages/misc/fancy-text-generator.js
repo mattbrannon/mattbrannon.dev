@@ -254,16 +254,21 @@ export default function Page() {
     <>
       <FontControls ref={ref} onChange={onChange} state={state} dispatch={dispatch} />
       <Main style={{ '--controlWidth': 320 + 'px' }}>
-        <AnimatePresence exitBeforeEnter>
-          {state.help ? (
-            <HelpView state={state} key={state.help} />
-          ) : state.code ? (
-            <CodeView key={state.code} styles={state.styles} />
-          ) : (
-            <MainView key={!state.code && !state.help} state={state}>
-              {state.textContent}
-            </MainView>
-          )}
+        <AnimatePresence>
+          <motion.div
+            key={view}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {view === 'help' ? (
+              <HelpView state={state} />
+            ) : view === 'code' ? (
+              <CodeView styles={state.styles} />
+            ) : (
+              <MainView state={state}>{state.textContent}</MainView>
+            )}
+          </motion.div>
         </AnimatePresence>
       </Main>
     </>

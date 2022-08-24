@@ -103,16 +103,8 @@ const getCss = ({ styles }) => {
 export const CodeView = ({ styles }) => {
   console.log(styles);
   return (
-    <AnimatePresence exitBeforeEnter>
-      <ViewWrapper
-        initial={{ width: 0 }}
-        animate={{ width: '100%' }}
-        exit={{ width: 0, transition: { duration: 0.3 } }}
-        transition={{ duration: 0.8, ease: 'anticipate' }}
-        key={styles.fontFamily}
-      >
-        <Basic language="css" code={getCss({ styles })} />
-      </ViewWrapper>
-    </AnimatePresence>
+    <ViewWrapper>
+      <Basic language="css" code={getCss({ styles })} />
+    </ViewWrapper>
   );
 };
