@@ -21,6 +21,7 @@ const initialState = {
   code: false,
   reset: false,
   textContent: 'Blah blah blah',
+  applyToWords: false,
 
   shadow: {
     shadowColorStart: '#80e5ff',
@@ -224,6 +225,10 @@ const fancyTextReducer = (state, action) => {
     case 'TEXT_CONTENT': {
       return { ...state, textContent: action.value };
     }
+    case 'APPLY_TO_WORDS': {
+      return { ...state, applyToWords: action.value };
+    }
+
     case 'reset': {
       const { fontFamily, fontSize } = state.styles;
       const start = parseFontSettings(state.fonts[fontFamily].currentSettings);

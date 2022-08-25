@@ -75,7 +75,7 @@ export const textGeneratorVariant = {
       '--shadow': state.styles.shadow,
 
       transition: {
-        duration: 2,
+        // duration: 2,
         ease: 'linear',
       },
     };

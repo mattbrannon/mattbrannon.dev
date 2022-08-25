@@ -152,14 +152,14 @@ export const Span = styled(motion.span)`
   -webkit-text-fill-color: transparent;
   color: transparent;
 
-  padding: 24px;
+  padding: 0.125em 0.25em 0.125em 0.25em;
 
   background-image: var(--gradient);
   letter-spacing: var(--letterSpacing);
 
   &:after {
     content: '${(p) => p.children}';
-    padding: 24px;
+    padding: 0.125em 0.25em 0.125em 0.25em;
 
     position: absolute;
     top: 0;
@@ -168,6 +168,27 @@ export const Span = styled(motion.span)`
     text-shadow: var(--shadow);
     -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
   }
+`;
+
+export const WordSpan = styled(Span)`
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 0px;
+  padding-right: 0px;
+
+  &:after {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  /* &:nth-of-type(1) {
+    padding-left: 42px;
+  }
+  &:nth-of-type(1):after {
+    padding-left: 42px;
+  } */
 `;
 
 // const Heading = styled(H1)`
@@ -187,64 +208,74 @@ const Word = ({ children, ...props }) => {
 };
 
 export const FancyGradient = ({ ...props }) => {
-  const [text, setText] = useState(props.state.textContent);
-
-  const handleChange = (e) => {
+  const onChange = (e) => {
     const text = e.target.value.replace("'", '`');
     props.dispatch({ type: 'TEXT_CONTENT', value: text });
   };
 
-  const words = props.state.textContent.split(' ');
+  const Gradient = props.state.applyToWords ? WordGradient : PhraseGradient;
+
   return (
     <div style={{ maxWidth: '100%', margin: '0 auto' }}>
-      <FancyInput value={props.state.textContent} onChange={handleChange} />
-      {words.map((word, i) => (
-        <WordSpan {...props} key={i}>
-          {word}&nbsp;
-        </WordSpan>
-      ))}
+      <Gradient onChange={onChange} {...props} />
     </div>
   );
-
-  // return (
-  //   <div style={{ maxWidth: '100%', margin: '0 auto' }}>
-  //     <FancyInput value={props.state.textContent} onChange={handleChange} />
-  //     <Span {...props}>{props.state.textContent}</Span>
-  //   </div>
-  // );
 };
 
-export const WordSpan = styled(motion.span)`
-  font-family: var(--fontFamily);
-  font-variation-settings: var(--fontSettings);
-  font-size: var(--fontSize);
-  position: relative;
-  display: inline-block;
-  /* width: max-content; */
+const PhraseGradient = ({ ...props }) => {
+  return (
+    <>
+      <FancyInput {...props} value={props.state.textContent} />
+      <Span {...props}>{props.state.textContent}</Span>
+    </>
+  );
+};
 
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+const WordGradient = ({ ...props }) => {
+  const words = props.state.textContent.split(' ');
+  return (
+    <>
+      <FancyInput {...props} value={props.state.textContent} />
+      {words.map((word, i) => (
+        <Span {...props} key={i}>
+          {word}&nbsp;
+        </Span>
+      ))}
+    </>
+  );
+};
 
-  background-image: var(--gradient);
-  letter-spacing: var(--letterSpacing);
+// export const WordSpan = styled(motion.span)`
+//   font-family: var(--fontFamily);
+//   font-variation-settings: var(--fontSettings);
+//   font-size: var(--fontSize);
+//   position: relative;
+//   display: inline-block;
+//   /* width: max-content; */
 
-  padding-bottom: 4px;
+//   -webkit-background-clip: text;
+//   background-clip: text;
+//   -webkit-text-fill-color: transparent;
+//   color: transparent;
 
-  &:after {
-    padding-bottom: 4px;
+//   background-image: var(--gradient);
+//   letter-spacing: var(--letterSpacing);
 
-    content: '${(p) => p.children}';
+//   padding-bottom: 4px;
 
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    text-shadow: var(--shadow);
-    -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
-  }
-`;
+//   &:after {
+//     padding-bottom: 4px;
+
+//     content: '${(p) => p.children}';
+
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     z-index: -1;
+//     text-shadow: var(--shadow);
+//     -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
+//   }
+// `;
 
 const Editable = styled.div.attrs(() => {
   return { contentEditable: true };
@@ -314,7 +345,7 @@ export const FancyInput = styled.input.attrs(() => {
   font-variation-settings: var(--fontSettings);
   caret-color: transparent;
   color: transparent;
-  /* outline: none; */
+  outline: none;
   border: none;
   z-index: 1000;
 `;
@@ -419,3 +450,37 @@ export const FancyText = ({ children, ...props }) => {
 //     -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
 //   }
 // `;
+
+// export const FancyGradient = ({ ...props }) => {
+//   const onChange = (e) => {
+//     const text = e.target.value.replace("'", '`');
+//     props.dispatch({ type: 'TEXT_CONTENT', value: text });
+//   };
+
+//   const Gradient = props.state.applyToWords ? WordGradient : PhraseGradient;
+
+//   return (
+//     <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+//       <Gradient onChange={onChange} {...props} />
+//     </div>
+//   );
+
+//   // const words = props.state.textContent.split(' ');
+//   // return (
+//   //   <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+//   //     <FancyInput value={props.state.textContent} onChange={onChange} />
+//   //     {words.map((word, i) => (
+//   //       <WordSpan {...props} key={i}>
+//   //         {word}&nbsp;
+//   //       </WordSpan>
+//   //     ))}
+//   //   </div>
+//   // );
+
+//   // return (
+//   //   <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+//   //     <FancyInput value={props.state.textContent} onChange={handleChange} />
+//   //     <Span {...props}>{props.state.textContent}</Span>
+//   //   </div>
+//   // );
+// };
