@@ -243,8 +243,6 @@ a function that makes other functions.
 Here's another example of a function factory. Suppose you're doing a bunch of math operations. Maybe
 you're brushing up on your geometry equations. Remember the pythagorean theorem?
 
-<!-- <Math>a^2 + b^2 = c^2</Math> -->
-
 ```js
 const a = 3
 const b = 4
@@ -504,7 +502,7 @@ level of security we wouldn't have otherwise.
 To illustrate what I mean, let's look at a simpler version of the same concept.
 
 ```js
-var player = {
+const player = {
   health: 100,
   lives: 3,
   damage: function (amount) {
@@ -542,7 +540,7 @@ But with closures, the only way to access those properties are through the metho
 
 ```js
 function makePlayer() {
-  var status = { lives: 3, health: 100 }
+  const status = { lives: 3, health: 100 }
   return {
     damage: function (amount) {
       status.health -= Math.abs(amount)

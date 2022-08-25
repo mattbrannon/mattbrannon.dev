@@ -27,7 +27,7 @@ export const Buttons = ({ state, ...props }) => {
         {state.code ? 'Back to Editor' : 'Get Css'}
       </NormalButton>
       <FancyButton
-        onClick={() => props.dispatch({ type: 'reset', value: !state.reset })}
+        onClick={() => props.dispatch({ type: 'reset', value: true })}
         name="reset"
         {...props}
       >

@@ -218,12 +218,21 @@ const fancyTextReducer = (state, action) => {
       };
     }
     case 'help':
-    case 'code':
-    case 'reset': {
+    case 'code': {
       return { ...state, [action.type]: action.value };
     }
-    case 'textContent': {
+    case 'TEXT_CONTENT': {
       return { ...state, textContent: action.value };
+    }
+    case 'reset': {
+      const { fontFamily, fontSize } = state.styles;
+      const start = parseFontSettings(state.fonts[fontFamily].currentSettings);
+      const end = parseFontSettings(state.fonts[fontFamily].initialSettings);
+
+      return {
+        ...initialState,
+        styles: { ...initialState.styles, fontFamily, start, end },
+      };
     }
   }
 };
@@ -266,7 +275,7 @@ export default function Page() {
             ) : view === 'code' ? (
               <CodeView styles={state.styles} />
             ) : (
-              <MainView state={state}>{state.textContent}</MainView>
+              <MainView dispatch={dispatch} state={state} />
             )}
           </motion.div>
         </AnimatePresence>

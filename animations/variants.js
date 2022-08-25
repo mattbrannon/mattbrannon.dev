@@ -29,7 +29,7 @@ export const shadow = makeShadow({
 
 export const textGeneratorVariant = {
   hidden: ({ state, ...props }) => {
-    console.log(state);
+    // console.log(state);
     const fontVariationSettings = parseFontSettings(
       state.fonts[state.styles.fontFamily].initialSettings
     );
@@ -49,7 +49,7 @@ export const textGeneratorVariant = {
     return {
       '--fontSize': parseInt(state.styles.fontSize) + 'px',
       '--fontFamily': state.styles.fontFamily,
-      '--fontSettings': state.styles.fontVariationSettings,
+      '--fontSettings': state.styles.end || state.styles.fontVariationSettings,
       '--strokeWidth': state.styles.strokeWidth + 'em',
       '--strokeColor': state.styles.strokeColor,
       '--letterSpacing': state.styles.letterSpacing + 'em',
@@ -58,6 +58,24 @@ export const textGeneratorVariant = {
 
       transition: {
         duration: duration,
+        ease: 'linear',
+      },
+    };
+  },
+  close: ({ state }) => {
+    console.log(state);
+    return {
+      '--fontSize': parseInt(state.styles.fontSize) + 'px',
+      '--fontFamily': state.styles.fontFamily,
+      '--fontSettings': state.styles.start,
+      '--strokeWidth': state.styles.strokeWidth + 'em',
+      '--strokeColor': state.styles.strokeColor,
+      '--letterSpacing': state.styles.letterSpacing + 'em',
+      '--gradient': state.styles.gradient,
+      '--shadow': state.styles.shadow,
+
+      transition: {
+        duration: 2,
         ease: 'linear',
       },
     };

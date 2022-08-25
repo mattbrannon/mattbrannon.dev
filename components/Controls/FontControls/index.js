@@ -54,14 +54,8 @@ function Controls({ ...props }, ref) {
 
       <Group>
         <SectionHeading>Outline</SectionHeading>
-        <Color {...props} name="stroke color" defaultValue={styles.strokeColor} />
-        <Range
-          {...props}
-          name="stroke width"
-          defaultValue={styles.strokeWidth}
-          step={0.001}
-          max={0.25}
-        />
+        <Color {...props} name="stroke color" value={styles.strokeColor} />
+        <Range {...props} name="stroke width" value={styles.strokeWidth} step={0.001} max={0.25} />
       </Group>
 
       <Group>
@@ -69,19 +63,12 @@ function Controls({ ...props }, ref) {
         <Range
           {...props}
           name="letter spacing"
-          defaultValue={styles.letterSpacing}
+          value={styles.letterSpacing}
           step={0.001}
           min={-0.25}
           max={0.25}
         />
-        <Range
-          {...props}
-          name="font size"
-          defaultValue={styles.fontSize}
-          step={1}
-          min={16}
-          max={160}
-        />
+        <Range {...props} name="font size" value={styles.fontSize} step={1} min={16} max={160} />
       </Group>
       <Group>
         <Buttons {...props} />

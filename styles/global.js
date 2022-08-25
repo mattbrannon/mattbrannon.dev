@@ -84,6 +84,7 @@ export const GlobalStyle = createGlobalStyle`
   --visible: polygon(-20% -20%, 100% -20%, 100% 100%, -20% 100%);
 
   --max-page-width: 80ch;
+  /* --max-page-width: 1100px; */
   --unit: calc((30 / 100) * 1vw);
   --cube-height: calc(50 * var(--unit));
   --cube-width: calc(50 * var(--unit));

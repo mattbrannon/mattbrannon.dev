@@ -12,8 +12,6 @@
     "sourceType": "module"
   },
   "settings": {
-    "mdx/code-blocks": false,
-    "mdx/language-mapper": {},
     "react": {
       "version": "detect"
     }

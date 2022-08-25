@@ -187,20 +187,64 @@ const Word = ({ children, ...props }) => {
 };
 
 export const FancyGradient = ({ ...props }) => {
-  const [text, setText] = useState(props.children);
+  const [text, setText] = useState(props.state.textContent);
 
   const handleChange = (e) => {
-    const text = e.target.value.replace(/\s+/g, '\u{00a0}');
-    setText(text);
+    const text = e.target.value.replace("'", '`');
+    props.dispatch({ type: 'TEXT_CONTENT', value: text });
   };
 
+  const words = props.state.textContent.split(' ');
   return (
-    <div style={{ maxWidth: '1000%', margin: '0 auto' }}>
-      <FancyInput onChange={handleChange} />
-      <Span {...props}>{text}</Span>
+    <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+      <FancyInput value={props.state.textContent} onChange={handleChange} />
+      {words.map((word, i) => (
+        <WordSpan {...props} key={i}>
+          {word}&nbsp;
+        </WordSpan>
+      ))}
     </div>
   );
+
+  // return (
+  //   <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+  //     <FancyInput value={props.state.textContent} onChange={handleChange} />
+  //     <Span {...props}>{props.state.textContent}</Span>
+  //   </div>
+  // );
 };
+
+export const WordSpan = styled(motion.span)`
+  font-family: var(--fontFamily);
+  font-variation-settings: var(--fontSettings);
+  font-size: var(--fontSize);
+  position: relative;
+  display: inline-block;
+  /* width: max-content; */
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  background-image: var(--gradient);
+  letter-spacing: var(--letterSpacing);
+
+  padding-bottom: 4px;
+
+  &:after {
+    padding-bottom: 4px;
+
+    content: '${(p) => p.children}';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    text-shadow: var(--shadow);
+    -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
+  }
+`;
 
 const Editable = styled.div.attrs(() => {
   return { contentEditable: true };
@@ -253,25 +297,26 @@ export const FancyHeading = styled.span`
 
 export const FancyInput = styled.input.attrs(() => {
   return {
-    spellcheck: false,
+    spellCheck: false,
   };
 })`
   font-size: var(--fontSize);
-  padding: 16px;
+  padding: 48px;
   position: absolute;
-  /* top: 0;
+  top: 0;
   left: 0;
   right: 0;
-  bottom: 0; */
+  bottom: 0;
   background: transparent;
   letter-spacing: var(--letterSpacing);
   text-align: center;
   font-family: var(--fontFamily);
   font-variation-settings: var(--fontSettings);
-  caret-color: white;
+  caret-color: transparent;
   color: transparent;
-  outline: none;
+  /* outline: none; */
   border: none;
+  z-index: 1000;
 `;
 
 // import styled from 'styled-components';

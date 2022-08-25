@@ -6,9 +6,13 @@
   "editor.formatOnSaveMode": "file",
   "files.autoSave": "onFocusChange",
   "editor.wordWrap": "on",
+  "eslint.run": "onSave",
+  "eslint.codeActionsOnSave.mode": "problems",
   "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": false,
     "source.organizeImports": false
   },
-  "eslint.run": "onSave",
-  "eslint.codeActionsOnSave.mode": "problems"
+  "[mdx]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

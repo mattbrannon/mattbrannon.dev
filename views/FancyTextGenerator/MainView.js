@@ -15,6 +15,13 @@ export const FancyAnimatedGradient = ({ state, children, ...props }) => {
     }
   };
 
+  const handleAnimationComplete = (name) => {
+    if (state.reset && name === 'show') {
+      props.dispatch({ type: 'reset', value: false });
+    }
+    console.log(name, 'complete');
+  };
+
   return (
     <AnimatePresence exitBeforeEnter>
       <motion.div
@@ -33,20 +40,20 @@ export const FancyAnimatedGradient = ({ state, children, ...props }) => {
           '--strokeWidth': state.styles.strokeWidth + 'em',
           '--strokeColor': state.styles.strokeColor,
           '--letterSpacing': state.styles.letterSpacing + 'em',
+          padding: 48,
         }}
       >
-        <Span
+        <FancyGradient
           initial="hidden"
           animate="show"
           exit="close"
           variants={textGeneratorVariant}
           onAnimationStart={handleAnimationStart}
+          onAnimationComplete={handleAnimationComplete}
           custom={{ duration, state }}
           state={state}
           {...props}
-        >
-          Click to edit
-        </Span>
+        />
       </motion.div>
     </AnimatePresence>
   );
