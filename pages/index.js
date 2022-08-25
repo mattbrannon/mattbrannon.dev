@@ -40,7 +40,7 @@ export default function HomePage() {
     <Container>
       <Head description="Personal website for Matt Brannon" title="Matt Brannon" />
       {!isMobile ? (
-        <TopRow style={{ '--marginTop': `${marginTop}px` }}>
+        <TopRow style={{ '--marginTop': `${marginTop}px`, alignSelf: 'center' }}>
           <TitleWrapper>
             <FancyTitle
               style={{
