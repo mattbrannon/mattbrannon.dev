@@ -15,6 +15,21 @@ export const Main = styled.div`
   overflow-x: hidden;
 `;
 
+export const NoScript = styled.noscript`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  display: grid;
+  place-items: center;
+  font-size: var(--size52);
+  font-family: recursive;
+  font-variation-settings: 'wght' 800, 'slnt' -6, 'CRSV' 0, 'CASL' 0, 'MONO' 0;
+  text-align: center;
+`;
+
 // HelpView
 export const Container = styled.div`
   background: var(--help-background);
