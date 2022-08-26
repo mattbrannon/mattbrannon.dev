@@ -35,6 +35,7 @@ const NativeSelect = styled.select`
   height: 100%;
   opacity: 0;
   margin-left: 10px;
+  margin-top: 10px;
   /* Allow the select to span the full height in Safari */
   -webkit-appearance: none;
 `;
@@ -53,8 +54,6 @@ const FancySelect = styled.div`
   justify-content: space-between;
 
   ${NativeSelect}:focus + & {
-    /* outline: 1px dotted #212121; */
-    /* outline: 5px auto -webkit-focus-ring-color; */
     outline-offset: 2px;
     outline: 2px solid white;
     /* outline-offset: 4px; */
@@ -62,6 +61,7 @@ const FancySelect = styled.div`
 
   ${NativeSelect}:hover + & {
     color: white;
+    background: var(--pink-medium-dark);
   }
 `;
 
