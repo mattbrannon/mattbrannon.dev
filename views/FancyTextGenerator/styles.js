@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { m as motion, useMotionValue } from 'framer-motion';
-import { Children, useState, useEffect } from 'react';
+import { Children, useState, useEffect, useRef } from 'react';
 import FancyTitle from '@components/FancyTitle';
 
 export const Main = styled.div`
@@ -145,21 +145,31 @@ export const Span = styled(motion.span)`
   font-size: var(--fontSize);
   position: relative;
   display: inline-block;
+
   /* width: max-content; */
 
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  padding-bottom: 0.2em;
+  padding-left: 0.44em;
+  margin-left: -0.44em;
+  margin-bottom: -0.2em;
+  /* padding-right: 0.1em; */
 
-  padding: 0.125em 0.25em 0.125em 0.25em;
+  /* padding: 0.125em 0.25em 0.125em 0.25em; */
 
   background-image: var(--gradient);
   letter-spacing: var(--letterSpacing);
 
   &:after {
     content: '${(p) => p.children}';
-    padding: 0.125em 0.25em 0.125em 0.25em;
+    /* padding: 0.125em 0.25em 0.125em 0.25em; */
+    padding-bottom: 0.2em;
+    padding-left: 0.44em;
+
+    /* padding-right: 0.1em; */
 
     position: absolute;
     top: 0;
@@ -209,14 +219,14 @@ const Word = ({ children, ...props }) => {
 
 export const FancyGradient = ({ ...props }) => {
   const onChange = (e) => {
-    const text = e.target.value.replace("'", '`');
+    const text = e.target.value.replace("'", '`').replace('\\', '');
     props.dispatch({ type: 'TEXT_CONTENT', value: text });
   };
 
   const Gradient = props.state.applyToWords ? WordGradient : PhraseGradient;
 
   return (
-    <div style={{ maxWidth: '100%', margin: '0 auto' }}>
+    <div>
       <Gradient onChange={onChange} {...props} />
     </div>
   );
@@ -236,11 +246,17 @@ const WordGradient = ({ ...props }) => {
   return (
     <>
       <FancyInput {...props} value={props.state.textContent} />
-      {words.map((word, i) => (
-        <Span {...props} key={i}>
-          {word}&nbsp;
-        </Span>
-      ))}
+      {words.map((word, i) =>
+        i === words.length - 1 ? (
+          <Span {...props} key={i}>
+            {word}
+          </Span>
+        ) : (
+          <Span {...props} key={i}>
+            {word}&nbsp;
+          </Span>
+        )
+      )}
     </>
   );
 };
@@ -338,6 +354,7 @@ export const FancyInput = styled.input.attrs(() => {
   left: 0;
   right: 0;
   bottom: 0;
+  height: 100%;
   background: transparent;
   letter-spacing: var(--letterSpacing);
   text-align: center;
@@ -345,7 +362,7 @@ export const FancyInput = styled.input.attrs(() => {
   font-variation-settings: var(--fontSettings);
   caret-color: transparent;
   color: transparent;
-  outline: none;
+  /* outline: none; */
   border: none;
   z-index: 1000;
 `;
