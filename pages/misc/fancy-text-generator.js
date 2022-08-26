@@ -26,15 +26,15 @@ const initialState = {
   shadow: {
     shadowColorStart: '#80e5ff',
     shadowColorEnd: '#110c1d',
-    shadowLayers: 30,
-    shadowGap: 3.9,
+    shadowLayers: 10,
+    shadowGap: 10,
     shadowBlur: 0,
     shadowOffsetX: -1,
-    shadowOffsetY: -0.5,
+    shadowOffsetY: -1,
   },
   gradient: {
-    gradientColorStart: '#6b257e',
-    gradientColorEnd: '#ff8fe7',
+    gradientColorStart: '#0c0066',
+    gradientColorEnd: '#ff00c8',
     gradientAngle: 0,
     gradientMidpoint: 50,
     gradientBlend: 50,
@@ -99,13 +99,13 @@ const initialState = {
   styles: {
     fontFamily: 'Recursive',
     fontSize: 144,
-    strokeWidth: 0.011,
-    strokeColor: '#f3ff99',
-    letterSpacing: -0.012,
+    strokeWidth: 0.015,
+    strokeColor: '#ffdd00',
+    letterSpacing: 0,
     fontVariationSettings: parseFontSettings({ wght: 1000, slnt: 0, CASL: 0, CRSV: 0, MONO: 0 }),
     gradient: makeGradient({
-      gradientColorStart: '#6b257e',
-      gradientColorEnd: '#ff8fe7',
+      gradientColorStart: '#0c0066',
+      gradientColorEnd: '#ff00c8',
       gradientAngle: 0,
       gradientMidpoint: 50,
       gradientBlend: 50,
@@ -113,11 +113,11 @@ const initialState = {
     shadow: makeShadow({
       shadowColorStart: '#80e5ff',
       shadowColorEnd: '#110c1d',
-      shadowLayers: 30,
-      shadowGap: 3.9,
+      shadowLayers: 10,
+      shadowGap: 10,
       shadowBlur: 0,
       shadowOffsetX: -1,
-      shadowOffsetY: -0.5,
+      shadowOffsetY: -1,
     }),
   },
 };
@@ -228,21 +228,57 @@ const fancyTextReducer = (state, action) => {
     case 'APPLY_TO_WORDS': {
       return { ...state, applyToWords: action.value };
     }
-
     case 'reset': {
-      const { fontFamily, fontSize } = state.styles;
-      const start = parseFontSettings(state.fonts[fontFamily].currentSettings);
-      const end = parseFontSettings(state.fonts[fontFamily].initialSettings);
+      const colorKeys = [
+        'gradientColorStart',
+        'gradientColorEnd',
+        'shadowColorStart',
+        'shadowColorEnd',
+        'textStrokeColor',
+      ];
+      // const initial = getInitialSettings(state.font).settings;
+      const initialSettings = state.fonts[state.styles.fontFamily].initialSettings;
+      // const settings = state.settings;
+
+      // for (const key in settings) {
+      //   settings[key] = initial[key];
+      // }
+
+      const newState = { ...initialState };
+      const gradientState = { ...initialState.gradient };
+      const shadowState = {
+        ...initialState.shadow,
+        shadowLayers: state.shadow.shadowLayers,
+        shadowGap: state.shadow.shadowGap,
+      };
+      const fontState = { ...initialState.fonts };
+
+      console.log(fontState[state.styles.fontFamily]);
+
+      const styleState = {
+        ...initialState.styles,
+        fontFamily: state.styles.fontFamily,
+        fontVariationSettings: parseFontSettings(
+          fontState[state.styles.fontFamily].currentSettings
+        ),
+        shadow: makeShadow(shadowState),
+      };
 
       return {
-        ...initialState,
-        styles: { ...initialState.styles, fontFamily, start, end },
+        ...newState,
+        reset: action.value,
+        applyToWords: state.applyToWords,
+        textContent: state.textContent,
+        gradient: gradientState,
+        shadow: shadowState,
+        fonts: fontState,
+        styles: styleState,
       };
     }
   }
 };
 
-export default function Page() {
+export default function Page({ ...props }) {
   const [state, dispatch] = useReducer(fancyTextReducer, initialState);
   const ref = useRef();
   const [view, setView] = useState('main');
@@ -267,7 +303,7 @@ export default function Page() {
   return (
     <>
       <FontControls ref={ref} onChange={onChange} state={state} dispatch={dispatch} />
-      <Main style={{ '--controlWidth': 320 + 'px' }}>
+      <Main style={{ '--controlWidth': 336 + 'px' }}>
         <AnimatePresence>
           <motion.div
             key={view}
@@ -280,7 +316,7 @@ export default function Page() {
             ) : view === 'code' ? (
               <CodeView styles={state.styles} />
             ) : (
-              <MainView dispatch={dispatch} state={state} />
+              <MainView {...props} dispatch={dispatch} state={state} />
             )}
           </motion.div>
         </AnimatePresence>
