@@ -22,7 +22,7 @@ function Controls({ ...props }, ref) {
 
       <Group>
         <SectionHeading>Gradient</SectionHeading>
-        {/* <Select
+        <Select
           value={applyToWords ? 'apply to words' : 'apply to phrase'}
           onChange={(e) =>
             props.dispatch({ type: 'APPLY_TO_WORDS', value: e.target.value === 'apply to words' })
@@ -31,7 +31,7 @@ function Controls({ ...props }, ref) {
           {['apply to words', 'apply to phrase'].map((choice, i) => (
             <option key={i}>{choice}</option>
           ))}
-        </Select> */}
+        </Select>
         <Color {...props} name="gradient color start" value={gradient.gradientColorStart} />
         <Color {...props} name="gradient color end" value={gradient.gradientColorEnd} />
         <Range {...props} name="gradient angle" value={gradient.gradientAngle} max={360} />
@@ -78,7 +78,7 @@ function Controls({ ...props }, ref) {
           name="letter spacing"
           value={styles.letterSpacing}
           step={0.001}
-          min={-0.25}
+          min={0}
           max={0.25}
         />
         <Range {...props} name="font size" value={styles.fontSize} step={1} min={16} max={160} />
