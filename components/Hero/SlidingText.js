@@ -1,61 +1,67 @@
-import { textAnimation as slideText } from '@animations';
-import { springDown } from '@constants';
-import { useCookie } from '@hooks/useCookie';
-import { useMediaQuery } from '@hooks/useMediaQuery';
-import styled, { css } from 'styled-components/macro';
+import { ThemeContext } from 'styled-components';
+import { breakpoints } from '@constants/breakpoints';
+import { useEffect, Children, useContext, useState } from 'react';
+import styled from 'styled-components';
 
-const AnimatedWords = ({ children }) => {
-  const hasCookie = useCookie('navigated')[0];
-  const isMobile = useMediaQuery({ maxWidth: 546 });
-  const isSmall = useMediaQuery({ maxWidth: 320 });
+export default function AnimatedWords({ children }) {
+  const context = useContext(ThemeContext);
+  const [start, setStart] = useState(context.hasRun);
   const words = children.split(' ');
-  const shouldLoadStatic = hasCookie || isMobile || isSmall;
+
+  useEffect(() => {
+    if (!context.hasRun) {
+      setTimeout(() => {
+        setStart(true);
+      }, 2000);
+    }
+  }, [context.hasRun]);
 
   return (
-    <P isMobile={isMobile} hasCookie={hasCookie}>
-      {!shouldLoadStatic ? (
-        words.map((word, i) => (
-          <Span hasCookie={hasCookie} key={i} index={i + 1}>
-            {word}&nbsp;
-          </Span>
-        ))
-      ) : (
-        <span>{children}</span>
-      )}
-    </P>
+    <Container>
+      {Children.toArray(words).map((word, i) => (
+        <Word
+          onTransitionEnd={() => {
+            if (i === words.length - 1) {
+              context.setHasRun(true);
+            }
+          }}
+          hasRun={context.hasRun}
+          $start={start}
+          index={i + 1}
+          key={i}
+        >
+          {word}&nbsp;
+        </Word>
+      ))}
+    </Container>
   );
-};
+}
 
-const textSlide = (props) => {
-  const animation = css`
-    ${slideText} ${props.duration} ease ${props.delay} both;
-  `;
-  return animation;
-};
+const Container = styled.div`
+  margin-top: -8px;
+`;
 
-const P = styled.p``;
-
-const Span = styled.span.attrs(({ index, hasCookie }) => {
-  const base = hasCookie ? 100 : 3300;
-  const opacity = hasCookie ? 0 : 1;
-  const delay = hasCookie ? 200 : base + index * 15 + 'ms';
-  const distance = 500 + index * 2 + 'px';
-  const duration = 1200 + 'ms'; //1000 + Math.pow(index, 2) + 'ms';
+const Word = styled.span.attrs((props) => {
+  const translateX = props.$start ? 0 : props.index * 2 + 700 + 'px';
+  const delay = props.hasRun ? 0 : (props.index + 1) / 100;
+  const duration = props.hasRun ? 0 : (props.index + 100) / 100;
   return {
-    duration,
-    delay,
     style: {
-      '--delay': delay,
-      '--distance': distance,
-      '--duration': duration,
-      '--opacity': opacity,
+      '--translateX': translateX,
+      '--delay': delay + 's',
+      '--duration': duration + 's',
     },
   };
 })`
-  --curve: ${springDown};
   display: inline-block;
-  opacity: var(--opacity);
-  animation: ${(p) => textSlide(p)};
-`;
+  font-weight: 600;
+  line-height: 1.85;
 
-export default AnimatedWords;
+  transform: translateX(var(--translateX));
+
+  transition: transform var(--duration) ease-in-out var(--delay);
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    line-height: 1.25;
+  }
+`;

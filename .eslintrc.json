@@ -5,56 +5,48 @@
     "node": true
   },
   "parserOptions": {
-    "ecmaVersion": 12,
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "settings": {
-    "mdx/code-blocks": false,
-    "mdx/language-mapper": {},
     "react": {
       "version": "detect"
-    },
-    "prettierx": {
-      "usePrettierrc": true,
-      "editorconfig": false,
-      "ignorePath": ".prettierignore",
-      "proseWrap": "never",
-      "pluginSearchDirs": [],
-      "plugins": [],
-      "withNodeModules": false,
-      "useCache": true
-    },
-    "import/resolver": {
-      "babel-module": {}
     }
   },
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettierx/default",
-    "next/core-web-vitals"
+    "plugin:react-hooks/recommended",
+    "plugin:@next/next/recommended"
   ],
-  "plugins": ["module-resolver", "import", "react", "prettierx"],
+  "plugins": ["react", "react-hooks", "@next/next"],
   "rules": {
+    "quotes": ["error", "single", { "avoidEscape": true }],
     "no-unused-expressions": "off",
-    "module-resolver/use-alias": 2,
     "no-var": "error",
-    "no-unused-vars": "warn",
+    "no-unused-vars": "off",
     "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off",
     "no-multiple-empty-lines": ["off", { "max": 8, "maxEOF": 2 }],
-    "prettierx/options": [
-      "warn",
+    "n/no-callback-literal": "off",
+    "brace-style": ["error", "stroustrup"],
+    "semi": ["error", "always"],
+    "space-before-function-paren": "off",
+    "comma-dangle": ["error", "only-multiline"],
+    "multiline-ternary": "off",
+    "no-unneeded-ternary": "error",
+    "indent": [
+      "error",
+      2,
       {
-        "arrayBracketSpacing": true,
-        "breakBeforeElse": true,
-        "semi": true,
-        "printWidth": 90,
-        "offsetTernaryExpressions": false,
-        "singleQuote": true,
-        "breakLongMethodChains": true
+        "ignoredNodes": ["ConditionalExpression > *"],
+        "SwitchCase": 1
       }
-    ]
+    ],
+    "object-curly-spacing": ["error", "always", { "arraysInObjects": false }]
   }
 }

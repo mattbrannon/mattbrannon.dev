@@ -1,87 +1,63 @@
 import BlogHeader from '@components/BlogHeader';
-import DocumentHead from '@components/Head';
-import Section from '@components/Section';
-import SideNote from '@components/SideNote';
-import { postFilePaths, POSTS_PATH } from '@utils/mdxUtils';
+import { NormalButton, InvertedButton } from '@components/Button';
+import Head from '@components/Head';
+import { H2Link, H3Link, H4Link, H5Link } from '@components/Headings';
+
+import { BlogHighlighter } from '@components/SyntaxHighlighter';
+import { POSTS_PATH, publishedArticles } from '@utils/mdxUtils.js';
 import fs from 'fs';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
+import dynamic from 'next/dynamic';
 import path from 'path';
-import Prism from 'prismjs';
-import { useEffect } from 'react';
+import remarkGfm from 'remark-gfm';
+import styled from 'styled-components';
+// import { Em } from '@components/Text';
+
+const UnorderedList = styled.ul`
+  margin: revert;
+  padding: revert;
+`;
+
+const ListItem = styled.li`
+  list-style-type: revert;
+  margin: 1.125rem 0;
+`;
 
 const components = {
-  SideNote,
-  Section,
+  blockquote: dynamic(() => import('@components/SideNote').then((res) => res.Blockquote)),
+  Button: NormalButton,
+  InvertedButton,
+  pre: BlogHighlighter,
+  p: dynamic(() => import('@components/Text').then((res) => res.P)),
+  ColorText: dynamic(() => import('@components/Text/Text').then((res) => res.ColorText)),
+  Video: dynamic(() => import('@components/VideoPlayer').then((res) => res.FlatVideo)),
+  ul: UnorderedList,
+  li: ListItem,
+  Gap: dynamic(() => import('@components/Spacer').then((res) => res.Gap)),
+  List: dynamic(() => import('@components/List')),
+  MiniGame: dynamic(() => import('@components/Minigame')),
+  checkbox: dynamic(() => import('@components/Minigame').then((res) => res.Checkbox)),
+  strong: dynamic(() => import('@components/Text').then((res) => res.StrongText)),
+  Spacer: dynamic(() => import('@components/Spacer').then((res) => res.Spacer)),
+  h2: H2Link,
+  h3: H3Link,
+  h4: H4Link,
+  h5: H5Link,
+  // em: dynamic(() => import('@components/Text').then((res) => res.Em)),
+  a: dynamic(() => import('@components/Links').then((res) => res.ExternalLink)),
+  InternalLink: dynamic(() => import('@components/Links').then((res) => res.Link)),
 };
 
 export default function PostPage({ source, frontMatter }) {
-  useEffect(() => {
-    async function copyText(selectedText) {
-      try {
-        await navigator.clipboard.writeText(selectedText);
-        console.log('text copied clipboard');
-      } catch (err) {
-        console.error('Failed to copy: ', err);
-      }
-    }
-
-    setTimeout(() => {
-      Prism.plugins.toolbar.registerButton('copy', function (env) {
-        const button = document.createElement('button');
-        button.innerHTML = 'Copy snippet';
-
-        button.addEventListener('click', function () {
-          // Source: http://stackoverflow.com/a/11128179/2757940
-          if (document.body.createTextRange) {
-            // ms
-            const range = document.body.createTextRange();
-            range.moveToElementText(env.element);
-            range.select();
-          }
-          else if (window.getSelection) {
-            // moz, opera, webkit
-            const selection = window.getSelection();
-            const range = document.createRange();
-            range.selectNodeContents(env.element);
-            selection.removeAllRanges();
-            selection.addRange(range);
-            copyText(selection.toString())
-              .then(selection.removeAllRanges())
-              .then(() => {
-                button.innerHTML = 'Snippet Copied to clipboard!';
-                button.style.color = 'white';
-                button.style.transition = 'all 0.3s ease';
-              })
-              .then(() =>
-                setTimeout(() => {
-                  button.innerHTML = 'Copy snippet';
-                }, 2000)
-              )
-              .catch(console.log);
-          }
-        });
-
-        return button;
-      });
-      Prism.highlightAll();
-      console.log(Prism.plugins);
-    }, 0);
-  }, []);
-
+  const { title, description } = frontMatter;
   return (
-    // <MaxWidthWrapper>
     <>
-      <DocumentHead title={frontMatter.title} desc={frontMatter.description} />
-      <div style={{ marginTop: '32px' }}>
-        <BlogHeader>{frontMatter}</BlogHeader>
-      </div>
-      <main>
-        <MDXRemote {...source} components={components} />
-      </main>
+      <Head title={title} description={description} />
+      <BlogHeader>{frontMatter}</BlogHeader>
+      <MDXRemote {...source} components={components} />
     </>
-    // </MaxWidthWrapper>
   );
 }
 
@@ -92,19 +68,15 @@ export const getStaticProps = async ({ params }) => {
     .join('');
 
   const postFilePath = path.join(POSTS_PATH, filename);
-  const source = fs.readFileSync(postFilePath);
+  const source = fs.readFileSync(postFilePath, 'utf8');
 
   const { content, data } = matter(source);
-
   const mdxSource = await serialize(content, {
-    // Optionally pass remark/rehype plugins
-    mdxOptions: {
-      remarkPlugins: [],
-      rehypePlugins: [],
-    },
     scope: data,
+    mdxOptions: {
+      remarkPlugins: [remarkGfm],
+    },
   });
-
   return {
     props: {
       source: mdxSource,
@@ -114,10 +86,8 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths = async () => {
-  const paths = postFilePaths
-    // Remove file extensions for page paths
-    .map((path) => path.replace(/\.mdx?$/, ''))
-    // Map the path into the static paths object required by Next.js
+  const paths = publishedArticles
+    .map((path) => path.replace(/\.mdx$/, ''))
     .map((slug) => ({ params: { slug } }));
 
   return {

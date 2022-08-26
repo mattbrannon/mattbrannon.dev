@@ -1,185 +1,82 @@
-import { Anchor } from '@components/Anchor';
-import DocumentHead from '@components/Head';
-import { H4 } from '@components/Headings';
-import Picture from '@components/Image';
-import { TopRow } from '@components/Layout';
+import { AppCard } from '@components/AppCard';
+import Head from '@components/Head';
 import PageTitle from '@components/PageTitle';
-import Section from '@components/Section';
-import { getImageConfig } from '@utils/images';
-import Link from 'next/link';
-import styled from 'styled-components/macro';
+import Text from '@components/Text/Text';
+import { memo } from 'react';
+// import elbowRoomImage from '/public/images/elbowroom/desktop.png';
+// import letsMakeAGifImage from '/public/images/lets-make-a-gif/desktop.png';
 
-export default function AppsPage({ montyHall, elbowRoom, letsMakeGifs }) {
+const makeSourceArray = (...images) => {
+  return images.map((image) => {
+    const { src, width, height, blurDataURL } = image;
+    return { src, width, height, blurDataURL };
+  });
+};
+
+import elbowRoomAvif from '/public/images/elbowroom/desktop.avif';
+import elbowRoomWebp from '/public/images/elbowroom/desktop.webp';
+import elbowRoomPng from '/public/images/elbowroom/desktop.png';
+
+import letsMakeAGifAvif from '/public/images/lets-make-a-gif/desktop.avif';
+import letsMakeAGifWebp from '/public/images/lets-make-a-gif/desktop.webp';
+import letsMakeAGifPng from '/public/images/lets-make-a-gif/desktop.png';
+
+import montyHallAvif from '/public/images/monty-hall/monty-hall1.avif';
+import montyHallWebp from '/public/images/monty-hall/monty-hall1.webp';
+import montyHallPng from '/public/images/monty-hall/monty-hall1.png';
+
+const elbowRoomSources = makeSourceArray(elbowRoomAvif, elbowRoomWebp, elbowRoomPng);
+const letsMakeAGifSources = makeSourceArray(letsMakeAGifAvif, letsMakeAGifWebp, letsMakeAGifPng);
+const montyHallSources = makeSourceArray(montyHallAvif, montyHallWebp, montyHallPng);
+
+const letsMakeAGifConfig = {
+  href: '/apps/lets-make-a-gif',
+  title: 'Let\'s Make a Gif',
+  description: 'Online photo & video editing application',
+  sources: letsMakeAGifSources,
+  alt: 'desktop view of the app',
+  priority: true,
+};
+
+const elbowRoomConfig = {
+  href: '/apps/elbowroom',
+  title: 'Elbow Room',
+  description: 'Fullstack realtime chat application',
+  sources: elbowRoomSources,
+  alt: 'desktop view of the app',
+  priority: false,
+};
+
+const montyHallConfig = {
+  href: '/apps/monty-hall',
+  title: 'Monty Hall Experience',
+  description: 'A game inspired by the monty hall problem',
+  sources: montyHallSources,
+  alt: 'desktop view of the app',
+  priority: false,
+};
+
+const Introduction = () => {
   return (
-    <Article id="apps">
-      <DocumentHead title="Apps" desc="Apps built by Matt Brannon" />
-      <TopRow>
-        <PageTitle>Apps I've Built</PageTitle>
-      </TopRow>
-
-      <Paragraph>
-        The modern web is all about components and for good reason. Component driven
-        development allows developers to focus on building smaller individual pieces of an
-        app and then gradually combine those pieces together. Kind of like building a
-        complex model of the Millenium Falcon out of Lego blocks. And when it comes to
-        building a component based app from the ground up, I can think of no other
-        framework more suited to the task than <strong>React. </strong> All the
-        applications listed on this page were built with React on the frontend.
-      </Paragraph>
-
-      <AppList>
-        <Section>
-          <HeadingWrapper>
-            <Heading>
-              <Link passHref href="/apps/lets-make-a-gif">
-                <A>Let's Make a Gif</A>
-              </Link>
-            </Heading>
-            <Small>Online photo &amp; video editing application</Small>
-          </HeadingWrapper>
-          <AppImage sources={letsMakeGifs.main} href="/apps/lets-make-a-gif"></AppImage>
-        </Section>
-
-        <Section>
-          <HeadingWrapper>
-            <Heading>
-              <Link passHref href="/apps/elbowroom">
-                <A>Elbow Room</A>
-              </Link>
-            </Heading>
-            <Small>A fullstack realtime chat application</Small>
-          </HeadingWrapper>
-          <AppImage sources={elbowRoom.main} href="/apps/elbowroom" />
-        </Section>
-
-        <Section>
-          <HeadingWrapper>
-            <Heading>
-              <Link passHref href="/apps/monty-hall">
-                <A>Monty Hall Experience</A>
-              </Link>
-            </Heading>
-            <Small>A game inspired by the Monty Hall Problem</Small>
-          </HeadingWrapper>
-          <AppImage sources={montyHall.main} href="/apps/monty-hall" />
-        </Section>
-      </AppList>
-    </Article>
+    <Text>
+      Below you'll find a few apps I've buit that I'm particularly proud of (there's a whole slew of
+      others that I wish I could forget). All of these apps are live on the web. You'll find links
+      to the live sites on the app discussion page. If you'd like to see the code, you'll also find
+      a link to the app's github repository. Please feel free to try them out and let me know what
+      you think.
+    </Text>
   );
-}
+};
 
-const A = styled(Anchor)`
-  color: var(--pinkBg);
-  font-size: clamp(var(--size24), 10vw, var(--size40));
-  line-height: 1.2;
-  display: block;
-  &:visited {
-    color: currentColor;
-  }
-
-  @media (max-width: 320px) {
-    text-align: center;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    color: var(--orange-main);
-  }
-`;
-
-const HeadingWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  @media (min-width: 360px) {
-    align-items: flex-start;
-  }
-`;
-
-const Small = styled.small`
-  font-size: clamp(var(--size14), 5vw, var(--size21));
-  font-variation-settings: 'wdth' 75, 'wght' 555;
-  margin-bottom: -16px;
-`;
-
-const Heading = styled(H4)`
-  margin-bottom: -4px;
-`;
-
-const Article = styled.article`
-  ${'' /* padding: 0px 0 48px 0; */}
-  padding-bottom: 48px;
-`;
-
-const Paragraph = styled.p`
-  font-size: clamp(var(--size16), 0.2vw + 1rem, var(--size20));
-`;
-
-const AppList = styled.div`
-  margin-top: -32px;
-  grid-column: 1 / -1;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(480px, 100%), 1fr));
-  ${'' /* gap: 32px; */}
-`;
-
-const ImageLinkWrapper = styled.div`
-  --shadow: -0.1em 0.4em 0.8em hsl(210, 12%, 46%);
-  position: relative;
-  left: 0;
-  padding: 0 8px;
-
-  @media (prefers-color-scheme: dark) {
-    --shadow: 0px 1em 1em hsl(210, 6%, 4%);
-    &:hover {
-      --shadow: 0em 0.6em 1.2em hsl(210, 10%, 10%);
-    }
-  }
-
-  @media (min-width: 320px) {
-    max-width: revert;
-    &:hover {
-      --shadow: 0em 0.6em 1.2em hsl(210, 10%, 50%);
-      cursor: pointer;
-      transition: all 160ms ease-in 40ms;
-    }
-  }
-
-  transform: translateY(32px) scale(1.07);
-
-  transition: all 400ms ease-in-out 100ms;
-`;
-
-function AppImage({ ...props }) {
-  console.log(props);
-  const appName = props.href.slice(6);
+export default memo(function AppsPage() {
   return (
-    <ImageLinkWrapper>
-      <Link passHref {...props}>
-        <Anchor>
-          <Picture
-            href={props.href}
-            sources={props.sources}
-            src={`/images/${appName}/main.png`}
-            width={1440}
-            height={900}
-            alt={`Go to the ${appName.replace(/-/g, ' ')} discussion page`}
-          />
-        </Anchor>
-      </Link>
-    </ImageLinkWrapper>
+    <>
+      <Head title="Apps" description="Apps built by Matt Brannon" />
+      <PageTitle>Apps I've Built</PageTitle>
+      <Introduction />
+      <AppCard config={letsMakeAGifConfig} />
+      <AppCard config={elbowRoomConfig} />
+      <AppCard config={montyHallConfig} />
+    </>
   );
-}
-
-export async function getStaticProps() {
-  const montyHall = await getImageConfig('monty-hall');
-  const elbowRoom = await getImageConfig('elbowroom');
-  const letsMakeGifs = await getImageConfig('lets-make-a-gif');
-  return {
-    props: {
-      montyHall,
-      elbowRoom,
-      letsMakeGifs,
-    },
-  };
-}
+});

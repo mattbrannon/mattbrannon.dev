@@ -21,7 +21,7 @@ export const allFilePaths = fs
 export const imageFilePaths = allFilePaths.filter((filename) => {
   const fullPath = path.resolve(IMAGES_PATH, filename);
   const source = fs.readFileSync(fullPath);
-  console.log(source);
+  // console.log(source);
   return source;
 });
 
@@ -33,10 +33,10 @@ export const getImageConfig = (appName) => {
       const hasValue = filename.match(/-\d+/g) !== null;
       const size = hasValue
         ? filename
-            .match(/-\d+/g)
-            .filter((value) => value)
-            .map((n) => Math.abs(n))
-            .join('')
+          .match(/-\d+/g)
+          .filter((value) => value)
+          .map((n) => Math.abs(n))
+          .join('')
         : null;
       const type = filename.slice(filename.lastIndexOf('.') + 1);
       const name = filename.slice(0, filename.lastIndexOf('-'));

@@ -1,22 +1,19 @@
-import { TopRow } from '@components/Layout';
-import PageTitle from '@components/PageTitle';
 import ContactForm from '@components/ContactForm';
-
-{
-  /* <DocumentHead title="Contact" desc="If you want to get in touch, here's how.." /> */
-}
+import Head from '@components/Head';
+import PageTitle from '@components/PageTitle';
+import { P } from '@components/Text';
 
 export default function Contact() {
   return (
-    <section id="contact">
-      <TopRow>
-        <PageTitle>Contact Me</PageTitle>
-      </TopRow>
-      <p>
-        Wanna get in touch? Send me a message using the form below. All messages go
-        staight to my inbox.
-      </p>
+    <>
+      <Head title="Contact" description="If you want to get in touch, here's how.." />
+      <PageTitle inline>Contact Me</PageTitle>
+
+      <P>
+        Wanna get in touch? Send me a message using the form below. All messages go straight to my
+        inbox.
+      </P>
       <ContactForm />
-    </section>
+    </>
   );
 }

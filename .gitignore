@@ -33,7 +33,6 @@ yarn-error.log*
 # vercel
 .vercel
 
-articles
 .env
 
 *trash*
@@ -41,3 +40,8 @@ articles
 unused
 encode.sh
 pages/apps/lets-make-a-gif/samples.js
+testing.mjs
+sample.js
+
+changelog.txt
+.vscode

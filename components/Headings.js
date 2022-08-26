@@ -1,93 +1,90 @@
-import styled, { keyframes } from 'styled-components/macro';
-
-const fadeIn = keyframes`
-  from {
-    font-variation-settings: var(--recursive5);
-    transform: translate(-10%, 0);
-    letter-spacing: -0.5em;
-    opacity: 0;
-
-  }
-  to {
-    font-variation-settings: var(--recursive4);
-    transform: translate(0, 0);
-    letter-spacing: 0.0125em;
-    opacity: 1;
-  }
-`;
+import { breakpoints } from '@constants/index';
+import styled from 'styled-components';
+import { BlogLink } from '@components/Links';
+import { toHeadingId } from '@utils/helpers.js';
 
 export const H1 = styled.h1`
-  ${'' /* --settings: 'BLDA' 1000, 'TRMD' 0, 'TRMC' 0, 'SKLD' 1000, 'TRML' 0, 'SKLA' 0, 'TRMF' 0,
-    'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0, 'SKLB' 0, 'TRMG' 0, 'TRME' 0;
-
-  --start: 'BLDA' 1000, 'TRMD' 0, 'TRMC' 0, 'SKLD' 1000, 'TRML' 0, 'SKLA' 0, 'TRMF' 0,
-    'TRMK' 0, 'BLDB' 0, 'WMX2' 0, 'TRMB' 0, 'TRMA' 0, 'SKLB' 0, 'TRMG' 0, 'TRME' 0;
-
-  --end: 'BLDA' 0, 'TRMD' 0, 'TRMC' 0, 'SKLD' 0, 'TRML' 0, 'SKLA' 0, 'TRMF' 0, 'TRMK' 0,
-    'BLDB' 0, 'WMX2' 800, 'TRMB' 0, 'TRMA' 0, 'SKLB' 0, 'TRMG' 630, 'TRME' 0; */}
-
-  --font: var(--jost-heavy);
-  --start: var(--jost-hairline);
-  --end: var(--jost-black);
-
-  letter-spacing: 0.125em;
-  font-family: 'Jost', sans-serif;
-  font-variation-settings: var(--font);
-
-  background-image: linear-gradient(
-    var(--pinkShadow),
-    var(--orange2) 60%,
-    var(--orange3)
-  );
-  color: var(--blue0);
-  -webkit-text-fill-color: var(--blue0);
-
-  background-clip: text;
-  -webkit-background-clip: text;
-
-  @media (prefers-color-scheme: dark) {
-    background-image: linear-gradient(var(--pinkShadow), var(--blue2) 60%, var(--blue1));
-    color: var(--blue0);
-    -webkit-text-fill-color: var(--blue0);
+  color: var(--h1);
+  font-size: var(--fontSize);
+  @media (max-width: ${breakpoints.mobile}px) {
+    margin: 16px 0 16px 0;
   }
-
-  animation: ${fadeIn} 1000ms ease 1000ms both;
 `;
-export const H2 = styled.h2``;
-export const H3 = styled.h3``;
+
+export const H2 = styled.h2`
+  font-size: var(--size28);
+  margin: 24px 0 12px 0;
+  color: var(--h2);
+  position: relative;
+  @media (max-width: ${breakpoints.mobile}px) {
+    font-size: var(--size21);
+    margin: 16px 0 16px 0;
+  }
+`;
+
+export const H3 = styled.h3`
+  font-size: var(--size24);
+  margin: 24px 0 24px 0;
+  color: var(--h3);
+  position: relative;
+  @media (max-width: ${breakpoints.mobile}px) {
+    font-size: var(--size21);
+    margin: 16px 0 16px 0;
+  }
+`;
 
 export const H4 = styled.h4`
-  font-size: clamp(var(--size18), 7vw, var(--size32));
+  font-size: var(--size21);
 
-  margin: 48px 0 0 0;
-
-  font-family: Recursive, sans-serif;
-
-  font-variation-settings: var(--recursive4);
-
-  ${'' /* animation: ${fadeIn} 1000ms cubic-bezier(0.175, 0.885, 0.32, 1.875) 500ms both; */}
-
-  transition: all 10ms;
-  width: fit-content;
-
-  @media (prefers-color-scheme: light) {
-    color: var(--pinkBg);
-    &:hover {
-      color: var(--pinkHover);
-      text-decoration: underline;
-    }
-    &:visited {
-      color: green;
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    color: var(--orange-main);
-    &:hover {
-      color: var(--orange-hover);
-      text-decoration: underline;
-    }
+  margin: 21px 0 21px 0;
+  color: var(--h4);
+  position: relative;
+  @media (max-width: ${breakpoints.mobile}px) {
+    font-size: var(--size18);
+    margin: 16px 0 16px 0;
   }
 `;
-export const H5 = styled.h5``;
+
+export const H5 = styled.h5`
+  font-size: var(--size18);
+  margin: 18px 0;
+  color: var(--h5);
+  position: relative;
+  @media (max-width: ${breakpoints.mobile}px) {
+    font-size: var(--size16);
+    margin: 16px 0 16px 0;
+  }
+`;
 export const H6 = styled.h6``;
+
+export const CardHeading = styled(H2)`
+  margin-top: 16px;
+  font-size: var(--size28);
+  color: var(--h3);
+  position: relative;
+  @media (max-width: ${breakpoints.mobile}px) {
+    font-size: var(--size21);
+    margin: 16px 0 16px 0;
+  }
+`;
+
+const withHeading = (Component) => {
+  return function heading(props) {
+    const heading = toHeadingId(props.children);
+
+    return (
+      <Component id={heading} {...props}>
+        <BlogLink title={heading} href={`#${heading}`} {...props}>
+          {props.children}
+        </BlogLink>
+      </Component>
+    );
+  };
+};
+
+export const H1Link = withHeading(H1);
+export const H2Link = withHeading(H2);
+export const H3Link = withHeading(H3);
+export const H4Link = withHeading(H4);
+export const H5Link = withHeading(H5);
+export const H6Link = withHeading(H6);

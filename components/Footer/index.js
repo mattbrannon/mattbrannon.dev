@@ -1,90 +1,63 @@
 import { FullBleed } from '@components/Layout';
-import VisuallyHidden from '@components/VisuallyHidden';
-import Image from 'next/image';
-import Link from 'next/link';
-import styled from 'styled-components/macro';
+import { VisuallyHidden } from '@components/VisuallyHidden';
+// import { breakpoints } from '@constants/index';
+import NextImage from 'next/future/image';
+// import Link from 'next/link';
+import { InternalLink } from '@components/Links';
+import styled from 'styled-components';
 
 export default function Footer() {
   return (
-    <FooterContainer>
-      <FooterWrapper>
-        <MaxWidthFlexContainer>
-          <InnerWrapper>
-            <NavWrapper id="nav2">
-              <Items className="items">
-                <VisuallyHidden>
-                  <h2>Social Media Links</h2>
-                </VisuallyHidden>
-                <Link passHref href="https://github.com/mattbrannon">
-                  <LinkButton>
-                    <ImageLink
-                      src="/images/github/github.png"
-                      alt="link to github"
-                      width={30}
-                      height={30}
-                    />
-                  </LinkButton>
-                </Link>
-                <Link passHref href="https://linkedin.com/in/mattbrannon1">
-                  <LinkButton>
-                    <ImageLink
-                      width={30}
-                      height={30}
-                      src="/images/linkedin/linkedin.png"
-                      alt="link to linkedin"
-                    />
-                  </LinkButton>
-                </Link>
-                <Link passHref href="https://twitter.com/_mattbrannon">
-                  <LinkButton>
-                    <ImageLink
-                      width={30}
-                      height={30}
-                      src="/images/twitter/twitter.png"
-                      alt="link to twitter"
-                    />
-                  </LinkButton>
-                </Link>
-              </Items>
-            </NavWrapper>
-            <CopyrightWrapper>
-              <Notice>&copy;&nbsp;2021 Matt Brannon.</Notice>
-              <Notice>All rights reserved</Notice>
-            </CopyrightWrapper>
-          </InnerWrapper>
-        </MaxWidthFlexContainer>
-      </FooterWrapper>
-    </FooterContainer>
+    <Container as="footer">
+      <NavWrapper>
+        <Nav>
+          <VisuallyHidden>
+            <h2>Social Media Links</h2>
+          </VisuallyHidden>
+          <ImageLink
+            href="https://github.com/mattbrannon"
+            src="/images/github/github.png"
+            alt="link to github"
+          />
+          <ImageLink
+            href="https://linkedin.com/in/mattbrannon1"
+            src="/images/linkedin/linkedin.png"
+            alt="link to linkedin"
+          />
+          <ImageLink
+            href="https://twitter.com/_mattbrannon"
+            src="/images/twitter/twitter.png"
+            alt="link to twitter"
+          />
+        </Nav>
+      </NavWrapper>
+      <Copyright>
+        <Notice>&copy;&nbsp;{new Date().getFullYear()} Matt Brannon.</Notice>
+        <Notice>All rights reserved</Notice>
+      </Copyright>
+    </Container>
   );
 }
 
-const FooterContainer = styled(FullBleed)`
-  margin-top: 64px;
-  min-height: var(--footer-height);
+const ImageLink = ({ ...props }) => {
+  return (
+    <InternalLink {...props}>
+      <Image alt="" width={30} height={30} {...props} />
+    </InternalLink>
+  );
+};
+
+const Container = styled(FullBleed)`
   display: grid;
-`;
-
-const FooterWrapper = styled.div`
-  width: 100%;
-  z-index: 1;
-  background: var(--footer-background);
-
-  @media (prefers-color-scheme: dark) {
-    background: #111;
-    border-bottom: 1px solid black;
-  }
-`;
-
-const MaxWidthFlexContainer = styled.div`
-  max-width: 80ch;
-  width: 100%;
+  min-height: var(--footer-height);
   height: 100%;
+  background: var(--footer-background);
+  --color-outline: var(--azure-light);
 
-  margin: 0 auto;
-
-  ${'' /* display: flex;
-  align-items: center;
-  justify-content: center; */}
+  grid-template-columns: 1fr;
+  place-items: center;
+  grid-row-gap: 21px;
+  place-content: center;
 `;
 
 const NavWrapper = styled.div`
@@ -96,18 +69,7 @@ const NavWrapper = styled.div`
   }
 `;
 
-const InnerWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 16px;
-  padding: 16px;
-  ${'' /* background: var(--footer-background); */}
-`;
-
-const CopyrightWrapper = styled.div`
+const Copyright = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -119,7 +81,7 @@ const Notice = styled.span`
   color: whitesmoke;
 `;
 
-const Items = styled.nav`
+const Nav = styled.nav`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -129,20 +91,10 @@ const Items = styled.nav`
   gap: 32px;
 `;
 
-const ImageLink = styled(Image)`
+const Image = styled(NextImage)`
   width: 30px;
   height: 30px;
   &:hover {
     cursor: pointer;
-  }
-`;
-
-const LinkButton = styled.button`
-  background: transparent;
-  border: none;
-  @supports (-webkit-touch-callout: none) and (not (translate: none)) {
-    &:not(:last-child) {
-      margin-right: 32px;
-    }
   }
 `;

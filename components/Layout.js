@@ -1,58 +1,33 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components';
 
 const Layout = styled.div`
-  min-height: 100%;
-  height: 100%;
   display: grid;
-  ${'' /* margin-top: var(--header-height); */}
-  grid-template-columns: 1fr min(var(--max-width), 100%) 1fr;
+  grid-template-columns: 1fr min(var(--max-page-width), 100%) 1fr;
   grid-template-rows: auto 1fr auto;
-  ${'' /* padding-left: var(--breathing-room);
-  padding-right: var(--breathing-room); */}
-
+  grid-template-areas:
+    'header'
+    'content'
+    'footer';
   & > * {
     grid-column: 2;
-    padding: 0 18px;
-
-    &:first-child {
-      padding: 0 0px;
-    }
-    &:last-child {
-      padding: 0 0;
-      grid-column: 1 / -1;
-    }
+    padding: 0 var(--breathing-room);
   }
+  min-height: 100%;
 `;
 
-// export const FullBleed = styled.div`
-//   grid-column: 1 / -1;
-//   margin-left: calc(var(--breathing-room) * -1);
-//   margin-right: calc(var(--breathing-room) * -1);
-//   height: fit-content;
-// `;
+export const Main = styled.main`
+  /* margin-top: var(--header-height); */
+  margin-bottom: 96px;
+`;
+
+export const AltMain = styled(Main)`
+  min-height: 100%;
+  height: calc(100vh - var(--footer-height));
+`;
 
 export const FullBleed = styled.div`
   grid-column: 1 / -1;
-`;
-
-export const TopRow = styled.div`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  margin-bottom: 32px;
-  margin-top: 32px;
-  @media (min-width: 480px) {
-    margin-top: 64px;
-  }
-  ${'' /* align-items: center; */}
-`;
-
-export const TopRowLeftAligned = styled(TopRow)`
-  align-items: flex-start;
-`;
-
-export const BottomRow = styled(TopRow)`
-  margin-bottom: var(--breathing-room);
+  padding: 0;
 `;
 
 export default Layout;

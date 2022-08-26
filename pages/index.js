@@ -1,77 +1,103 @@
-import AboutMePage from '@components/AboutMe';
-import ShadowGradient from '@components/GradientText';
-import DocumentHead from '@components/Head';
+import styled, { ThemeContext } from 'styled-components';
 import Hero from '@components/Hero';
-import { breakpoints } from '@constants/';
-import { useCookie } from '@hooks/useCookie';
+import FancyTitle from '@components/FancyTitle';
+import Head from '@components/Head';
+import { useState, useContext, useEffect } from 'react';
 import { useMediaQuery } from '@hooks/useMediaQuery';
-import { getImageConfig } from '@utils/images';
-import { useContext, useEffect, useRef, useState } from 'react';
-import styled, { ThemeContext } from 'styled-components/macro';
+import { breakpoints } from '@constants/breakpoints';
 
-const frames = [
-  { opacity: 0, transform: 'translate(0, 30px)' },
-  { opacity: 1, transform: 'translate(0, 0)' },
-];
-
-const timing = {
-  duration: 1200,
-  easing: 'ease',
-  delay: -100,
-  fill: 'both',
+const homePageVariant = {
+  hidden: {
+    opacity: 0,
+    clipPath: 'var(--left)',
+    letterSpacing: '0.2em',
+  },
+  show: ({ hasRun }) => {
+    return {
+      opacity: 1,
+      clipPath: 'var(--visible)',
+      letterSpacing: '0.0195em',
+      transition: {
+        duration: 1.5,
+        delay: hasRun ? 0 : 2,
+      },
+    };
+  },
 };
 
-export default function Home({ config }) {
-  const context = useContext(ThemeContext);
+export default function HomePage() {
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
-  const [ isFinished, setIsFinished ] = useState(false);
-  const [ started, setStarted ] = useState(null);
-  const [ animationTiming, setAnimationTiming ] = useState(null);
-  context.heroConfig = config;
-  const ref = useRef();
-  const hasCookie = useCookie('navigated')[0];
+  const marginTop = isMobile ? 8 : 48;
+  const context = useContext(ThemeContext);
 
-  useEffect(() => {
-    if (!started && hasCookie !== null && ref.current) {
-      setStarted(true);
-      const options = hasCookie || isMobile ? timing : { ...timing, delay: 3800 };
-      const animation = ref.current.animate(frames, options);
-      const animationTiming = animation.effect.getComputedTiming();
-      setAnimationTiming(animationTiming);
-      animation.finished.then(() => {
-        setIsFinished(true);
-      });
-    }
-  }, [ started, hasCookie, isMobile ]);
+  // useEffect(() => {
+  //   console.log(context);
+  // }, [context]);
+
+  const [shouldRemove, setShouldRemove] = useState(true);
 
   return (
-    <Main>
-      <DocumentHead title="Matt Brannon" desc="A brief introduction" />
-      <Hero config={config} />
-
-      <BottomGroup ref={ref} hasCookie={hasCookie}>
-        <ShadowGradient isFinished={isFinished} animationTiming={animationTiming}>
-          About Me
-        </ShadowGradient>
-        <AboutMePage />
-      </BottomGroup>
-    </Main>
+    <Container>
+      <Head description="Personal website for Matt Brannon" title="Matt Brannon" />
+      {!isMobile ? (
+        <TopRow style={{ '--marginTop': `${marginTop}px`, alignSelf: 'center' }}>
+          <TitleWrapper>
+            <FancyTitle
+              style={{
+                '--gradient': 'var(--app-name-gradient)',
+                '--shadow': 'var(--app-name-shadow)',
+              }}
+              variants={homePageVariant}
+              initial="hidden"
+              animate="show"
+              custom={{ hasRun: context.hasRun }}
+            >
+              Welcome to my site!
+            </FancyTitle>
+          </TitleWrapper>
+        </TopRow>
+      ) : null}
+      <Hero
+        shouldRemove={shouldRemove}
+        setShouldRemove={setShouldRemove}
+        // setShowTitle={setShowTitle}
+        // hasCookie={hasCookie}
+        // setHasCookie={setHasCookie}
+      />
+    </Container>
   );
 }
 
-const Main = styled.div`
+const Container = styled.div`
+  display: grid;
+  row-gap: 8px;
+
   height: 100%;
+  --fontFamily: Recursive;
+  --fontSize: clamp(24px, 8vw, 64px);
+  --fontVariationSettings: 'wght' 974, 'slnt' -7, 'CASL' 0.42, 'CRSV' 0, 'MONO' 0;
+  --strokeWidth: 0.021875em;
+  --strokeColor: #000000;
+
+  padding-bottom: 16px;
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    padding-bottom: 0;
+  }
 `;
 
-const BottomGroup = styled.div`
-  opacity: 0;
+const TitleWrapper = styled.div`
+  top: 64px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  white-space: nowrap;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: var(--marginTop);
 `;
 
-export async function getStaticProps() {
-  const config = await getImageConfig('hero');
-  return {
-    props: {
-      config: config,
-    },
-  };
-}
+const TopRow = styled.div`
+  width: 100%;
+  transition: margin-top, 0.2s linear;
+`;

@@ -1,9 +1,12 @@
-// 'use strict';
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 // async..await is not allowed in global scope, must use a wrapper
 export default async function main(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).redirect('/contact');
+  }
+
   try {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -25,10 +28,7 @@ export default async function main(req, res) {
     Email: ${req.body.email}
     Message: ${req.body.message} `;
 
-    const receivers = [
-      process.env.MAILER_RECIPIENT_PRIMARY,
-      process.env.MAILER_RECIPIENT_ALTERNATE,
-    ];
+    const receivers = [process.env.MAILER_RECIPIENT_PRIMARY, process.env.MAILER_RECIPIENT_ALTERNATE];
 
     // send mail with defined transport object
     await transporter.sendMail({
@@ -42,7 +42,8 @@ export default async function main(req, res) {
     // console.log('Message sent: %s', info.messageId);
 
     res.status(200).send('message delivered');
-  } catch (error) {
+  }
+  catch (error) {
     console.error(error);
     res.status(500).send('AN ERROR OCCURED');
   }

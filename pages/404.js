@@ -1,17 +1,17 @@
-import Creature from '@components/Creature';
 import DocumentHead from '@components/Head';
-import { decovarValues } from '@constants';
-import { useFontSize } from '@hooks/useFontSize';
-import { motion } from 'framer-motion';
+import { decovarValues } from '@constants/index.js';
+import { m as motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';
-import styled, { keyframes } from 'styled-components/macro';
+import styled, { keyframes } from 'styled-components';
+// import { loadFeatures } from '@utils/helpers';
+import { SmirkingCube } from '@components/Creature';
 
 const getTranslateXPoints = (start, end, divider) => {
   let total = Math.abs(start) + Math.abs(end);
   let multiplier = start < end ? 1 : -1;
   let steps = total / divider;
-  let arr = [ start ];
+  let arr = [start];
   for (let i = 0; i < steps; i++) {
     start += divider * multiplier;
     arr.push(start);
@@ -29,31 +29,39 @@ const walking = (start, end, amount, xdeg, ydeg) => {
   });
 };
 
-const frames = walking(-600, 0, 42, -5, 62);
+const random = (n) => Math.floor(Math.random() * (n + 1));
+
+const shuffle = (array) => {
+  const copy = [...array];
+  const shuffledItems = [];
+  while (copy.length) {
+    let i = random(copy.length - 1);
+    let key = copy[i];
+    shuffledItems.push(key);
+    copy.splice(i, 1);
+  }
+  return shuffledItems;
+};
 
 const setRandomValues = () => {
-  const random = (n) => Math.floor(Math.random() * (n + 1));
-  const removeKeys = (key) => key !== 'default' && key !== 'sheared';
+  const removeKeys = (key) => key !== 'default'; // || key !== 'sheared';
 
   const keys = Object.keys(decovarValues);
-  const shuffledKeys = [];
-  while (keys.length) {
-    let i = random(keys.length - 1);
-    let key = keys[i];
-    shuffledKeys.push(key);
-    keys.splice(i, 1);
-  }
-
-  return shuffledKeys.filter(removeKeys).map((key) => decovarValues[key]);
+  const shuffledKeys = shuffle(keys);
+  const shuffledSettings = shuffledKeys.filter(removeKeys).map((key) => decovarValues[key]);
+  const fontSettings = [decovarValues.default, ...shuffledSettings];
+  return fontSettings;
 };
 
 export default function Error404() {
   const ref = useRef();
   const textRef = useRef();
-  const fontSize = useFontSize(32, 7 * 16, 240, 1440);
+  const fontSize = 'clamp(var(--size21), 7vw, var(--size36))';
 
   useEffect(() => {
-    if (ref.current) {
+    if (ref && ref.current) {
+      const frames = walking(-800, 0, 42, -5, 62);
+
       const walk = ref.current.animate(frames, {
         duration: 2000,
         fill: 'both',
@@ -61,24 +69,24 @@ export default function Error404() {
       });
       walk.finished.then(() => {
         const lastFrame = frames.pop();
-        const spin = [ lastFrame, { transform: 'rotateY(-15deg)' } ];
+        const spin = [lastFrame, { transform: 'rotateY(-15deg)' }];
         ref.current.animate(spin, {
           duration: 900,
           delay: 1400,
           easing: 'cubic-bezier(.79,-0.31,.05,1.4)',
-          fill: 'both',
+          fill: 'forwards',
         });
       });
     }
-  }, [ ref ]);
+  }, [ref]);
 
   const font = {
     animate: {
-      fontVariationSettings: [ decovarValues.default, ...setRandomValues() ],
+      fontVariationSettings: setRandomValues(),
       transition: {
-        delay: 9,
+        delay: 0,
         repeat: Infinity,
-        repeatType: 'reverse',
+        repeatType: 'mirror',
         duration: 120,
       },
     },
@@ -97,12 +105,15 @@ export default function Error404() {
       </DocumentHead>
 
       <Container>
-        <Creature ref={ref} />
+        <CubeWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <SmirkingCube width={125} height={125} ref={ref} />
+        </CubeWrapper>
         <Wrapper>
-          <Link passHref href="/">
+          <Link passHref href="/" legacyBehavior>
             <P
               variants={font}
-              animate={font.animate}
+              initial="initial"
+              animate="animate"
               ref={textRef}
               fontSize={fontSize}
               href="/"
@@ -127,18 +138,22 @@ const fadeIn = keyframes`
 `;
 
 const Container = styled.div`
-  display: grid;
-  place-items: center;
-  grid-template-rows: 200px 100px;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  align-content: center;
-  justify-items: center;
+  justify-content: center;
+  gap: 32px;
 `;
 
-const Wrapper = styled(motion.div)`
-  animation: ${fadeIn} 2s linear both 5s;
-  ${'' /* margin-top: -200px;
-  margin-bottom: -100px; */}
+const CubeWrapper = styled(motion.span)`
+  transform-style: preserve-3d;
+  margin-top: 64px;
+`;
+
+const Wrapper = styled.div`
+  animation: ${fadeIn} 2s linear both 4s;
 `;
 
 const P = styled(motion.p)`
@@ -146,86 +161,24 @@ const P = styled(motion.p)`
   text-align: center;
   font-family: decovar;
   font-size: ${(p) => p.fontSize};
+  font-size: clamp(60px, 10vw, 128px);
+  color: var(--color-404);
+  margin: 0;
+
+  text-shadow: -0.0125em -0.0125em 0 var(--shadow-404), 0.0125em -0.0125em 0 var(--shadow-404),
+    -0.0125em 0.0125em 0 var(--shadow-404), 0.0125em 0.0125em 0 var(--shadow-404);
+
+  -webkit-text-stroke: 0.0125em var(--stroke-404);
+
+  transition: all 200ms linear;
 
   &:hover {
     cursor: pointer;
-    color: var(--dark-pink);
-    @media (prefers-color-scheme: dark) {
-      color: deepskyblue;
-    }
+
+    text-shadow: -0.0125em -0.0125em 0 var(--shadow-404-hover),
+      0.0125em -0.0125em 0 var(--shadow-404-hover), -0.0125em 0.0125em 0 var(--shadow-404-hover),
+      0.0125em 0.0125em 0 var(--shadow-404-hover);
+
+    -webkit-text-stroke: 0.0125em var(--stroke-404-hover);
   }
 `;
-
-// const randomFonts = Array.from({ length: 10 }, () => setRandomFontVariation(700));
-
-// const getFontFrames = (totalFrames, minVariation, maxVariation) => {
-//   // const first = { fontVariationSettings: decovarTemplate };
-//   const frames = [ decovarTemplate ];
-//   minVariation = minVariation || 100;
-//   maxVariation = maxVariation || 600;
-//   for (let i = 1; i <= totalFrames; i++) {
-//     let variation =
-//       i % (totalFrames / 2) === 0
-//         ? minVariation
-//         : i % 2 === 0
-//         ? maxVariation / 2
-//         : maxVariation;
-//     const font = setRandomFontVariation(variation);
-//     frames.push(font);
-//   }
-//   return frames;
-// };
-
-// console.log(setRandomValues());
-// console.log(getFontFrames(12, 50, 700));
-
-// useEffect(() => {
-//   const frames = getFontFrames(8);
-//   const config = {
-//     duration: 20000,
-//     easing: 'linear',
-//     delay: 5000,
-//     iterations: Infinity,
-//     direction: 'alternate',
-//     fill: 'forwards',
-//   };
-//   if (textRef.current) {
-//     textRef.current.animate(frames, config);
-//   }
-// }, [ textRef ]);
-
-// function isBelowLimit(s, max = 1500) {
-//   const total = s
-//     .split(',')
-//     .filter((value) => {
-//       return value.includes('SKLA') || value.includes('BLDA');
-//     })
-//     .map((value) => value.match(/\d+/g))
-//     .flat()
-//     .map(Number)
-//     .reduce((a, b) => a + b);
-
-//   return total < max;
-// }
-
-// const setRandomFontVariation = (max = 1000) => {
-//   const template = decovarTemplate;
-//   let variation = template.replace(/0/g, () => random(max));
-//   while (!isBelowLimit(variation)) {
-//     variation = template.replace(/0/g, () => random(max));
-//   }
-
-//   return variation;
-// };
-
-// const setRandomVariables = () => {
-//   const copy = decovarVariables.slice();
-//   const shuffled = [];
-//   while (copy.length) {
-//     let index = random(copy.length - 1);
-//     let font = copy[index];
-//     shuffled.push(font);
-//     copy.splice(index, 1);
-//   }
-//   return shuffled;
-// };

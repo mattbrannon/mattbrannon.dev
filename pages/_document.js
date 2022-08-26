@@ -1,6 +1,7 @@
-/* eslint-disable @next/next/no-css-tags */
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+// import Script from 'next/script';
 import { ServerStyleSheet } from 'styled-components';
+// import GoogleAnalytics from '@components/GoogleAnalytics';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -23,7 +24,8 @@ export default class MyDocument extends Document {
           </>
         ),
       };
-    } finally {
+    }
+    finally {
       sheet.seal();
     }
   }
@@ -34,7 +36,21 @@ export default class MyDocument extends Document {
         <Head>
           <link
             rel="preload"
+            href="/fonts/decovar.woff2"
+            as="font"
+            crossOrigin=""
+            type="font/woff2"
+          />
+          <link
+            rel="preload"
             href="/fonts/Jost-english-subset.woff2"
+            as="font"
+            crossOrigin=""
+            type="font/woff2"
+          />
+          <link
+            rel="preload"
+            href="/fonts/inter-variable-subset.woff2"
             as="font"
             crossOrigin=""
             type="font/woff2"
@@ -53,11 +69,9 @@ export default class MyDocument extends Document {
             crossOrigin=""
             type="font/woff2"
           />
-
-          <link rel="stylesheet" href="/styles/fonts.css" />
-          <link rel="stylesheet" href="/styles/global.css" />
         </Head>
         <body>
+          <div id="mobile-nav-portal"></div>
           <Main />
           <NextScript />
         </body>

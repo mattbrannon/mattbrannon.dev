@@ -1,13 +1,33 @@
-import styled from 'styled-components/macro';
-import VideoPlayer from '@components/VideoPlayer';
-import { ExternalLink } from '@components/ExternalLink';
+import styled from 'styled-components';
+import { FlatVideo } from '@components/VideoPlayer';
+import { ExternalLink } from '@components/Links';
+import { breakpoints } from '@constants/index.js';
+import FancyTitle from '@components/FancyTitle';
+import { memo } from 'react';
+import { m as motion } from 'framer-motion';
 
-export default function PageTitle({ title, sources, links, children }) {
+export const AppTitle = memo(AppTitleComponent);
+
+function AppTitleComponent({ title, sources, links, children, ...props }) {
   return (
     <Top>
-      <Heading>{title}</Heading>
+      <FancyTitle
+        style={{
+          '--gradient': 'var(--app-name-gradient)',
+          // '--shadow': 'var(--app-name-shadow)',
+          '--strokeWidth': '0.05em',
+          '--strokeColor': '#000000',
+        }}
+        initial="hidden"
+        animate="show"
+        variants={appTitleVariant}
+      >
+        {title}
+      </FancyTitle>
       <Caption>{children}</Caption>
-      <VideoPlayer sources={sources} />
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+        <FlatVideo center sources={sources} {...props} />
+      </motion.div>
       <LinksWrapper>
         <ExternalLink href={links.liveSite}>Visit the live site</ExternalLink>
         <ExternalLink href={links.github}>See the code</ExternalLink>
@@ -16,41 +36,59 @@ export default function PageTitle({ title, sources, links, children }) {
   );
 }
 
-const Heading = styled.h3`
-  font-size: clamp(var(--size18), 7vw, var(--size48));
-  margin: 32px 0 0 0;
-  font-family: Recursive, sans-serif;
-  font-variation-settings: var(--recursive4);
+const appTitleVariant = {
+  hidden: {
+    opacity: 0,
+    // clipPath: 'var(--center)',
+    // letterSpacing: '0.2em',
+    '--fontSize': 'clamp(36px, 4vw, 54px)',
+    // '--gradient': 'linear-gradient(0deg, white, black)',
 
-  @media (prefers-color-scheme: light) {
-    color: var(--pinkBg);
-  }
+    '--fontVariationSettings': "'wght' 300, 'slnt' 0, 'CASL' 0, 'CRSV' 0, 'MONO' 0",
+  },
+  show: {
+    opacity: 1,
+    // clipPath: 'var(--visible)',
+    '--fontSize': 'clamp(36px, 4vw, 54px)',
 
-  @media (prefers-color-scheme: dark) {
-    color: var(--orange-main);
-  }
-`;
+    // fontSize:
+    '--fontVariationSettings': "'wght' 974, 'slnt' -7, 'CASL' 0.42, 'CRSV' 0, 'MONO' 0",
+    transition: {
+      duration: 1.5,
+    },
+  },
+};
 
 const Top = styled.div`
-  ${'' /* background: #444; */}
   text-align: center;
-  padding-top: 32px;
-  padding-bottom: 32px;
+  margin-bottom: 96px;
+  margin-top: 64px;
+  @media (max-width: ${breakpoints.mobile}px) {
+    margin-top: 32px;
+  }
+
+  --fontFamily: Recursive;
+  --fontVariationSettings: 'wght' 974, 'slnt' -7, 'CASL' 0.42, 'CRSV' 0, 'MONO' 0;
+  --strokeWidth: 0.021875em;
+  --strokeColor: #000000;
 `;
 
 const Caption = styled.div`
-  margin-top: -8px;
-  margin-bottom: 32px;
-  font-size: clamp(var(--size14), 2.5vw, var(--size20));
+  margin-bottom: 8px;
+  font-variation-settings: 'wdth' 80, 'wght' 575;
+
+  @media (max-width: ${breakpoints.mobile}px) {
+    font-size: 12px;
+  }
 `;
 
 const LinksWrapper = styled.div`
   width: 100%;
-  margin: 32px 0;
-  padding-top: 32px;
+  margin-top: 64px;
   display: flex;
   justify-content: space-around;
-  @media (max-width: 420px) {
+  @media (max-width: ${breakpoints.mobile}px) {
+    margin-top: 16px;
     gap: 16px;
     flex-direction: column;
     align-items: center;
