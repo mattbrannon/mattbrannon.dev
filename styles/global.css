@@ -251,7 +251,7 @@
 
   --app-card-shadow: #000;
   --app-card-color: var(--orange);
-  --app-card-hover-color: var(--yellow);
+  --app-card-hover: var(--yellow);
 
   --color-strong: var(--sky);
   /* --color-strong: var(--yellow); */
