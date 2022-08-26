@@ -14,16 +14,30 @@ const LabelWrapper = styled.label`
   display: block;
 `;
 
+const getPrecision = (step, value) => {
+  try {
+    const s = step.toString();
+    const index = s.indexOf('.');
+    const fixedAmount = index > -1 ? s.slice(index + 1).split('').length : 0;
+    return Number(value).toFixed(fixedAmount);
+  }
+  catch {
+    return value;
+  }
+};
+
 function withInputType(type) {
   return function withInput(Input) {
     return function Component({ ...props }) {
       const value = props.value?.toString() ?? props.defaultValue?.toString();
+      // const fixed = getPrecision(props.step);
+      const fixed = getPrecision(props.step, value);
 
       return (
         <>
           <Wrapper>
             <Label>{props.name}</Label>
-            <ValueDisplay>{value}</ValueDisplay>
+            <ValueDisplay>{fixed}</ValueDisplay>
             <Input type={type} {...props} />
           </Wrapper>
         </>
