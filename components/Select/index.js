@@ -13,7 +13,7 @@ const Select = ({ ...props }) => {
     <Wrapper>
       <NativeSelect {...props} />
       <FancySelect>
-        <TextWrapper>{displayedValue}</TextWrapper>
+        {/* <TextWrapper>{displayedValue}</TextWrapper> */}
         <IconWrapper>
           <Icon />
         </IconWrapper>
@@ -31,13 +31,23 @@ const NativeSelect = styled.select`
   position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   width: 100%;
   height: 100%;
-  opacity: 0;
-  margin-left: 10px;
-  margin-top: 10px;
+  /* opacity: 0; */
+  /* margin-left: 10px;
+  margin-top: 10px; */
   /* Allow the select to span the full height in Safari */
   -webkit-appearance: none;
+  font-size: 16px;
+  border: none;
+  border-radius: 0;
+  /* padding: 0 16px; */
+  outline: none;
+  background: none;
+
+  margin-left: 12px;
 `;
 
 const FancySelect = styled.div`
@@ -49,6 +59,7 @@ const FancySelect = styled.div`
   padding: 2px 8px;
 
   border-radius: 2px;
+  min-height: 32px;
 
   display: flex;
   justify-content: space-between;
@@ -67,6 +78,7 @@ const FancySelect = styled.div`
 
 const TextWrapper = styled.div`
   width: 100%;
+  color: white;
 `;
 
 const Icon = styled.div`

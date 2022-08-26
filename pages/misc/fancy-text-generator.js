@@ -5,6 +5,7 @@ import { MainView, HelpView, CodeView } from 'views/FancyTextGenerator';
 import { AnimatePresence, m as motion } from 'framer-motion';
 import { toSnakeUpperCase } from '@utils/helpers';
 import { Main, NoScript } from 'views/FancyTextGenerator/styles';
+import Head from '@components/Head';
 
 export default function Page({ ...props }) {
   const [state, dispatch] = useReducer(fancyTextReducer, initialState);
@@ -17,6 +18,8 @@ export default function Page({ ...props }) {
 
   return (
     <>
+      <Head title="Fancy Text Generator" description="Developer tools" />
+
       <FontControls ref={ref} onChange={onChange} state={state} dispatch={dispatch} />
       <Main style={{ '--controlWidth': 336 + 'px' }}>
         <AnimatePresence>

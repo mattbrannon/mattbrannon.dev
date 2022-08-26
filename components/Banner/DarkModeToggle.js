@@ -89,6 +89,9 @@ const ToggleButton = styled.button`
   min-width: 32px;
   max-width: 32px;
   width: 100%;
+
+  width: 32px;
+  height: 32px;
   border: none;
   position: relative;
   &:hover {
