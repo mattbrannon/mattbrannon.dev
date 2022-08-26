@@ -43,7 +43,7 @@ function Controls({ ...props }, ref) {
       {props.state.shape === 'Sphere' && (
         <Group>
           <SectionHeading>Sides</SectionHeading>
-          <Range {...props} name="shape sides" min={1} max={props.state.max} />
+          <Range {...props} name="shape sides" min={1} max={props.state.max || 15} />
         </Group>
       )}
 
@@ -93,9 +93,9 @@ function Controls({ ...props }, ref) {
           </>
         )}
       </Group>
-      <Group>
+      {/* <Group>
         <NormalButton onClick={() => props.dispatch({ type: 'RESET' })}>reset</NormalButton>
-      </Group>
+      </Group> */}
     </Layout>
   );
 }

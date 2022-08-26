@@ -50,6 +50,7 @@ export const Globe = ({ ...props }) => {
 // 'hsl(140, 75%, 50%, 0.1)'
 
 const Thing = styled.div.attrs(({ sides, i, color }) => {
+  console.log(color);
   return {
     style: {
       '--background': i <= sides ? color : 'transparent',
