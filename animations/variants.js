@@ -29,7 +29,7 @@ export const shadow = makeShadow({
 
 export const textGeneratorVariant = {
   hidden: ({ state, ...props }) => {
-    // console.log(state);
+    // console.log(state, props);
     const fontVariationSettings = parseFontSettings(
       state.fonts[state.styles.fontFamily].initialSettings
     );
@@ -57,7 +57,7 @@ export const textGeneratorVariant = {
       '--shadow': state.styles.shadow,
 
       transition: {
-        duration: duration,
+        duration: state.reset ? 2 : duration,
         ease: 'linear',
       },
     };
