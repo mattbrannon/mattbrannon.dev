@@ -22,6 +22,7 @@ export const Layout = forwardRef((props, ref) => {
         initial="initial"
         animate="animate"
         exit="exit"
+        style={{ minWidth: 335 }}
       >
         <Wrapper style={{ '--zIndex': zIndex }} tabIndex={-1} {...props} ref={ref}>
           <Section>{props.children}</Section>
@@ -33,7 +34,7 @@ export const Layout = forwardRef((props, ref) => {
 
 const Wrapper = styled(motion.div)`
   ${'' /* width: 280px; */}
-  ${'' /* min-width: 320px; */}
+  min-width: 336px;
   height: calc(100% - var(--header-height));
   position: absolute;
   background: hsl(0, 0%, 3.5%, 1);
