@@ -85,8 +85,8 @@ export default function Application({ Component, pageProps }) {
                 <Layout>
                   <HeaderGap />
                   {/* <Header isVisible={isVisible} ref={header} /> */}
-                  <Main id="main-content">
-                    <Component {...pageProps} />
+                  <Main>
+                    <Component mainContent={'main-content'} {...pageProps} />
                   </Main>
                   <Footer />
                 </Layout>
