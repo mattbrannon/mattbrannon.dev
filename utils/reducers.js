@@ -17,7 +17,7 @@ export const initialState = {
   help: false,
   code: false,
   reset: false,
-  textContent: 'Blah blah blah',
+  textContent: 'Click to Edit',
   applyToWords: false,
 
   shadow: {
