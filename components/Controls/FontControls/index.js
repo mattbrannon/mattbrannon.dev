@@ -12,6 +12,12 @@ export const FontControls = forwardRef(Controls);
 function Controls({ ...props }, ref) {
   const { gradient, shadow, styles, applyToWords } = props.state;
 
+  useEffect(() => {
+    if (ref && ref.current) {
+      props.setControlWidth(ref.current.getBoundingClientRect().width);
+    }
+  }, [ref, props]);
+
   return (
     <Layout ref={ref}>
       <Group>

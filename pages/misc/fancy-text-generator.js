@@ -20,8 +20,14 @@ export default function Page({ ...props }) {
     <>
       <Head title="Fancy Text Generator" description="Developer tools" />
 
-      <FontControls ref={ref} onChange={onChange} state={state} dispatch={dispatch} />
-      <Main style={{ '--controlWidth': 336 + 'px' }}>
+      <FontControls
+        ref={ref}
+        onChange={onChange}
+        state={state}
+        dispatch={dispatch}
+        setControlWidth={setControlWidth}
+      />
+      <Article style={{ '--controlWidth': controlWidth + 'px' }}>
         <AnimatePresence>
           <motion.div
             key={state.help || state.code || 'main'}
