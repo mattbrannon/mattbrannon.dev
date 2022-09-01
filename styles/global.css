@@ -64,6 +64,8 @@
   --footer-background: var(--black-soft);
   --form-background: var(--beige);
   --help-background: var(--yellow-faded-light);
+  --fancyCaretColor: var(--black-soft);
+
   --help-background: var(--body-background);
 
   --fancy-link-underline: var(--pink-light);
@@ -242,6 +244,7 @@
   --stroke-404-hover: deepskyblue;
   --color-text: var(--white-soft);
   --body-background: var(--black-soft);
+  --fancyCaretColor: var(--white-soft);
 
   --code-background: var(--black1);
   --header-background: var(--black2);
