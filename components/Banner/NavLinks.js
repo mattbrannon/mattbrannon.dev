@@ -22,7 +22,7 @@ export function NavLinks() {
 const Navigation = () => {
   const links = ['blog', 'apps', 'misc', 'contact'];
   const { route } = useRouter();
-  const isMobile = useMediaQuery({ maxWidth: 660 });
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.tablet });
   const hasMounted = useHasMounted();
 
   if (isMobile || !hasMounted) {
