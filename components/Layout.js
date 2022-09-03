@@ -15,19 +15,19 @@ const Layout = styled.div`
   min-height: 100%;
 `;
 
-export const Main = styled.main`
-  /* margin-top: var(--header-height); */
-  margin-bottom: 96px;
-`;
-
-export const AltMain = styled(Main)`
-  min-height: 100%;
-  height: calc(100vh - var(--footer-height));
-`;
+// export const Main = styled.main`
+//   /* margin-top: var(--header-height); */
+//   margin-bottom: 96px;
+//   display: grid;
+// `;
 
 export const FullBleed = styled.div`
   grid-column: 1 / -1;
   padding: 0;
+`;
+
+export const Main = styled.main`
+  grid-column: 2;
 `;
 
 export default Layout;

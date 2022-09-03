@@ -84,10 +84,7 @@ export default function Application({ Component, pageProps }) {
                 <Banner ref={ref} isVisible={hasActiveElement || isBannerVisible} />
                 <Layout>
                   <HeaderGap />
-                  {/* <Header isVisible={isVisible} ref={header} /> */}
-                  <Main>
-                    <Component mainContent={'main-content'} {...pageProps} />
-                  </Main>
+                  <Component {...pageProps} />
                   <Footer />
                 </Layout>
               </ContextProvider>
