@@ -34,10 +34,12 @@ export const textGeneratorVariant = {
       state.fonts[state.styles.fontFamily].initialSettings
     );
 
+    // console.log(fontVariationSettings);
+
     return {
       '--fontFamily': state.styles.fontFamily,
       '--fontSize': state.styles.fontSize + 'px',
-      '--fontSettings': fontVariationSettings,
+      '--fontVariationSettings': fontVariationSettings,
       '--strokeWidth': 0,
       '--shadow': 0,
       '--gradient': 0,
@@ -46,10 +48,11 @@ export const textGeneratorVariant = {
     };
   },
   show: ({ state, duration, ...props }) => {
+    // console.log(state.styles);
     return {
       '--fontSize': parseInt(state.styles.fontSize) + 'px',
       '--fontFamily': state.styles.fontFamily,
-      '--fontSettings': state.styles.end || state.styles.fontVariationSettings,
+      '--fontVariationSettings': state.styles.fontVariationSettings,
       '--strokeWidth': state.styles.strokeWidth + 'em',
       '--strokeColor': state.styles.strokeColor,
       '--letterSpacing': state.styles.letterSpacing + 'em',
@@ -63,19 +66,19 @@ export const textGeneratorVariant = {
     };
   },
   close: ({ state }) => {
-    console.log(state);
+    // console.log(state);
     return {
       '--fontSize': parseInt(state.styles.fontSize) + 'px',
       '--fontFamily': state.styles.fontFamily,
-      '--fontSettings': state.styles.start,
+      '--fontVariationSettings': state.styles.start,
       '--strokeWidth': state.styles.strokeWidth + 'em',
       '--strokeColor': state.styles.strokeColor,
       '--letterSpacing': state.styles.letterSpacing + 'em',
       '--gradient': state.styles.gradient,
       '--shadow': state.styles.shadow,
-
+      opacity: 0,
       transition: {
-        // duration: 2,
+        duration: 0.5,
         ease: 'linear',
       },
     };
