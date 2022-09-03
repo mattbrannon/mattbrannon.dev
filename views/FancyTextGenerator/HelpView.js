@@ -1,7 +1,7 @@
 import { Container, Wrapper, Section, Heading, Row, SubHeading, Text, ViewWrapper } from './styles';
 import { AnimatePresence, m as motion } from 'framer-motion';
 
-export const Help = ({ state: { help } }) => {
+export const HelpView = ({ state: { help } }) => {
   return (
     <ViewWrapper>
       <Container>
