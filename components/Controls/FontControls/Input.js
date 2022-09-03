@@ -1,13 +1,6 @@
 import styled from 'styled-components';
 
-const Label = ({ children }) => {
-  const tempName = children.split(' ').slice(1).join(' ');
-  const name = tempName.length ? tempName : children;
-
-  return <LabelWrapper>{name}</LabelWrapper>;
-};
-
-const LabelWrapper = styled.label`
+const Label = styled.label`
   font-size: 14px;
   padding: 8px 0;
   white-space: nowrap;
@@ -33,12 +26,19 @@ function withInputType(type) {
       // const fixed = getPrecision(props.step);
       const fixed = getPrecision(props.step, value);
 
+      const tempName = props.name.split(' ').slice(1).join(' ');
+      const name = tempName.length ? tempName : props.name;
+
+      const onChange = (e) => {
+        return props.onChange(e);
+      };
+
       return (
         <>
           <Wrapper>
-            <Label>{props.name}</Label>
+            <Label htmlFor={props.name}>{name}</Label>
             <ValueDisplay>{fixed}</ValueDisplay>
-            <Input type={type} {...props} />
+            <Input onChange={onChange} id={props.name} type={type} {...props} />
           </Wrapper>
         </>
       );
