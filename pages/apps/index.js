@@ -3,6 +3,7 @@ import Head from '@components/Head';
 import PageTitle from '@components/PageTitle';
 import Text from '@components/Text/Text';
 import { memo } from 'react';
+import { Main } from '@components/Layout';
 // import elbowRoomImage from '/public/images/elbowroom/desktop.png';
 // import letsMakeAGifImage from '/public/images/lets-make-a-gif/desktop.png';
 
@@ -31,7 +32,7 @@ const montyHallSources = makeSourceArray(montyHallAvif, montyHallWebp, montyHall
 
 const letsMakeAGifConfig = {
   href: '/apps/lets-make-a-gif',
-  title: 'Let\'s Make a Gif',
+  title: "Let's Make a Gif",
   description: 'Online photo & video editing application',
   sources: letsMakeAGifSources,
   alt: 'desktop view of the app',
@@ -70,13 +71,13 @@ const Introduction = () => {
 
 export default memo(function AppsPage() {
   return (
-    <>
+    <Main id="main-content">
       <Head title="Apps" description="Apps built by Matt Brannon" />
       <PageTitle>Apps I've Built</PageTitle>
       <Introduction />
       <AppCard config={letsMakeAGifConfig} />
       <AppCard config={elbowRoomConfig} />
       <AppCard config={montyHallConfig} />
-    </>
+    </Main>
   );
 });

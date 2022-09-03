@@ -1,5 +1,6 @@
 import { InternalLink } from '@components/Links';
 import Head from '@components/Head';
+import { Main } from '@components/Layout';
 import { CardHeading } from '@components/Headings';
 import PageTitle from '@components/PageTitle';
 import { Spacer } from '@components/Spacer';
@@ -24,7 +25,7 @@ export default function Index() {
   }, []);
 
   return (
-    <>
+    <Main id="main-content">
       <Head title="Oddities and revelations" description="secret shh..." />
 
       <PageTitle>Oddities and revelations</PageTitle>
@@ -103,7 +104,7 @@ export default function Index() {
         </Card>
       </List>
       <Spacer axis="vertical" size={32} />
-    </>
+    </Main>
   );
 }
 

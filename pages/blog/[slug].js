@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic';
 import path from 'path';
 import remarkGfm from 'remark-gfm';
 import styled from 'styled-components';
+import { Main } from '@components/Layout';
 // import { Em } from '@components/Text';
 
 const UnorderedList = styled.ul`
@@ -53,11 +54,11 @@ const components = {
 export default function PostPage({ source, frontMatter }) {
   const { title, description } = frontMatter;
   return (
-    <>
+    <Main id="main-content">
       <Head title={title} description={description} />
       <BlogHeader>{frontMatter}</BlogHeader>
       <MDXRemote {...source} components={components} />
-    </>
+    </Main>
   );
 }
 

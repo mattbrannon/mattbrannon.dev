@@ -10,7 +10,7 @@ export const AppTitle = memo(AppTitleComponent);
 
 function AppTitleComponent({ title, sources, links, children, ...props }) {
   return (
-    <Top>
+    <Top id="main-content">
       <FancyTitle
         style={{
           '--gradient': 'var(--app-name-gradient)',

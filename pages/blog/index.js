@@ -2,6 +2,7 @@ import { InternalLink } from '@components/Links';
 import Head from '@components/Head';
 import { CardHeading } from '@components/Headings';
 import PageTitle from '@components/PageTitle';
+import { Main } from '@components/Layout';
 import { Spacer } from '@components/Spacer';
 import Text from '@components/Text/Text';
 import { BlogVideo } from '@components/VideoPlayer';
@@ -10,11 +11,12 @@ import { POSTS_PATH, publishedArticles } from '@utils/mdxUtils.js';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
+
 import styled from 'styled-components';
 
 export default function Index({ posts }) {
   return (
-    <>
+    <Main id="main-content">
       <Head
         title="Another Developer Blog"
         description="Thoughts, opinions, criticisms, rantings, ravings, musings on all things great and small"
@@ -44,7 +46,7 @@ export default function Index({ posts }) {
         })}
       </BlogList>
       <Spacer axis="vertical" size={32} />
-    </>
+    </Main>
   );
 }
 
