@@ -12,9 +12,9 @@
     "next:version": "next --version"
   },
   "dependencies": {
+    "@mattbrannon/color-tools": "^1.0.3",
     "@reach/dialog": "^0.17.0",
     "axios": "^0.21.4",
-    "color-tools": "file:../color-tools",
     "date-fns": "^2.22.1",
     "dotenv": "^10.0.0",
     "focus-trap-react": "^8.5.1",

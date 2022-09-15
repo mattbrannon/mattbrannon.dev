@@ -6,7 +6,7 @@ import SlidingText from './SlidingText';
 const MobileText = ({ ...props }) => {
   return (
     <motion.div initial={{ x: 40 }} animate={{ x: 0 }} transition={{ duration: 1 }}>
-      <SlidingText showWords={props.shouldRemove}>
+      <SlidingText>
         Hey there! My name is Matt. I'm a web developer and musician. Thanks for stopping by my
         little corner of the web.
       </SlidingText>
@@ -16,7 +16,7 @@ const MobileText = ({ ...props }) => {
 
 const RegularText = ({ ...props }) => {
   return (
-    <SlidingText showWords={props.shouldRemove}>
+    <SlidingText>
       Hey there! My name is Matt. I'm a web developer and musician. I enjoy building solutions to
       modern problems with code. Thanks for stopping by my little corner of the web.
     </SlidingText>

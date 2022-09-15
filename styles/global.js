@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import { breakpoints } from '@constants/breakpoints';
 
 export const GlobalStyle = createGlobalStyle`
 :root {
@@ -220,7 +221,7 @@ export const GlobalStyle = createGlobalStyle`
 
   --blog-shadow-light-mode: var(--blog-shadow-dark-mode);
 
-  @media (max-width: 660px) {
+  @media (max-width: ${breakpoints.tablet}px) {
     --breathing-room: 15px;
     --header-height: 50px;
   }

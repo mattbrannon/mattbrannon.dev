@@ -50,15 +50,11 @@ const getCss = ({ styles }) => {
   // console.log(fontSettings.split(','));
 
   const staticCSS = `
-
   /*
-
   ${fontFamily}
     homepage: ${homepage}
     github: ${github}
-  
   */
-
 
   .fancy-text {
     --fontFamily: ${fontFamily};
@@ -93,8 +89,6 @@ const getCss = ({ styles }) => {
     text-shadow: var(--shadow);
     -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
   }
-
-
   `;
 
   return staticCSS;

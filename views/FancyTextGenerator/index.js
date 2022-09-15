@@ -1,38 +1,51 @@
-export { Help as HelpView } from './HelpView';
-export { FancyAnimatedGradient as MainView } from './MainView';
-export { CodeView } from './CodeView';
+import { AnimatePresence, m as motion } from 'framer-motion';
+import { useReducer, useRef, useState } from 'react';
+import { fancyTextReducer, initialState } from './reducer';
+import Head from '@components/Head';
+import { FontControls } from '@components/Controls/FontControls';
+import { Main } from '@components/Layout';
+import { breakpoints } from '@constants/breakpoints';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { toSnakeUpperCase } from '@utils/helpers';
+import { CodeView } from './CodeView';
+import { HelpView } from './HelpView';
+import { MainView } from './MainView';
+import { Article, NoScript } from './styles';
 
-// import { AnimatePresence } from 'framer-motion';
-// import { CodeView, ViewWrapper } from './CodeView';
-// import { HelpView } from './HelpView';
-// import { pxToEm } from '@utils/helpers';
+export function FancyTextGenerator({ ...props }) {
+  const [state, dispatch] = useReducer(fancyTextReducer, initialState);
+  const ref = useRef();
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
+  const [controlWidth, setControlWidth] = useState(0);
 
-// export const ToggleViews = ({ show, stroke, ...props }) => {
-//   console.log(stroke);
+  const onChange = (e) => {
+    const type = toSnakeUpperCase(e.target.name);
+    dispatch({ type, value: e.target.value });
+  };
 
-//   return (
-//     <AnimatePresence exitBeforeEnter>
-//       {show.code ? (
-//         <CodeView
-//           key={show.code}
-//           fontFamily={props.font.fontName}
-//           shadow={props.shadow}
-//           gradient={props.gradient}
-//           fontSize={'10vw'}
-//           strokeWidth={`${pxToEm(stroke.width)}em`}
-//           strokeColor={stroke.color}
-//           fontVariationSettings={props.font.css}
-//         />
-//       ) : show.help ? (
-//         <ViewWrapper
-//           initial={{ width: 0 }}
-//           animate={{ width: '100%' }}
-//           exit={{ width: 0, transition: { duration: 0.3 } }}
-//           transition={{ duration: 0.8, ease: 'anticipate' }}
-//         >
-//           <HelpView key={show.help} />
-//         </ViewWrapper>
-//       ) : null}
-//     </AnimatePresence>
-//   );
-// };
+  return (
+    <Main>
+      <Head title="Fancy Text Generator" description="Developer tools" />
+
+      <FontControls
+        ref={ref}
+        onChange={onChange}
+        state={state}
+        dispatch={dispatch}
+        setControlWidth={setControlWidth}
+      />
+      <Article style={{ '--controlWidth': controlWidth + 'px' }}>
+        <AnimatePresence>
+          {state.help ? (
+            <HelpView state={state} />
+          ) : state.code ? (
+            <CodeView styles={state.styles} />
+          ) : (
+            <MainView {...props} dispatch={dispatch} state={state} />
+          )}
+        </AnimatePresence>
+        <NoScript>This tool requires javascript to work properly</NoScript>
+      </Article>
+    </Main>
+  );
+}

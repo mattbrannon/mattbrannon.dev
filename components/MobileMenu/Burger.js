@@ -3,7 +3,7 @@ import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/breakpoints';
 
 export function Burger({ dialogIsOpen, setDialogIsOpen }) {
-  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.tablet });
 
   return (
     <BurgerWrapper
@@ -40,7 +40,7 @@ const BurgerWrapper = styled.button`
   right: 32px;
   z-index: 99999;
 
-  @media (max-width: ${breakpoints.mobile}px) {
+  @media (max-width: ${breakpoints.tablet}px) {
     --burger-width: var(--size24);
     --burger-height: var(--size18);
   }

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Blockquote } from '../SideNote';
-import { Color } from 'color-tools';
+import { Color } from '@mattbrannon/color-tools';
 import { fonts } from '@constants/index';
 import Help from '@components/Help';
 
@@ -54,11 +54,6 @@ const reduceStyles = (style) => {
 
 const getFontStyle = (props) => {
   const { families } = fonts;
-  // const Color = dynamic(() => import('color-tools'));
-
-  // console.log(new Color('blue').hsl.css());
-
-  // const Color = dynamic(() => import 'color-tools')
 
   const colorName = Reflect.ownKeys(props)
     .filter((key) => Color.isNamedColor(key))

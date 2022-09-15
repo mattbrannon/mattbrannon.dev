@@ -1,8 +1,8 @@
 // import ControlsLayout, { Group, Heading } from './Layout';
-// import RangeSlider from './RangeSlider';
+// import Range from './Range';
 import { useRef, forwardRef, useState } from 'react';
 import Select from '@components/Select';
-import { Range as RangeSlider } from './FontControls/Input';
+import { Range, Color } from './FontControls/Input';
 import { Group, Layout, SectionHeading } from './FontControls/Layout';
 
 const composites = [
@@ -27,7 +27,7 @@ const composites = [
   'luminosity',
 ];
 
-const FractalControls = forwardRef(({ ...props }, ref) => {
+const FractalControls = forwardRef(({ state, ...props }, ref) => {
   const scaleRef = useRef();
   // console.log(props);
   // const [selected, setSelected] = useState('');
@@ -72,7 +72,7 @@ const FractalControls = forwardRef(({ ...props }, ref) => {
       <Group>
         <SectionHeading>Fractal Settings</SectionHeading>
 
-        <Select value={props.state.composite} onChange={handleCompositeChange}>
+        <Select value={state.composite} onChange={handleCompositeChange}>
           {composites.map((composite, i) => (
             <Option key={i} value={composite}>
               {composite}
@@ -80,39 +80,62 @@ const FractalControls = forwardRef(({ ...props }, ref) => {
           ))}
         </Select>
 
-        <RangeSlider name="fractal x axis" min={0} max={1000} {...props} />
-        <RangeSlider name="fractal y axis" min={0} max={1000} {...props} />
+        <Range name="fractal x axis" min={0} max={1000} value={state.xAxis} {...props} />
+        <Range name="fractal y axis" min={0} max={1000} {...props} value={state.yAxis} />
 
-        {/* <RangeSlider name="fractal limit" min={10} max={30} {...props} /> */}
-        <RangeSlider name="fractal size" min={1} max={144} {...props} />
-        <RangeSlider name="fractal sides" min={1} max={8} {...props} />
-        {/* <RangeSlider name="fractal branches" min={1} max={2} {...props} /> */}
-        <RangeSlider name="fractal max depth" min={1} max={12} {...props} />
+        {/* <Range name="fractal limit" min={10} max={30} {...props} /> */}
+        <Range name="fractal size" min={1} max={144} {...props} value={state.size} />
+        <Range name="fractal sides" min={1} max={8} {...props} value={state.sides} />
+        {/* <Range name="fractal branches" min={1} max={2} {...props} /> */}
+        <Range name="fractal max depth" min={1} max={12} {...props} value={state.maxDepth} />
 
-        {/* <RangeSlider name="fractal angle" min={45} max={315} step={1} {...props} /> */}
-        <RangeSlider
+        {/* <Range name="fractal angle" min={45} max={315} step={1} {...props} /> */}
+        <Range
           ref={scaleRef}
           name="fractal scale"
-          min={-0.9}
-          max={0.9}
+          min={-1}
+          max={1}
           step={0.01}
           {...props}
+          value={state.scale}
         />
-        <RangeSlider
+        <Range
           name="fractal radians"
           min={Math.PI * -2}
           max={Math.PI * 2}
           step={0.01}
           {...props}
+          value={state.radians}
         />
-        <RangeSlider name="fractal line width" min={0.01} max={30} step={0.01} {...props} />
+        <Range
+          name="fractal line width"
+          min={1}
+          max={200}
+          step={0.01}
+          {...props}
+          value={state.lineWidth}
+        />
       </Group>
-      {/* <Group>
-        <CustomInput type="color" name="shadow color" {...props} />
-        <RangeSlider name="shadow offset x" min={-10} max={10} {...props} />
-        <RangeSlider name="shadow offset y" min={-10} max={10} {...props} />
-        <RangeSlider name="shadow blur" min={0} max={10} {...props} />
-      </Group> */}
+      <Group>
+        <SectionHeading>Shadow</SectionHeading>
+
+        <Color name="fractal shadow color" value={state.shadowColor} {...props} />
+        <Range
+          name="fractal shadow offset x"
+          value={state.shadowOffsetX}
+          min={-10}
+          max={10}
+          {...props}
+        />
+        <Range
+          name="fractal shadow offset y"
+          value={state.shadowOffsetY}
+          min={-10}
+          max={10}
+          {...props}
+        />
+        <Range name="fractal shadow blur" value={state.shadowBlur} min={0} max={10} {...props} />
+      </Group>
     </Layout>
   );
 });

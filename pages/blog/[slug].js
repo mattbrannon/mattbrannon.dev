@@ -13,6 +13,7 @@ import dynamic from 'next/dynamic';
 import path from 'path';
 import remarkGfm from 'remark-gfm';
 import styled from 'styled-components';
+import { Main } from '@components/Layout';
 // import { Em } from '@components/Text';
 
 const UnorderedList = styled.ul`
@@ -46,18 +47,18 @@ const components = {
   h4: H4Link,
   h5: H5Link,
   // em: dynamic(() => import('@components/Text').then((res) => res.Em)),
-  a: dynamic(() => import('@components/Links').then((res) => res.ExternalLink)),
+  a: dynamic(() => import('@components/Links').then((res) => res.InternalLink)),
   InternalLink: dynamic(() => import('@components/Links').then((res) => res.Link)),
 };
 
 export default function PostPage({ source, frontMatter }) {
   const { title, description } = frontMatter;
   return (
-    <>
+    <Main id="main-content">
       <Head title={title} description={description} />
       <BlogHeader>{frontMatter}</BlogHeader>
       <MDXRemote {...source} components={components} />
-    </>
+    </Main>
   );
 }
 

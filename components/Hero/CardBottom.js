@@ -79,7 +79,7 @@ const Container = styled(motion.div)`
   position: relative;
   margin-top: 16px;
   transition: all 1s linear;
-  @media (max-width: ${breakpoints.mobile}px) {
+  @media (max-width: ${breakpoints.tablet}px) {
     margin: 16px 0;
     flex-wrap: wrap;
     grid-template-columns: 1fr;

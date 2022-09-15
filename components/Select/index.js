@@ -46,6 +46,8 @@ const NativeSelect = styled.select`
   /* padding: 0 16px; */
   outline: none;
   background: none;
+  color: white;
+  font-family: Jost;
 
   margin-left: 12px;
 `;

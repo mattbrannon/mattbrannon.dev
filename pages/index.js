@@ -2,8 +2,8 @@ import styled, { ThemeContext } from 'styled-components';
 import Hero from '@components/Hero';
 import FancyTitle from '@components/FancyTitle';
 import Head from '@components/Head';
-import { useState, useContext, useEffect } from 'react';
-import { useMediaQuery } from '@hooks/useMediaQuery';
+import { Main } from '@components/Layout';
+import { useContext } from 'react';
 import { breakpoints } from '@constants/breakpoints';
 
 const homePageVariant = {
@@ -26,51 +26,36 @@ const homePageVariant = {
 };
 
 export default function HomePage() {
-  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
-  const marginTop = isMobile ? 8 : 48;
   const context = useContext(ThemeContext);
-
-  // useEffect(() => {
-  //   console.log(context);
-  // }, [context]);
-
-  const [shouldRemove, setShouldRemove] = useState(true);
-
   return (
-    <Container>
-      <Head description="Personal website for Matt Brannon" title="Matt Brannon" />
-      {!isMobile ? (
-        <TopRow style={{ '--marginTop': `${marginTop}px`, alignSelf: 'center' }}>
-          <TitleWrapper>
-            <FancyTitle
-              style={{
-                '--gradient': 'var(--app-name-gradient)',
-                '--shadow': 'var(--app-name-shadow)',
-              }}
-              variants={homePageVariant}
-              initial="hidden"
-              animate="show"
-              custom={{ hasRun: context.hasRun }}
-            >
-              Welcome to my site!
-            </FancyTitle>
-          </TitleWrapper>
-        </TopRow>
-      ) : null}
-      <Hero
-        shouldRemove={shouldRemove}
-        setShouldRemove={setShouldRemove}
-        // setShowTitle={setShowTitle}
-        // hasCookie={hasCookie}
-        // setHasCookie={setHasCookie}
-      />
+    <Container id="main-content">
+      <Head description="Matt Brannon's slice of the internet" title="Matt Brannon" />
+      <TopRow>
+        <TitleWrapper>
+          <FancyTitle
+            style={{
+              '--gradient': 'var(--app-name-gradient)',
+              '--shadow': 'var(--app-name-shadow)',
+            }}
+            variants={homePageVariant}
+            initial="hidden"
+            animate="show"
+            custom={{ hasRun: context.hasRun }}
+          >
+            Welcome to my site!
+          </FancyTitle>
+        </TitleWrapper>
+      </TopRow>
+
+      <Hero />
     </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled(Main)`
   display: grid;
-  row-gap: 8px;
+  align-content: start;
+  gap: 16px;
 
   height: 100%;
   --fontFamily: Recursive;
@@ -99,5 +84,10 @@ const TitleWrapper = styled.div`
 
 const TopRow = styled.div`
   width: 100%;
+  margin-top: 96px;
   transition: margin-top, 0.2s linear;
+
+  @media (max-width: ${breakpoints.tablet}px) {
+    margin-top: 16px;
+  }
 `;

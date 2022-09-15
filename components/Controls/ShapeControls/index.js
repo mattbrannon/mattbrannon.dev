@@ -82,14 +82,13 @@ function Controls({ ...props }, ref) {
             <Color name="shape cube main" {...props} />
             <Color name="shape cube hair" {...props} />
             <Color name="shape cube eyes" {...props} />
-            <Range name="shape cube opacity" {...props} />
+            <Range max={1} step={0.01} name="shape cube opacity" {...props} />
           </>
         )}
 
         {props.state.shape === 'Sphere' && (
           <>
             <Color name="shape sphere outer" {...props} />
-            <Range name="shape cube opacity" {...props} />
           </>
         )}
       </Group>
