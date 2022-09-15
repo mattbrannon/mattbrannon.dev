@@ -1,10 +1,10 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@mattbrannon/color-tools': ^1.0.3
   '@next/eslint-plugin-next': ^12.0.7
   '@reach/dialog': ^0.17.0
   axios: ^0.21.4
-  color-tools: file:../color-tools
   date-fns: ^2.22.1
   dotenv: ^10.0.0
   eslint: 8.21.0
@@ -32,9 +32,9 @@ specifiers:
   typescript: ^4.7.4
 
 dependencies:
+  '@mattbrannon/color-tools': 1.0.3
   '@reach/dialog': 0.17.0_sfoxds7t5ydpegc3knd667wn6m
   axios: 0.21.4
-  color-tools: file:../color-tools
   date-fns: 2.29.2
   dotenv: 10.0.0
   focus-trap-react: 8.11.3_oxfzelaz5ynxsop2v2nu2h2m64
@@ -412,6 +412,10 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
+    dev: false
+
+  /@mattbrannon/color-tools/1.0.3:
+    resolution: {integrity: sha512-KII1HPhFmfuBHyD1RebeDV1MMx509Qiy47CAsti7BinGFqMMW0Rgap0O9nwbSWkibbQiJW0Jpp1PPMWhOo6qmg==}
     dev: false
 
   /@mdx-js/mdx/1.6.22:
@@ -4042,10 +4046,4 @@ packages:
 
   /zwitch/2.0.2:
     resolution: {integrity: sha512-JZxotl7SxAJH0j7dN4pxsTV6ZLXoLdGME+PsjkL/DaBrVryK9kTGq06GfKrwcSOqypP+fdXGoCHE36b99fWVoA==}
-    dev: false
-
-  file:../color-tools:
-    resolution: {directory: ../color-tools, type: directory}
-    name: color-tools
-    version: 1.0.0
     dev: false

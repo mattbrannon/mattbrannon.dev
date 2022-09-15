@@ -1,5 +1,4 @@
 import { snakeToCamel, parseFontSettings, makeGradient, makeShadow } from '@utils/helpers';
-import { Color } from 'color-tools';
 
 // #9eecff #21383f #47afff #192f70
 

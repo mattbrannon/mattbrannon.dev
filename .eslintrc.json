@@ -28,6 +28,7 @@
     "no-unused-expressions": "off",
     "no-var": "error",
     "no-unused-vars": "off",
+    "no-empty": "warn",
     "react/react-in-jsx-scope": "off",
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off",

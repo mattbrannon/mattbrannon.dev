@@ -1,6 +1,4 @@
-import { convert } from 'color-tools';
-import { Color } from 'color-tools';
-export { Color, Theme } from 'color-tools';
+import { Color } from '@mattbrannon/color-tools';
 
 // function removePrefix(prefix) {
 //   return function remove(str) {

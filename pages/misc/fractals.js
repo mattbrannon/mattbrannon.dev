@@ -2,27 +2,27 @@ import styled from 'styled-components';
 import { useRef, useEffect, useReducer, useState } from 'react';
 import Head from '@components/Head';
 import FractalControls from '@components/Controls/FractalControls';
-import { snakeToCamel } from '@utils/helpers.js';
+import { snakeToCamel, toSnakeUpperCase } from '@utils/helpers.js';
 import { m as motion } from 'framer-motion';
 
 const initialState = {
-  size: 120,
-  sides: 1,
-  maxDepth: 12,
+  size: 85,
+  sides: 8,
+  maxDepth: 6,
   scale: 0.75,
-  radians: -0.52, //2.35, //1.05,
+  radians: -5.55, //2.35, //1.05,
   angle: 0,
   branches: 1,
   strokeStyle: 'yellow',
-  lineWidth: 9,
-  shadowColor: 'rgb(0, 0, 0, 0.7)',
+  lineWidth: 61.5,
+  shadowColor: '#ffffff',
   shadowOffsetX: 0,
-  shadowOffsetY: 0,
+  shadowOffsetY: 1,
   shadowBlur: 0,
-  xAxis: 550,
-  yAxis: 500,
+  xAxis: 763,
+  yAxis: 416,
   limit: 20,
-  composite: 'source-over',
+  composite: 'difference',
 };
 
 function reducer(state, action) {
@@ -67,6 +67,17 @@ export default function Fractals() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     // const draw = makeDraw(ctx);
+    const {
+      size,
+      sides,
+      maxDepth,
+      scale,
+      radians,
+      shadowOffsetX,
+      shadowOffsetY,
+      shadowBlur,
+      shadowColor,
+    } = state;
 
     const { width, height } = mainRef.current.getBoundingClientRect();
 
@@ -77,20 +88,24 @@ export default function Fractals() {
     // const centerY = canvas.height - 30;
 
     ctx.lineWidth = state.lineWidth;
-    ctx.lineJoin = 'round';
+    ctx.lineJoin = 'miter';
     ctx.lineCap = 'round';
+    ctx.shadowColor = shadowColor;
+    ctx.shadowOffsetX = shadowOffsetX;
+    ctx.shadowOffsetY = shadowOffsetY;
+    ctx.shadowBlur = shadowBlur;
 
     const gradient = ctx.createLinearGradient(0, 20, 90, 30);
     ctx.strokeStyle = gradient;
 
-    let size = state.size;
-    let sides = state.sides;
-    let maxLevel = state.maxDepth;
-    let scale = state.scale;
-    let radians = state.radians;
+    // let size = state.size;
+    // let sides = state.sides;
+    // let maxDepth = state.maxDepth;
+    // let scale = state.scale;
+    // let radians = state.radians;
 
     function drawBranch(level = 0) {
-      if (level > maxLevel) return;
+      if (level > maxDepth) return;
       ctx.globalCompositeOperation = state.composite;
 
       ctx.beginPath();
@@ -125,9 +140,10 @@ export default function Fractals() {
       ctx.save();
       ctx.translate(state.xAxis, state.yAxis);
       ctx.rotate(Math.PI * 1.5);
-      ctx.arc(size, size, size, -size * Math.PI, 0, true);
+      // ctx.rotate(Math.cos(Math.PI * sides));
+      // ctx.arc(size, size, size, -size * Math.PI, 0, true);
 
-      const base = 180;
+      const base = 320;
       for (let i = 0; i < sides; i++) {
         gradient.addColorStop(0.0, `hsl(${base}, 100%, 50%)`);
         gradient.addColorStop(0.25, `hsl(${base + 30}, 100%, 50%)`);
@@ -152,6 +168,11 @@ export default function Fractals() {
 
     dispatch({ type: actionType, value: e.target.value });
   };
+
+  // const onChange = (e) => {
+  //   const type = toSnakeUpperCase(e.target.name);
+  //   dispatch({ type, value: e.target.value });
+  // };
 
   return (
     <>

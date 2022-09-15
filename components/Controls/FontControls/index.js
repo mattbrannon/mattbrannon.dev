@@ -14,7 +14,10 @@ function Controls({ ...props }, ref) {
 
   useEffect(() => {
     if (ref && ref.current) {
-      props.setControlWidth(ref.current.getBoundingClientRect().width);
+      try {
+        props.setControlWidth(ref.current.getBoundingClientRect().width);
+      }
+      catch {}
     }
   }, [ref, props]);
 
@@ -24,6 +27,15 @@ function Controls({ ...props }, ref) {
         <SectionHeading>Font</SectionHeading>
         <FontSelect {...props} />
         <FontProperties {...props} />
+        <Range {...props} name="font size" value={styles.fontSize} step={1} min={16} max={160} />
+        <Range
+          {...props}
+          name="letter spacing"
+          value={styles.letterSpacing}
+          step={0.001}
+          min={-0.25}
+          max={0.25}
+        />
       </Group>
 
       <Group>
@@ -61,13 +73,13 @@ function Controls({ ...props }, ref) {
       </Group>
 
       <Group>
-        <SectionHeading>Outline</SectionHeading>
+        <SectionHeading>Stroke</SectionHeading>
         <Color {...props} name="stroke color" value={styles.strokeColor} />
         <Range {...props} name="stroke width" value={styles.strokeWidth} step={0.001} max={0.25} />
       </Group>
 
-      <Group>
-        <SectionHeading>Spacing</SectionHeading>
+      {/* <Group>
+        <SectionHeading>Letter Spacing</SectionHeading>
         <Range
           {...props}
           name="letter spacing"
@@ -76,8 +88,9 @@ function Controls({ ...props }, ref) {
           min={-0.25}
           max={0.25}
         />
+        <SectionHeading>Font Size</SectionHeading>
         <Range {...props} name="font size" value={styles.fontSize} step={1} min={16} max={160} />
-      </Group>
+      </Group> */}
       <Group>
         <Buttons {...props} />
       </Group>

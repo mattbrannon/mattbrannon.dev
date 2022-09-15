@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 import { useReducer } from 'react';
 import styled from 'styled-components';
 import { NormalButton as Button } from './Button';
@@ -70,7 +70,6 @@ const Popup = () => {
             background: 'var(--form-background)',
             padding: '24px',
             borderRadius: '8px',
-            // height: 'max-content',
           }}
         >
           <strong>Thank you!</strong>
@@ -88,7 +87,7 @@ const Contact = ({ state, dispatch }) => {
   const handleSubmit = async (e) => {
     await e.preventDefault();
     try {
-      // await axios.post('/api/contact', state);
+      await axios.post('/api/contact', state);
       dispatch({ type: SUBMIT, value: true });
     }
     catch (error) {

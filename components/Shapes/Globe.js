@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Shape } from './Shape';
-// import { Theme } from 'color-tools';
-import { Theme, Color } from '@utils/colors';
+import { Theme } from '@mattbrannon/color-tools';
 import { useEffect, useState } from 'react';
 import { useHasMounted } from '@hooks/useHasMounted';
 

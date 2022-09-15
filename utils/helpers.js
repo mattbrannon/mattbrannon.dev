@@ -1,4 +1,4 @@
-import { Color } from 'color-tools';
+import { Color } from '@mattbrannon/color-tools';
 
 const randomInt = (min, max) => {
   min = Math.ceil(min);

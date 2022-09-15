@@ -23,8 +23,6 @@ export const MainView = ({ state, dispatch, children, ...props }) => {
   };
 
   const handleChange = (e) => {
-    const value = e.target.value.replace(/\s+/g, ' ').replace(/'/g, '\u{2019}') || 'Your text here';
-
     dispatch({
       type: 'TEXT_CONTENT',
       value: e.target.value.replace(/\s+/g, ' ').replace(/'/g, '\u{2019}'),

@@ -47,7 +47,7 @@ const components = {
   h4: H4Link,
   h5: H5Link,
   // em: dynamic(() => import('@components/Text').then((res) => res.Em)),
-  a: dynamic(() => import('@components/Links').then((res) => res.ExternalLink)),
+  a: dynamic(() => import('@components/Links').then((res) => res.InternalLink)),
   InternalLink: dynamic(() => import('@components/Links').then((res) => res.Link)),
 };
 
