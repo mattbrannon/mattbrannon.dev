@@ -93,6 +93,7 @@ const Heading = styled(H1)`
   margin-bottom: 0;
   margin-top: 0;
   letter-spacing: var(--letterSpacing);
+  margin: 0 auto;
 `;
 
 const Word = ({ children, ...props }) => {
