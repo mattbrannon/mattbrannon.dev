@@ -125,7 +125,7 @@ export default memo(function LetsMakeAGifpage() {
         </Text>
       </section>
 
-      <PageButtons prev="/apps/monty-hall" next="/apps/elbowroom" />
+      <PageButtons prev="/apps/password-generator" next="/apps/elbowroom" />
     </article>
   );
 });
