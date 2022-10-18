@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 import { P } from '@components/Text/Text';
-import { Blockquote } from '../SideNote';
+// import { Blockquote } from '../SideNote';
 
 const slantText = keyframes`
   from {
@@ -25,12 +25,6 @@ const FancyTextItalic = styled.i`
   table & {
     color: black;
   }
-
-  ${P} & {
-    ${Blockquote} & {
-      color: navy;
-    }
-  }
 `;
 
 export const FancyText = styled(FancyTextItalic)`
@@ -44,10 +38,6 @@ export const StrongText = styled(FancyTextItalic)`
   font-variation-settings: var(--recursive8);
   animation: none;
   /* color: var(--color-strong); */
-
-  /* ${Blockquote} & {
-    color: navy;
-  } */
 `;
 
 export default FancyTextItalic;

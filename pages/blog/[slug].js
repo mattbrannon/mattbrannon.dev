@@ -1,5 +1,5 @@
 import BlogHeader from '@components/BlogHeader';
-import { NormalButton, InvertedButton, PinkButton } from '@components/Button';
+import { button } from '@components/Button';
 import Head from '@components/Head';
 import { H2Link, H3Link, H4Link, H5Link } from '@components/Headings';
 import { TableOfContents } from '@components/TableOfContents';
@@ -47,9 +47,8 @@ const Strong = styled.strong`
 `;
 
 const components = {
-  Button: InvertedButton,
-  button: NormalButton,
-  InvertedButton,
+  Button: button.pink,
+  button: button.teal,
   pre: BlogHighlighter,
   ColorText: dynamic(() => import('@components/Text/Text').then((res) => res.ColorText)),
   Video: dynamic(() => import('@components/VideoPlayer').then((res) => res.VideoPlayer)),
