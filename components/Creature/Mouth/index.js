@@ -1,2 +1,1 @@
-import * as Mouth from './Mouth';
-export default Mouth;
+export * as mouth from './Mouth';

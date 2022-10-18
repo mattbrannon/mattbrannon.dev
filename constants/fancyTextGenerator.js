@@ -78,6 +78,15 @@ export const fonts = [
     github: 'https://github.com/rsms/inter',
   },
   {
+    name: 'JetBrainsMono',
+    properties: {
+      wght: [100, 800],
+    },
+    default: false,
+    homepage: 'https://www.jetbrains.com/lp/mono/',
+    github: 'https://github.com/JetBrains/JetBrainsMono',
+  },
+  {
     name: 'OpenSans',
     properties: {
       wght: [300, 800],

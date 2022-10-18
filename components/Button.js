@@ -18,7 +18,7 @@ const Wrapper = styled(motion.div)`
   }
 `;
 
-export const Button = styled(motion.button)`
+export const MotionButton = styled(motion.button)`
   --padding-top-bottom: clamp(0.125rem, 0.175rem + 0.5vw, 0.5rem);
   --padding-left-right: clamp(0.25rem, 0.35rem + 1vw, 1rem);
   --font-size: clamp(0.75rem, 1rem + 1vw, 1.25rem);
@@ -58,6 +58,10 @@ const TealWrapper = styled(Wrapper)`
   --outerShadow: var(--tealBg);
 `;
 
+const WhiteText = styled(TealWrapper)`
+  color: white;
+`;
+
 const InvertedWrapper = styled(Wrapper)`
   --innerBg: var(--tealBg);
   --innerHover: var(--tealHover);
@@ -75,7 +79,7 @@ const InvertedWrapper = styled(Wrapper)`
   transition: opacity 0.15s ease-in-out;
 `;
 
-const FancyWrapper = styled(Wrapper)`
+const PinkWrapper = styled(Wrapper)`
   --pink-light: hsl(328, 100%, 74%);
   --pink-medium-light: hsl(328, 100%, 62%);
   --pink: hsl(328, 100%, 54%);
@@ -89,16 +93,25 @@ const FancyWrapper = styled(Wrapper)`
   --outerShadow: var(--pink-dark);
 `;
 
-function withButton(Component, Wrapper) {
-  return function Button(props) {
+function withButton(Wrapper) {
+  return function ButtonComponent(props) {
     return (
       <Wrapper {...props}>
-        <Component {...props}>{props.children}</Component>
+        <MotionButton {...props}>{props.children}</MotionButton>
       </Wrapper>
     );
   };
 }
 
-export const FancyButton = withButton(Button, FancyWrapper);
-export const InvertedButton = withButton(Button, InvertedWrapper);
-export const NormalButton = withButton(Button, TealWrapper);
+// export const PinkButton = withButton(PinkWrapper);
+// export const InvertedButton = withButton(InvertedWrapper);
+// export const NormalButton = withButton(TealWrapper);
+
+// export const Button = withButton(WhiteText);
+
+export const button = {
+  teal: withButton(TealWrapper),
+  pink: withButton(PinkWrapper),
+  orange: withButton(InvertedWrapper),
+  basic: withButton(WhiteText),
+};

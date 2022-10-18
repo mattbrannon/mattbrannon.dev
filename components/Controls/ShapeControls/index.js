@@ -1,9 +1,9 @@
 import { forwardRef, useState, useEffect } from 'react';
 import { Color, Range } from './Input';
-import { Layout, Group, SectionHeading } from './Layout';
+import { Layout, Group, SectionHeading, ButtonGroup } from './Layout';
 import { ShapeSelect } from './ShapeSelect';
 import { useWindowSize } from '@hooks/useWindowSize';
-import { NormalButton } from '@components/Button';
+import { button } from '@components/Button';
 
 export const ShapeControls = forwardRef(Controls);
 
@@ -92,9 +92,9 @@ function Controls({ ...props }, ref) {
           </>
         )}
       </Group>
-      {/* <Group>
-        <NormalButton onClick={() => props.dispatch({ type: 'RESET' })}>reset</NormalButton>
-      </Group> */}
+      <ButtonGroup>
+        <button.teal onClick={() => props.dispatch({ type: 'RESET' })}>reset</button.teal>
+      </ButtonGroup>
     </Layout>
   );
 }

@@ -6,6 +6,17 @@ import matter from 'gray-matter';
 // POSTS_PATH is useful when you want to get the path to a specific file
 export const POSTS_PATH = path.join(process.cwd(), 'articles');
 
+export const VIEWS_PATH = path.join(process.cwd(), 'views');
+
+export const parseFolderName = (folder) => {
+  return folder
+    .replace(/[A-Z]/g, (v) => ' ' + v.toLowerCase())
+    .trim()
+    .replace(/\s/g, '-');
+};
+
+// fs.readdirSync(VIEWS_PATH).filter((path) => /index.js/.test(path));
+
 // postFilePaths is the list of all mdx files inside the POSTS_PATH directory
 export const allFilePaths = fs
   .readdirSync(POSTS_PATH)
@@ -65,3 +76,30 @@ export function getSortedPostsData() {
 //     code,
 //   };
 // }
+
+const makeCodeBlockTest = () => {
+  let isCodeBlock = false;
+  return (line) => {
+    isCodeBlock =
+      line.startsWith('```') && !isCodeBlock
+        ? true
+        : line.startsWith('```') && isCodeBlock
+        ? false
+        : isCodeBlock;
+
+    return { line, isCodeBlock };
+  };
+};
+
+const removeCodeBlocks = ({ line, isCodeBlock }) => !isCodeBlock && line.startsWith('#');
+
+export const getArrayOfHeadings = (source) => {
+  const isCodeBlock = makeCodeBlockTest();
+  const headings = source
+    .split('\n')
+    .map(isCodeBlock)
+    .filter(removeCodeBlocks)
+    .map(({ line }) => line);
+
+  return headings;
+};

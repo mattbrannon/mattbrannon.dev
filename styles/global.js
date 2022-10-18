@@ -40,6 +40,7 @@ export const GlobalStyle = createGlobalStyle`
   --azure-85: hsl(210, 100%, 85%);
   --cyan-55: hsl(190, 100%, 55%);
   --cyan-75: hsl(190, 100%, 75%);
+  --cyan-85: hsl(190, 100%, 85%);
   --blue3: hsl(236, 100%, 35%);
   --blue3-light: hsl(236, 100%, 45%);
   --blue5: #001c3b;
@@ -59,6 +60,8 @@ export const GlobalStyle = createGlobalStyle`
   --black1: hsl(0, 0%, 15%);
   --black2: hsl(0, 0%, 7%);
   --black3: hsl(0, 0%, 13%);
+
+  --white3: hsl(222, 10%, 90%);
 
   --tealBg: hsl(191, 50%, 34%);
   --tealHover: hsl(191, 44%, 40%);
@@ -167,7 +170,7 @@ export const GlobalStyle = createGlobalStyle`
   --recursive5: 'MONO' 0, 'CRSV' 0, 'CASL' 1, 'wght' 300, 'slnt' -15;
   --recursive6: 'MONO' 0, 'CRSV' 0, 'CASL' 0, 'wght' 700, 'slnt' 0;
   --recursive7: 'MONO' 0, 'CRSV' 0, 'CASL' 1, 'wght' 400, 'slnt' 0;
-  --recursive8: 'MONO' 0, 'CRSV' 0, 'CASL' 1, 'wght' 700, 'slnt' -10;
+  --recursive8: 'MONO' 0, 'CRSV' 0, 'CASL' 1, 'wght' 700, 'slnt' 0;
   --recursive9: 'MONO' 0.5, 'CRSV' 0.38, 'CASL' 1, 'wght' 673.25, 'slnt' 0;
   --monospace: 'MONO' 1, 'CASL' 0, 'CRSV' 0, 'wght' 360, 'slnt' 0;
   --monospaceLight: 'MONO' 1, 'CASL' 0, 'CRSV' 0.5, 'wght' 100, 'slnt' 0;
@@ -221,10 +224,38 @@ export const GlobalStyle = createGlobalStyle`
 
   --blog-shadow-light-mode: var(--blog-shadow-dark-mode);
 
+
+  --card-shadow-values-dark-mode: 210deg, 5%, 5%;
+  --card-shadow-opacity-dark-mode: 0.4;
+  --card-shadow-dark-mode: 2px 2px 4px hsl(var(--card-shadow-values-dark-mode), var(--card-shadow-opacity-dark-mode)),
+    3px 3px 6px hsl(var(--card-shadow-values-dark-mode), var(--card-shadow-opacity-dark-mode)),
+    4px 4px 8px hsl(var(--card-shadow-values-dark-mode), var(--card-shadow-opacity-dark-mode)),
+    5px 5px 10px hsl(var(--card-shadow-values-dark-mode), var(--card-shadow-opacity-dark-mode)),
+    6px 6px 12px hsl(var(--card-shadow-values-dark-mode), var(--card-shadow-opacity-dark-mode));
+
+
+
+  --card-shadow-values-light-mode: 210deg, 5%, 35%;
+  --card-shadow-opacity-light-mode: 0.1;
+  --card-shadow-light-mode: 2px 2px 4px hsl(var(--card-shadow-values-light-mode), var(--card-shadow-opacity-light-mode)),
+    3px 3px 6px hsl(var(--card-shadow-values-light-mode), var(--card-shadow-opacity-light-mode)),
+    4px 4px 8px hsl(var(--card-shadow-values-light-mode), var(--card-shadow-opacity-light-mode)),
+    5px 5px 10px hsl(var(--card-shadow-values-light-mode), var(--card-shadow-opacity-light-mode)),
+    6px 6px 12px hsl(var(--card-shadow-values-light-mode), var(--card-shadow-opacity-light-mode)),
+    7px 7px 14px hsl(var(--card-shadow-values-light-mode), var(--card-shadow-opacity-light-mode)),
+    8px 8px 16px hsl(var(--card-shadow-values-light-mode), var(--card-shadow-opacity-light-mode)),
+    9px 9px 18px hsl(var(--card-shadow-values-light-mode), var(--card-shadow-opacity-light-mode));
+
+
+    --hero-card-darkmode: #212121;
+    --hero-card-lightmode: #e3e4e8;
+
   @media (max-width: ${breakpoints.tablet}px) {
     --breathing-room: 15px;
     --header-height: 50px;
   }
 }
+
+
 
 `;

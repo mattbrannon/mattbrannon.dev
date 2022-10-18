@@ -50,7 +50,6 @@ const ImageLink = ({ ...props }) => {
 const Container = styled(FullBleed)`
   display: grid;
   min-height: var(--footer-height);
-  height: 100%;
   background: var(--footer-background);
   --color-outline: var(--azure-light);
 

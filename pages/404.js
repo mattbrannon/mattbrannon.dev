@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 // import { loadFeatures } from '@utils/helpers';
-import { SmirkingCube } from '@components/Creature';
+import { creature } from '@components/Creature';
 
 const getTranslateXPoints = (start, end, divider) => {
   let total = Math.abs(start) + Math.abs(end);
@@ -95,29 +95,16 @@ export default function Error404() {
   return (
     <>
       <DocumentHead title="Whoops" desc="We must have taken a wrong turn at Albuquerque">
-        <link
-          rel="preload"
-          href="/fonts/decovar.woff2"
-          as="font"
-          crossOrigin=""
-          type="font/woff2"
-        />
+        <link rel="preload" href="/fonts/decovar.woff2" as="font" crossOrigin="" type="font/woff2" />
       </DocumentHead>
 
       <Container>
         <CubeWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <SmirkingCube width={125} height={125} ref={ref} />
+          <creature.talking width={125} height={125} ref={ref} />
         </CubeWrapper>
         <Wrapper>
           <Link passHref href="/" legacyBehavior>
-            <P
-              variants={font}
-              initial="initial"
-              animate="animate"
-              ref={textRef}
-              fontSize={fontSize}
-              href="/"
-            >
+            <P variants={font} initial="initial" animate="animate" ref={textRef} fontSize={fontSize} href="/">
               Go Back
             </P>
           </Link>
@@ -175,9 +162,8 @@ const P = styled(motion.p)`
   &:hover {
     cursor: pointer;
 
-    text-shadow: -0.0125em -0.0125em 0 var(--shadow-404-hover),
-      0.0125em -0.0125em 0 var(--shadow-404-hover), -0.0125em 0.0125em 0 var(--shadow-404-hover),
-      0.0125em 0.0125em 0 var(--shadow-404-hover);
+    text-shadow: -0.0125em -0.0125em 0 var(--shadow-404-hover), 0.0125em -0.0125em 0 var(--shadow-404-hover),
+      -0.0125em 0.0125em 0 var(--shadow-404-hover), 0.0125em 0.0125em 0 var(--shadow-404-hover);
 
     -webkit-text-stroke: 0.0125em var(--stroke-404-hover);
   }

@@ -259,20 +259,29 @@ export const getDataType = (data) => {
   return Object.prototype.toString.call(data).slice(8, -1);
 };
 
-export const toHeadingId = (str) => {
+// export const toHeadingId = (str) => {
+//   try {
+//     return (
+//       str.slice(0, 1).toLowerCase() +
+//       str
+//         .slice(1)
+//         .split(/\s|\./)
+//         .map((s) => s.replace(/[A-Z]/g, (v) => '-' + v.toLowerCase()))
+//         .join('-')
+//         .replace(/-+/g, '-')
+//     );
+//   }
+//   catch {
+//     return str;
+//   }
+// };
+
+export const toHeadingId = (s) => {
   try {
-    return (
-      str.slice(0, 1).toLowerCase() +
-      str
-        .slice(1)
-        .split(' ')
-        .map((s) => s.replace(/[A-Z]/g, (v) => '-' + v.toLowerCase()))
-        .join('-')
-        .replace(/-+/g, '-')
-    );
+    return s.split(/\s|\./).join('-').toLowerCase();
   }
   catch {
-    return str;
+    return s;
   }
 };
 
@@ -432,6 +441,17 @@ export const makeClipPath = (n) => {
     const bottom = 100 - top;
 
     return `polygon(0 ${top}%, 100% ${top}%, 100% ${bottom}%, 0 ${bottom}%)`;
+  });
+};
+
+export const makeRandomPadding = (n) => {
+  return Array.from({ length: n }, (_, i) => {
+    const lowMax = randomNumber(1);
+    const highMax = randomNumber(4);
+
+    const padding = i % 2 === 0 ? lowMax(4) : highMax(8);
+
+    return `${padding}px 0`;
   });
 };
 

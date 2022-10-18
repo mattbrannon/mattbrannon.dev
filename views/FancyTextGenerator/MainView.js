@@ -2,9 +2,12 @@ import { useState } from 'react';
 import { AnimatePresence, m as motion, useAnimation } from 'framer-motion';
 import { textGeneratorVariant } from '@animations/variants';
 import styled from 'styled-components';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { breakpoints } from '@constants/breakpoints';
 
 export const MainView = ({ state, dispatch, children, ...props }) => {
-  const [duration, setDuration] = useState(2);
+  const [duration, setDuration] = useState(1);
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.tablet });
 
   const handleAnimationStart = (name) => {
     if (name === 'close') {
@@ -30,7 +33,7 @@ export const MainView = ({ state, dispatch, children, ...props }) => {
   };
 
   return (
-    <div style={{ padding: '64px' }}>
+    <div style={{ padding: isMobile ? '0 64px' : '64px' }}>
       <AnimatePresence exitBeforeEnter>
         <Container
           id="main-content"
@@ -137,7 +140,7 @@ const TextAreaBox = styled.textarea.attrs({ rows: 1, spellCheck: false })`
   &::placeholder {
     -webkit-text-fill-color: hsl(0, 0%, 97%, 0.7);
     /* -webkit-text-stroke: 0.0125em black; */
-    text-shadow: -0.0125em -0.0125em 0em #777, -0.025em -0.025em 0em #555,
-      -0.0375em -0.0375em 0em #333, -0.05em -0.05em 0em #111;
+    text-shadow: -0.0125em -0.0125em 0em #777, -0.025em -0.025em 0em #555, -0.0375em -0.0375em 0em #333,
+      -0.05em -0.05em 0em #111;
   }
 `;

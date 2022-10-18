@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const MotionGradientWrapper = styled(motion.div)`
   @supports (background-image: paint(something)) {
     @property --gradPoint {
-      syntax: "<percentage>";
+      syntax: '<percentage>';
       inherits: false;
       initial-value: 40%;
     }
@@ -52,7 +52,7 @@ export const Text = styled(motion.span)`
   }
 
   &:before {
-    content: "${(p) => p.children}";
+    content: '${(p) => p.children}';
     text-shadow: var(--shadow);
     position: absolute;
     z-index: -1;
@@ -69,7 +69,7 @@ export const TextGradient = styled(Text)`
 
   &:before {
     /* word-break: break-word; */
-    content: "${(p) => p.children}";
+    content: '${(p) => p.children}';
     text-shadow: var(--shadow);
     /* position: absolute; */
 
@@ -112,7 +112,7 @@ export const gradientVariant = {
 };
 
 export const withGradient = (Gradient) => {
-  const forwarded = forwardRef((props, ref) => {
+  return forwardRef(function GradientText(props, ref) {
     return (
       <AnimatePresence exitBeforeEnter>
         <MotionGradientWrapper key={props} {...props}>
@@ -123,6 +123,4 @@ export const withGradient = (Gradient) => {
       </AnimatePresence>
     );
   });
-  forwarded.displayName = 'withGradient';
-  return forwarded;
 };

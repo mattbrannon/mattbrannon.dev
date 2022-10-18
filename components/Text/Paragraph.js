@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Blockquote } from '@components/SideNote';
 
 export const P = styled.p`
-  margin: 0 0 32px 0;
+  margin: 0;
   font-size: clamp(var(--size16), 0.2vw + 1rem, var(--size20));
   line-height: 1.7;
 

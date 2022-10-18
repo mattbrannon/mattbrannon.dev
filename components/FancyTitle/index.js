@@ -1,0 +1,1 @@
+export { FancyTitle } from './FancyTitle';

@@ -1,35 +1,29 @@
 ---
 title: 'Closures'
 description:
-  'Gaining an understanding of closures is an important part of being software developer. In this
-  post, we take a look at what a closure is, what it can do, and how you as a developer can benefit
-  from it.'
+  'Gaining an understanding of closures is an important part of being software developer. In this post, we take a look
+  at what a closure is, what it can do, and how you as a developer can benefit from it.'
 date: '2021-12-12'
-status: 'draft'
+status: 'published'
+toc: false
 ---
 
-Maybe you've googled, "what is a closure" and came away more confused than when you started. I know
-I did. According to wikipedia~
+Maybe you've googled, "what is a closure" and came away more confused than when you started. I know I did. According to
+wikipedia~
 
-> In programming languages, a closure, also lexical closure or function closure, is a technique for
-> implementing lexically scoped name binding in a language with first-class functions.
-> Operationally, a closure is a record storing a function together with an environment.
+> In programming languages, a closure, also lexical closure or function closure, is a technique for implementing
+> lexically scoped name binding in a language with first-class functions. Operationally, a closure is a record storing a
+> function together with an environment.
 
 <Video sources={['/videos/mp4/nonsense.mp4']} />
 
 ## What is a closure?
 
-If there's one thing that drives me crazy about software development, it's the jargon. To understand
-the defintion above, you have to also understand what `lexically scoped name binding` means. We'll
-talk about that a little later. But for now, let's just simplify things a little bit.
+If there's one thing that drives me crazy about software development, it's the jargon. To understand the defintion
+above, you have to also understand what `lexically scoped name binding` means. We'll talk about that a little later. But
+for now, let's just simplify things a little bit.
 
-In Javascript - a closure is a **function returned from another function**
-
-testing _blah blah_
-
-testing **blah blah blah**
-
-testing **_blah blah blah blah_**
+A closure is a _function returned from another function_
 
 ```js
 // we have an outer function that creates an environment
@@ -49,23 +43,22 @@ const closure = makeClosure()
 console.log(typeof closure) // function
 ```
 
-In the code above we define a function `makeClosure`. Inside of that function, we assign a variable
-`value` to hold some data for us. We then the define another function `closure` inside of the
-`makeClosure` function. It's important to note that we return the definition of the function
-**without invoking** it.
+In the code above we define a function `makeClosure`. Inside of that function, we assign a variable `value` to hold some
+data for us. We then the define another function `closure` inside of the `makeClosure` function. It's important to note
+that we return the definition of the function _without invoking_ it.
 
-Since we are **returning a function**, if we save a reference to it in a variable, we can then use
-that function at some point later in our code.
+Since we are _returning a function_, if we save a reference to it in a variable, we can then use that function at some
+point later in our code.
 
 ## What does it do?
 
-Ok so, we know how to define a closure. But what's the point of it? Returning a function that
-returns a hardcoded value doesn't seem particularly useful. Well this is where that whole,
-`lexically scoped name binding` thing comes into play. So what does that mean?
+Ok so, we know how to define a closure. But what's the point of it? Returning a function that returns a hardcoded value
+doesn't seem particularly useful. Well this is where that whole, `lexically scoped name binding` thing comes into play.
+So what does that mean?
 
-To put it simply - A closure allows you to define some variables inside of a function and **retain
-access** to those variables after the function has executed. Not only are we able to retain access
-to the surrounding environment, we can also **make changes to it**.
+To put it simply - A closure allows you to define some variables inside of a function and _retain access_ to those
+variables after the function has executed. Not only are we able to retain access to the surrounding environment, we can
+also _make changes to it_.
 
 ### makeCounter
 
@@ -116,9 +109,9 @@ function makeCounter() {
 }
 ```
 
-Looks pretty similar to what we've seen so far. Really the only notable difference other than the
-naming is how we interact with the `count` variable. Before, we were just returning a hardcoded
-value. Now we increase the value by 1. Beyond that, everything else is the same.
+Looks pretty similar to what we've seen so far. Really the only notable difference other than the naming is how we
+interact with the `count` variable. Before, we were just returning a hardcoded value. Now we increase the value by 1.
+Beyond that, everything else is the same.
 
 To invoke it, we'll store a reference to the returned function in a variable
 
@@ -140,10 +133,10 @@ increment() // 3   <- magic!
 
 <Spacer size={32} />
 
-That's just the tip of the iceberg! Let's building on this idea for a minute.
+That's just the tip of the iceberg! Let's continue building on this idea for a minute.
 
-What if we wanted to start the count at a number other than `0`? Instead of hard coding the initial
-value for `count` what happens if we pass it in dynamically as an argument to `makeCounter`?
+What if we wanted to start the count at a number other than `0`? Instead of hard coding the initial value for `count`
+what happens if we pass it in dynamically as an argument to `makeCounter`?
 
 ```js
 function makeCounter(count) {
@@ -159,13 +152,12 @@ increment() // 7
 increment() // 8
 ```
 
-**Neat!** We're able to **retain access to the arguments** passed to the `makeCounter` in the same
-way we're able to retain access to any variables defined inside of it. This allows us to start our
-counter anywhere we want.
+_Neat!_ We're able to _retain access to the arguments_ passed to the `makeCounter` in the same way we're able to retain
+access to any variables defined inside of it. This allows us to start our counter anywhere we want.
 
-But what if we wanted to increment by a different number? What about if we wanted to decrease the
-count? Well, much in the same way we were able to pass arguments to the outer function, we can do
-the same thing with the function returned from `makeCounter`
+But what if we wanted to increment by a different number? What about if we wanted to decrease the count? Well, much in
+the same way we were able to pass arguments to the outer function, we can do the same thing with the function returned
+from `makeCounter`
 
 ```js
 function makeCounter(count) {
@@ -187,17 +179,16 @@ adjustCount(5) // 5
 
 <Spacer size={32} />
 
-Pretty cool right? With closures we basically have our own little private environemnt. It's a walled
-garden so to speak. And we get to decide what goes in and out. It's really a very powerful tool to
-have at your disposal.
+Pretty cool right? With closures we basically have our own little private environemnt. It's a walled garden so to speak.
+And we get to decide what goes in and out. It's really a very powerful tool to have at your disposal.
 
 The best way to learn is to do. So let's do some more!
 
 ### withPrecision
 
-I often find myself doing math with javascript. When math operations involve **floats** (decimal
-numbers) it's pretty common to end up with a number like `0.3333333333333333`. A lot of times, a
-number with fewer decimal places is preferable. To accomplish this, I reach for something like this.
+I often find myself doing math with javascript. When math operations involve _floats_ (decimal numbers) it's pretty
+common to end up with a number like `0.3333333333333333`. A lot of times, a number with fewer decimal places is
+preferable. To accomplish this, I reach for something like this.
 
 ```js
 function toFloat(n, max) {
@@ -208,9 +199,8 @@ toFloat(0.3333333333333333, 1000) // 0.333
 toFloat(Math.PI, 100) // 3.14
 ```
 
-But the amount of precision required might vary from one situation to the next. To make our lives
-easier, we can use the power of closures to create some utility functions with different levels of
-precision.
+But the amount of precision required might vary from one situation to the next. To make our lives easier, we can use the
+power of closures to create some utility functions with different levels of precision.
 
 ```js
 // we can give the outer function's first parameter a default value
@@ -232,16 +222,16 @@ threeDecimal(0.3333333333333333) // 0.333
 toFloat(0.3333333333333333) // 0.3333
 ```
 
-If you've ever heard the phrase **function factory**, this is what it means. We've essentially made
-a function that makes other functions.
+If you've ever heard the phrase _function factory_, this is what it means. We've essentially made a function that makes
+other functions.
 
-> Not to be confused with **factory function**. While similar in name, their implementation as well
-> as what they produce are quite different.
+> Not to be confused with _factory function_. While similar in name, their implementation as well as what they produce
+> are quite different.
 
 ### withExponent
 
-Here's another example of a function factory. Suppose you're doing a bunch of math operations. Maybe
-you're brushing up on your geometry equations. Remember the pythagorean theorem?
+Here's another example of a function factory. Suppose you're doing a bunch of math operations. Maybe you're brushing up
+on your geometry equations. Remember the pythagorean theorem?
 
 ```js
 const a = 3
@@ -268,15 +258,14 @@ const c = Math.sqrt(squared(a) + squared(b)) // 5
 
 ### makeCharacter
 
-Let's switch gears a little and do something a bit more complex. Let's build an **arcade game!** One
-of the scariest games I ever played was a game called Left 4 Dead. It's all about surviving a zombie
-apocalypse. But unlike other zombie games, these zombies can run! And they run fast!
+Let's switch gears a little and do something a bit more complex. Let's build an _arcade game!_ One of the scariest games
+I ever played was a game called Left 4 Dead. It's all about surviving a zombie apocalypse. But unlike other zombie
+games, these zombies can run! And they run fast!
 
 Our task is to build out a character template for our game.
 
-Players start the game with a full health bar and 3 lives. As players take damage the health bar
-depletes. Once the player's health reaches `0`, the player loses a life. When a player has `0` lives
-and `0` health, the game is over.
+Players start the game with a full health bar and 3 lives. As players take damage the health bar depletes. Once the
+player's health reaches `0`, the player loses a life. When a player has `0` lives and `0` health, the game is over.
 
 Players can also find special items that will increase their health after taking damage.
 
@@ -288,8 +277,7 @@ Players can also find special items that will increase their health after taking
 
 </List>
 
-This sounds complicated! Let's just start at the top of the list and work our way down. Let's
-inflict some **damage!**
+This sounds complicated! Let's just start at the top of the list and work our way down. Let's inflict some _damage!_
 
 #### damage
 
@@ -320,36 +308,33 @@ character(100) // 'Health: 100, Lives: 0'
 character(100) // 'GAME OVER'
 ```
 
-This is the first time we've put any logic inside of our closures. We use an object with the
-properties `health` and `lives` to keep track of the player's status during the course of the game.
-Once a player runs out of lives, we set `player.gameOver` to `true`. Once this happens, it doesn't
-matter what arguments we pass in, our function will always return `GAME OVER`.
+This is the first time we've put any logic inside of our closures. We use an object with the properties `health` and
+`lives` to keep track of the player's status during the course of the game. Once a player runs out of lives, we set
+`player.gameOver` to `true`. Once this happens, it doesn't matter what arguments we pass in, our function will always
+return `GAME OVER`.
 
-This may seem a bit more complicated than the previous examples but, the structure is the exact
-same. We have an outer function that we use to store our data. The inner function i.e. **the
-closure** implements some logic to modify that data.
+This may seem a bit more complicated than the previous examples but, the structure is the exact same. We have an outer
+function that we use to store our data. The inner function i.e. _the closure_ implements some logic to modify that data.
 
-However, we do have a problem. We're supposed to be building a character for our game. So we named
-our function `makeCharacter` and saved the closure to a variable called `character`. But what does
-it mean when we invoke `character(20)`? We know that it inflicts 20 points of damage to the player
-but if we showed this code to someone else, it's very unlikely they would come to the same
-conclusion. So, we've lost any semantic meaning. Ideally the code we write should be somewhat self
-explanatory.
+However, we do have a problem. We're supposed to be building a character for our game. So we named our function
+`makeCharacter` and saved the closure to a variable called `character`. But what does it mean when we invoke
+`character(20)`? We know that it inflicts 20 points of damage to the player but if we showed this code to someone else,
+it's very unlikely they would come to the same conclusion. So, we've lost any semantic meaning. Ideally the code we
+write should be somewhat self explanatory.
 
-On top of that, I would not expect a `damage` function to also reset a players health to 100. That's
-the opposite of damage. Essentially, our `damage` function is doing too much.
+On top of that, I would not expect a `damage` function to also reset a players health to 100. That's the opposite of
+damage. Essentially, our `damage` function is doing too much.
 
-TLDR - **We need more functions.**
+TLDR - _We need more functions._
 
-Right now we're returning a single function. But we need to do more than a single function allows us
-to do. We need a way to `damage` as well as `heal` our player. We also need to be able to `respawn`
-players when they lose one of their lives. So how can we do that? How can we return multiple
-functions from a single function?
+Right now we're returning a single function. But we need to do more than a single function allows us to do. We need a
+way to `damage` as well as `heal` our player. We also need to be able to `respawn` players when they lose one of their
+lives. So how can we do that? How can we return multiple functions from a single function?
 
-If you're thinking **we can use an object** then you're correct!
+If you're thinking _we can use an object_ then you're correct!
 
-We can do this in a couple of ways actually. I'll show you both ways and we'll talk about why you
-might want to do one or the other.
+We can do this in a couple of ways actually. I'll show you both ways and we'll talk about why you might want to do one
+or the other.
 
 #### heal v1
 
@@ -384,20 +369,19 @@ player.damage(30) // 'Health: 70, Lives: 3'
 player.heal(20) // 'Health: 90, Lives: 3
 ```
 
-So that's one way of doing it. We **return a function that returns an object with methods
-attached.** However, we're not passing any arguments into either of functions. I'm also not a big
-fan of the way we're defining a `character` and then a `player`. Sure, I could use some different
-variable names to make it better but, it still feels a little redundant. One way to get around this
-is to simply invoke the closure immediately as discussed at the beginning of this article.
+So that's one way of doing it. We _return a function that returns an object with methods attached._ However, we're not
+passing any arguments into either of functions. I'm also not a big fan of the way we're defining a `character` and then
+a `player`. Sure, I could use some different variable names to make it better but, it still feels a little redundant.
+One way to get around this is to simply invoke the closure immediately as discussed at the beginning of this article.
 
 ```js
 const player = makeCharacter()()
 player.damage(30)
 ```
 
-But, it still feels a little **wonky** to me. If we're not passing any arguments to the closure, do
-we really need to **return a function?** Well, yes and no. Instead of returning a function that
-returns an object. What if we just return the object itself?
+But, it still feels a little _wonky_ to me. If we're not passing any arguments to the closure, do we really need to
+_return a function?_ Well, yes and no. Instead of returning a function that returns an object. What if we just return
+the object itself?
 
 #### heal v2
 
@@ -425,20 +409,18 @@ function makeCharacter() {
 }
 ```
 
-But wait... you said a closure is **a function returned from another function.** But this is an
-object returned from a function!
+But wait... you said a closure is _a function returned from another function._ But this is an object returned from a
+function!
 
 <Video height={274} x={0} y={-120} sources={['/videos/mp4/squint.mp4']} />
 
 <Spacer size={32} />
 
-Even though we're not returning a function directly, we are still returning a function from another
-function. Using an object as a container simply gives us a way of returning multiple functions
-instead of a single one.
+Even though we're not returning a function directly, we are still returning a function from another function. Using an
+object as a container simply gives us a way of returning multiple functions instead of a single one.
 
-If we needed to pass some arguments to our closure, then I'd opt for version 1. For example, if we
-were going to give different characters in our game different attributes, then you'd probably want
-to go with version 1.
+If we needed to pass some arguments to our closure, then I'd opt for version 1. For example, if we were going to give
+different characters in our game different attributes, then you'd probably want to go with version 1.
 
 ```js
 const makeFighter = makeCharacter()
@@ -450,13 +432,13 @@ const wizard = makeWizard({ strength: 40, speed: 70, health: 100 })
 
 In this case however, we don't really need to do that. So I'm opting for version 2.
 
-In both cases, now instead of one function having access to the surrounding environment, each of
-these functions has shared access to the surrounding environment. This allows us to break up our
-code into more logical, singular purpose functions.
+In both cases, now instead of one function having access to the surrounding environment, each of these functions has
+shared access to the surrounding environment. This allows us to break up our code into more logical, singular purpose
+functions.
 
-Did you notice anything **smelly** about our last code block? We had this line
-`` return `Health: ${player.health}, Lives: ${player.lives}` `` in two separate functions. Since we
-now have an object to work with, we can make some helper functions to clean up our code a bit.
+Did you notice anything _smelly_ about our last code block? We had this line
+`` return `Health: ${player.health}, Lives: ${player.lives}` `` in two separate functions. Since we now have an object
+to work with, we can make some helper functions to clean up our code a bit.
 
 ```js
 function makeCharacter() {
@@ -491,13 +473,13 @@ player.heal(30) // health 70
 
 ## Benefits of using closures
 
-One thing we haven't talked about that you may have noticed by now is that any variables defined
-inside of a closure's outer function are only accessible to the functions defined in the closure.
-This allows us to have private variables that cannot be accessed directly.
+One thing we haven't talked about that you may have noticed by now is that any variables defined inside of a closure's
+outer function are only accessible to the functions defined in the closure. This allows us to have private variables
+that cannot be accessed directly.
 
-For example, it is impossible to directly access or modify the player's current health or number of
-lives without invoking either `player.damage` or `player.heal`. This is important because it gives a
-level of security we wouldn't have otherwise.
+For example, it is impossible to directly access or modify the player's current health or number of lives without
+invoking either `player.damage` or `player.heal`. This is important because it gives a level of security we wouldn't
+have otherwise.
 
 To illustrate what I mean, let's look at a simpler version of the same concept.
 
@@ -517,10 +499,9 @@ const player = {
 }
 ```
 
-This is a much smaller and simpler version of our game. But the basic functionality remains the
-same. `damage` causes damage and `heal` removes damage. But there's also a big problem here. We
-haven't sealed off our `health` or `lives` properties. Anyone with access to the `player` object can
-directly access these properties and modify them.
+This is a much smaller and simpler version of our game. But the basic functionality remains the same. `damage` causes
+damage and `heal` removes damage. But there's also a big problem here. We haven't sealed off our `health` or `lives`
+properties. Anyone with access to the `player` object can directly access these properties and modify them.
 
 ```js
 // Regular game play
@@ -559,8 +540,7 @@ function makePlayer() {
 
 ## So long and thanks for all the fish
 
-Hopefully this gives you some idea as to how poweful closures can be. There's a lot more we could do
-to build upon what we have. For example, what if players wanted to continue playing once the game
-was over. Arcade games always allow people to continue playing by inserting quarters. How might we
-implement something like this with closures? I leave this as a challenge to the reader. Give it a
-try!
+Hopefully this gives you some idea as to how poweful closures can be. There's a lot more we could do to build upon what
+we have. For example, what if players wanted to continue playing once the game was over. Arcade games always allow
+people to continue playing by inserting quarters. How might we implement something like this with closures? I leave this
+as a challenge to the reader. Give it a try!

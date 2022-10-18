@@ -2,22 +2,19 @@ import { lookAround } from '@animations/index.js';
 import styled from 'styled-components';
 
 export default function Eye({ ...props }) {
-  // const { width, height } = props.size;
-  // const ratio = Math.max(width, height) / Math.min(width, height);
-  // props.ratio = ratio;
   return (
-    <EyeWrapper {...props}>
-      <EyeWhite {...props}>
+    <EyeSocket {...props}>
+      <Eyeball {...props}>
         <Cornea {...props}>
-          <Pupil />
+          <Pupil {...props} />
         </Cornea>
         <Eyelid {...props} />
-      </EyeWhite>
-    </EyeWrapper>
+      </Eyeball>
+    </EyeSocket>
   );
 }
 
-const EyeWrapper = styled.div.attrs((props) => {
+const EyeSocket = styled.div.attrs((props) => {
   const unit = 16;
   const double = unit * 2;
   const half = unit / 2;
@@ -30,7 +27,7 @@ const EyeWrapper = styled.div.attrs((props) => {
       '--borderRadius': borderRadius,
       '--padding': padding,
       '--eyeWhiteColor': eyeWhiteColor || 'whitesmoke',
-      '--eyeColor': eyeColor,
+      '--eyeColor': eyeColor || '#8cbecf',
       '--eyelidTop': `${eyelidTop}%`,
       '--eyelidColor': eyelidColor || 'tan',
     },
@@ -54,7 +51,7 @@ const EyeWrapper = styled.div.attrs((props) => {
   --animation: ${(p) => p.animation};
   --eyelidColor: ${(p) => p.eyelidColor || 'tan'}; */
 
-const EyeWhite = styled.div`
+const Eyeball = styled.div`
   padding: 3.2rem;
   box-shadow: 0 0 0 1px black;
   overflow: hidden;
@@ -72,11 +69,11 @@ const EyeWhite = styled.div`
   transition: all var(--speed) linear;
 `;
 
-// const RedEye = styled(EyeWhite)`
+// const RedEye = styled(Eyeball)`
 //   background: hsl(0deg, 15%, 75%, 1);
 // `;
 
-export const Cornea = styled(EyeWhite)`
+export const Cornea = styled(Eyeball)`
   background: var(--eyeColor);
   position: absolute;
   margin: auto;
@@ -101,7 +98,7 @@ export const Pupil = styled(Cornea)`
   animation: none;
 `;
 
-export const Eyelid = styled(EyeWhite)`
+export const Eyelid = styled(Eyeball)`
   background: var(--eyelidColor);
   z-index: 999;
   position: absolute;
@@ -112,22 +109,20 @@ export const Eyelid = styled(EyeWhite)`
 `;
 
 function withEye(variants) {
-  // console.log({ variants });
   return function Eyeball(props) {
-    return (
-      // <EyeWrapper {...props} {...variants}>
-      <Eye {...variants} {...props} />
-      // </EyeWrapper>
-    );
+    return <Eye {...variants} {...props} />;
   };
 }
 
 export const RedEye = withEye({
-  // eyeWhiteColor: 'hsl(0deg, 15%, 85%, 1)',
-  eyeWhiteColor: 'whitesmoke',
+  eyeWhiteColor: 'hsl(0deg, 15%, 85%, 1)',
   eyeColor: '#8cbecf',
   margin: -50,
   animation: lookAround,
+});
+
+export const BigEye = withEye({
+  padding: '20%',
 });
 
 export const NormalEye = withEye({});

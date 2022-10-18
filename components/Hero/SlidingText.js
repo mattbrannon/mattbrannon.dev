@@ -5,16 +5,16 @@ import styled from 'styled-components';
 
 export default function AnimatedWords({ children }) {
   const context = useContext(ThemeContext);
-  const [start, setStart] = useState(context.hasRun);
+  // const [start, setStart] = useState(context.bubblesDone);
   const words = children.split(' ');
 
-  useEffect(() => {
-    if (!context.hasRun) {
-      setTimeout(() => {
-        setStart(true);
-      }, 2000);
-    }
-  }, [context.hasRun]);
+  // useEffect(() => {
+  //   if (!context.bubblesDone) {
+  //     setTimeout(() => {
+  //       setStart(true);
+  //     }, 2000);
+  //   }
+  // }, [context.bubblesDone]);
 
   return (
     <Container>
@@ -25,8 +25,8 @@ export default function AnimatedWords({ children }) {
               context.setHasRun(true);
             }
           }}
-          hasRun={context.hasRun}
-          $start={start}
+          bubblesDone={context.bubblesDone}
+          // $start={start}
           index={i + 1}
           key={i}
         >
@@ -42,9 +42,9 @@ const Container = styled.div`
 `;
 
 const Word = styled.span.attrs((props) => {
-  const translateX = props.$start ? 0 : props.index * 2 + 700 + 'px';
-  const delay = props.hasRun ? 0 : (props.index + 1) / 100;
-  const duration = props.hasRun ? 0 : (props.index + 100) / 100;
+  const translateX = props.bubblesDone ? 0 : props.index * 2 + 700 + 'px';
+  const delay = props.bubblesDone ? (props.index + 1) / 100 : 0;
+  const duration = props.bubblesDone ? (props.index + 100) / 100 : 0;
   return {
     style: {
       '--translateX': translateX,

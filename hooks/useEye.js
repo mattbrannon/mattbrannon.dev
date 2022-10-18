@@ -7,7 +7,7 @@ let randomNumber = (min, max) => {
 };
 
 export const useEye = ({ eyelid = 175 }) => {
-  const [ margin, setMargin ] = useState(eyelid * -1);
+  const [margin, setMargin] = useState(eyelid * -1);
 
   useEffect(() => {
     const repeat = () => {
@@ -24,7 +24,7 @@ export const useEye = ({ eyelid = 175 }) => {
     const timeoutId = repeat();
 
     return () => clearTimeout(timeoutId);
-  }, [ eyelid ]);
+  }, [eyelid]);
 
   return margin;
 };

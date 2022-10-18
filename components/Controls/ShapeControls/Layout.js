@@ -78,3 +78,7 @@ export const SectionHeading = styled.h2`
   margin-top: 0;
   margin: 16px 0 0px 0;
 `;
+
+export const ButtonGroup = styled(Group)`
+  margin-top: 32px;
+`;

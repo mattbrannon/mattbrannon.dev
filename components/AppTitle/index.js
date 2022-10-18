@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { FlatVideo } from '@components/VideoPlayer';
+import { VideoPlayer } from '@components/VideoPlayer';
 import { ExternalLink } from '@components/Links';
 import { breakpoints } from '@constants/index.js';
-import FancyTitle from '@components/FancyTitle';
+import { FancyTitle } from '@components/FancyTitle';
 import { memo } from 'react';
 import { m as motion } from 'framer-motion';
 
@@ -26,7 +26,7 @@ function AppTitleComponent({ title, sources, links, children, ...props }) {
       </FancyTitle>
       <Caption>{children}</Caption>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-        <FlatVideo center sources={sources} {...props} />
+        <VideoPlayer center sources={sources} {...props} />
       </motion.div>
       <LinksWrapper>
         <ExternalLink href={links.liveSite}>Visit the live site</ExternalLink>

@@ -1,0 +1,54 @@
+---
+title: 'Quick and Easy Server Setup'
+description:
+  "Securing a backend server can feel like a daunting task, especially if you've never done it before. In this post,
+  I'll walk you through the process from start to finish. When we're done, you'll have a server setup that's secure with
+  an A+ rating"
+date: '2022-10-01'
+status: 'published'
+toc: false
+---
+
+- [Server setup](#server-setup)
+  - [Intended Audience](#intended-audience)
+    - [Disclaimer](#disclaimer)
+  - [Getting started](#getting-started)
+    - [Prerequisites](#prerequisites)
+  - [SSH](#ssh)
+
+# Server setup
+
+Lorem ipsum dolor sit amet consectetur, adipisicing elit. Id fugit nihil est reiciendis facilis minus dolores rerum,
+deserunt veritatis ipsa excepturi neque dolore! Alias, recusandae ipsa harum quae laborum delectus?
+
+## Intended Audience
+
+This guide is intended for anyone looking to get their feet wet setting up a remote server. Command line familiarity is
+a plus but not required.
+
+### Disclaimer
+
+I am not a security expert. These are the steps I take when setting up my own servers. If you find a flaw in my
+approach, I'd be happy to know about it.
+
+## Getting started
+
+blah blah
+
+### Prerequisites
+
+To follow along with this guide, you will need:
+
+- A remote server instance. I would suggest either [Digital Ocean](https://digitalocean.com) or
+  [Amazon AWS](https://aws.amazon.com/)
+- Familiarity with the command line is a plus but not required.
+
+## SSH
+
+Try this: `ssh` into your server and run this command `sudo lastb`;
+
+sudo rsync --archive --chown=gizmo:gizmo ~/.ssh /home/gizmo
+
+sudo sed -i 's/Port 2648/Port 9173/g' /etc/ssh/sshd_config
+
+sudo usermod -aG sudo gizmo
