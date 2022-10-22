@@ -1,11 +1,8 @@
 import styled from 'styled-components';
-import '@reach/dialog/styles.css';
 import { Burger } from './Burger';
 import { Portal } from '@components/Portal';
-// import Link from 'next/link';
 import { InternalLink } from '@components/Links';
 import FocusTrap from 'focus-trap-react';
-// import { HamburgerButton } from './FluidBurger';
 
 const links = [
   { href: '/', text: 'Home' },

@@ -11,8 +11,7 @@ import styled, { ThemeContext } from 'styled-components';
 import { ExternalLink } from '@components/Links';
 
 import image1Avif from '/public/images/monty-hall/monty-hall1.avif';
-import image2Avif from '/public/images/monty-hall/monty-hall2.avif';
-import image3Avif from '/public/images/monty-hall/monty-hall3.avif';
+
 import Image from 'next/image';
 import { AnimatePresence, m as motion } from 'framer-motion';
 import { VideoPlayer } from '@components/VideoPlayer';

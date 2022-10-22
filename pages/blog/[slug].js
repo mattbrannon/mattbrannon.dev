@@ -65,9 +65,8 @@ const components = {
   h4: H4Link,
   h5: H5Link,
   InternalLink: dynamic(() => import('@components/Links').then((res) => res.Link)),
-  // em: text.em,
-  // strong: text.strong,
-  // strong: Strong,
+
+  p: text.paragraph,
 };
 
 export default function PostPage({ source, frontMatter, headings }) {
@@ -104,6 +103,8 @@ export const getStaticProps = async ({ params }) => {
     .filter((file) => file.slice(0, file.lastIndexOf('.')) === params.slug)
     .join('');
 
+  console.log(params, filename);
+
   const postFilePath = path.join(POSTS_PATH, filename);
   const source = fs.readFileSync(postFilePath, 'utf8');
   const headings = getArrayOfHeadings(source);
@@ -125,7 +126,9 @@ export const getStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths = async () => {
-  const paths = publishedArticles.map((path) => path.replace(/\.mdx$/, '')).map((slug) => ({ params: { slug } }));
+  const paths = publishedArticles.map((path) => path.replace(/\.mdx?$/, '')).map((slug) => ({ params: { slug } }));
+
+  console.log(paths);
 
   return {
     paths,

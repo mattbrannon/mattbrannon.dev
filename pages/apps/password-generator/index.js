@@ -3,50 +3,11 @@ import { ExternalLink } from '@components/Links';
 import Head from '@components/Head';
 import { H2Link, H3Link } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
-import { Spacer } from '@components/Spacer';
 import { text } from '@components/Text';
-import { VideoPlayer } from '@components/VideoPlayer';
 import styled from 'styled-components';
 import { memo, useState } from 'react';
-import { Blockquote, SideNote } from '@components/SideNote';
-import { Button } from '@components/Button';
+import { SideNote } from '@components/SideNote';
 import { SyntaxHighlighter } from '@components/SyntaxHighlighter';
-
-const entropyCode = `
-const charMap = {
-  lowercase: 'abcdefghijklmnopqrstuvwxyz',
-  uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-  numbers: '0123456789',
-  symbols: \`!@#$%^&*()_-+={[}]|\\<,>.?/;:'"\\\`~\`,
-};
-
-const getMatches = (password) => {
-  const lower = /[a-z]+/g;
-  const upper = /[A-Z]+/g;
-  const nums = /[0-9]+/g;
-  const syms = /[!@#$%^&*()_-+={[}]|\\<,>.?/;:'"\`~ ]+/g;
-
-  const lowercase = password.match(lower);
-  const uppercase = password.match(upper);
-  const numbers = password.match(nums);
-  const symbols = password.match(syms);
-
-  return { lowercase, uppercase, numbers, symbols };
-};
-
-const getCharSpace = (password) => {
-  const matches = getMatches(password);
-  return Object.keys(charMap)
-    .filter((key) => matches[key])
-    .reduce((acc, key) => charMap[key].length + acc, 0);
-};
-
-const calculateEntropy = (password) => {
-  const chars = getCharSpace(password);
-  const n = Math.pow(chars, password.length);
-  return Math.log10(n) / Math.log10(2);
-};
-`;
 
 export default memo(function PasswordGenerator() {
   const [hasClicked, setHasClicked] = useState(false);
@@ -202,13 +163,6 @@ export default memo(function PasswordGenerator() {
           will generate 57 bits of entropy. This <em>might</em> be ok but adding an additional 4 characters will
           generate nearly 80 bits of entropy, which is more than enough by current standards.
         </text.paragraph>
-
-        {/* <Spacer size={64} />
-        <text.paragraph>So, based on all that, which of these do you think is the stronger password?</text.paragraph>
-        <ButtonGroup>
-          <Button onClick={() => setHasClicked(true)}>|-|@c|&lt;3R</Button>
-          <Button onClick={() => setHasClicked(true)}>fried okra is gross</Button>
-        </ButtonGroup> */}
       </section>
 
       <section>

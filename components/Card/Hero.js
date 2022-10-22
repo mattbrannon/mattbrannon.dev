@@ -15,13 +15,6 @@ export const HeroCard = ({ children, ...props }) => {
   const context = useContext(ThemeContext);
   const initialTheme = useRef(theme);
 
-  // useEffect(() => {
-  //   if (context.hasRun) {
-  //     const transition = { delay: 0, duration: 0.3 };
-  //     setTransition(transition);
-  //   }
-  // }, [context.hasRun]);
-
   useEffect(() => {
     if (hasMounted) {
       setClassName(`hero-card ${theme}`);
@@ -29,8 +22,7 @@ export const HeroCard = ({ children, ...props }) => {
   }, [hasMounted, theme]);
 
   useEffect(() => {
-    const shadow =
-      theme === 'dark' ? 'var(--card-shadow-dark-mode)' : 'var(--card-shadow-light-mode)';
+    const shadow = theme === 'dark' ? 'var(--card-shadow-dark-mode)' : 'var(--card-shadow-light-mode)';
     setBoxShadow(shadow);
 
     const background = theme === 'dark' ? 'var(--hero-card-darkmode)' : 'var(--hero-card-lightmode)';
