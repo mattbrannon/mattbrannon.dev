@@ -3,7 +3,7 @@ import { useReducer, useRef, useState } from 'react';
 import { fancyTextReducer, initialState } from './reducer';
 import Head from '@components/Head';
 import { FontControls } from '@components/Controls/FontControls';
-import { Main } from '@components/Layout';
+// import { Main } from '@components/Layout';
 import { breakpoints } from '@constants/breakpoints';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { toSnakeUpperCase } from '@utils/helpers';
@@ -12,7 +12,7 @@ import { HelpView } from './HelpView';
 import { MainView } from './MainView';
 import { Article, NoScript } from './styles';
 
-export function FancyTextGenerator({ ...props }) {
+export default function FancyTextGenerator({ ...props }) {
   const [state, dispatch] = useReducer(fancyTextReducer, initialState);
   const ref = useRef();
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
@@ -24,16 +24,10 @@ export function FancyTextGenerator({ ...props }) {
   };
 
   return (
-    <Main>
+    <>
       <Head title="Fancy Text Generator" description="Developer tools" />
-
-      <FontControls
-        ref={ref}
-        onChange={onChange}
-        state={state}
-        dispatch={dispatch}
-        setControlWidth={setControlWidth}
-      />
+      {/* <div style={{ display: 'grid', height: '100%' }}> */}
+      <FontControls ref={ref} onChange={onChange} state={state} dispatch={dispatch} setControlWidth={setControlWidth} />
       <Article style={{ '--controlWidth': controlWidth + 'px' }}>
         <AnimatePresence>
           {state.help ? (
@@ -46,6 +40,7 @@ export function FancyTextGenerator({ ...props }) {
         </AnimatePresence>
         <NoScript>This tool requires javascript to work properly</NoScript>
       </Article>
-    </Main>
+      {/* </div> */}
+    </>
   );
 }

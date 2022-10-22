@@ -55,6 +55,7 @@ const NameBanner = () => {
 const Nav = styled.nav`
   display: flex;
   align-items: center;
+  min-height: 100%;
 `;
 
 const Container = styled.div`

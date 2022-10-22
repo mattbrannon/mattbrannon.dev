@@ -15,19 +15,29 @@ const Layout = styled.div`
   min-height: 100%;
 `;
 
-// export const Main = styled.main`
-//   /* margin-top: var(--header-height); */
-//   margin-bottom: 96px;
-//   display: grid;
-// `;
-
 export const FullBleed = styled.div`
   grid-column: 1 / -1;
   padding: 0;
 `;
 
 export const Main = styled.main`
-  grid-column: 2;
+  margin: 92px 0 128px 0;
+  width: 100%;
 `;
 
 export default Layout;
+
+export const BlogList = styled.div`
+  display: grid;
+  /* grid-template-columns: repeat(auto-fit, minmax(min(400px, 100%), 1fr)); */
+  grid-template-columns: auto;
+  /* grid-template-rows: repeat(auto-fit, minmax(min(100px, 100%), 1fr)); */
+  gap: 8px;
+`;
+
+export const ToolsList = styled.nav`
+  list-style: none;
+  display: grid;
+  gap: 18px;
+  padding: 0;
+`;

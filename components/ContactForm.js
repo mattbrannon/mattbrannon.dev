@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useReducer } from 'react';
 import styled from 'styled-components';
-import { NormalButton as Button } from './Button';
+import { button } from './Button';
 import { MaxWidthWrapper } from './MaxWidthWrapper';
 import { AnimatePresence, m as motion } from 'framer-motion';
 import { useRouter } from 'next/router';
@@ -75,7 +75,7 @@ const Popup = () => {
           <strong>Thank you!</strong>
           <p style={{ fontWeight: 700, fontFamily: 'Inter' }}>Your message has been sent.</p>
           <ButtonWrapper>
-            <Button onClick={() => router.replace('/')}>Ok</Button>
+            <button.teal onClick={() => router.replace('/')}>Ok</button.teal>
           </ButtonWrapper>
         </div>
       </MaxWidthWrapper>
@@ -97,14 +97,7 @@ const Contact = ({ state, dispatch }) => {
 
   return (
     <AnimatePresence exitBeforeEnter>
-      <Form
-        variants={fadeInOut}
-        initial="hidden"
-        animate="show"
-        exit="exit"
-        key={state.submit}
-        onSubmit={handleSubmit}
-      >
+      <Form variants={fadeInOut} initial="hidden" animate="show" exit="exit" key={state.submit} onSubmit={handleSubmit}>
         <FlexGroup>
           <InputGroup>
             <Label htmlFor="name">Name:</Label>
@@ -139,7 +132,7 @@ const Contact = ({ state, dispatch }) => {
           />
         </InputGroup>
         <ButtonWrapper>
-          <Button value="Send Message">Send Message</Button>
+          <button.teal value="Send Message">Send Message</button.teal>
         </ButtonWrapper>
         {/* </Fieldset> */}
       </Form>

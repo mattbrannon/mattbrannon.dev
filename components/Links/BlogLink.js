@@ -8,7 +8,7 @@ export const BlogLink = ({ href, children, ...props }) => {
     <Container {...props}>
       {children}
       {/* <InternalLink {...props} scroll={false} shallow={true} href={href} passHref> */}
-      <LinkIcon scroll={false} shallow={true} passHref {...props} href={href} />
+      <LinkIcon shallow={true} scroll={false} href={href} passHref {...props} />
       {/* </InternalLink> */}
     </Container>
   );

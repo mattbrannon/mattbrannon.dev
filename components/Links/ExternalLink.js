@@ -11,10 +11,12 @@ export const ExternalLink = ({ href, children }) => {
 };
 
 const External = styled(Anchor)`
-  font-variation-settings: 'wght' 700;
-
+  /* font-variation-settings: 'wght' 700; */
+  font: inherit;
+  font-weight: bold;
   color: var(--external-link);
   &:hover {
-    color: var(--external-link-hover);
+    text-decoration: revert;
+    /* color: var(--external-link-hover); */
   }
 `;

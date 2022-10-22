@@ -1,20 +1,19 @@
-import { InternalLink } from '@components/Links';
+import styled from 'styled-components';
 import Head from '@components/Head';
-import { CardHeading } from '@components/Headings';
-import PageTitle from '@components/PageTitle';
+import { PageTitle } from '@components/PageTitle';
 import { Main } from '@components/Layout';
-import { Spacer } from '@components/Spacer';
-import Text from '@components/Text/Text';
-import { BlogVideo } from '@components/VideoPlayer';
-import { breakpoints } from '@constants/index';
+import { spacer } from '@components/Spacer';
+import { VideoPlayer } from '@components/VideoPlayer';
+import { breakpoints } from '@constants/breakpoints';
 import { POSTS_PATH, publishedArticles } from '@utils/mdxUtils.js';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
-
-import styled from 'styled-components';
+import { Card } from '@components/Card';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 
 export default function Index({ posts }) {
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.tablet });
   return (
     <Main id="main-content">
       <Head
@@ -24,43 +23,24 @@ export default function Index({ posts }) {
 
       <PageTitle>Another Developer Blog</PageTitle>
 
-      <BlogVideo
+      <VideoPlayer
+        width={540}
         rounded
-        center
-        size={360}
+        center={isMobile}
         sources={['/videos/demos/mitm.webm', '/videos/demos/mitm.mp4']}
       />
-      <Spacer size={32} />
+      <spacer.block size={32} />
 
       <BlogList tabIndex={-1}>
         {posts.map((post) => {
           const href = `/blog/${post.filePath.replace(/\.mdx?$/, '')}`;
-          return (
-            <Card key={post.filePath}>
-              <CardHeading>
-                <InternalLink href={href}>{post.data.title}</InternalLink>
-              </CardHeading>
-              <Text>{post.data.description}</Text>
-            </Card>
-          );
+          return <Card.Blog key={href} href={href} post={post} />;
         })}
       </BlogList>
-      <Spacer axis="vertical" size={32} />
+      <spacer.block size={32} />
     </Main>
   );
 }
-
-const Card = styled.li`
-  border: 1px solid black;
-  border-radius: 6px;
-  background: #222;
-  grid-column: 2;
-  width: 100%;
-  padding: 0 16px;
-  background: var(--basic-card-background);
-  font-variation-settings: 'wght' 700;
-  list-style: none;
-`;
 
 const BlogList = styled.ul`
   display: grid;

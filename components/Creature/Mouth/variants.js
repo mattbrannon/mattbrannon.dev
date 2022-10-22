@@ -5,11 +5,15 @@ export const talking = {
     clipPath: 'polygon(0% 48%, 100% 48%, 100% 52%, 0% 52%)',
     borderRadius: '1000px 1000px 1000px 1000px',
   },
-  animate: ({ amount }) => ({
-    borderRadius: '1000px 1000px 1300px 1300px',
-    clipPath: makeClipPath(amount),
-    transition: { delay: 1, duration: amount / 8 },
-  }),
+  animate: () => {
+    // amount = amount || 50;
+    return {
+      borderRadius: '1000px 1000px 1300px 1300px',
+      padding: '8px 0 0 0',
+      clipPath: makeClipPath(40),
+      transition: { delay: 1, duration: 40 / 8 },
+    };
+  },
 };
 
 export const smiling = {
@@ -54,9 +58,9 @@ export const frowning = {
 
 export const smirking = {
   initial: {
-    padding: '3% 0',
+    // padding: '3% 0',
     borderRadius: '24px 24px 24px 24px',
-    clipPath: 'polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%)',
+    // clipPath: 'polygon(0% 40%, 100% 40%, 100% 60%, 0% 60%)',
   },
   animate: {
     clipPath: [
@@ -65,13 +69,14 @@ export const smirking = {
       'polygon(4% 20%, 100% 20%, 80% 90%, 6% 80%)',
     ],
     padding: '6% 0',
-    borderRadius: '6px 6px 24px 24px',
+    // borderRadius: '6px 6px 24px 24px',
     transition: {
       clipPath: {
         repeat: Infinity,
         repeatType: 'mirror',
         repeatDelay: 10,
         duration: 1,
+        delay: 7,
       },
     },
   },
@@ -88,10 +93,21 @@ export const closed = {
 };
 
 export const shocked = {
-  initial: { '--mouth-padding': '1px', '--mouth-margin': 'calc(var(--mouth-padding) * -2)' },
+  initial: {
+    padding: '1px 0',
+    borderRadius: '4px 4px 4px 4px',
+    width: '54px',
+  },
   animate: {
-    '--mouth-padding': '48px',
-    '--mouth-margin': 'calc(var(--mouth-padding) * -2)',
-    transition: { delay: 1, duration: 1 },
+    padding: '9px 0',
+    borderRadius: '24px 24px 24px 24px',
+    width: '42px',
+    transition: {
+      duration: 1,
+      delay: 7,
+      repeat: 1,
+      repeatType: 'mirror',
+      repeatDelay: 10,
+    },
   },
 };

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { m as motion } from 'framer-motion';
-import FancyTitle from '@components/FancyTitle';
+// import {FancyTitle} from '@components/FancyTitle';
 import { breakpoints } from '@constants/breakpoints';
 
 export const Article = styled.article`
@@ -11,9 +11,9 @@ export const Article = styled.article`
   bottom: var(--footer-height);
   overflow: auto;
 
-  @media (max-width: ${breakpoints.mobile}) {
+  @media (max-width: ${breakpoints.tablet}px) {
     --controlWidth: 0;
-    bottom: 50%;
+    left: 0;
   }
 `;
 

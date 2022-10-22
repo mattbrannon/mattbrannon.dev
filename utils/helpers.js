@@ -259,20 +259,12 @@ export const getDataType = (data) => {
   return Object.prototype.toString.call(data).slice(8, -1);
 };
 
-export const toHeadingId = (str) => {
+export const toHeadingId = (s) => {
   try {
-    return (
-      str.slice(0, 1).toLowerCase() +
-      str
-        .slice(1)
-        .split(' ')
-        .map((s) => s.replace(/[A-Z]/g, (v) => '-' + v.toLowerCase()))
-        .join('-')
-        .replace(/-+/g, '-')
-    );
+    return s.split(/\s|\./).join('-').toLowerCase();
   }
   catch {
-    return str;
+    return s;
   }
 };
 
@@ -307,13 +299,7 @@ const getRangeOfHues = (start, end, steps) => {
   return hues;
 };
 
-export const makeGradient2 = ({
-  colorStart = 'blue',
-  colorEnd = 'red',
-  blend = 10,
-  midPoint = 47,
-  angle = 0,
-}) => {
+export const makeGradient2 = ({ colorStart = 'blue', colorEnd = 'red', blend = 10, midPoint = 47, angle = 0 }) => {
   let [h1, s1, l1] = new Color(colorStart).hsl.array();
   let [h2, s2, l2] = new Color(colorEnd).hsl.array();
 
@@ -388,16 +374,6 @@ export const parseFontSettings = (settings) => {
     .join(', ');
 };
 
-// export const loadFeatures = () => d("./features.js").then(res => res.default)
-// export const loadFeatures = () =>
-//   dynamic(() => import('@animations/features.js').then((res) => res.default));
-
-// export const loadFeatures = () => import('@animations/features.js').then((res) => res.default);
-
-// export const loadFeatures = dynamic(() =>
-//   import('@animations/features.js').then((res) => res.default)
-// );
-
 export function animate({ timing, draw, duration }) {
   let start = performance.now();
 
@@ -435,6 +411,17 @@ export const makeClipPath = (n) => {
   });
 };
 
+export const makeRandomPadding = (n) => {
+  return Array.from({ length: n }, (_, i) => {
+    const lowMax = randomNumber(1);
+    const highMax = randomNumber(4);
+
+    const padding = i % 2 === 0 ? lowMax(4) : highMax(8);
+
+    return `${padding}px 0`;
+  });
+};
+
 const getMultiPoints = (midpoint, gap, values) => {
   const nums = [];
   while (nums.length < values.length) {
@@ -457,22 +444,6 @@ export const createGradient = (values, gap, midpoint = 50, angle = 35) => {
   return gradient;
 };
 
-// export const makeGradient = ({
-//   gradientColors,
-//   gradientBlend,
-//   gradientMidpoint,
-//   gradientAngle,
-// }) => {
-//   const points = getMultiPoints(gradientMidpoint, gradientBlend, gradientColors);
-//   const colors = gradientColors.map((color, i) => {
-//     const location = points[i];
-//     return `${color} ${location}%`;
-//   });
-
-//   const gradient = `linear-gradient(${gradientAngle}deg, ${colors.join(', ')})`;
-//   return gradient;
-// };
-
 export const createFullStopGradient = (values) => {
   return values
     .map((color, i) => {
@@ -483,15 +454,7 @@ export const createFullStopGradient = (values) => {
     .join(', ');
 };
 
-export const makeShadow2 = ({
-  colorStart,
-  colorEnd,
-  layers,
-  gap = 1,
-  offsetX = -1,
-  offsetY = -1,
-  blur = 1,
-}) => {
+export const makeShadow2 = ({ colorStart, colorEnd, layers, gap = 1, offsetX = -1, offsetY = -1, blur = 1 }) => {
   if (parseInt(layers) === 0) return 'none';
 
   let [h1, s1, l1] = new Color(colorStart).hsl.array();

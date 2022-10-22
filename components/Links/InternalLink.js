@@ -17,8 +17,9 @@ export const InternalLink = forwardRef(Link);
 
 const Internal = styled(Anchor)`
   color: var(--internal-link);
-  font-weight: 700;
-  font-variation-settings: 'wght' 750;
+  /* font-weight: 700; */
+  font: inherit;
+  /* font-variation-settings: 'wght' 750; */
 
   &:hover {
     color: var(--internal-link-hover);

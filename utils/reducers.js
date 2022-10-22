@@ -29,10 +29,12 @@ export const initialShapeState = {
   translateYAxis: 0,
   translateZAxis: 0,
   speed: 1,
+  max: 15,
+  sides: 12,
 
-  sphereOuter: '#df60201a',
-  sphereMiddle: '#9fdf201a',
-  sphereInner: '#20df601a',
+  sphereOuter: '#df6020',
+  sphereMiddle: '#9fdf20',
+  sphereInner: '#20df60',
 };
 
 // sphereSides: 12,
@@ -70,7 +72,8 @@ export const shapeReducer = (state, action) => {
     case 'RESET': {
       return {
         ...initialShapeState,
-        sides: 12,
+        shape: state.shape,
+
         // sides: state.sides,
         // speed: state.speed,
         // shape: state.shape,

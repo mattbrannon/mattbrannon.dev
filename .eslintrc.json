@@ -48,6 +48,6 @@
         "SwitchCase": 1
       }
     ],
-    "object-curly-spacing": ["error", "always", { "arraysInObjects": false }]
+    "object-curly-spacing": ["error", "always"]
   }
 }

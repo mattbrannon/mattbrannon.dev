@@ -9,7 +9,6 @@ export function Burger({ dialogIsOpen, setDialogIsOpen }) {
     <BurgerWrapper
       style={{ '--display': isMobile || dialogIsOpen ? 'flex' : 'none' }}
       onClick={() => setDialogIsOpen(!dialogIsOpen)}
-      dialogIsOpen={dialogIsOpen}
       aria-label="mobile navigation menu"
     >
       <Line dialogIsOpen={dialogIsOpen} />
@@ -99,36 +98,3 @@ const Line = styled.span.attrs(({ dialogIsOpen }) => {
     transform: rotate(var(--after));
   }
 `;
-
-// const Line = styled.span.attrs((props) => {
-//   const { isOpen, top, middle, bottom } = props;
-//   // const background = isOpen ? 'white' : 'black';
-
-//   const amount = 9;
-//   let transform;
-
-//   if (isOpen && top) {
-//     transform = `translateY(${amount}px) rotate(-45deg)`;
-//   }
-//   else if (isOpen && middle) {
-//     transform = 'scale(0)';
-//   }
-//   else if (isOpen && bottom) {
-//     transform = `translateY(-${amount}px) rotate(45deg)`;
-//   }
-
-//   return {
-//     style: {
-//       '--transform': transform,
-//       '--top': top && '4.75px',
-//       '--bottom': bottom && '4.75px',
-//     },
-//   };
-// })`
-//   display: block;
-//   background: white;
-//   height: var(--thickness);
-//   width: 100%;
-//   transform: var(--transform);
-//   transition: transform 0.2s linear;
-// `;

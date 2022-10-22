@@ -7,7 +7,7 @@ import { useActiveElement } from './useActiveElement';
 export const useIsBannerVisible = (threshold = 300) => {
   const scroll = useScroll();
   const activeElement = useActiveElement();
-  const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
+  const isMobile = useMediaQuery({ maxWidth: breakpoints.tablet });
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {

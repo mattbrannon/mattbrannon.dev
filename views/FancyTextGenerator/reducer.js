@@ -10,20 +10,20 @@ export const initialState = {
   applyToWords: false,
 
   shadow: {
-    shadowColorStart: '#f4ccff',
-    shadowColorEnd: '#3a313a',
-    shadowLayers: 6,
-    shadowGap: 18,
+    shadowColorStart: '#deffcc',
+    shadowColorEnd: '#3a3131',
+    shadowLayers: 14,
+    shadowGap: 8,
     shadowBlur: 0,
     shadowOffsetX: -0.9,
     shadowOffsetY: -0.6,
   },
   gradient: {
-    gradientColorStart: '#4f5940',
-    gradientColorEnd: '#ffe45c',
+    gradientColorStart: '#00c0f0',
+    gradientColorEnd: '#0a1a3d',
     gradientAngle: 0,
-    gradientMidpoint: 50,
-    gradientBlend: 50,
+    gradientMidpoint: 39,
+    gradientBlend: 39,
   },
 
   fonts: {
@@ -42,6 +42,10 @@ export const initialState = {
     Jost: {
       initialSettings: { wght: 600, ital: 0 },
       currentSettings: { wght: 900, ital: 2 },
+    },
+    JetBrainsMono: {
+      initialSettings: { wght: 100 },
+      currentSettings: { wght: 700 },
     },
     Decovar: {
       initialSettings: {
@@ -86,21 +90,21 @@ export const initialState = {
     fontFamily: 'Recursive',
     fontSize: 128,
     strokeWidth: 0.02,
-    strokeColor: '#7f00ad',
+    strokeColor: '#000000',
     letterSpacing: 0,
     fontVariationSettings: parseFontSettings({ wght: 1000, slnt: 0, CASL: 0, CRSV: 0, MONO: 0 }),
     gradient: makeGradient({
-      gradientColorStart: '#4f5940',
-      gradientColorEnd: '#ffe45c',
+      gradientColorStart: '#00c0f0',
+      gradientColorEnd: '#0a1a3d',
       gradientAngle: 0,
-      gradientMidpoint: 50,
-      gradientBlend: 50,
+      gradientMidpoint: 39,
+      gradientBlend: 39,
     }),
     shadow: makeShadow({
-      shadowColorStart: '#f4ccff',
-      shadowColorEnd: '#3a313a',
-      shadowLayers: 6,
-      shadowGap: 18,
+      shadowColorStart: '#deffcc',
+      shadowColorEnd: '#3a3131',
+      shadowLayers: 14,
+      shadowGap: 8,
       shadowBlur: 0,
       shadowOffsetX: -0.9,
       shadowOffsetY: -0.6,
@@ -244,9 +248,7 @@ export const fancyTextReducer = (state, action) => {
       const styleState = {
         ...initialState.styles,
         fontFamily: state.styles.fontFamily,
-        fontVariationSettings: parseFontSettings(
-          fontState[state.styles.fontFamily].currentSettings
-        ),
+        fontVariationSettings: parseFontSettings(fontState[state.styles.fontFamily].currentSettings),
         shadow: makeShadow(shadowState),
       };
 

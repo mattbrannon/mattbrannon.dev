@@ -34,41 +34,18 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link
+          <link rel="preload" href="/fonts/decovar.woff2" as="font" crossOrigin="" type="font/woff2" />
+          <link rel="preload" href="/fonts/Jost-english-subset.woff2" as="font" crossOrigin="" type="font/woff2" />
+          <link rel="preload" href="/fonts/inter-variable-subset.woff2" as="font" crossOrigin="" type="font/woff2" />
+          <link rel="preload" href="/fonts/open-sans-regular.woff2" as="font" crossOrigin="" type="font/woff2" />
+          <link rel="preload" href="/fonts/recursive-variable.woff2" as="font" crossOrigin="" type="font/woff2" />
+          {/* <link
             rel="preload"
-            href="/fonts/decovar.woff2"
+            href="/fonts/JetBrainsMono.woff2"
             as="font"
             crossOrigin=""
             type="font/woff2"
-          />
-          <link
-            rel="preload"
-            href="/fonts/Jost-english-subset.woff2"
-            as="font"
-            crossOrigin=""
-            type="font/woff2"
-          />
-          <link
-            rel="preload"
-            href="/fonts/inter-variable-subset.woff2"
-            as="font"
-            crossOrigin=""
-            type="font/woff2"
-          />
-          <link
-            rel="preload"
-            href="/fonts/open-sans-regular.woff2"
-            as="font"
-            crossOrigin=""
-            type="font/woff2"
-          />
-          <link
-            rel="preload"
-            href="/fonts/recursive-variable.woff2"
-            as="font"
-            crossOrigin=""
-            type="font/woff2"
-          />
+          /> */}
         </Head>
         <body>
           <div id="mobile-nav-portal"></div>

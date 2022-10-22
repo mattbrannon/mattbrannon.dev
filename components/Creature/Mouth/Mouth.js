@@ -5,10 +5,11 @@ import * as variants from './variants';
 export const Mouth = styled(motion.div)`
   --mouth-padding: 2px;
   --mouth-margin: calc(var(--mouth-padding) * -2);
-  width: calc(var(--cube-width) * 0.5);
+  --mouth-width: calc(var(--cube-width) * 0.5);
   background: #191919;
+  width: var(--mouth-width);
   border-radius: var(--mouth-radius);
-  padding: var(--mouth-padding) 0;
+  padding: var(--mouth-padding);
 `;
 
 const withMouthVariant = (variants) => {

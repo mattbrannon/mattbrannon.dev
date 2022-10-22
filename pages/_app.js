@@ -5,6 +5,7 @@ import { Banner } from '@components/Banner';
 import { HeaderGap } from '@components/Spacer';
 import { MobileMenu } from '@components/MobileMenu';
 import { GoogleAnalytics } from '@components/GoogleAnalytics';
+import { MaxWidthWrapper } from '@components/MaxWidthWrapper';
 
 import '@styles/global.css';
 import { GlobalStyle } from '@styles/global';
@@ -17,6 +18,10 @@ import { useIsBannerVisible } from '@hooks/useIsBannerVisible';
 import { useActiveElement } from '@hooks/useActiveElement';
 import { useHasMounted } from '@hooks/useHasMounted';
 
+import { TableOfContents } from '@components/TableOfContents';
+
+const components = { TableOfContents };
+
 export default function Application({ Component, pageProps }) {
   const [isOpen, setIsOpen] = useState(null);
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
@@ -25,7 +30,10 @@ export default function Application({ Component, pageProps }) {
   const [hasActiveElement, setHasActiveElement] = useState(false);
 
   const [hasRun, setHasRun] = useState(null);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [bubblesDone, setBubblesDone] = useState(false);
   const isBannerVisible = useIsBannerVisible(400);
+  const [hasPlayedGame, setHasPlayedGame] = useState(false);
 
   const ref = useRef();
 
@@ -55,6 +63,12 @@ export default function Application({ Component, pageProps }) {
     setIsOpen,
     hasRun,
     setHasRun,
+    hasStarted,
+    setHasStarted,
+    bubblesDone,
+    setBubblesDone,
+    hasPlayedGame,
+    setHasPlayedGame,
     // pathname,
   };
 
@@ -75,20 +89,21 @@ export default function Application({ Component, pageProps }) {
       <GoogleAnalytics />
       <MotionConfig isValidProp={isValidProp}>
         <LazyMotion strict features={domAnimation}>
-          {/* <GoogleAnalytics /> */}
           <StyleSheetManager disableVendorPrefixes>
-            <ThemeProvider defaultTheme="dark" enableSystem={false} enableColorScheme={true}>
-              <ContextProvider theme={theme}>
-                <GlobalStyle />
+            <ContextProvider theme={theme}>
+              <GlobalStyle />
+              <ThemeProvider defaultTheme="dark" enableSystem={false} enableColorScheme={true}>
                 <MobileMenu dialogIsOpen={dialogIsOpen} setDialogIsOpen={setDialogIsOpen} />
                 <Banner ref={ref} isVisible={hasActiveElement || isBannerVisible} />
                 <Layout>
                   <HeaderGap />
-                  <Component {...pageProps} />
+                  <MaxWidthWrapper>
+                    <Component {...pageProps} />
+                  </MaxWidthWrapper>
                   <Footer />
                 </Layout>
-              </ContextProvider>
-            </ThemeProvider>
+              </ThemeProvider>
+            </ContextProvider>
           </StyleSheetManager>
         </LazyMotion>
       </MotionConfig>

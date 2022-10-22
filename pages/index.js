@@ -1,6 +1,6 @@
 import styled, { ThemeContext } from 'styled-components';
 import Hero from '@components/Hero';
-import FancyTitle from '@components/FancyTitle';
+import { FancyTitle } from '@components/FancyTitle';
 import Head from '@components/Head';
 import { Main } from '@components/Layout';
 import { useContext } from 'react';
@@ -10,16 +10,17 @@ const homePageVariant = {
   hidden: {
     opacity: 0,
     clipPath: 'var(--left)',
-    letterSpacing: '0.2em',
+    // letterSpacing: '0.05em',
   },
   show: ({ hasRun }) => {
     return {
       opacity: 1,
       clipPath: 'var(--visible)',
-      letterSpacing: '0.0195em',
+      // letterSpacing: '0.0195em',
+
       transition: {
         duration: 1.5,
-        delay: hasRun ? 0 : 2,
+        delay: hasRun ? 0 : 4,
       },
     };
   },
@@ -30,22 +31,21 @@ export default function HomePage() {
   return (
     <Container id="main-content">
       <Head description="Matt Brannon's slice of the internet" title="Matt Brannon" />
-      <TopRow>
-        <TitleWrapper>
-          <FancyTitle
-            style={{
-              '--gradient': 'var(--app-name-gradient)',
-              '--shadow': 'var(--app-name-shadow)',
-            }}
-            variants={homePageVariant}
-            initial="hidden"
-            animate="show"
-            custom={{ hasRun: context.hasRun }}
-          >
-            Welcome to my site!
-          </FancyTitle>
-        </TitleWrapper>
-      </TopRow>
+
+      <FancyTitle
+        style={{
+          '--gradient': 'var(--app-name-gradient)',
+          '--shadow': 'var(--app-name-shadow)',
+          overflow: 'hidden',
+          textAlign: 'center',
+        }}
+        variants={homePageVariant}
+        initial="hidden"
+        animate="show"
+        custom={{ hasRun: context.hasRun }}
+      >
+        Welcome to my site!
+      </FancyTitle>
 
       <Hero />
     </Container>
@@ -64,22 +64,17 @@ const Container = styled(Main)`
   --strokeWidth: 0.021875em;
   --strokeColor: #000000;
 
-  padding-bottom: 16px;
+  /* padding-bottom: 16px; */
 
-  @media (max-width: ${breakpoints.mobile}px) {
+  /* @media (max-width: ${breakpoints.mobile}px) {
     padding-bottom: 0;
-  }
+  } */
 `;
 
 const TitleWrapper = styled.div`
-  top: 64px;
-  left: 0;
-  right: 0;
-  width: 100%;
-  white-space: nowrap;
   margin: 0 auto;
   text-align: center;
-  margin-top: var(--marginTop);
+  /* margin-top: var(--marginTop); */
 `;
 
 const TopRow = styled.div`

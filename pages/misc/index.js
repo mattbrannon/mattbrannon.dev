@@ -1,15 +1,15 @@
-import { InternalLink } from '@components/Links';
 import Head from '@components/Head';
-import { Main } from '@components/Layout';
-import { CardHeading } from '@components/Headings';
-import PageTitle from '@components/PageTitle';
-import { Spacer } from '@components/Spacer';
-import Text from '@components/Text/Text';
-import styled from 'styled-components';
+import { Main, ToolsList } from '@components/Layout';
+import { PageTitle } from '@components/PageTitle';
+import { spacer } from '@components/Spacer';
+import { text } from '@components/Text';
 import { useState, useEffect } from 'react';
-import SideNote from '@components/SideNote';
+import { SideNote } from '@components/SideNote';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/breakpoints';
+import { Card } from '@components/Card';
+import Link from 'next/link';
+import { InternalLink } from '@components/Links';
 
 export default function Index() {
   const [isSafari, setIsSafari] = useState(false);
@@ -26,100 +26,78 @@ export default function Index() {
 
   return (
     <Main id="main-content">
-      <Head title="Oddities and revelations" description="secret shh..." />
+      <Head title="Tools and toys" description="A collection of useful and pointless things" />
 
-      <PageTitle>Oddities and revelations</PageTitle>
+      <PageTitle>Tools and Toys</PageTitle>
+      <text.paragraph>
+        This is a collection of fun stuff. Some of it is actually useful. Some is just fun to play with. I'm quite happy
+        with the <InternalLink href="/misc/fancy-text-generator">Fancy Text Generator.</InternalLink> It's what I used
+        to create most of the headings on this site.
+      </text.paragraph>
 
-      <Text>
-        I don't know how to describe this page. It's just things I'm working on. Some are useful,
-        others are not. While you're here, check out the Fancy Text Generator and let me know what
-        you think.
-      </Text>
-      <Text>
-        The most recent addition is the Fractals page. It's not really "finished" yet but it doesn't
-        need to be. It's just something fun to play around with.
-      </Text>
-      <Text>
-        Also, just so you're aware, my little cube friend likes to hang around these parts. If you
-        see him, please remember,{' '}
-        <strong>
-          <>don't feed the cube after midnight.</>
-        </strong>
-      </Text>
+      <text.paragraph>Ok so one thing is useful...</text.paragraph>
 
-      {/* <Text>
-        On this page you'll find various tools that I created and used when building my site. Some
-        of these tools are visual aids I use to help plot the course of an animation. And some you
-        can use to generate cool things in your own projects.
-      </Text>
-
-      <Text>On this page you'll find all kinds of weirdness.</Text>
-
-      <Text>
-        On this page you'll find various tools I created and used when building my site. Sometimes I
-        build a tool to help me visualize something. Other times I build a tool to generate some
-        markup and wind up using quite frequently. Basically, if I were a mad scientist, this would
-        be my secret lab. You're welcome to look around and turn some knobs. Just please{' '}
-        <strong>
-          <em>don't feed the cube after midnight</em>
-        </strong>
-      </Text> */}
       {isSafari ? (
         <SideNote>
-          It seems like you're using Safari. The tools on this page don't do so great with Safari.
-          They still work, but you might experience some performance issues and other odd little
-          bugs. If the controls feel sluggish or things just seems a little off, I'd recommend using
-          Chrome instead.
+          It seems like you're using Safari. The tools on this page don't do so great with Safari. They still work, but
+          you might experience some performance issues and other odd little bugs. If the controls feel sluggish or
+          things just seems a little off, I'd recommend using Chrome instead.
         </SideNote>
       ) : null}
 
-      {isMobile ? (
-        <SideNote>
-          The tools listed on this page are not setup for use with mobile devices.
-        </SideNote>
-      ) : null}
+      {isMobile ? <SideNote>The tools listed on this page are not setup for use with mobile devices.</SideNote> : null}
 
-      <List>
-        <Card>
-          <CardHeading>
-            <InternalLink href="/misc/fancy-text-generator">Fancy Text Generator</InternalLink>
-          </CardHeading>
-          <Text>Variable fonts + gradient backgrounds + layered text shadows = Fancy text</Text>
-        </Card>
-
-        <Card>
-          <CardHeading>
-            <InternalLink href="/misc/geometry">Pushing squares through circles</InternalLink>
-          </CardHeading>
-          <Text>Without geometry life is pointless...</Text>
-        </Card>
-
-        <Card>
-          <CardHeading>
-            <InternalLink href="/misc/fractals">Fractals</InternalLink>
-          </CardHeading>
-          <Text>
-            Still a work in progress but feel free to play around with what I've got so far.
-          </Text>
-        </Card>
-      </List>
-      <Spacer axis="vertical" size={32} />
+      <ToolsList>
+        <Card.Tools href="/misc/fancy-text-generator" title="Fancy Text Generator">
+          This is free online tool you can use to generate awesome looking text for your website. Use it to create nice
+          subtle effects or bold creative ones. Gradients, layered text shadows, variable fonts and more. Completely
+          customizable and easy to use.
+        </Card.Tools>
+        <Card.Tools href="/misc/experiments-with-a-cube" title="Experiments with a Cube">
+          This is the beginnings of what I hope will become sort of character creator type of thing. Did you see my
+          little cube friend on the main page? He was born here.
+        </Card.Tools>
+        <Card.Tools href="/misc/fractals" title="Fractals">
+          Fractals are really interesting and often complex recursive geometric patterns. Here you can play around with
+          various <code>canvas</code> properties to alter the look of a fractal.
+        </Card.Tools>
+      </ToolsList>
+      <spacer.block axis="vertical" size={32} />
     </Main>
   );
 }
 
-const List = styled.ul`
-  list-style: none;
-  display: grid;
-  gap: 18px;
-  padding: 0;
-`;
+// const List = styled.ul`
+//   list-style: none;
+//   display: grid;
+//   gap: 18px;
+//   padding: 0;
+// `;
 
-const Card = styled.li`
-  border: 1px solid black;
-  border-radius: 6px;
-  background: #222;
-  width: 100%;
-  padding: 0 16px;
-  background: var(--basic-card-background);
-`;
+// const CardWrapper = styled.div`
+//   border: 1px solid black;
+//   border-radius: 6px;
+//   padding: 0 16px 16px 16px;
+//   background: var(--basic-card-background);
+//   /* display: flex;
+//   flex-direction: column;
+//   justify-content: space-between; */
+//   min-height: 160px;
+// `;
+
+// const Small = styled.small`
+//   color: var(--color-text);
+// `;
+
+// const Card = ({ title, href, children }) => {
+//   return (
+//     <li>
+//       <Link href={href}>
+//         <CardWrapper>
+//           <CardHeading>{title}</CardHeading>
+//           <Small>{children}</Small>
+//         </CardWrapper>
+//       </Link>
+//     </li>
+//   );
+// };

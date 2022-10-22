@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { NormalButton, FancyButton } from '@components/Button';
+import { button } from '@components/Button';
 
 export const Buttons = ({ state, ...props }) => {
   // const showCodeText = props.show.code ? 'Back to Editor' : 'Get Css';
@@ -20,19 +20,15 @@ export const Buttons = ({ state, ...props }) => {
 
   return (
     <ButtonGroup>
-      <NormalButton onClick={handleToggle} name="help" {...props}>
+      <button.teal onClick={handleToggle} name="help" {...props}>
         {state.help ? 'Back to Editor' : 'Help'}
-      </NormalButton>
-      <NormalButton onClick={handleToggle} name="code" {...props}>
+      </button.teal>
+      <button.teal onClick={handleToggle} name="code" {...props}>
         {state.code ? 'Back to Editor' : 'Get Css'}
-      </NormalButton>
-      <FancyButton
-        onClick={() => props.dispatch({ type: 'reset', value: true })}
-        name="reset"
-        {...props}
-      >
+      </button.teal>
+      <button.pink onClick={() => props.dispatch({ type: 'reset', value: true })} name="reset" {...props}>
         Reset
-      </FancyButton>
+      </button.pink>
     </ButtonGroup>
   );
 };
@@ -47,7 +43,7 @@ const ButtonGroup = styled.div`
 `;
 
 // import styled from 'styled-components';
-// import { NormalButton, FancyButton } from '@components/Button';
+// import { NormalButton, PinkButton } from '@components/Button';
 
 // export const Buttons = ({ state, dispatch, ...props }) => {
 //   // const showCodeText = props.show.code ? 'Back to Editor' : 'Get Css';
@@ -76,9 +72,9 @@ const ButtonGroup = styled.div`
 //       <NormalButton onClick={handleCode} name="code" {...props}>
 //         {state.code ? 'Back to editor' : 'Get CSS'}
 //       </NormalButton>
-//       <FancyButton onClick={handleReset} name="reset" {...props}>
+//       <PinkButton onClick={handleReset} name="reset" {...props}>
 //         Reset
-//       </FancyButton>
+//       </PinkButton>
 //     </ButtonGroup>
 //   );
 // };

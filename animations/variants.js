@@ -1,6 +1,6 @@
 import { makeGradient, makeShadow, makeFluidFontSize, parseFontSettings } from '@utils/helpers';
 
-import { breakpoints } from '@constants/index';
+import { breakpoints } from '@constants/breakpoints';
 
 const { mobile, desktop } = breakpoints;
 export const fontSize = makeFluidFontSize(36, 52, mobile, desktop);
@@ -30,9 +30,7 @@ export const shadow = makeShadow({
 export const textGeneratorVariant = {
   hidden: ({ state, ...props }) => {
     // console.log(state, props);
-    const fontVariationSettings = parseFontSettings(
-      state.fonts[state.styles.fontFamily].initialSettings
-    );
+    const fontVariationSettings = parseFontSettings(state.fonts[state.styles.fontFamily].initialSettings);
 
     // console.log(fontVariationSettings);
 

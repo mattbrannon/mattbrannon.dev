@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import Mouth from '../Mouth';
-import Eyes from '../Eyes';
+import { mouth } from '../Mouth';
+import { eyes } from '../Eyes';
 
 function withFace(Eyes) {
   return function makeFace(Mouth) {
@@ -16,8 +16,10 @@ function withFace(Eyes) {
   };
 }
 
-export const SmirkingFace = withFace(Eyes.RedEyes)(Mouth.Smirking);
-export const NormalFace = withFace(Eyes.NormalEyes)(Mouth.Smirking);
+export const TalkingFace = withFace(eyes.RedEyes)(mouth.Talking);
+export const SmirkingFace = withFace(eyes.NormalEyes)(mouth.Smirking);
+export const NormalFace = withFace(eyes.NormalEyes)(mouth.Closed);
+export const ShockedFace = withFace(eyes.NormalEyes)(mouth.Shocked);
 
 const Wrapper = styled.div`
   display: flex;
