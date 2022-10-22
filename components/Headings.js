@@ -1,4 +1,4 @@
-import { breakpoints } from '@constants/index';
+import { breakpoints } from '@constants/breakpoints';
 import styled from 'styled-components';
 // import { BlogLink } from '@components/Links'
 import { toHeadingId } from '@utils/helpers.js';

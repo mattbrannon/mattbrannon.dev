@@ -1,5 +1,5 @@
 import DocumentHead from '@components/Head';
-import { decovarValues } from '@constants/index.js';
+import { decovarValues } from '@constants/fonts';
 import { m as motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect, useRef } from 'react';

@@ -1,4 +1,4 @@
-import { breakpoints } from '@constants/index';
+import { breakpoints } from '@constants/breakpoints';
 import styled from 'styled-components';
 import { m as motion } from 'framer-motion';
 

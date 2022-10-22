@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { VideoPlayer } from '@components/VideoPlayer';
 import { ExternalLink } from '@components/Links';
-import { breakpoints } from '@constants/index.js';
+import { breakpoints } from '@constants/breakpoints';
 import { FancyTitle } from '@components/FancyTitle';
 import { memo } from 'react';
 import { m as motion } from 'framer-motion';
@@ -14,7 +14,6 @@ function AppTitleComponent({ title, sources, links, children, ...props }) {
       <FancyTitle
         style={{
           '--gradient': 'var(--app-name-gradient)',
-          // '--shadow': 'var(--app-name-shadow)',
           '--strokeWidth': '0.05em',
           '--strokeColor': '#000000',
         }}
@@ -39,19 +38,12 @@ function AppTitleComponent({ title, sources, links, children, ...props }) {
 const appTitleVariant = {
   hidden: {
     opacity: 0,
-    // clipPath: 'var(--center)',
-    // letterSpacing: '0.2em',
     '--fontSize': 'clamp(36px, 4vw, 54px)',
-    // '--gradient': 'linear-gradient(0deg, white, black)',
-
     '--fontVariationSettings': "'wght' 300, 'slnt' 0, 'CASL' 0, 'CRSV' 0, 'MONO' 0",
   },
   show: {
     opacity: 1,
-    // clipPath: 'var(--visible)',
     '--fontSize': 'clamp(36px, 4vw, 54px)',
-
-    // fontSize:
     '--fontVariationSettings': "'wght' 974, 'slnt' -7, 'CASL' 0.42, 'CRSV' 0, 'MONO' 0",
     transition: {
       duration: 1.5,

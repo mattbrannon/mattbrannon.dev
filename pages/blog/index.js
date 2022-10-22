@@ -7,7 +7,7 @@ import { Main } from '@components/Layout';
 import { spacer } from '@components/Spacer';
 import Text from '@components/Text/Text';
 import { VideoPlayer } from '@components/VideoPlayer';
-import { breakpoints } from '@constants/index';
+import { breakpoints } from '@constants/breakpoints';
 import { POSTS_PATH, publishedArticles } from '@utils/mdxUtils.js';
 import fs from 'fs';
 import matter from 'gray-matter';

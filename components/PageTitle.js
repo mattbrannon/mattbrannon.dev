@@ -1,11 +1,10 @@
 import { useFontSize } from '@hooks/useFontSize';
 import styled from 'styled-components';
 import FancyText from './Text/FancyText';
-import { breakpoints } from '@constants/index';
+import { breakpoints } from '@constants/breakpoints';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { forwardRef } from 'react';
 import { H1 } from '@components/Headings';
-// import { Spacer } from '@components/Spacer';
 
 const Title = (props, ref) => {
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });

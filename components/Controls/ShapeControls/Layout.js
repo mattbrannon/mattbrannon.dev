@@ -1,5 +1,5 @@
 import styled, { ThemeContext } from 'styled-components';
-import { breakpoints } from '@constants/index';
+import { breakpoints } from '@constants/breakpoints';
 import { forwardRef, useContext } from 'react';
 import { m as motion, AnimatePresence } from 'framer-motion';
 // import { loadFeatures } from '@utils/helpers';
@@ -16,13 +16,7 @@ export const Layout = forwardRef((props, ref) => {
   const zIndex = context.isOpen ? 0 : 1;
   return (
     <AnimatePresence>
-      <motion.div
-        key={props.children}
-        variants={controlVariant}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-      >
+      <motion.div key={props.children} variants={controlVariant} initial="initial" animate="animate" exit="exit">
         <Wrapper style={{ '--zIndex': zIndex }} tabIndex={-1} {...props} ref={ref}>
           <Section>{props.children}</Section>
         </Wrapper>

@@ -1,6 +1,7 @@
 import { format, parseISO } from 'date-fns';
 import styled from 'styled-components';
-import { mobile, blogHeader } from '@constants/index';
+import { blogHeader } from '@constants/blog';
+import { breakpoints } from '@constants/breakpoints';
 import { FancyTitle } from '@components/FancyTitle';
 import { useTheme } from 'next-themes';
 import { makeGradient } from '@utils/helpers.js';
@@ -51,7 +52,7 @@ const BlogTitleWrapper = styled.div`
   margin-bottom: 32px;
   font-family: Recursive;
 
-  @media (max-width: ${mobile}px) {
+  @media (max-width: ${breakpoints.mobile}px) {
     margin-top: 24px;
   }
 `;

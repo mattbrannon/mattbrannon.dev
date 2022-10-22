@@ -1,5 +1,5 @@
 import styled, { ThemeContext } from 'styled-components';
-import { breakpoints } from '@constants/index';
+import { breakpoints } from '@constants/breakpoints';
 import { forwardRef, useContext } from 'react';
 import { m as motion, AnimatePresence } from 'framer-motion';
 
