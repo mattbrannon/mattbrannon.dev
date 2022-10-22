@@ -4,7 +4,7 @@ import Head from '@components/Head';
 import { CardHeading } from '@components/Headings';
 import { PageTitle } from '@components/PageTitle';
 import { Main } from '@components/Layout';
-import { Spacer } from '@components/Spacer';
+import { spacer } from '@components/Spacer';
 import Text from '@components/Text/Text';
 import { VideoPlayer } from '@components/VideoPlayer';
 import { breakpoints } from '@constants/index';
@@ -33,7 +33,7 @@ export default function Index({ posts }) {
         center={isMobile}
         sources={['/videos/demos/mitm.webm', '/videos/demos/mitm.mp4']}
       />
-      <Spacer size={32} />
+      <spacer.block size={32} />
 
       <BlogList tabIndex={-1}>
         {posts.map((post) => {
@@ -41,7 +41,7 @@ export default function Index({ posts }) {
           return <Card.Blog key={href} href={href} post={post} />;
         })}
       </BlogList>
-      <Spacer axis="vertical" size={32} />
+      <spacer.block size={32} />
     </Main>
   );
 }

@@ -16,7 +16,7 @@ import image3Avif from '/public/images/monty-hall/monty-hall3.avif';
 import Image from 'next/image';
 import { AnimatePresence, m as motion } from 'framer-motion';
 import { VideoPlayer } from '@components/VideoPlayer';
-import { Spacer } from '@components/Spacer';
+import { spacer } from '@components/Spacer';
 import { MaxWidthWrapper } from '@components/MaxWidthWrapper';
 
 const links = {
@@ -107,7 +107,7 @@ export default memo(function MontyHallPage() {
             <small>Every possible round of play</small>
             {/* </MaxWidthWrapper> */}
 
-            <Spacer size={64} />
+            <spacer.block size={64} />
 
             <VideoPlayer sources={['/math.mp4']} />
           </motion.section>

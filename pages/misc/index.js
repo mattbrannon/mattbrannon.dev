@@ -1,7 +1,7 @@
 import Head from '@components/Head';
 import { Main, ToolsList } from '@components/Layout';
 import { PageTitle } from '@components/PageTitle';
-import { Spacer } from '@components/Spacer';
+import { spacer } from '@components/Spacer';
 import { text } from '@components/Text';
 import { useState, useEffect } from 'react';
 import { SideNote } from '@components/SideNote';
@@ -62,7 +62,7 @@ export default function Index() {
           various <code>canvas</code> properties to alter the look of a fractal.
         </Card.Tools>
       </ToolsList>
-      <Spacer axis="vertical" size={32} />
+      <spacer.block axis="vertical" size={32} />
     </Main>
   );
 }

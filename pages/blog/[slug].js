@@ -17,6 +17,7 @@ import styled from 'styled-components';
 import { Main } from '@components/Layout';
 import { useEffect } from 'react';
 import { text } from '@components/Text';
+import { spacer } from '@components/Spacer';
 
 import { MaxWidthWrapper } from '@components/MaxWidthWrapper';
 // import { Em } from '@components/Text';
@@ -58,8 +59,7 @@ const components = {
   List: dynamic(() => import('@components/List')),
   MiniGame: dynamic(() => import('@components/Minigame')),
   checkbox: dynamic(() => import('@components/Minigame').then((res) => res.Checkbox)),
-  // strong: dynamic(() => import('@components/Text').then((res) => res.StrongText)),
-  Spacer: dynamic(() => import('@components/Spacer').then((res) => res.Spacer)),
+  spacer,
   h2: H2Link,
   h3: H3Link,
   h4: H4Link,

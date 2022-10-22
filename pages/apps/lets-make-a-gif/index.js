@@ -3,7 +3,7 @@ import { ExternalLink } from '@components/Links';
 import Head from '@components/Head';
 import { H2Link } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
-import { Spacer } from '@components/Spacer';
+import { spacer } from '@components/Spacer';
 import { text } from '@components/Text';
 import { VideoPlayer } from '@components/VideoPlayer';
 import styled from 'styled-components';
@@ -47,7 +47,7 @@ export default memo(function LetsMakeAGifpage() {
           <VideoPlayer sources={['/videos/mp4/sammy-molly2.mp4']} />
         </FlexContainer>
         <ImageCaption>Sammy is not too pleased with Molly being in his bed</ImageCaption>
-        <Spacer size={32} />
+        <spacer.block size={32} />
 
         <text.paragraph>
           Then, I started messing around with the various filters available with ffmpeg. I found a color filter that was
@@ -62,7 +62,7 @@ export default memo(function LetsMakeAGifpage() {
           <VideoPlayer sources={['/videos/mp4/burning3.mp4']} />
         </FlexContainer>
         <ImageCaption>Before and after applying a few filters to a video</ImageCaption>
-        <Spacer size={32} />
+        <spacer.block size={32} />
 
         <text.paragraph>
           One of the biggest challenges was trying to come up with a design that worked well for both mobile and desktop
