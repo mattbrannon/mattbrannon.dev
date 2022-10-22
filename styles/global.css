@@ -82,15 +82,6 @@
   --fancy-text-color: hsl(313, 100%, 40%);
   --fancy-text-color: var(--pink-dark);
   --fancy-link-underline: hsl(313, 100%, 64%);
-  /* --fancy-text-color: hsl(191, 50%, 34%); */
-  /* --fancy-text-color: hsl(180, 25%, 35%); */
-  /* --fancy-text-color: hsl(222, 60%, 40%); */
-
-  /* --color-app-card: var(--pink-dark);
-  --color-app-card-hover: var(--pink); */
-
-  /* --color-app-card: hsl(191, 50%, 24%);
-  --color-app-card-hover: hsl(191, 50%, 30%); */
 
   --color-blog-title: var(--azure-25);
   --color-blog-date: hsl(60, 3%, 35%);
@@ -119,10 +110,7 @@
 
   --fancy-text-color: hsl(222, 60%, 30%);
   --fancy-text-color: hsl(190, 100%, 20%);
-  /* --h2: hsl(19, 60%, 35%); */
 
-  /* --app-card-color: hsl(190, 25%, 25%);
-  --app-card-hover: hsl(190, 25%, 35%); */
   --app-card-color: hsl(222, 60%, 30%);
   --app-card-hover: hsl(222, 60%, 40%);
 
@@ -177,30 +165,15 @@
 
   --color-link-icon-top: var(--blue5);
   --color-link-icon-bottom: var(--blue6);
-  /* --internal-link: hsl(222, 60%, 30%); */
 
-  /* --internal-link: var(--azure-dark);
-  --internal-link-hover: var(--azure-heavy); */
-  /* --internal-link: var(--pink-dark); */
-  /* --internal-link-hover: hsl(328, 100%, 40%); */
-
-  /* --internal-link: hsl(191, 50%, 24%); */
-
-  /* --internal-link: var(--azure-heavy);
-  --internal-link-hover: var(--azure-dark); */
   --app-card-color: var(--internal-link);
   --app-card-hover: var(--internal-link-hover);
   --app-card-color: hsl(194, 60%, 15%);
   --app-card-hover: var(--internal-link-hover);
 
-  /* --internal-link: var(--external-link); */
-  /* --internal-link-hover: var(--external-link-hover); */
   --skip-link: var(--azure-light);
-  /* --color-app-card: var(--azure-heavy); */
 
-  /* --color-app-card: darkslategrey; */
   --color-blog-title: darkslategrey;
-  /* --internal-link: darkslategrey; */
 
   --color-text: var(--black);
 
@@ -224,12 +197,6 @@
   --transparent-values: 210deg, 5%, 35%, 0;
 
   --shadow-opacity: 0.1;
-
-  /* --transparent-shadow: 2px 2px 4px hsl(var(--transparent-values)),
-    3px 3px 6px hsl(var(--transparent-values)), 4px 4px 8px hsl(var(--transparent-values)),
-    5px 5px 10px hsl(var(--transparent-values)), 6px 6px 12px hsl(var(--transparent-values)),
-    7px 7px 14px hsl(var(--transparent-values)), 8px 8px 16px hsl(var(--transparent-values)),
-    9px 9px 18px hsl(var(--transparent-values)); */
 
   --transparent-shadow: 2px 2px 4px hsl(var(--transparent-values));
 
@@ -268,7 +235,6 @@
   --app-card-hover: var(--yellow);
 
   --color-strong: var(--sky);
-  /* --color-strong: var(--yellow); */
 
   --basic-card-background: var(--black3);
   --form-background: var(--dark-faded-blue);
@@ -278,22 +244,10 @@
   --basic-card-color: var(--orange);
   --basic-card-hover-color: var(--yellow);
 
-  /* --yellow-orange: hsl(45, 100%, 60%);
-  --amber: hsl(45, 100%, 50%);
-  --orange-dark: hsl(22, 100%, 55%);
-
-  --yellow: hsl(55, 100%, 55%);
-  --orange-hover: hsl(45, 100%, 60%);
-  --orange: hsl(36, 100%, 62%); */
-
   --h5: hsl(45, 100%, 50%);
-  /* --h4: hsl(36, 100%, 62%); */
-  /* --h4: hsl(45, 100%, 60%); */
   --h3: hsl(55, 100%, 55%);
-  /* --h4: hsl(36, 100%, 62%); */
   --h3: hsl(36, 100%, 62%);
   --h2: hsl(36, 100%, 62%);
-  /* --h2: var(--yellow); */
   --h4: var(--yellow);
 
   --page-buttons: var(--orange);
@@ -313,9 +267,6 @@
   --external-link: var(--cyan-75);
   --external-link-hover: var(--cyan-85);
 
-  /* --external-link: var(--sky); */
-  /* --external-link-hover: var(--sky-light); */
-
   --color-idiomatic: hsl(16, 100%, 77%);
 
   --color-link-icon-top: var(--blue-white);
@@ -330,9 +281,6 @@
 
   --myName: var(--amber);
   --myNameHover: var(--yellow-orange);
-
-  /* --myName: var(--azure-80);
-  --myNameHover: var(--azure-85); */
 
   --color-outline: var(--azure-light);
   --color-outline-form: var(--sky);
@@ -437,12 +385,10 @@ picture {
 
 p {
   font-weight: 500;
-  /* font-size: clamp(var(--size16), 0.5vw + 0.5rem, var(--size20)); */
 }
 
 small {
   font-family: OpenSans;
-  /* font-size: clamp(var(--size14), 3vw, var(--size16)); */
   font-variation-settings: 'wdth' 75, 'wght' 555;
 }
 
@@ -452,6 +398,11 @@ ul ~ li:first-child {
 
 ul {
   margin: 0;
+}
+
+ul > li {
+  font-family: Inter;
+  font-variation-settings: 'slnt' -5, 'wght' 400;
 }
 
 table {
@@ -505,8 +456,10 @@ code {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
+  /* width: 0; */
+  /* height: 0; */
 }
 
 ::-webkit-scrollbar-track {
@@ -545,8 +498,11 @@ blockquote {
 }
 
 blockquote > p {
-  color: black;
-  margin: 0;
+  color: black !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: 'OpenSans', system-ui, sans-serif !important;
+  font-variation-settings: 'wdth' 75, 'wght' 555 !important;
 }
 
 blockquote p em {
