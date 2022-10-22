@@ -21,7 +21,7 @@ export const FullBleed = styled.div`
 `;
 
 export const Main = styled.main`
-  margin: 64px 0 128px 0;
+  margin: 92px 0 128px 0;
   width: 100%;
 `;
 

@@ -5,6 +5,7 @@ import { Banner } from '@components/Banner';
 import { HeaderGap } from '@components/Spacer';
 import { MobileMenu } from '@components/MobileMenu';
 import { GoogleAnalytics } from '@components/GoogleAnalytics';
+import { MaxWidthWrapper } from '@components/MaxWidthWrapper';
 
 import '@styles/global.css';
 import { GlobalStyle } from '@styles/global';
@@ -96,7 +97,9 @@ export default function Application({ Component, pageProps }) {
                 <Banner ref={ref} isVisible={hasActiveElement || isBannerVisible} />
                 <Layout>
                   <HeaderGap />
-                  <Component {...pageProps} />
+                  <MaxWidthWrapper>
+                    <Component {...pageProps} />
+                  </MaxWidthWrapper>
                   <Footer />
                 </Layout>
               </ThemeProvider>
