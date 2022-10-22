@@ -2,23 +2,13 @@
 title: 'Color Tools'
 description: 'A lightweight library for color manipulation, conversion, and palette generation'
 date: '2022-08-23'
-status: 'published'
+published: true
 toc: false
 ---
 
 > This is the README for a package I recently published on NPM. It's not really meant to be a blog post. I was mostly
 > curious what it would look like with the styles I currently have set for my site. But if you're reading this and are
 > curious about it, give it a try and let me know what you think. Ok... now back to the README.
-
-<!--
-- [Installation](#installation)
-- [Usage](#usage)
-  - [ES Modules](#es-modules)
-  - [Common JS](#common-js)
-- [Color](#color)
-  - [Config](#config);
-  - [Color Spaces](#color-spaces);
--->
 
 ---
 
@@ -163,8 +153,6 @@ space.
 - [`saturation()`](#hsl-methods) set the `hsl` saturation value
 - [`lightness()`](#hsl-methods) set the `hsl` lightness value
 
-<!--<h4 id="value">Value</h4>-->
-
 #### Value
 
 The simplest way to obtain the color output is with the `value` method. The output of this method will vary depending on
@@ -185,8 +173,6 @@ const green = new Color({ h: 120, s: 100, l: 25 })
 green.value() // {h:120, s:100, l:25}
 ```
 
-<!--<h4 id="contrast">Contrast</h4>-->
-
 #### Contrast
 
 Get the contrast ratio between the current color and another. Accepts the same input formats as `Color`
@@ -196,8 +182,6 @@ const orange = new Color('orange')
 const ratio = orange.contrast('red') // 2.02
 ```
 
-<!--<h4 id="luminance">Luminance</h4>-->
-
 #### Luminance
 
 Get the relative luminance value of the current color Returns a value between 0 - 1 with 0 being total darkness and 1
@@ -206,8 +190,6 @@ being all white
 ```js
 new Color('#8faba2').luminance() // 0.3757409455965292
 ```
-
-<!--<h4 id="rgb-methods">RGB Methods</h4>-->
 
 #### RGB Methods
 
@@ -221,8 +203,6 @@ const magenta = pureRed.blue(255)
 const purple = magenta.red(-127).blue(-127)
 const grey = magenta.red(-127).blue(-127).green(127)
 ```
-
-<!--<h4 id="hsl-methods">HSL Methods</h4>-->
 
 #### HSL Methods
 
@@ -239,8 +219,6 @@ const purple = maroon.hue(300)
 
 - `Color.random()` - returns a random hexadecimal color value
 - `Color.contrast()` - Takes 2 colors as input and returns the contrast ratio between them.
-
-<!--<h4 id="random">Color.random</h4>-->
 
 ```js
 const randomColor = Color.random() // #0d7ae8
@@ -266,8 +244,6 @@ want to tweak these a bit when deciding which colors to use.
 - [`rectangle()`](#rectangle)
 - [`square()`](#square)
 
-<!--<h4 id="complementary">Complementary</h4>-->
-
 #### Complementary
 
 A complementary color palette is one which consists of two colors opposite each other on the color wheel.
@@ -281,8 +257,6 @@ new Theme('hsl(0 100 50)').complementary()
 ]
 */
 ```
-
-<!--<h4 id="compound">Compound</h4>-->
 
 #### Compound
 
@@ -300,8 +274,6 @@ new Theme('rgb(255 0 0)').compound()
 */
 ```
 
-<!--<h4 id="analagous">Analagous</h4>-->
-
 #### Analagous
 
 An analagous color palette is one in which three colors are positioned next to each other on the color wheel.
@@ -317,8 +289,6 @@ new Theme('hsl(240 100 50)').analagous()
 */
 ```
 
-<!--<h4 id="triadic">Triadic</h4>-->
-
 #### Triadic
 
 A triadic color palette is one which consists of three colors evenly spaced on the color wheel.
@@ -333,8 +303,6 @@ new Theme('rgb(255 0 0)').triadic()
 ]
 */
 ```
-
-<!--<h4 id="rectangle">Rectangle</h4>-->
 
 #### Rectangle
 
@@ -352,8 +320,6 @@ new Theme('rgb(255 0 0)').rectangle()
 ]
 */
 ```
-
-<!--<h4 id="square">Square</h4>-->
 
 #### Square
 
