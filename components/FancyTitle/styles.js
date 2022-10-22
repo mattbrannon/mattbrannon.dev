@@ -2,21 +2,7 @@ import styled from 'styled-components';
 import { H1 } from '@components/Headings';
 import { m as motion } from 'framer-motion';
 
-export const Container = styled(motion.div).attrs((props) => {
-  console.log(props);
-  // return {
-  //   style: {
-  //     '--fontFamily': state.styles.fontFamily,
-  //     '--fontSize': state.styles.fontSize + 'px',
-  //     '--fontVariationSettings': state.styles.fontVariationSettings,
-  //     '--gradient': state.styles.gradient,
-  //     '--shadow': state.styles.shadow,
-  //     '--strokeWidth': state.styles.strokeWidth + 'em',
-  //     '--strokeColor': state.styles.strokeColor,
-  //     '--letterSpacing': state.styles.letterSpacing + 'em',
-  //   },
-  // };
-})`
+export const Container = styled(motion.div)`
   font-family: var(--fontFamily);
   font-size: var(--fontSize);
   font-variation-settings: var(--fontVariationSettings);
