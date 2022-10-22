@@ -14,21 +14,13 @@ export default function Footer() {
           <VisuallyHidden>
             <h2>Social Media Links</h2>
           </VisuallyHidden>
-          <ImageLink
-            href="https://github.com/mattbrannon"
-            src="/images/github/github.png"
-            alt="link to github"
-          />
+          <ImageLink href="https://github.com/mattbrannon" src="/images/github/github.png" alt="link to github" />
           <ImageLink
             href="https://linkedin.com/in/mattbrannon1"
             src="/images/linkedin/linkedin.png"
             alt="link to linkedin"
           />
-          <ImageLink
-            href="https://twitter.com/_mattbrannon"
-            src="/images/twitter/twitter.png"
-            alt="link to twitter"
-          />
+          <ImageLink href="https://twitter.com/_mattbrannon" src="/images/twitter/twitter.png" alt="link to twitter" />
         </Nav>
       </NavWrapper>
       <Copyright>

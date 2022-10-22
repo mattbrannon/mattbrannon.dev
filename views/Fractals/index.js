@@ -67,17 +67,7 @@ export default function Fractals() {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     // const draw = makeDraw(ctx);
-    const {
-      size,
-      sides,
-      maxDepth,
-      scale,
-      radians,
-      shadowOffsetX,
-      shadowOffsetY,
-      shadowBlur,
-      shadowColor,
-    } = state;
+    const { size, sides, maxDepth, scale, radians, shadowOffsetX, shadowOffsetY, shadowBlur, shadowColor } = state;
 
     const { width, height } = mainRef.current.getBoundingClientRect();
 
