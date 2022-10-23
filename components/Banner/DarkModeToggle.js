@@ -82,7 +82,7 @@ const ToggleButton = styled.button`
   margin-bottom: -6px;
 
   @media (max-width: ${breakpoints.tablet}px) {
-    right: 64px;
+    right: 54px;
     width: 64px;
     margin-bottom: -3px;
   }
