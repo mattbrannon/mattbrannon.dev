@@ -1,0 +1,1 @@
+export { MiniGame } from './MiniGame';
