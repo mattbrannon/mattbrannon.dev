@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-// async..await is not allowed in global scope, must use a wrapper
 export default async function main(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).redirect('/contact');
@@ -38,8 +37,6 @@ export default async function main(req, res) {
       text: text, // plain text body
       html: html,
     });
-
-    // console.log('Message sent: %s', info.messageId);
 
     res.status(200).send('message delivered');
   }
