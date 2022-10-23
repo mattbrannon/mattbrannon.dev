@@ -62,7 +62,7 @@ const SvgWrapper = styled(motion.svg)`
   width: 100%;
   height: 100%;
   min-height: 24px;
-  min-width: 24px;
+  min-width: px;
   display: grid;
   place-items: center;
 `;
@@ -74,7 +74,6 @@ const ToggleButton = styled.button`
   max-width: 32px;
   width: 100%;
 
-  width: 32px;
   height: 32px;
   border: none;
   position: relative;
