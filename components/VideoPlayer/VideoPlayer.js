@@ -37,6 +37,10 @@ export const VideoPlayer = ({ ...props }) => {
     }
   }, [ref]);
 
+  useEffect(() => {
+    ref.current.play();
+  }, []);
+
   return (
     <VideoWrapper onClick={toggleVideoPlayState} {...props}>
       <Video {...props} ref={ref} autoPlay loop muted playsInline>
