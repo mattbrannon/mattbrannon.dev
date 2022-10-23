@@ -114,11 +114,8 @@ const Left = styled.div`
 
 const NameLink = styled(Link)`
   color: var(--myName);
-  font-size: var(--size28);
+  font-size: clamp(var(--size20), 1rem - -1vw, var(--size28));
   &:hover {
     text-decoration: none;
-  }
-  @media (max-width: ${breakpoints.mobile}px) {
-    font-size: var(--size24);
   }
 `;
