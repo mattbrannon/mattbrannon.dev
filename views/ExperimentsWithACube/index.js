@@ -69,7 +69,7 @@ export default function Experiments() {
         />
 
         <Main>
-          <AnimatePresence exitBeforeEnter>
+          <AnimatePresence mode="wait">
             <Wrapper
               key={state.shape}
               variants={shapeVariants}

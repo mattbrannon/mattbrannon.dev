@@ -53,7 +53,7 @@ export default function ContactForm() {
 
   return (
     <div style={{ overflow: 'hidden', minHeight: '50vh' }}>
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <Component dispatch={dispatch} state={state} />
       </AnimatePresence>
     </div>
@@ -96,7 +96,7 @@ const Contact = ({ state, dispatch }) => {
   };
 
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode="wait">
       <Form variants={fadeInOut} initial="hidden" animate="show" exit="exit" key={state.submit} onSubmit={handleSubmit}>
         <FlexGroup>
           <InputGroup>

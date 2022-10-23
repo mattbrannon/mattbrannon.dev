@@ -34,7 +34,7 @@ export const MainView = ({ state, dispatch, children, ...props }) => {
 
   return (
     <div style={{ padding: isMobile ? '0 64px' : '64px' }}>
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <Container
           id="main-content"
           state={state}

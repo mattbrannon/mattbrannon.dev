@@ -114,7 +114,7 @@ export const gradientVariant = {
 export const withGradient = (Gradient) => {
   return forwardRef(function GradientText(props, ref) {
     return (
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <MotionGradientWrapper key={props} {...props}>
           <Gradient ref={ref} key={props} {...props}>
             {props.children}

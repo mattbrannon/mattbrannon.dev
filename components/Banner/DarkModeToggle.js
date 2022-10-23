@@ -32,7 +32,7 @@ export function DarkModeToggle() {
 
   return (
     <ToggleButton id="theme-toggle" title={`Switch to ${theme} mode`} onClick={toggle}>
-      <AnimatePresence exitBeforeEnter>
+      <AnimatePresence mode="wait">
         <IconWrapper key={currentIcon} variants={containerVariant} initial="hidden" animate="show" exit="close">
           <Icon />
         </IconWrapper>
