@@ -15,7 +15,7 @@ import path from 'path';
 import remarkGfm from 'remark-gfm';
 import styled from 'styled-components';
 import { Main } from '@components/Layout';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { text } from '@components/Text';
 import { spacer } from '@components/Spacer';
 
@@ -57,8 +57,6 @@ const components = {
   // li: ListItem,
   Gap: dynamic(() => import('@components/Spacer').then((res) => res.Gap)),
   List: dynamic(() => import('@components/List')),
-  MiniGame: dynamic(() => import('@components/Minigame')),
-  checkbox: dynamic(() => import('@components/Minigame').then((res) => res.Checkbox)),
   spacer,
   h2: H2Link,
   h3: H3Link,
