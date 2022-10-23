@@ -74,14 +74,6 @@ export default memo(function LetsMakeAGifpage() {
 
       <section>
         <Heading>Backend: NodeJs</Heading>
-        {/* <text.paragraph>
-          Most of the heavy lifting happens on the server. One thing I didn't think about during the initial development
-          phase was the difference between CPU and memory resources on my local machine compared to CPU and memory
-          resources on a free tier remote server in the cloud. Uploading a rather large file locally was quick and easy.
-          Attempting to upload a large file to the remote server took much longer. In hindsight, it seems obvious that
-          this would be the case. But you only know what you know at the time you know it. Or something like that... I
-          don't know.
-        </text.paragraph> */}
 
         <text.paragraph>
           Most of the heavy lifting happens in the Nodejs backend. Video and image processing can be very resource

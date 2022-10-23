@@ -8,31 +8,17 @@ import Image from 'next/future/image';
 import styled from 'styled-components';
 
 import { Picture } from '@components/Picture';
-// import path from 'path';
-// import fs from 'fs';
-// import dynamic from 'next/dynamic';
+
 import { memo } from 'react';
 
 import desktopImageAvif from '/public/images/elbowroom/desktop.avif';
-// import desktopImageWebp from '/public/images/elbowroom/desktop.webp';
-// import desktopImagePng from '/public/images/elbowroom/desktop.png';
+import desktopImageWebp from '/public/images/elbowroom/desktop.webp';
+import desktopImagePng from '/public/images/elbowroom/desktop.png';
 
 import mobileImageAvif from '/public/images/elbowroom/mobile.avif';
-// import mobileImageWebp from '/public/images/elbowroom/mobile.webp';
-// import mobileImagePng from '/public/images/elbowroom/mobile.png';
+import mobileImageWebp from '/public/images/elbowroom/mobile.webp';
+import mobileImagePng from '/public/images/elbowroom/mobile.png';
 // import Image from 'next/image';
-
-// const desktopImages = [desktopImageAvif, desktopImageWebp, desktopImagePng].map((image) => {
-//   const { src, width, height, blurDataURL } = image;
-//   // console.log(image);
-//   return { src, width, height, blurDataURL };
-// });
-
-// const mobileImages = [mobileImageAvif, mobileImageWebp, mobileImagePng].map((image) => {
-//   const { src, width, height, blurDataURL } = image;
-//   // console.log(image);
-//   return { src, width, height, blurDataURL };
-// });
 
 export default memo(function ElbowRoomPage() {
   // console.log(desktopImages, mobileImages);
@@ -64,9 +50,10 @@ export default memo(function ElbowRoomPage() {
 
       <section>
         <FlexContainer>
-          <Image src={desktopImageAvif} alt="desktop view" />
-          <Image src={mobileImageAvif} alt="mobile view" />
-          {/* <Image src={mobileImagePng} alt="mobile view of the app" /> */}
+          <Picture sources={[desktopImageAvif, desktopImageWebp, desktopImagePng]} alt="desktop view" />
+          <Picture sources={[mobileImageAvif, mobileImageWebp, mobileImagePng]} alt="mobile view" />
+          {/* <Image src={desktopImageAvif} alt="desktop view" />
+          <Image src={mobileImageAvif} alt="mobile view" /> */}
         </FlexContainer>
         <Heading>FrontEnd</Heading>
         <text.paragraph>

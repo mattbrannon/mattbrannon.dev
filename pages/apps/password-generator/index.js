@@ -61,18 +61,6 @@ export default memo(function PasswordGenerator() {
           thorough, more often than not, reveals at least one thing I had previously overlooked. And it's much easier to
           make adjustments at this stage.
         </text.paragraph>
-
-        {/* <text.paragraph>
-          The value of taking the time to plan ahead before ever writing a line of code cannot be overstated. Depending
-          on the size and scope of the app in question, having a plan of attack in place beforehand can save you hours,
-          days, weeks, or even months of work.
-        </text.paragraph>
-        <text.paragraph>
-          With an app this size and Figma design ready to go, the planning phase doesn't have to take a long time. For
-          this app, I spent a few minutes jotting down the typography and color values so I'd have them on hand when
-          needed. Then a few minutes looking at the design in Figma determining the different individual components of
-          the app.
-        </text.paragraph> */}
       </section>
 
       <section>
@@ -91,27 +79,13 @@ export default memo(function PasswordGenerator() {
       </section>
       <section>
         <SubHeading>What is entropy?</SubHeading>
-        {/* <SideNote></SideNote> */}
 
         <SideNote>
           A thermodynamic quantity representing the unavailability of a system's thermal energy for conversion into
           mechanical work, often interpreted as the degree of disorder or randomness in the system.
-          <span style={{ position: 'relative', display: 'block' }}>
-            <cite
-              style={{
-                position: 'absolute',
-                right: '0px',
-                transform: 'translate(-50%, -75%)',
-                textAlign: 'right',
-                fontFamily: 'Jost',
-                fontStyle: 'normal',
-                fontVariationSettings: "'wght' 200, 'ital' 2 ",
-              }}
-            >
-              Oxford Languages
-            </cite>
-          </span>
+          <Cite>Oxford Languages</Cite>
         </SideNote>
+
         <text.paragraph>
           A good analogy for entropy is melting ice. When the ice is frozen solid, there is very little entropy. The
           molecules within the ice are fixed in space with very little movement. As the ice melts, the molecules have
@@ -120,6 +94,7 @@ export default memo(function PasswordGenerator() {
           predictable. The liquid water is less predictable than the ice. The steam from evaporated water is less
           predictable than both.
         </text.paragraph>
+
         <text.paragraph>
           <em>We want our passwords to be like steam.</em>
         </text.paragraph>
@@ -217,4 +192,12 @@ const ButtonGroup = styled.div`
   padding-top: 0;
   margin: auto;
   width: 100%;
+`;
+
+const Cite = styled.cite`
+  text-align: 'right';
+  font-family: 'Jost';
+  font-style: 'normal';
+  display: 'block';
+  font-variation-settings: "'wght' 200, 'ital' 2 ";
 `;
