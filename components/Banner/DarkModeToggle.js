@@ -61,6 +61,8 @@ const Moon = () => {
 const SvgWrapper = styled(motion.svg)`
   width: 100%;
   height: 100%;
+  min-height: 24px;
+  min-width: 24px;
   display: grid;
   place-items: center;
 `;
