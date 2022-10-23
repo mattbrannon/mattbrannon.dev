@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { breakpoints } from '@constants/breakpoints';
 
 const Layout = styled.div`
   display: grid;
@@ -23,6 +24,10 @@ export const FullBleed = styled.div`
 export const Main = styled.main`
   margin: 92px 0 128px 0;
   width: 100%;
+
+  @media (max-width: ${breakpoints.tablet}px) {
+    margin: 24px 0 128px 0;
+  }
 `;
 
 export default Layout;
