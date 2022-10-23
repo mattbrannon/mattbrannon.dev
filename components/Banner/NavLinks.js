@@ -81,9 +81,7 @@ const LinkWrapper = styled.span`
 
 const NameWrapper = styled.div`
   display: block;
-  /* font-family: recursive; */
-  /* font-variation-settings: 'MONO' 0, 'CRSV' 0, 'CASL' 0.35, 'wght' 800, 'slnt' 0; */
-  /* var(--recursive4); */
+
   font-family: decovar;
   font-variation-settings: 'TRMA' 1000;
   color: var(--myName);
