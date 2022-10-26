@@ -4,7 +4,6 @@ import { InternalLink } from './InternalLink';
 import Link from 'next/link';
 
 function Icon(props, ref) {
-  console.log(ref);
   return (
     <Anchor replace ref={ref} {...props}>
       <Svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">

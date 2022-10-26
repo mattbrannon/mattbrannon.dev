@@ -18,8 +18,8 @@ const LinkWrapper = styled.span`
   position: relative;
   background: transparent;
   border: none;
-  font-family: Jost, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'OpenSans', 'Helvetica Neue', sans-serif;
+  font-family: Jost, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+    'OpenSans', 'Helvetica Neue', sans-serif;
   font-weight: 525;
 
   --maxWidth: ${(p) => (p.$isActive ? '100%' : '0%')};
@@ -41,6 +41,7 @@ const A = styled(InternalLink)`
     cursor: pointer;
   }
   color: white;
+  font-size: clamp(0.85rem, 0.85rem + 0.25vw, 1rem);
   transition: color 0.15s ease;
 `;
 
