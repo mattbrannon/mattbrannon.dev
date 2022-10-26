@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Blockquote } from '@components/SideNote';
 
-export const P = styled.p`
+export const Note = styled.p`
   margin: 0;
   font-size: clamp(var(--size16), 0.2vw + 1rem, var(--size20));
   line-height: 1.7;
@@ -18,7 +18,7 @@ export const P = styled.p`
     line-height: 1.5;
     font-size: var(--size18);
     font-family: 'OpenSans';
-    font-variation-settings: 'wdth' 80, 'wght' 600;
+    font-variation-settings: 'wdth' 75, 'wght' 555;
     width: 90%;
   }
 `;
