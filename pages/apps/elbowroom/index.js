@@ -6,6 +6,7 @@ import { text } from '@components/Text';
 import { VideoPlayer } from '@components/VideoPlayer';
 import Image from 'next/future/image';
 import styled from 'styled-components';
+import { Main } from '@components/Layout';
 
 import { Picture } from '@components/Picture';
 
@@ -30,7 +31,7 @@ export default memo(function ElbowRoomPage() {
   const videoSources = ['/videos/demos/elbowroom.webm', '/videos/demos/elbowroom.mp4'];
 
   return (
-    <article>
+    <Main>
       <Head description="Discussion page concerning the making of elbowroom.dev" title="Elbow Room" />
 
       <AppTitle title="Elbow Room" sources={videoSources} links={links}>
@@ -83,7 +84,7 @@ export default memo(function ElbowRoomPage() {
       </section>
 
       <PageButtons prev="/apps/lets-make-a-gif" next="/apps/monty-hall" />
-    </article>
+    </Main>
   );
 });
 

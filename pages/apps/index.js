@@ -3,7 +3,7 @@ import Head from '@components/Head';
 import { PageTitle } from '@components/PageTitle';
 import { text } from '@components/Text';
 import { memo } from 'react';
-import { Main } from '@components/Layout';
+import { layout } from '@components/Layout';
 import elbowRoomAvif from '/public/images/elbowroom/desktop.avif';
 import letsMakeAGifAvif from '/public/images/lets-make-a-gif/desktop.avif';
 import montyHallAvif from '/public/images/monty-hall/monty-hall1.avif';
@@ -47,7 +47,7 @@ const passwordGeneratorConfig = {
 
 export default memo(function AppsPage() {
   return (
-    <Main id="main-content">
+    <layout.page id="main-content">
       <Head title="Apps" description="Apps built by Matt Brannon" />
       <PageTitle>Apps I've Built</PageTitle>
       <text.paragraph>
@@ -60,6 +60,6 @@ export default memo(function AppsPage() {
       <AppCard config={letsMakeAGifConfig} />
       <AppCard config={elbowRoomConfig} />
       <AppCard config={montyHallConfig} />
-    </Main>
+    </layout.page>
   );
 });

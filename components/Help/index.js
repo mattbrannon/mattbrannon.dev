@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { text } from '@components/Text';
 
 export default function Help() {
   return (
@@ -16,9 +17,7 @@ export default function Help() {
           </Row>
           <Row>
             <strong>Blend</strong>
-            <span>
-              Controls how much or how little the colors blend together. Ranges from 0 - 100%
-            </span>
+            <span>Controls how much or how little the colors blend together. Ranges from 0 - 100%</span>
           </Row>
         </Section>
         <Section>
@@ -26,9 +25,8 @@ export default function Help() {
           <Row>
             <strong>Layers</strong>
             <span>
-              Controls the depth of the shadow by adding or removing layers. Ranges from 0 - 30.
-              Note: adding layers also adds to the overall computational expense when the browser
-              renders the elements.
+              Controls the depth of the shadow by adding or removing layers. Ranges from 0 - 30. Note: adding layers
+              also adds to the overall computational expense when the browser renders the elements.
             </span>
           </Row>
           <Row>
@@ -38,20 +36,16 @@ export default function Help() {
           <Row>
             <strong>Blur</strong>
             <span>
-              The amount of blur applied to the shadow. Currently the amount of blur applied is the
-              same across all layers. I'm still trying to figure out how to best apply blur
-              incrementally to each layer. Ranges from 0 - 10.
+              The amount of blur applied to the shadow. Currently the amount of blur applied is the same across all
+              layers. I'm still trying to figure out how to best apply blur incrementally to each layer. Ranges from 0 -
+              10.
             </span>
           </Row>
           <Row>
             <strong>Offset X</strong>
-            <span>
-              Controls how far offset the shadow's x-axis is from the center. Ranges from -10 - 10
-            </span>
+            <span>Controls how far offset the shadow's x-axis is from the center. Ranges from -10 - 10</span>
             <strong>Offset Y</strong>
-            <span>
-              Controls how far offset the shadow's y-axis is from the center. Ranges from -10 - 10
-            </span>
+            <span>Controls how far offset the shadow's y-axis is from the center. Ranges from -10 - 10</span>
           </Row>
         </Section>
         <Section>
@@ -59,11 +53,10 @@ export default function Help() {
           <Row>
             <strong>Properties</strong>
             <span>
-              Currently there are 4 font families to play with. Each one is a variable font.
-              Variable fonts are neat because they can be tweaked and morphed in ways that would be
-              impossible for non variable fonts. Variable fonts are adjust by the "axes". These are
-              non standard properties. Each variable font is free to come up with their own axes. A
-              few of the common ones among many variable fonts are "WDTH" for width, "SLNT" for
+              Currently there are 4 font families to play with. Each one is a variable font. Variable fonts are neat
+              because they can be tweaked and morphed in ways that would be impossible for non variable fonts. Variable
+              fonts are adjust by the "axes". These are non standard properties. Each variable font is free to come up
+              with their own axes. A few of the common ones among many variable fonts are "WDTH" for width, "SLNT" for
               slant, and "WGHT" for weight.
             </span>
           </Row>
@@ -71,19 +64,17 @@ export default function Help() {
         <Section>
           <Heading>Troubleshooting</Heading>
           <SubHeading>Controls feel sluggish</SubHeading>
-          <Text>
-            If the controls start to feel sluggish or if there is a noticable slowdown in
-            performance, try working on one thing at a time and reducing the values for the
-            properties that you're not currently working on.
-          </Text>
-          <Text>
-            For example, if you're trying to fine tune the font variation settings, try reducing the
-            number of shadow layers until you're satisfied with how the font looks. If you're
-            working with a font like Decovar, you'll find that because it's such a crazy font with
-            so many different axes, reducing the shadow layer is critical when fine tuning the font
-            properties.
-          </Text>
-          <Text>If you're using Safari, I'd suggest switching to Chrome when using this tool.</Text>
+          <text.help>
+            If the controls start to feel sluggish or if there is a noticable slowdown in performance, try working on
+            one thing at a time and reducing the values for the properties that you're not currently working on.
+          </text.help>
+          <text.help>
+            For example, if you're trying to fine tune the font variation settings, try reducing the number of shadow
+            layers until you're satisfied with how the font looks. If you're working with a font like Decovar, you'll
+            find that because it's such a crazy font with so many different axes, reducing the shadow layer is critical
+            when fine tuning the font properties.
+          </text.help>
+          <text.help>If you're using Safari, I'd suggest switching to Chrome when using this tool.</text.help>
         </Section>
       </Wrapper>
     </Container>
