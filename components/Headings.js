@@ -1,7 +1,7 @@
 import { breakpoints } from '@constants/breakpoints';
 import styled from 'styled-components';
 import { toHeadingId } from '@utils/helpers.js';
-import { LinkIcon } from '@components/Links';
+import { link } from '@components/Links';
 import { useEffect, useRef, useState } from 'react';
 
 const BlogLink = styled.div`
@@ -110,7 +110,7 @@ const withLink = (Heading) => {
         {...props}
       >
         {/* <div> */}
-        <LinkIcon isFocused={isFocused} isHovering={isHovering} ref={svg} href={'#' + id} />
+        <link.icon isFocused={isFocused} isHovering={isHovering} ref={svg} href={'#' + id} />
         <span>{props.children}</span>
       </Heading>
     );
@@ -121,12 +121,16 @@ export const CardHeading = styled(H2)`
   font-size: var(--size28);
   color: var(--h3);
   position: relative;
-  margin: 16px 0 8px 0;
+
   font-variation-settings: 'wght' 750;
-  @media (max-width: ${breakpoints.mobile}px) {
-    font-size: var(--size21);
-    margin: 16px 0 16px 0;
+  margin: 16px 0 16px 0;
+  font-size: var(--size21);
+
+  @media (min-width: ${breakpoints.laptop}px) {
+    margin: 16px 0 8px 0;
+    font-size: var(--size28);
   }
+
   &:hover {
     color: var(--app-card-hover);
   }

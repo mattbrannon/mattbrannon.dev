@@ -1,5 +1,5 @@
 import { AppTitle } from '@components/AppTitle';
-import { ExternalLink } from '@components/Links';
+import { link } from '@components/Links';
 import Head from '@components/Head';
 import { H2Link } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
@@ -8,6 +8,7 @@ import { text } from '@components/Text';
 import { VideoPlayer } from '@components/VideoPlayer';
 import styled from 'styled-components';
 import { memo } from 'react';
+import { Main } from '@components/Layout';
 
 export default memo(function LetsMakeAGifpage() {
   const links = {
@@ -18,7 +19,7 @@ export default memo(function LetsMakeAGifpage() {
   const sources = ['/videos/demos/lets-make-a-gif.mp4'];
 
   return (
-    <article>
+    <Main>
       <Head title="Let's Make a Gif" description="Let's Make a Gif discussion page" />
 
       <AppTitle rounded center title="Lets Make a Gif" sources={sources} links={links}>
@@ -100,7 +101,7 @@ export default memo(function LetsMakeAGifpage() {
           for working with all kinds of media files. From simple edits like cropping or trimming a video to complex
           operations like blending multiple images together or adding a semi transparent water mark, ffmpeg does it all.
           It's truly an amazing piece of software and without it, this app wouldn't exist. To learn more about ffmpeg
-          visit <ExternalLink href="https://ffmpeg.org">ffmpeg.org</ExternalLink>
+          visit <link.external href="https://ffmpeg.org">ffmpeg.org</link.external>
         </text.paragraph>
       </section>
 
@@ -119,7 +120,7 @@ export default memo(function LetsMakeAGifpage() {
       </section>
 
       <PageButtons prev="/apps/password-generator" next="/apps/elbowroom" />
-    </article>
+    </Main>
   );
 });
 

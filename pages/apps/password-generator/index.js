@@ -1,5 +1,5 @@
 import { AppTitle } from '@components/AppTitle';
-import { ExternalLink } from '@components/Links';
+import { link } from '@components/Links';
 import Head from '@components/Head';
 import { H2Link, H3Link } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import { memo, useState } from 'react';
 import { SideNote } from '@components/SideNote';
 import { SyntaxHighlighter } from '@components/SyntaxHighlighter';
+import { Main } from '@components/Layout';
 
 export default memo(function PasswordGenerator() {
   const [hasClicked, setHasClicked] = useState(false);
@@ -20,7 +21,7 @@ export default memo(function PasswordGenerator() {
   const sources = ['/videos/password-generator.mp4', '/videos/password-generator.webm'];
 
   return (
-    <article>
+    <Main>
       <Head title="Password Generator" description="Password Generator app" />
       <AppTitle rounded center title="Password Generator" sources={sources} links={links}>
         Configurable random password generator.
@@ -30,16 +31,16 @@ export default memo(function PasswordGenerator() {
 
         <text.paragraph>
           A few years ago I wrote a{' '}
-          <ExternalLink href="https://github.com/mattbrannon/password-generator">
+          <link.external href="https://github.com/mattbrannon/password-generator">
             shell script for generating random passwords
-          </ExternalLink>
+          </link.external>
           . I was pretty proud of it and I still use it to this day. I always wanted to make a UI for it. But I also
           know that if I try and design it myself, I'm going to get all caught up in the weeds for way too long
           obsessing about things that don't matter. So it remained a shell script.
         </text.paragraph>
         <text.paragraph>
           Then, recently I was looking at some website designs on{' '}
-          <ExternalLink href="https://frontendmentor.io">Frontend Mentor</ExternalLink>. One of the first designs that
+          <link.external href="https://frontendmentor.io">Frontend Mentor</link.external>. One of the first designs that
           caught my eye was the design for a password generator. So I downloaded the design files and got to work.
         </text.paragraph>
 
@@ -83,7 +84,7 @@ export default memo(function PasswordGenerator() {
         <SideNote>
           A thermodynamic quantity representing the unavailability of a system's thermal energy for conversion into
           mechanical work, often interpreted as the degree of disorder or randomness in the system.
-          <Cite>Oxford Languages</Cite>
+          <Citation href="https://example.com">Oxford Languages</Citation>
         </SideNote>
 
         <text.paragraph>
@@ -99,10 +100,10 @@ export default memo(function PasswordGenerator() {
           <em>We want our passwords to be like steam.</em>
         </text.paragraph>
 
-        <SideNote>
+        <text.note>
           This is the definition is for entropy in physics. Entropy in cryptography is, while not entirely the same
           concept, fundamentally rooted in the same principles of measuring uncertainty.
-        </SideNote>
+        </text.note>
       </section>
 
       <section>
@@ -151,7 +152,7 @@ export default memo(function PasswordGenerator() {
         </text.paragraph>
       </section>
       <PageButtons prev="/apps/monty-hall" next="/apps/lets-make-a-gif" />
-    </article>
+    </Main>
   );
 });
 
@@ -201,3 +202,11 @@ const Cite = styled.cite`
   display: 'block';
   font-variation-settings: "'wght' 200, 'ital' 2 ";
 `;
+
+const Citation = ({ href, children }) => {
+  return (
+    <Cite>
+      <link.external href={href}>{children}</link.external>
+    </Cite>
+  );
+};

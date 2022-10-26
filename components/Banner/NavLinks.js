@@ -1,4 +1,4 @@
-import { FancyLink, Link } from '@components/Links';
+import { link } from '@components/Links';
 import styled from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
 import { useRouter } from 'next/router';
@@ -11,10 +11,10 @@ export function NavLinks() {
   return (
     <Nav>
       <NameBanner />
-      <Container>
+      <Right>
         <Navigation />
         <DarkModeToggle />
-      </Container>
+      </Right>
     </Nav>
   );
 }
@@ -32,9 +32,9 @@ const Navigation = () => {
     const isActive = route.split('/').filter((v) => v)[0] === link;
     return (
       <LinkWrapper key={link}>
-        <FancyLink $isActive={isActive} href={`/${link}`}>
+        <link.fancy $isActive={isActive} href={`/${link}`}>
           {link.charAt(0).toUpperCase() + link.slice(1)}
-        </FancyLink>
+        </link.fancy>
       </LinkWrapper>
     );
   });
@@ -58,7 +58,7 @@ const Nav = styled.nav`
   min-height: 100%;
 `;
 
-const Container = styled.div`
+const Right = styled.div`
   display: flex;
 
   justify-content: flex-end;
@@ -103,14 +103,9 @@ const Left = styled.div`
   align-items: center;
   margin-right: var(--header-link-gap);
   position: relative;
-  margin-bottom: -8px;
-
-  @media (max-width: ${breakpoints.mobile}px) {
-    margin-bottom: 0;
-  }
 `;
 
-const NameLink = styled(Link)`
+const NameLink = styled(link.next)`
   color: var(--myName);
   font-size: clamp(var(--size20), 1rem - -1vw, var(--size28));
   &:hover {

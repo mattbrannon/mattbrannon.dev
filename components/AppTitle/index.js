@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { VideoPlayer } from '@components/VideoPlayer';
-import { ExternalLink } from '@components/Links';
+import { link } from '@components/Links';
 import { breakpoints } from '@constants/breakpoints';
 import { FancyTitle } from '@components/FancyTitle';
 import { memo } from 'react';
@@ -28,8 +28,8 @@ function AppTitleComponent({ title, sources, links, children, ...props }) {
         <VideoPlayer center sources={sources} {...props} />
       </motion.div>
       <LinksWrapper>
-        <ExternalLink href={links.liveSite}>Visit the live site</ExternalLink>
-        <ExternalLink href={links.github}>See the code</ExternalLink>
+        <link.external href={links.liveSite}>Visit the live site</link.external>
+        <link.external href={links.github}>See the code</link.external>
       </LinksWrapper>
     </Top>
   );
@@ -54,9 +54,9 @@ const appTitleVariant = {
 const Top = styled.div`
   text-align: center;
   margin-bottom: 96px;
-  margin-top: 64px;
-  @media (max-width: ${breakpoints.mobile}px) {
-    margin-top: 32px;
+  margin-top: 32px;
+  @media (min-width: ${breakpoints.laptop}px) {
+    margin-top: 64px;
   }
 
   --fontFamily: Recursive;
@@ -68,9 +68,10 @@ const Top = styled.div`
 const Caption = styled.div`
   margin-bottom: 8px;
   font-variation-settings: 'wdth' 80, 'wght' 575;
+  font-size: 12px;
 
-  @media (max-width: ${breakpoints.mobile}px) {
-    font-size: 12px;
+  @media (min-width: ${breakpoints.laptop}px) {
+    font-size: revert;
   }
 `;
 

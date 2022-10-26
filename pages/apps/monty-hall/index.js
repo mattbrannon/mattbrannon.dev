@@ -5,7 +5,7 @@ import PageButtons from '@components/PageButtons';
 import { text } from '@components/Text';
 import { useState, useContext, memo } from 'react';
 import styled, { ThemeContext } from 'styled-components';
-import { ExternalLink } from '@components/Links';
+import { link } from '@components/Links';
 
 import image1Avif from '/public/images/monty-hall/monty-hall1.avif';
 import image1WebP from '/public/images/monty-hall/monty-hall1.webp';
@@ -16,6 +16,7 @@ import { AnimatePresence, m as motion } from 'framer-motion';
 import { VideoPlayer } from '@components/VideoPlayer';
 import { spacer } from '@components/Spacer';
 import { MiniGame } from '@components/MiniGame';
+import { Main } from '@components/Layout';
 
 const links = {
   github: 'https://github.com/mattbrannon/monty-hall-experiment',
@@ -33,7 +34,7 @@ export default memo(function MontyHallPage() {
   };
 
   return (
-    <article>
+    <Main>
       <Head title="Monty Hall Experiment" description="Monty Hall Experiment discussion" />
 
       <AppTitle title="Monty Hall Experience" sources={sources} links={links}>
@@ -151,7 +152,7 @@ export default memo(function MontyHallPage() {
 
             <text.paragraph>
               I hope to find a little free time to make some updates and improve on this app. Here's another link to{' '}
-              <ExternalLink href="https://monty-hall-experiment.surge.sh/">The Monty Hall Experiment</ExternalLink> if
+              <link.external href="https://monty-hall-experiment.surge.sh/">The Monty Hall Experiment</link.external> if
               you'd like to play it yourself.
             </text.paragraph>
           </motion.section>
@@ -159,7 +160,7 @@ export default memo(function MontyHallPage() {
       ) : null}
 
       <PageButtons prev="/apps/elbowroom" next="/apps/password-generator" />
-    </article>
+    </Main>
   );
 });
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
-import { Anchor } from '@components/Links';
+import { link } from '@components/Links';
 
 export default function SkipLink({ children, ...props }) {
   return (
@@ -21,7 +21,7 @@ const SkipWrapper = styled.div`
   }
 `;
 
-const Link = styled(Anchor)`
+const Link = styled(link.anchor)`
   height: inherit;
   display: block;
   display: flex;

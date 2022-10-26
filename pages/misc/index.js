@@ -1,5 +1,5 @@
 import Head from '@components/Head';
-import { Main, ToolsList } from '@components/Layout';
+import { layout, ToolsList } from '@components/Layout';
 import { PageTitle } from '@components/PageTitle';
 import { spacer } from '@components/Spacer';
 import { text } from '@components/Text';
@@ -8,8 +8,8 @@ import { SideNote } from '@components/SideNote';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/breakpoints';
 import { Card } from '@components/Card';
-import Link from 'next/link';
-import { InternalLink } from '@components/Links';
+// import Link from 'next/link';
+import { link } from '@components/Links';
 
 export default function Index() {
   const [isSafari, setIsSafari] = useState(false);
@@ -25,13 +25,13 @@ export default function Index() {
   }, []);
 
   return (
-    <Main id="main-content">
+    <layout.page id="main-content">
       <Head title="Tools and toys" description="A collection of useful and pointless things" />
 
       <PageTitle>Tools and Toys</PageTitle>
       <text.paragraph>
         This is a collection of fun stuff. Some of it is actually useful. Some is just fun to play with. I'm quite happy
-        with the <InternalLink href="/misc/fancy-text-generator">Fancy Text Generator.</InternalLink> It's what I used
+        with the <link.internal href="/misc/fancy-text-generator">Fancy Text Generator.</link.internal> It's what I used
         to create most of the headings on this site.
       </text.paragraph>
 
@@ -63,7 +63,7 @@ export default function Index() {
         </Card.Tools>
       </ToolsList>
       <spacer.block axis="vertical" size={32} />
-    </Main>
+    </layout.page>
   );
 }
 

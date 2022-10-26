@@ -3,7 +3,7 @@ import { VisuallyHidden } from '@components/VisuallyHidden';
 // import { breakpoints } from '@constants/index';
 import NextImage from 'next/future/image';
 // import Link from 'next/link';
-import { InternalLink } from '@components/Links';
+import { link } from '@components/Links';
 import styled from 'styled-components';
 
 export default function Footer() {
@@ -33,9 +33,9 @@ export default function Footer() {
 
 const ImageLink = ({ ...props }) => {
   return (
-    <InternalLink {...props}>
+    <link.internal {...props}>
       <Image alt="" width={30} height={30} {...props} />
-    </InternalLink>
+    </link.internal>
   );
 };
 

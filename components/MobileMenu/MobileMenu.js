@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Burger } from './Burger';
 import { Portal } from '@components/Portal';
-import { InternalLink } from '@components/Links';
+import { link } from '@components/Links';
 import FocusTrap from 'focus-trap-react';
 
 const links = [
@@ -121,7 +121,7 @@ const NavContainer = styled.div`
     visibility 0.5s linear var(--timeout);
 `;
 
-const ButtonLink = styled(InternalLink)`
+const ButtonLink = styled(link.internal)`
   background: none;
   border: none;
   font-family: Recursive;
