@@ -3,21 +3,21 @@ import { MaxWidthWrapper } from 'components/MaxWidthWrapper';
 import { NavLinks } from './NavLinks';
 import { forwardRef, memo } from 'react';
 
-function ForwardBanner({ ...props }, ref) {
+function ForwardHeader({ ...props }, ref) {
   return (
     <>
-      <Header ref={ref} {...props}>
+      <Container ref={ref} {...props}>
         <MaxWidthWrapper>
           <NavLinks {...props} />
         </MaxWidthWrapper>
-      </Header>
+      </Container>
     </>
   );
 }
 
-export const Banner = memo(forwardRef(ForwardBanner));
+export const Header = memo(forwardRef(ForwardHeader));
 
-export const Header = styled.header.attrs(({ isVisible, dialogIsOpen }) => {
+export const Container = styled.header.attrs(({ isVisible, dialogIsOpen }) => {
   const translateY = isVisible ? '0%' : '-100%';
   return {
     style: {
