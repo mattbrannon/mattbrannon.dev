@@ -7,12 +7,12 @@ import { useActiveElement } from './useActiveElement';
 export const useIsBannerVisible = (threshold = 300) => {
   const scroll = useScroll();
   const activeElement = useActiveElement();
-  const isMobile = useMediaQuery({ maxWidth: breakpoints.tablet });
+  const isTablet = useMediaQuery({ minWidth: breakpoints.tablet });
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     let isVisible;
-    if (!isMobile) {
+    if (isTablet) {
       const { previous, current } = scroll;
       const direction = previous < current ? 'down' : 'up';
 
@@ -33,7 +33,7 @@ export const useIsBannerVisible = (threshold = 300) => {
     else {
       setIsVisible(true);
     }
-  }, [isMobile, scroll, threshold, activeElement]);
+  }, [isTablet, scroll, threshold, activeElement]);
 
   return isVisible;
 };
