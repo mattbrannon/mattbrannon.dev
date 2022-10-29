@@ -5,10 +5,11 @@ import NextImage from 'next/future/image';
 // import Link from 'next/link';
 import { link } from '@components/Links';
 import styled from 'styled-components';
+import { forwardRef } from 'react';
 
-export default function Footer() {
+function Footer({ ...props }, ref) {
   return (
-    <Container as="footer">
+    <Container ref={ref} as="footer">
       <NavWrapper>
         <Nav>
           <VisuallyHidden>
@@ -30,6 +31,8 @@ export default function Footer() {
     </Container>
   );
 }
+
+export default forwardRef(Footer);
 
 const ImageLink = ({ ...props }) => {
   return (
