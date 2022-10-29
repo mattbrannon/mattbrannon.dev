@@ -24,7 +24,11 @@ function AppTitleComponent({ title, sources, links, children, ...props }) {
         {title}
       </FancyTitle>
       <Caption>{children}</Caption>
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
         <VideoPlayer center sources={sources} {...props} />
       </motion.div>
       <LinksWrapper>
@@ -77,13 +81,14 @@ const Caption = styled.div`
 
 const LinksWrapper = styled.div`
   width: 100%;
-  margin-top: 64px;
+  margin-top: 16px;
+  gap: 16px;
   display: flex;
-  justify-content: space-around;
-  @media (max-width: ${breakpoints.mobile}px) {
-    margin-top: 16px;
-    gap: 16px;
-    flex-direction: column;
-    align-items: center;
+  flex-direction: column;
+  align-items: center;
+  @media (min-width: ${breakpoints.laptop}px) {
+    margin-top: 64px;
+    justify-content: space-around;
+    flex-direction: row;
   }
 `;
