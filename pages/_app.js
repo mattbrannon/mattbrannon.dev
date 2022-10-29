@@ -1,11 +1,7 @@
 import Footer from '@components/Footer';
-import Layout, { Main } from '@components/Layout';
 import isValidProp from '@emotion/is-prop-valid';
-import { Banner } from '@components/Banner';
-import { HeaderGap } from '@components/Spacer';
+import { Header } from '@components/Header';
 import { MobileMenu } from '@components/MobileMenu';
-import { GoogleAnalytics } from '@components/GoogleAnalytics';
-import { MaxWidthWrapper } from '@components/MaxWidthWrapper';
 
 import '@styles/global.css';
 import { GlobalStyle } from '@styles/global';
@@ -17,10 +13,7 @@ import { ThemeProvider as ContextProvider, StyleSheetManager } from 'styled-comp
 import { useIsBannerVisible } from '@hooks/useIsBannerVisible';
 import { useActiveElement } from '@hooks/useActiveElement';
 import { useHasMounted } from '@hooks/useHasMounted';
-
-import { TableOfContents } from '@components/TableOfContents';
-
-const components = { TableOfContents };
+import { useElementSize } from '@hooks/useElementSize';
 
 export default function Application({ Component, pageProps }) {
   const [isOpen, setIsOpen] = useState(null);
@@ -35,7 +28,10 @@ export default function Application({ Component, pageProps }) {
   const isBannerVisible = useIsBannerVisible(400);
   const [hasPlayedGame, setHasPlayedGame] = useState(false);
 
-  const ref = useRef();
+  const headerRef = useRef();
+  const footerRef = useRef();
+  const headerSize = useElementSize(headerRef);
+  const footerSize = useElementSize(footerRef);
 
   useEffect(() => {
     function traverseNode(root) {
@@ -48,11 +44,9 @@ export default function Application({ Component, pageProps }) {
     }
 
     if (hasMounted) {
-      const hasActiveElement = traverseNode(ref.current)
+      const hasActiveElement = traverseNode(headerRef.current)
         .flat(Infinity)
         .some((element) => Object.is(element, activeElement));
-
-      // console.log({ hasActiveElement });
 
       setHasActiveElement(hasActiveElement);
     }
@@ -69,7 +63,8 @@ export default function Application({ Component, pageProps }) {
     setBubblesDone,
     hasPlayedGame,
     setHasPlayedGame,
-    // pathname,
+    headerSize,
+    footerSize,
   };
 
   useEffect(() => {
@@ -86,7 +81,6 @@ export default function Application({ Component, pageProps }) {
 
   return (
     <>
-      <GoogleAnalytics />
       <MotionConfig isValidProp={isValidProp}>
         <LazyMotion strict features={domAnimation}>
           <StyleSheetManager disableVendorPrefixes>
@@ -94,14 +88,9 @@ export default function Application({ Component, pageProps }) {
               <GlobalStyle />
               <ThemeProvider defaultTheme="dark" enableSystem={false} enableColorScheme={true}>
                 <MobileMenu dialogIsOpen={dialogIsOpen} setDialogIsOpen={setDialogIsOpen} />
-                <Banner ref={ref} isVisible={hasActiveElement || isBannerVisible} />
-                <Layout>
-                  <HeaderGap />
-                  <MaxWidthWrapper>
-                    <Component {...pageProps} />
-                  </MaxWidthWrapper>
-                  <Footer />
-                </Layout>
+                <Header dialogIsOpen={dialogIsOpen} ref={headerRef} isVisible={hasActiveElement || isBannerVisible} />
+                <Component {...pageProps} />
+                <Footer ref={footerRef} />
               </ThemeProvider>
             </ContextProvider>
           </StyleSheetManager>
