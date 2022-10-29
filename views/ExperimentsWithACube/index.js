@@ -54,7 +54,7 @@ export default function Experiments() {
   return (
     <>
       <Head title="Experiments with a cube" description="A tool for visualizing 3d transforms" />
-      <div style={{ '--controlWidth': `${width}px` }}>
+      <Grid style={{ '--controlWidth': `${width}px` }}>
         <ShapeControls
           ref={controlRef}
           cubeHeight={state.cubeHeight}
@@ -120,7 +120,7 @@ export default function Experiments() {
             </Wrapper>
           </AnimatePresence>
         </Main>
-      </div>
+      </Grid>
       <NoScript>This tool requires javascript to work properly</NoScript>
     </>
   );
@@ -172,4 +172,9 @@ const Main = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+`;
+
+const Grid = styled.main`
+  display: grid;
+  height: calc(100vh - (var(--header-height) + var(--footer-height)));
 `;

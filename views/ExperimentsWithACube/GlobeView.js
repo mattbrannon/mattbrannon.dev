@@ -33,7 +33,7 @@ export const GlobeView = ({ ...props }) => {
       {Array.from({ length: props.state.max }, (_, i) => {
         const transform = transforms[i];
         return (
-          <GlobeSide i={i} transform={transform}>
+          <GlobeSide key={i} i={i} transform={transform}>
             <Thing sides={sides} i={i} color={colors[0] + '1a'} size={300}>
               <Thing sides={sides} i={i} color={colors[1] + '34'} size={150}>
                 <Thing sides={sides} i={i} color={colors[2]} size={75} />
