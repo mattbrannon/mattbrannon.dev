@@ -17,10 +17,6 @@ export const useElementSize = (ref) => {
         setSize(blockSize);
         height.current = blockSize;
       }
-      // if (dimensions.current.width !== inlineSize) {
-      //   dimensions.current.width = inlineSize;
-      //   setSize({ ...size, width: dimensions.current.width });
-      // }
     }
   }, [hasMounted, element, size]);
 
