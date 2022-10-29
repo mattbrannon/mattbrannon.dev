@@ -66,38 +66,3 @@ export default function Index() {
     </layout.page>
   );
 }
-
-// const List = styled.ul`
-//   list-style: none;
-//   display: grid;
-//   gap: 18px;
-//   padding: 0;
-// `;
-
-// const CardWrapper = styled.div`
-//   border: 1px solid black;
-//   border-radius: 6px;
-//   padding: 0 16px 16px 16px;
-//   background: var(--basic-card-background);
-//   /* display: flex;
-//   flex-direction: column;
-//   justify-content: space-between; */
-//   min-height: 160px;
-// `;
-
-// const Small = styled.small`
-//   color: var(--color-text);
-// `;
-
-// const Card = ({ title, href, children }) => {
-//   return (
-//     <li>
-//       <Link href={href}>
-//         <CardWrapper>
-//           <CardHeading>{title}</CardHeading>
-//           <Small>{children}</Small>
-//         </CardWrapper>
-//       </Link>
-//     </li>
-//   );
-// };
