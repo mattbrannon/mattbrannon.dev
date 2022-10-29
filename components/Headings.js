@@ -148,3 +148,18 @@ export const H3Link = withLink(H3Blog);
 export const H4Link = withLink(H4Blog);
 export const H5Link = withLink(H5);
 export const H6Link = withLink(H6);
+
+export const headings = {
+  h1: H1,
+  h2: H2,
+  h3: H3,
+  h4: H4,
+  h5: H5,
+  h6: H6,
+  h1Link: H1Link,
+  h2Link: H2Link,
+  h3Link: H3Link,
+  h4Link: H4Link,
+  h5Link: H5Link,
+  h6Link: H6Link,
+};
