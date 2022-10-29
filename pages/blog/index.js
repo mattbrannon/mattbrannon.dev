@@ -15,7 +15,7 @@ import { useMediaQuery } from '@hooks/useMediaQuery';
 export default function Index({ posts }) {
   const isMobile = useMediaQuery({ maxWidth: breakpoints.tablet });
   return (
-    <layout.page>
+    <layout.blog>
       <Head
         title="Another Developer Blog"
         description="Thoughts, opinions, criticisms, rantings, ravings, musings on all things great and small"
@@ -38,7 +38,7 @@ export default function Index({ posts }) {
         })}
       </BlogList>
       <spacer.block size={32} />
-    </layout.page>
+    </layout.blog>
   );
 }
 
