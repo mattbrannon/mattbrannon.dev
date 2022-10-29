@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import Link from 'next/link';
-import Text from '@components/Text/Text';
+import { text } from '@components/Text';
 import { CardHeading } from '@components/Headings';
 
 export const BlogCard = ({ post, href }) => {
@@ -11,7 +11,7 @@ export const BlogCard = ({ post, href }) => {
       <Link href={href}>
         <CardHeading>{post.data.title}</CardHeading>
       </Link>
-      <Description>{post.data.description}</Description>
+      <text.description>{post.data.description}</text.description>
     </Card>
     // </li>
   );
@@ -21,13 +21,13 @@ const Card = styled.article`
   border: 1px solid black;
   border-radius: 6px;
   background: #222;
-  grid-column: 2;
+  /* grid-column: 2; */
   width: 100%;
   padding: 0 16px;
   background: var(--basic-card-background);
   font-variation-settings: 'wght' 700;
   min-height: 150px;
-  /* max-width: 500px; */
+  max-width: 540px;
 `;
 
 const Description = styled.p`

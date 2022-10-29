@@ -2,10 +2,10 @@ import { HeroCard } from './Hero';
 import { BlogCard } from './Blog';
 import { ToolsCard } from './Misc';
 
-export const Card = {
-  Hero: HeroCard,
-  Blog: BlogCard,
-  Tools: ToolsCard,
+export const card = {
+  hero: HeroCard,
+  blog: BlogCard,
+  tools: ToolsCard,
 };
 
 // import styled from 'styled-components';
