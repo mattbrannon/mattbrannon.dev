@@ -95,12 +95,12 @@ const InnerWrappper = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px;
   position: relative;
+  padding: 0;
+  gap: 0;
 
-  @media (max-width: ${breakpoints.mobile}px) {
-    padding: 0;
-    gap: 0;
+  @media (min-width: ${breakpoints.laptop}px) {
+    gap: 16px;
+    padding: 16px;
   }
 `;

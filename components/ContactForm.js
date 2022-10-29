@@ -142,11 +142,11 @@ const Contact = ({ state, dispatch }) => {
 
 const FlexGroup = styled.div`
   display: flex;
-  gap: 32px;
+  flex-direction: column;
+  gap: 8px;
   margin-bottom: 16px;
-  @media (max-width: ${breakpoints.mobile}px) {
-    flex-direction: column;
-    gap: 8px;
+  @media (min-width: ${breakpoints.mobile}px) {
+    gap: 32px;
   }
 `;
 

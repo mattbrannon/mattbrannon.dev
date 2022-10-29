@@ -3,17 +3,39 @@ import { m as motion } from 'framer-motion';
 // import {FancyTitle} from '@components/FancyTitle';
 import { breakpoints } from '@constants/breakpoints';
 
-export const Article = styled.article`
-  position: absolute;
-  top: var(--header-height);
-  left: var(--controlWidth);
-  right: 0;
-  bottom: var(--footer-height);
-  overflow: auto;
+// export const Article = styled.article`
+//   /* @media (max-width: ${breakpoints.tablet}px) {
+//     --controlWidth: 0;
+//     left: 0;
+//   } */
 
-  @media (max-width: ${breakpoints.tablet}px) {
-    --controlWidth: 0;
-    left: 0;
+//   @media (min-width: ${breakpoints.laptop}px) {
+//     position: absolute;
+//     top: var(--header-height);
+//     left: var(--controlWidth);
+//     right: 0;
+//     bottom: var(--footer-height);
+//     overflow: auto;
+//     height: calc(100vh - (var(--header-height) + var(--footer-height)));
+//   }
+// `;
+
+export const Article = styled.article.attrs(({ theme }) => {
+  const headerFooterTotal = theme.headerSize + theme.footerSize + 'px';
+  return {
+    style: {
+      '--offsetHeight': headerFooterTotal,
+    },
+  };
+})`
+  min-height: 300px;
+  max-height: 400px;
+  overflow: auto;
+  flex: 1;
+  height: calc(100vh - var(--offsetHeight));
+
+  @media (min-width: ${breakpoints.laptop}px) {
+    max-height: unset;
   }
 `;
 
@@ -72,23 +94,17 @@ export const Text = styled.p`
 //// CodeView
 
 export const ViewWrapper = styled(motion.div)`
-  /* position: absolute; */
-  /* width: 100%; */
   height: 100%;
   overflow: auto;
-  /* overflow: auto;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0; */
-
-  @media (max-width: ${breakpoints.mobile}) {
-    left: 0;
-    right: 0;
-  }
 `;
 
 /// MainView
+
+export const MainViewWrapper = styled(motion.div)`
+  padding: clamp(16px, 0.5rem + 3vw, 36px);
+  // padding causes overflow
+  overflow: hidden;
+`;
 
 export const Span = styled(motion.span)`
   font-family: var(--fontFamily);
@@ -257,4 +273,96 @@ const GradientLayer = styled(TextArea)`
   background-image: var(--gradient);
   font-size: var(--fontSize);
   overflow: hidden;
+`;
+
+export const Grid = styled.main`
+  /* display: grid;
+  height: calc(100vh - (var(--header-height) + var(--footer-height))); */
+`;
+
+export const MainContainer = styled(motion.div).attrs(({ state }) => {
+  return {
+    style: {
+      '--fontFamily': state.styles.fontFamily,
+      '--fontSize': state.styles.fontSize + 'px',
+      '--fontVariationSettings': state.styles.fontVariationSettings,
+      '--gradient': state.styles.gradient,
+      '--shadow': state.styles.shadow,
+      '--strokeWidth': state.styles.strokeWidth + 'em',
+      '--strokeColor': state.styles.strokeColor,
+      '--letterSpacing': state.styles.letterSpacing + 'em',
+    },
+  };
+})`
+  font-family: var(--fontFamily);
+  font-size: var(--fontSize);
+  font-variation-settings: var(--fontVariationSettings);
+  letter-spacing: var(--letterSpacing);
+
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  word-break: break-word;
+  position: relative;
+`;
+
+export const GradientSpan = styled.span`
+  font: inherit;
+  background: var(--gradient);
+  background-clip: text;
+  color: transparent;
+  box-decoration-break: clone;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
+  margin: 0 -32px;
+  padding-left: 32px;
+  padding-right: 32px;
+`;
+
+export const MainWrapper = styled(motion.div)`
+  display: grid;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  &::after {
+    content: '${(p) => p.state.textContent} \u{00a0}';
+    white-space: pre-wrap;
+    border: none;
+    font: inherit;
+    color: transparent;
+    text-shadow: var(--shadow);
+    z-index: -1;
+    -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+`;
+
+export const TextAreaBox = styled.textarea.attrs({ rows: 1, spellCheck: false })`
+  resize: none;
+  overflow: hidden;
+  border: none;
+  font: inherit;
+  background: none;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  caret-color: var(--fancyCaretColor);
+  letter-spacing: var(--letterSpacing);
+
+  margin: -32px;
+  padding: 32px;
+
+  &::placeholder {
+    -webkit-text-fill-color: hsl(0, 0%, 97%, 0.7);
+    /* -webkit-text-stroke: 0.0125em black; */
+    text-shadow: -0.0125em -0.0125em 0em #777, -0.025em -0.025em 0em #555, -0.0375em -0.0375em 0em #333,
+      -0.05em -0.05em 0em #111;
+  }
 `;

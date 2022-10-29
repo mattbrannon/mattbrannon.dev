@@ -17,17 +17,24 @@ export default function CardTop({ ...props }) {
 }
 
 const TopCardRow = styled.div`
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  grid-template-areas: 'left right';
-
   padding-top: 16px;
-  @media (max-width: ${breakpoints.mobile}px) {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    align-items: center;
-    justify-items: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  justify-items: center;
+
+  @media (min-width: ${breakpoints.tablet}px) {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    grid-template-areas: 'left right';
+  }
+
+  @media (min-width: ${breakpoints.laptop}px) {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    grid-template-areas: 'left right';
   }
 `;
 

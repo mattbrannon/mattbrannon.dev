@@ -26,31 +26,36 @@ export const Layout = forwardRef((props, ref) => {
         ref={ref}
         {...props}
       >
-        <Section>{props.children}</Section>
+        <Menu>{props.children}</Menu>
       </Wrapper>
     </AnimatePresence>
   );
 });
 
-const Wrapper = styled(motion.div)`
-  height: calc(100% - var(--header-height));
-  position: absolute;
+const Wrapper = styled(motion.aside).attrs(({ theme }) => {
+  return {
+    style: {
+      '--offsetHeight': theme.headerSize + 'px',
+    },
+  };
+})`
+  /* height: calc(100% - var(--header-height)); */
+
   background: hsl(0, 0%, 3.5%, 1);
-  left: 0;
+
   border: 4px solid black;
   padding: 16px;
-  overflow: auto;
-  z-index: ${(p) => (p.isOpen ? 0 : 1)};
+
   isolation: isolate;
   color: white;
-  min-width: 336px;
-  top: var(--header-height);
+  min-width: 100%;
 
   scrollbar-width: thin;
+  overflow: auto;
 
-  @media (max-width: ${breakpoints.tablet}px) {
-    top: 50%;
-    min-width: 100%;
+  @media (min-width: ${breakpoints.laptop}px) {
+    width: 336px;
+    height: calc(100vh - var(--offsetHeight));
   }
 
   &::-webkit-scrollbar {
@@ -58,12 +63,15 @@ const Wrapper = styled(motion.div)`
   }
 `;
 
-const Section = styled.div`
+const Menu = styled.menu`
   display: flex;
   flex-direction: column;
+  margin: 0;
+  padding: 0;
+  background: inherit;
 `;
 
-export const Group = styled.section`
+export const Group = styled.hgroup`
   display: grid;
 `;
 

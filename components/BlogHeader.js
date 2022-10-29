@@ -48,12 +48,12 @@ function Date({ date }) {
 }
 
 const BlogTitleWrapper = styled.div`
-  margin-top: 64px;
+  margin-top: 24px;
   margin-bottom: 32px;
   font-family: Recursive;
 
-  @media (max-width: ${breakpoints.mobile}px) {
-    margin-top: 24px;
+  @media (min-width: ${breakpoints.tablet}px) {
+    margin-top: 64px;
   }
 `;
 

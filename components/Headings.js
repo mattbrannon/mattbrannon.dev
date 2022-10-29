@@ -110,7 +110,13 @@ const withLink = (Heading) => {
         {...props}
       >
         {/* <div> */}
-        <link.icon isFocused={isFocused} isHovering={isHovering} ref={svg} href={'#' + id} />
+        <link.icon
+          aria-label={props.children}
+          isFocused={isFocused}
+          isHovering={isHovering}
+          ref={svg}
+          href={'#' + id}
+        />
         <span>{props.children}</span>
       </Heading>
     );

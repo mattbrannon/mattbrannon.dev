@@ -7,7 +7,7 @@ const Layout = styled.div`
   grid-template-rows: auto 1fr auto;
   grid-template-areas:
     'header'
-    'content'
+    'main'
     'footer';
   & > * {
     grid-column: 2;
@@ -21,13 +21,24 @@ export const FullBleed = styled.div`
   padding: 0;
 `;
 
-export const Main = styled.main`
-  margin: 92px 0 128px 0;
-  width: 100%;
+export const Main = styled.main.attrs(({ theme }) => {
+  const totalSize = `${theme.headerSize + theme.footerSize}px`;
+  return {
+    style: {
+      '--offsetHeight': totalSize,
+    },
+  };
+})`
+  --fontFamily: Recursive;
+  --fontSize: clamp(24px, 8vw, 64px);
+  --fontVariationSettings: 'wght' 974, 'slnt' -7, 'CASL' 0.42, 'CRSV' 0, 'MONO' 0;
+  --strokeWidth: 0.021875em;
+  --strokeColor: #000000;
 
-  @media (max-width: ${breakpoints.tablet}px) {
-    margin: 24px 0 128px 0;
-  }
+  min-height: calc(100vh - var(--offsetHeight));
+  max-width: var(--max-page-width);
+  margin: 0 auto;
+  padding: var(--breathing-room);
 `;
 
 export default Layout;
@@ -46,3 +57,139 @@ export const ToolsList = styled.nav`
   gap: 18px;
   padding: 0;
 `;
+
+export const MiscToolsLayout = styled.main`
+  display: grid;
+  min-height: 100%;
+  /* grid-template-columns: ${(p) => p.controlWidth + 'px' + ' 1fr'}; */
+  grid-template-rows: var(--header-height) 1fr auto;
+  grid-template-areas:
+    'header header'
+    'aside main'
+    'footer footer';
+`;
+
+const StackLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  justify-content: space-between;
+`;
+
+const TwoPanelLayout = styled.main.attrs(({ controlWidth }) => {
+  const column = controlWidth ? controlWidth + 'px' + ' 1fr' : 'auto 1fr';
+  return {
+    style: {
+      '--columns': column,
+    },
+  };
+})`
+  display: grid;
+  min-height: calc(100vh - (var(--header-height) + var(--footer-height)));
+  grid-template-columns: var(--columns);
+  grid-template-rows: var(--header-height) 1fr auto;
+  grid-template-areas:
+    'header header'
+    'aside main'
+    'footer footer';
+`;
+
+const Home = styled.main.attrs(({ theme }) => {
+  const headerFooterTotal = theme.headerSize + theme.footerSize;
+  return {
+    style: {
+      '--offsetHeight': headerFooterTotal + 'px',
+    },
+  };
+})`
+  --fontFamily: Recursive;
+  --fontSize: clamp(24px, 8vw, 64px);
+  --fontVariationSettings: 'wght' 974, 'slnt' -7, 'CASL' 0.42, 'CRSV' 0, 'MONO' 0;
+  --strokeWidth: 0.021875em;
+  --strokeColor: #000000;
+  --padding-top: 16px;
+
+  min-height: calc(100vh - var(--offsetHeight));
+  max-width: var(--max-page-width);
+  margin: 0 auto;
+  padding: var(--padding-top) var(--breathing-room);
+
+  display: grid;
+  grid-template-rows: min-content auto;
+  gap: 16px;
+
+  @media (min-width: ${breakpoints.laptop}px) {
+    --padding-top: calc(var(--offsetHeight) * 0.5);
+  }
+`;
+
+const Page = styled.main`
+  --padding-top: calc(var(--header-height) * 1.15);
+  min-height: calc(100% - (var(--header-height) + var(--footer-height)));
+  max-width: var(--max-page-width);
+  margin: var(--header-height) auto 128px;
+  padding: 0 var(--breathing-room);
+
+  /* padding: var(--padding-top) var(--breathing-room); */
+`;
+
+const FancyTextGeneratorLayout = styled.main.attrs(({ theme, controlWidth }) => {
+  const headerFooterTotal = theme.headerSize + theme.footerSize + 'px';
+
+  return {
+    style: {
+      '--offsetHeight': headerFooterTotal,
+      '--controlWidth': controlWidth + 'px',
+    },
+  };
+})`
+  display: flex;
+  flex-direction: column-reverse;
+  height: calc(100vh - var(--offsetHeight));
+
+  @media (min-width: ${breakpoints.laptop}px) {
+    display: grid;
+    grid-template-columns: 336px auto;
+  }
+`;
+
+// const FancyTextGeneratorLayout = styled.main.attrs(({ theme }) => {
+//   const headerFooterTotal = theme.headerSize + theme.footerSize + 'px';
+//   return {
+//     style: {
+//       '--offsetHeight': headerFooterTotal,
+//     },
+//   };
+// })`
+//   display: grid;
+//   height: calc(100vh - var(--offsetHeight));
+// `;
+
+export const Layout404 = styled.main.attrs(({ theme }) => {
+  const totalSize = `${theme.headerSize + theme.footerSize}px`;
+  return {
+    style: {
+      '--offsetHeight': totalSize,
+    },
+  };
+})`
+  --fontFamily: Recursive;
+  --fontSize: clamp(24px, 8vw, 64px);
+  --fontVariationSettings: 'wght' 974, 'slnt' -7, 'CASL' 0.42, 'CRSV' 0, 'MONO' 0;
+  --strokeWidth: 0.021875em;
+  --strokeColor: #000000;
+
+  min-height: calc(100vh - var(--offsetHeight));
+  max-width: var(--max-page-width);
+  margin: 0 auto;
+  padding: var(--breathing-room);
+`;
+
+export const layout = {
+  stack: StackLayout,
+  twoPanel: TwoPanelLayout,
+  home: Home,
+  page: Page,
+  fancyTextGenerator: FancyTextGeneratorLayout,
+  notFound: Layout404,
+};

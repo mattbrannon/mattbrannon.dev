@@ -83,15 +83,14 @@ export default function CardBottom({ ...props }) {
 
 const Container = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr;
   gap: 8px;
   position: relative;
   margin-top: 16px;
   transition: all 1s linear;
-  @media (max-width: ${breakpoints.tablet}px) {
+  @media (min-width: ${breakpoints.laptop}px) {
     margin: 16px 0;
-    flex-wrap: wrap;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 `;
 
@@ -104,13 +103,18 @@ const Bubble = ({ side, children }) => {
     const env = isMobile ? 'mobile' : 'desktop';
     if (!context.hasStarted) {
       context.setHasStarted(true);
-      controls
-        .start({ clipPath: bubble.hidden[env].clipPath, ...bubble.hidden[env][side] })
-        .then(() => controls.start({ ...bubble.circle, transition: bubble.transition.circle }))
-        .then(() => controls.start({ ...bubble.rest[env], transition: { ...bubble.transition.rest } }))
-        .then(() => context.setBubblesDone(true))
+      if (context.hasRun || context.bubblesDone) {
+        controls.start({ ...bubble.expand, transition: { ...bubble.transition.expand } });
+      }
+      else {
+        controls
+          .start({ clipPath: bubble.hidden[env].clipPath, ...bubble.hidden[env][side] })
+          .then(() => controls.start({ ...bubble.circle, transition: bubble.transition.circle }))
+          .then(() => controls.start({ ...bubble.rest[env], transition: { ...bubble.transition.rest } }))
+          .then(() => context.setBubblesDone(true))
 
-        .then(() => controls.start({ ...bubble.expand, transition: { ...bubble.transition.expand } }));
+          .then(() => controls.start({ ...bubble.expand, transition: { ...bubble.transition.expand } }));
+      }
     }
   }, [controls, side, context, isMobile]);
 

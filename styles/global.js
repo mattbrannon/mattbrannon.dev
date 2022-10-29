@@ -97,9 +97,16 @@ export const GlobalStyle = createGlobalStyle`
   --eye-margin: calc(var(--mouth-padding) * -1);
   --header-height: 80px;
   --footer-height: 165px;
-  --header-link-gap: clamp(0.5rem, 1rem + 3vw, 5rem);
+  --header-link-gap: clamp(0.25rem, 1rem + 3vw, 5rem);
 
-  --breathing-room: 48px;
+  /* --breathing-room: 48px; */
+  --breathing-room: 15px;
+  --header-height: 56px;
+
+  /* --breathing-room: clamp(16px, 3.5vw, 48px); */
+
+
+
   --gutter-size: 48px;
   --line-height: calc(1em + 0.625rem);
   --header-position: translateY(0%);
@@ -250,9 +257,9 @@ export const GlobalStyle = createGlobalStyle`
     --hero-card-darkmode: #212121;
     --hero-card-lightmode: #e3e4e8;
 
-  @media (max-width: ${breakpoints.tablet}px) {
-    --breathing-room: 15px;
-    --header-height: 50px;
+  @media (min-width: ${breakpoints.laptop}px) {
+    /* --breathing-room: 48px; */
+    --header-height: 80px;
   }
 }
 

@@ -1,23 +1,63 @@
 import { useFontSize } from '@hooks/useFontSize';
 import styled from 'styled-components';
-import FancyText from './Text/FancyText';
+import { text } from '@components/Text';
 import { breakpoints } from '@constants/breakpoints';
 import { useMediaQuery } from '@hooks/useMediaQuery';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { H1 } from '@components/Headings';
+import { spacer } from '@components/Spacer';
+import { useTheme } from 'next-themes';
+
+const slantText = {
+  initial: {
+    color: 'var(--color-text)',
+    fontVariationSettings: 'var(--recursive6)',
+  },
+  animate: ({ color }) => {
+    return {
+      color,
+      fontVariationSettings: 'var(--recursive2)',
+    };
+  },
+  transition: {
+    delay: 0.3,
+    duration: 1,
+    easing: 'ease',
+  },
+};
 
 const Title = (props, ref) => {
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
   const desktopFontSize = useFontSize(32, 40, breakpoints.mobile, breakpoints.desktop);
   const mobileFontSize = useFontSize(24, 32, 0, breakpoints.mobile);
   const fontSize = isMobile ? mobileFontSize : desktopFontSize;
+  const [color, setColor] = useState('');
+  const { theme } = useTheme();
+
+  useEffect(() => {
+    const pink = '#990078';
+    const blue = '#00bfff';
+
+    return theme === 'light' ? setColor(pink) : setColor(blue);
+  }, [theme, ref]);
 
   if (props.children.length) {
     const [highlighted, ...rest] = props.children.split(' ');
+    const { initial, animate, transition } = slantText;
+
     return (
       <>
         <FluidHeading style={{ '--fontSize': fontSize }} tabIndex={-1}>
-          <FancyText {...props}>{highlighted}&nbsp;</FancyText>
+          <text.italic
+            variants={slantText}
+            initial={initial}
+            animate={animate}
+            transition={transition}
+            custom={{ color }}
+            {...props}
+          >
+            {highlighted}&nbsp;
+          </text.italic>
           <Span ref={ref} {...props}>
             {rest.join(' ')}
           </Span>
@@ -40,14 +80,15 @@ const FluidHeading = styled(H1)`
   font-size: var(--fontSize);
   line-height: 1.2;
   margin: revert;
+  text-align: center;
   /* margin-top: 64px; */
   @media (max-width: ${breakpoints.mobile}px) {
     font-size: 24px;
     /* margin-bottom: 16px;
     margin-top: 16px; */
   }
-  @media (max-width: ${breakpoints.tablet}px) {
-    text-align: center;
+  @media (min-width: ${breakpoints.laptop}px) {
+    text-align: left;
   }
 `;
 

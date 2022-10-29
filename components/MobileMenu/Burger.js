@@ -3,11 +3,12 @@ import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/breakpoints';
 
 export function Burger({ dialogIsOpen, setDialogIsOpen }) {
-  const isMobile = useMediaQuery({ maxWidth: breakpoints.tablet });
+  const isTablet = useMediaQuery({ minWidth: breakpoints.tablet });
 
   return (
     <BurgerWrapper
-      style={{ '--display': isMobile || dialogIsOpen ? 'flex' : 'none' }}
+      style={{ '--display': isTablet ? 'none' : 'flex' }}
+      // style={{ '--display': isMobile || dialogIsOpen ? 'flex' : 'none' }}
       onClick={() => setDialogIsOpen(!dialogIsOpen)}
       aria-label="mobile navigation menu"
     >
@@ -18,11 +19,13 @@ export function Burger({ dialogIsOpen, setDialogIsOpen }) {
 
 const BurgerWrapper = styled.button`
   /* --buttonHeight: 32px; */
-  --burger-width: var(--size32, 32px);
-  --burger-height: var(--size24);
+
+  --burger-width: var(--size24);
+  --burger-height: var(--size18);
   --thickness: calc((var(--burger-height) - var(--burger-width)) * -0.5);
   --offset: calc((var(--burger-height) - var(--thickness)) * -0.5);
   --top: calc((var(--thickness) + var(--header-height) - var(--burger-height)) * 0.5);
+  --top: 18px;
 
   border: none;
   background: none;
@@ -39,9 +42,9 @@ const BurgerWrapper = styled.button`
   right: 32px;
   z-index: 99999;
 
-  @media (max-width: ${breakpoints.tablet}px) {
-    --burger-width: var(--size24);
-    --burger-height: var(--size18);
+  @media (min-width: ${breakpoints.tablet}px) {
+    --burger-width: var(--size32);
+    --burger-height: var(--size24);
   }
 `;
 

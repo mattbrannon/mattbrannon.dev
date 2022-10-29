@@ -3,13 +3,13 @@ import FutureImage from 'next/future/image';
 import { breakpoints } from '@constants/breakpoints';
 import { H2 } from '@components/Headings';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.hgroup`
   display: block;
-  margin: 64px 0 64px 0;
+  margin: 32px 0 32px 0;
+  text-align: center;
   cursor: pointer;
-  @media (max-width: ${breakpoints.tablet}px) {
-    text-align: center;
-    margin: 32px 0 32px 0;
+  @media (min-width: ${breakpoints.laptop}px) {
+    margin: 64px 0 64px 0;
   }
 `;
 
@@ -25,10 +25,10 @@ export const Heading = styled(H2)`
   &:hover {
     color: var(--app-card-hover);
   }
+  margin: auto;
 
-  margin: 0;
-  @media (max-width: ${breakpoints.tablet}px) {
-    margin: auto;
+  @media (min-width: ${breakpoints.laptop}px) {
+    margin: 0;
   }
 
   &:focus-visible {
@@ -40,6 +40,11 @@ export const Small = styled.small`
   margin-bottom: 23px;
   display: block;
   color: var(--color-text);
+  text-align: center;
+
+  @media (min-width: ${breakpoints.laptop}px) {
+    text-align: left;
+  }
 `;
 
 export const ImageWrapper = styled.div`

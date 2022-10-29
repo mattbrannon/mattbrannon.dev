@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Head from '@components/Head';
 import { PageTitle } from '@components/PageTitle';
-import { Main } from '@components/Layout';
+import { layout } from '@components/Layout';
 import { spacer } from '@components/Spacer';
 import { VideoPlayer } from '@components/VideoPlayer';
 import { breakpoints } from '@constants/breakpoints';
@@ -9,13 +9,13 @@ import { POSTS_PATH, publishedArticles } from '@utils/mdxUtils.js';
 import fs from 'fs';
 import matter from 'gray-matter';
 import path from 'path';
-import { Card } from '@components/Card';
+import { card } from '@components/Card';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 
 export default function Index({ posts }) {
   const isMobile = useMediaQuery({ maxWidth: breakpoints.tablet });
   return (
-    <Main id="main-content">
+    <layout.page>
       <Head
         title="Another Developer Blog"
         description="Thoughts, opinions, criticisms, rantings, ravings, musings on all things great and small"
@@ -34,16 +34,23 @@ export default function Index({ posts }) {
       <BlogList tabIndex={-1}>
         {posts.map((post) => {
           const href = `/blog/${post.filePath.replace(/\.mdx?$/, '')}`;
-          return <Card.Blog key={href} href={href} post={post} />;
+          return <card.blog key={href} href={href} post={post} />;
         })}
       </BlogList>
       <spacer.block size={32} />
-    </Main>
+    </layout.page>
   );
 }
 
 const BlogList = styled.ul`
-  display: grid;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+`;
+
+const BB = styled.ul`
+  /* display: grid; */
   display: flex;
   flex-direction: column;
   gap: 24px;
