@@ -47,8 +47,8 @@ export const SVG = styled.svg`
   opacity: var(--opacity);
   box-shadow: 0 0 0 0.025em hsl(30, 51%, 26%, 0.2);
 
-  transition: width var(--speed, 0.2s) linear, height var(--speed, 0.2s) linear,
-    transform var(--speed, 0.2s) linear, opacity var(--speed, 0.2s) linear;
+  transition: width var(--speed, 0s) linear, height var(--speed, 0s) linear,
+    transform var(--speed, 0s) linear, opacity var(--speed, 0s) linear;
 
   &:nth-of-type(1) {
     --rotation: 0deg;
@@ -57,7 +57,6 @@ export const SVG = styled.svg`
     /* set to 0.49999 because Safari is stupid */
     --transform: translate(-50%, -50%) rotateY(var(--rotation))
       translateZ(calc(var(--cube-depth) * 0.49999));
-    fill: red !important;
   }
 
   /* &:nth-of-type(1), */

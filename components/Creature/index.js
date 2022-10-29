@@ -2,15 +2,18 @@ import { face } from './Face';
 import { forwardRef } from 'react';
 import { Side } from './Sides';
 import { Shape } from './Shape';
+import styled from 'styled-components';
 
 function withCreature(FaceComponent) {
   return function CubeFace({ ...props }, ref) {
     return (
       <Shape ref={ref} {...props}>
-        {Array.from({ length: 7 }, (_, i) => {
-          const Component = i === 6 ? FaceComponent : Side;
-          return <Component {...props} i={i} key={i}></Component>;
-        })}
+        <Scene {...props}>
+          {Array.from({ length: 7 }, (_, i) => {
+            const Component = i === 6 ? FaceComponent : Side;
+            return <Component {...props} i={i} key={i}></Component>;
+          })}
+        </Scene>
       </Shape>
     );
   };
@@ -28,34 +31,10 @@ export const creature = {
   shocked,
 };
 
-// const withCube = (FaceComponent) => {
-//   return function CubeFace({ ...props }) {
-//     return Array.from({ length: 7 }, (_, i) => {
-//       const Component = i === 6 ? FaceComponent : Side;
-//       return <Component {...props} i={i} key={i} />;
-//     });
-//   };
-// };
+const Scene = styled.div`
+  transform-style: preserve-3d;
+  transform-origin: 80px;
 
-// const Basic = withCube(Face.NormalFace);
-
-// import Face from './Face';
-// import { forwardRef } from 'react';
-// import Side from '@components/Shapes/Sides';
-// import { Shape } from '@components/Shapes/Shape';
-
-// function withCreature(FaceComponent) {
-//   return function CubeFace({ ...props }, ref) {
-//     return (
-//       <Shape ref={ref} {...props}>
-//         {Array.from({ length: 7 }, (_, i) => {
-//           const Component = i === 6 ? FaceComponent : Side;
-//           return <Component {...props} i={i} key={i}></Component>;
-//         })}
-//       </Shape>
-//     );
-//   };
-// }
-
-// export const NormalCube = forwardRef(withCreature(Face.NormalFace));
-// export const SmirkingCube = forwardRef(withCreature(Face.SmirkingFace));
+  --cube-height: 125px;
+  --cube-width: 125px;
+`;

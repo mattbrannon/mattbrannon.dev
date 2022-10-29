@@ -7,10 +7,10 @@ function withFace(Eyes) {
   return function makeFace(Mouth) {
     return function wrapper({ ...props }) {
       return (
-        <Wrapper {...props}>
+        <Face {...props}>
           <Eyes {...props} />
           <Mouth {...props} />
-        </Wrapper>
+        </Face>
       );
     };
   };
@@ -21,12 +21,13 @@ export const SmirkingFace = withFace(eyes.NormalEyes)(mouth.Smirking);
 export const NormalFace = withFace(eyes.NormalEyes)(mouth.Closed);
 export const ShockedFace = withFace(eyes.NormalEyes)(mouth.Shocked);
 
-const Wrapper = styled.div`
+const Face = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: var(--cube-height, 100%);
+
   align-items: center;
   justify-content: space-evenly;
-  transform: translateZ(calc(var(--cube-depth) * 0.5));
+  transform: translateZ(calc(var(--cube-depth) * 0.55));
   transition: all var(--speed) linear;
 `;

@@ -20,11 +20,12 @@ const Wrapper = styled(motion.div)`
 
   transform-style: preserve-3d;
 
-  transform: translateX(var(--translateX)) translateY(var(--translateY)) rotateX(var(--rotateX))
-    rotateY(var(--rotateY)) rotateZ(var(--rotateZ)) translateZ(var(--translateZ));
+  transform: translateX(var(--translateX)) translateY(var(--translateY))
+    rotateX(var(--rotateX)) rotateY(var(--rotateY)) rotateZ(var(--rotateZ))
+    translateZ(var(--translateZ));
 
   width: var(--cube-width);
   height: var(--cube-height);
 
-  transition: transform var(--speed, 0.2s) linear;
+  transition: all var(--speed) linear;
 `;
