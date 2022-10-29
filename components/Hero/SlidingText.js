@@ -8,14 +8,6 @@ export default function AnimatedWords({ children }) {
   // const [start, setStart] = useState(context.bubblesDone);
   const words = children.split(' ');
 
-  // useEffect(() => {
-  //   if (!context.bubblesDone) {
-  //     setTimeout(() => {
-  //       setStart(true);
-  //     }, 2000);
-  //   }
-  // }, [context.bubblesDone]);
-
   return (
     <Container>
       {Children.toArray(words).map((word, i) => (
