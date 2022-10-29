@@ -29,13 +29,11 @@ const Navigation = () => {
     return null;
   }
   return links.map((page) => {
-    const isActive = route.split('/').filter((v) => v)[0] === link;
+    const isActive = route.split('/').filter((v) => v)[0] === page;
     return (
-      <LinkWrapper key={page}>
-        <link.fancy $isActive={isActive} href={`/${page}`}>
-          {page.charAt(0).toUpperCase() + page.slice(1)}
-        </link.fancy>
-      </LinkWrapper>
+      <link.fancy key={page} isActive={isActive} href={`/${page}`}>
+        {page.charAt(0).toUpperCase() + page.slice(1)}
+      </link.fancy>
     );
   });
 };
