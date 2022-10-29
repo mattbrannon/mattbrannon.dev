@@ -321,8 +321,8 @@
 html,
 body,
 #__next {
-  height: 100%;
-  min-height: 100%;
+  height: inherit;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -509,6 +509,18 @@ blockquote p em {
   color: navy;
 }
 
+aside cite a {
+  color: navy !important;
+  display: block !important;
+  text-align: right;
+  margin-top: 8px;
+  font-size: 16px !important;
+}
+
+blockquote cite a::before {
+  content: '~ ';
+}
+
 p,
 li {
   /* font-family: Inter, 'OpenSans', system-ui, sans-serif; */
@@ -611,16 +623,6 @@ em {
     transition-delay: 0s !important;
   }
 }
-
-/* @media (max-width: 320px) {
-  html {
-    --header-height: 50px;
-  }
-  a:focus-visible,
-  button:focus-visible {
-    outline: none;
-  }
-} */
 
 input[type='range'] {
   -webkit-appearance: none;
