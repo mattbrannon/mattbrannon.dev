@@ -4,7 +4,7 @@ import { useHasMounted } from './useHasMounted';
 export const useActiveElement = () => {
   const hasMounted = useHasMounted();
 
-  const [ activeElement, setActiveElement ] = useState(null);
+  const [activeElement, setActiveElement] = useState(null);
 
   const handleFocus = () => {
     setActiveElement(document.activeElement);
@@ -15,7 +15,7 @@ export const useActiveElement = () => {
       document.addEventListener('focusin', handleFocus);
       return () => document.removeEventListener('focusin', handleFocus);
     }
-  }, [ hasMounted ]);
+  }, [hasMounted]);
 
   return activeElement;
 };
