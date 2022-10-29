@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { SideNote } from '@components/SideNote';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { breakpoints } from '@constants/breakpoints';
-import { Card } from '@components/Card';
+import { card } from '@components/Card';
 // import Link from 'next/link';
 import { link } from '@components/Links';
 
@@ -48,19 +48,19 @@ export default function Index() {
       {isMobile ? <SideNote>The tools listed on this page are not setup for use with mobile devices.</SideNote> : null}
 
       <ToolsList>
-        <Card.Tools href="/misc/fancy-text-generator" title="Fancy Text Generator">
+        <card.tools href="/misc/fancy-text-generator" title="Fancy Text Generator">
           This is free online tool you can use to generate awesome looking text for your website. Use it to create nice
           subtle effects or bold creative ones. Gradients, layered text shadows, variable fonts and more. Completely
           customizable and easy to use.
-        </Card.Tools>
-        <Card.Tools href="/misc/experiments-with-a-cube" title="Experiments with a Cube">
+        </card.tools>
+        <card.tools href="/misc/experiments-with-a-cube" title="Experiments with a Cube">
           This is the beginnings of what I hope will become sort of character creator type of thing. Did you see my
           little cube friend on the main page? He was born here.
-        </Card.Tools>
-        <Card.Tools href="/misc/fractals" title="Fractals">
+        </card.tools>
+        <card.tools href="/misc/fractals" title="Fractals">
           Fractals are really interesting and often complex recursive geometric patterns. Here you can play around with
           various <code>canvas</code> properties to alter the look of a fractal.
-        </Card.Tools>
+        </card.tools>
       </ToolsList>
       <spacer.block axis="vertical" size={32} />
     </layout.page>

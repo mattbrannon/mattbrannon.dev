@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Card } from '@components/Card';
+import { card } from '@components/Card';
 
 import CardBottom from './CardBottom';
 import CardTop from './CardTop';
@@ -7,10 +7,10 @@ import CardTop from './CardTop';
 export default function AnimatedHero({ ...props }) {
   return (
     <Wrapper>
-      <Card.Hero {...props}>
+      <card.hero {...props}>
         <CardTop {...props} />
         <CardBottom {...props} />
-      </Card.Hero>
+      </card.hero>
     </Wrapper>
   );
 }
