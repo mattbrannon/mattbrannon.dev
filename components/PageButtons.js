@@ -1,3 +1,4 @@
+import { breakpoints } from '@constants/breakpoints';
 import Link from 'next/link';
 import styled from 'styled-components';
 
@@ -27,7 +28,7 @@ const BottomRow = styled.div`
   /* margin-bottom: 48px; */
 
   margin: 32px 0 64px 0;
-  @media (min-width: 480px) {
+  @media (min-width: ${breakpoints.tablet}px) {
     margin-top: 64px;
   }
 `;
