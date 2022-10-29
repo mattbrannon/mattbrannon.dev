@@ -1,20 +1,14 @@
-// export { P } from './Paragraph';
-export { Em } from './Emphasis';
-export { Strong } from './Strong';
-// export { StrongText } from './FancyText';
-export { FancyText } from './FancyText';
-// export { Text } from './Text';
-// export { P as Text } from './Text';
-import { P } from './P';
-import { Strong } from './Strong';
-import { Em } from './Emphasis';
-import { Note } from './Note';
-import { HelpText } from './help';
+import { SideNote } from '@components/SideNote';
+import { Paragraph, Em, Strong, HelpText, Description, FancyTextItalic } from './styles';
+import { withGradient } from './GradientText';
 
 export const text = {
-  paragraph: P,
+  paragraph: Paragraph,
   strong: Strong,
   em: Em,
-  note: Note,
+  note: SideNote,
   help: HelpText,
+  description: Description,
+  italic: FancyTextItalic,
+  gradient: (grad) => withGradient(grad),
 };
