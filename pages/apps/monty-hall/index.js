@@ -1,6 +1,6 @@
 import { AppTitle } from '@components/AppTitle';
 import Head from '@components/Head';
-import { H2Link, H3Link } from '@components/Headings';
+import { headings } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
 import { text } from '@components/Text';
 import { useState, useContext, memo } from 'react';
@@ -56,7 +56,7 @@ export default memo(function MontyHallPage() {
       {isCorrect !== null || context.hasPlayedGame ? (
         <AnimatePresence>
           <motion.section key="1" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-            <k>Explanation</k>
+            <Heading>Explanation</Heading>
             <text.paragraph>
               If you've never encountered this problem before, the idea that switching doors would increase your chances
               of winning very likely seems wrong. How could switching doors increase your chances? Let's look at a
@@ -164,12 +164,12 @@ export default memo(function MontyHallPage() {
   );
 });
 
-const Heading = styled(H2Link)`
+const Heading = styled(headings.h2Link)`
   font-size: var(--size28);
   color: var(--h2);
 `;
 
-const SubHeading = styled(H3Link)`
+const SubHeading = styled(headings.h3Link)`
   font-size: var(--size21);
   color: var(--h4);
 `;

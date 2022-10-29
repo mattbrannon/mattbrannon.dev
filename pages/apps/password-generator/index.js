@@ -1,18 +1,15 @@
 import { AppTitle } from '@components/AppTitle';
 import { link } from '@components/Links';
 import Head from '@components/Head';
-import { H2Link, H3Link } from '@components/Headings';
+import { headings } from '@components/Headings';
 import PageButtons from '@components/PageButtons';
 import { text } from '@components/Text';
 import styled from 'styled-components';
-import { memo, useState } from 'react';
-import { SideNote } from '@components/SideNote';
+import { memo } from 'react';
 import { SyntaxHighlighter } from '@components/SyntaxHighlighter';
 import { Main } from '@components/Layout';
 
 export default memo(function PasswordGenerator() {
-  const [hasClicked, setHasClicked] = useState(false);
-
   const links = {
     liveSite: 'https://mattbrannon-password-generator.vercel.app/',
     github: 'https://github.com/mattbrannon/coding-challenges/tree/main/password-generator',
@@ -44,7 +41,7 @@ export default memo(function PasswordGenerator() {
           caught my eye was the design for a password generator. So I downloaded the design files and got to work.
         </text.paragraph>
 
-        <SideNote>The link above is NOT an affiliate link. It's just where the design came from.</SideNote>
+        <text.note>The link above is NOT an affiliate link. It's just where the design came from.</text.note>
       </section>
 
       <section>
@@ -81,11 +78,11 @@ export default memo(function PasswordGenerator() {
       <section>
         <SubHeading>What is entropy?</SubHeading>
 
-        <SideNote>
+        <text.note>
           A thermodynamic quantity representing the unavailability of a system's thermal energy for conversion into
           mechanical work, often interpreted as the degree of disorder or randomness in the system.
-          <Citation href="https://example.com">Oxford Languages</Citation>
-        </SideNote>
+          <Citation href="https://oxfordlanguages.com">Oxford Languages</Citation>
+        </text.note>
 
         <text.paragraph>
           A good analogy for entropy is melting ice. When the ice is frozen solid, there is very little entropy. The
@@ -156,43 +153,15 @@ export default memo(function PasswordGenerator() {
   );
 });
 
-const FlexContainer = styled.div`
-  display: flex;
-  gap: 16px;
-  margin: 32px 0 0 0;
-  object-fit: cover;
-  max-height: ${(p) => p.max || 320}px;
-
-  flex-direction: ${(p) => (p.column ? 'column' : 'row')};
-`;
-
-const ImageCaption = styled.small`
-  margin-bottom: 32px;
-`;
-
-const Heading = styled(H2Link)`
+const Heading = styled(headings.h2Link)`
   /* margin: 64px 0 8px 0; */
   font-size: var(--size28);
   color: var(--h2);
 `;
 
-const SubHeading = styled(H3Link)`
+const SubHeading = styled(headings.h3Link)`
   font-size: var(--size21);
   color: var(--h4);
-`;
-
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: clamp(16px, 5vw, 32px);
-  align-items: center;
-  /* flex-wrap: wrap; */
-  justify-content: space-evenly;
-
-  margin: 32px 0;
-  padding: 32px 0;
-  padding-top: 0;
-  margin: auto;
-  width: 100%;
 `;
 
 const Cite = styled.cite`
@@ -201,6 +170,8 @@ const Cite = styled.cite`
   font-style: 'normal';
   display: 'block';
   font-variation-settings: "'wght' 200, 'ital' 2 ";
+  margin-left: auto;
+  width: fit-content;
 `;
 
 const Citation = ({ href, children }) => {

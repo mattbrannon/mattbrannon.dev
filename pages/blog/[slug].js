@@ -1,7 +1,7 @@
 import BlogHeader from '@components/BlogHeader';
 import { button } from '@components/Button';
 import Head from '@components/Head';
-import { H2Link, H3Link, H4Link, H5Link } from '@components/Headings';
+import { headings } from '@components/Headings';
 import { TableOfContents } from '@components/TableOfContents';
 
 import { BlogHighlighter } from '@components/SyntaxHighlighter';
@@ -17,10 +17,13 @@ import styled from 'styled-components';
 import { Main } from '@components/Layout';
 // import { useEffect } from 'react';
 import { text } from '@components/Text';
+import { link } from '@components/Links';
 import { spacer } from '@components/Spacer';
 
 import { MaxWidthWrapper } from '@components/MaxWidthWrapper';
 // import { Em } from '@components/Text';
+
+import { creature } from '@components/Creature';
 
 const UnorderedList = styled.ul`
   margin: revert;
@@ -51,18 +54,19 @@ const components = {
   Button: button.pink,
   button: button.teal,
   pre: BlogHighlighter,
-  ColorText: dynamic(() => import('@components/Text/Text').then((res) => res.ColorText)),
+  // ColorText: dynamic(() => import('@components/Text/P').then((res) => res.ColorText)),
   Video: dynamic(() => import('@components/VideoPlayer').then((res) => res.VideoPlayer)),
   // ul: UnorderedList,
   // li: ListItem,
   Gap: dynamic(() => import('@components/Spacer').then((res) => res.Gap)),
   List: dynamic(() => import('@components/List')),
   spacer,
-  h2: H2Link,
-  h3: H3Link,
-  h4: H4Link,
-  h5: H5Link,
-  InternalLink: dynamic(() => import('@components/Links').then((res) => res.Link)),
+  h2: headings.h2Link,
+  h3: headings.h3Link,
+  h4: headings.h4Link,
+  h5: headings.h5Link,
+  InternalLink: link.internal,
+  creature,
 
   p: text.paragraph,
 };

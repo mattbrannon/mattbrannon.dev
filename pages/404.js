@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import styled, { keyframes } from 'styled-components';
 // import { loadFeatures } from '@utils/helpers';
 import { creature } from '@components/Creature';
+import { Main, layout } from '@components/Layout';
 
 const getTranslateXPoints = (start, end, divider) => {
   let total = Math.abs(start) + Math.abs(end);
@@ -93,7 +94,7 @@ export default function Error404() {
   };
 
   return (
-    <>
+    <layout.notFound>
       <DocumentHead title="Whoops" desc="We must have taken a wrong turn at Albuquerque">
         <link rel="preload" href="/fonts/decovar.woff2" as="font" crossOrigin="" type="font/woff2" />
       </DocumentHead>
@@ -110,7 +111,7 @@ export default function Error404() {
           </Link>
         </Wrapper>
       </Container>
-    </>
+    </layout.notFound>
   );
 }
 

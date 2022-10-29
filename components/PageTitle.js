@@ -4,8 +4,7 @@ import { text } from '@components/Text';
 import { breakpoints } from '@constants/breakpoints';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { forwardRef, useEffect, useState } from 'react';
-import { H1 } from '@components/Headings';
-import { spacer } from '@components/Spacer';
+import { headings } from '@components/Headings';
 import { useTheme } from 'next-themes';
 
 const slantText = {
@@ -74,7 +73,7 @@ export const PageTitle = forwardRef(Title);
 //   font-size: var(--size40);
 // `;
 
-const FluidHeading = styled(H1)`
+const FluidHeading = styled(headings.h1)`
   font-family: Recursive, 'OpenSans', system-ui, sans-serif;
   font-variation-settings: var(--recursive6);
   font-size: var(--fontSize);
