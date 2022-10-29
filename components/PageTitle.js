@@ -32,6 +32,7 @@ const Title = (props, ref) => {
   const fontSize = isMobile ? mobileFontSize : desktopFontSize;
   const [color, setColor] = useState('');
   const { theme } = useTheme();
+  const [displayStyle, setDisplayStyle] = useState('block');
 
   useEffect(() => {
     const pink = '#990078';
@@ -39,6 +40,12 @@ const Title = (props, ref) => {
 
     return theme === 'light' ? setColor(pink) : setColor(blue);
   }, [theme, ref]);
+
+  useEffect(() => {
+    const [_, ...rest] = props.children.split(' ');
+    const displayStyle = rest.length > 1 ? 'block' : 'inline';
+    setDisplayStyle(displayStyle);
+  }, [props]);
 
   if (props.children.length) {
     const [highlighted, ...rest] = props.children.split(' ');
@@ -53,6 +60,7 @@ const Title = (props, ref) => {
             animate={animate}
             transition={transition}
             custom={{ color }}
+            displayStyle={displayStyle}
             {...props}
           >
             {highlighted}&nbsp;
@@ -80,20 +88,12 @@ const FluidHeading = styled(headings.h1)`
   line-height: 1.2;
   margin: revert;
   text-align: center;
-  /* margin-top: 64px; */
-  @media (max-width: ${breakpoints.mobile}px) {
-    font-size: 24px;
-    /* margin-bottom: 16px;
-    margin-top: 16px; */
-  }
+
   @media (min-width: ${breakpoints.laptop}px) {
     text-align: left;
   }
 `;
 
 const Span = styled.span`
-  @media (max-width: ${breakpoints.mobile}px) {
-    display: ${(p) => (p.inline ? 'inline' : 'block')};
-  }
   outline: none;
 `;

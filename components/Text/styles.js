@@ -38,7 +38,7 @@ export const FancyTextItalic = styled(motion.i)`
   font-weight: 700;
   font-size: var(--fontSize, inherit);
 
-  display: block;
+  display: ${(p) => p.displayStyle || 'block'};
 
   table & {
     color: black;
