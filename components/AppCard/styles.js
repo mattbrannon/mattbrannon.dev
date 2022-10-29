@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import FutureImage from 'next/future/image';
 import { breakpoints } from '@constants/breakpoints';
-import { H2 } from '@components/Headings';
+import { headings } from '@components/Headings';
 
 export const Wrapper = styled.hgroup`
   display: block;
@@ -13,7 +13,7 @@ export const Wrapper = styled.hgroup`
   }
 `;
 
-export const Heading = styled(H2)`
+export const Heading = styled(headings.h2)`
   font-family: Recursive, sans-serif;
   font-variation-settings: var(--recursive4);
 
