@@ -1,7 +1,7 @@
 import { Basic } from '@components/SyntaxHighlighter';
 import { ViewWrapper } from './styles';
 import { fonts } from '@constants/fancyTextGenerator';
-import { AnimatePresence } from 'framer-motion';
+import { spacer } from '@components/Spacer';
 
 const formatDecovar = (str) => {
   const arr = str.split(',').map((s) => s.trim());
@@ -30,7 +30,6 @@ const getFontLink = (fontFamily) => {
 };
 
 const getCss = ({ styles }) => {
-  console.log(styles);
   const strokeWidth = styles.strokeWidth;
   const strokeColor = styles.strokeColor;
   const gradient = styles.gradient;
@@ -43,9 +42,7 @@ const getCss = ({ styles }) => {
   const { homepage, github } = getFontLink(fontFamily);
 
   const fontSettings =
-    fontFamily === 'Decovar'
-      ? formatDecovar(styles.fontVariationSettings)
-      : styles.fontVariationSettings;
+    fontFamily === 'Decovar' ? formatDecovar(styles.fontVariationSettings) : styles.fontVariationSettings;
 
   // console.log(fontSettings.split(','));
 
@@ -94,11 +91,25 @@ const getCss = ({ styles }) => {
   return staticCSS;
 };
 
+const html = `
+<div class="fancy-text" data-content="your text here">
+  your text here
+</div>
+`;
+
 export const CodeView = ({ styles }) => {
   console.log(styles);
   return (
     <ViewWrapper>
-      <Basic language="css" code={getCss({ styles })} />
+      <div style={{ flex: 1 }}>
+        <h2>CSS</h2>
+        <Basic language="css" code={getCss({ styles })} />
+      </div>
+      <spacer.block size={32} />
+      <div style={{ flex: 1 }}>
+        <h2>HTML</h2>
+        <Basic language="html" code={html} />
+      </div>
     </ViewWrapper>
   );
 };

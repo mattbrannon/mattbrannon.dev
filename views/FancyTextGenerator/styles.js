@@ -1,24 +1,6 @@
 import styled from 'styled-components';
 import { m as motion } from 'framer-motion';
-// import {FancyTitle} from '@components/FancyTitle';
 import { breakpoints } from '@constants/breakpoints';
-
-// export const Article = styled.article`
-//   /* @media (max-width: ${breakpoints.tablet}px) {
-//     --controlWidth: 0;
-//     left: 0;
-//   } */
-
-//   @media (min-width: ${breakpoints.laptop}px) {
-//     position: absolute;
-//     top: var(--header-height);
-//     left: var(--controlWidth);
-//     right: 0;
-//     bottom: var(--footer-height);
-//     overflow: auto;
-//     height: calc(100vh - (var(--header-height) + var(--footer-height)));
-//   }
-// `;
 
 export const Article = styled.article.attrs(({ theme }) => {
   const headerFooterTotal = theme.headerSize + theme.footerSize + 'px';
@@ -136,29 +118,6 @@ export const Span = styled(motion.span)`
     -webkit-text-stroke: var(--strokeWidth) var(--strokeColor);
   }
 `;
-
-// export const WordSpan = styled(Span)`
-//   padding-top: 12px;
-//   padding-bottom: 12px;
-//   padding-left: 0px;
-//   padding-right: 0px;
-
-//   &:after {
-//     padding-top: 12px;
-//     padding-bottom: 12px;
-//     padding-left: 0px;
-//     padding-right: 0px;
-//   }
-// `;
-
-// const Word = ({ children, ...props }) => {
-//   if (props.space) {
-//     return <Span {...props}>{children}&nbsp;</Span>;
-//   }
-//   else {
-//     return <Span {...props}>{children}</Span>;
-//   }
-// };
 
 export const FancyGradient = ({ ...props }) => {
   const onChange = (e) => {
