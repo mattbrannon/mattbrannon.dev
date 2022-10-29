@@ -7,6 +7,7 @@ export const Link = ({ children, ...props }) => {
   const setState = () => {
     context.setHasRun(true);
     context.setBubblesDone(true);
+    context.setHasStarted(true);
   };
 
   return (
