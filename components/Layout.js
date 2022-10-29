@@ -133,6 +133,12 @@ const Page = styled.main`
   /* padding: var(--padding-top) var(--breathing-room); */
 `;
 
+const BlogPage = styled(Page)`
+  @media (max-width: ${breakpoints.laptop}px) {
+    max-width: 540px;
+  }
+`;
+
 const FancyTextGeneratorLayout = styled.main.attrs(({ theme, controlWidth }) => {
   const headerFooterTotal = theme.headerSize + theme.footerSize + 'px';
 
@@ -192,4 +198,5 @@ export const layout = {
   page: Page,
   fancyTextGenerator: FancyTextGeneratorLayout,
   notFound: Layout404,
+  blog: BlogPage,
 };
