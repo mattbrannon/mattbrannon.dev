@@ -45,7 +45,7 @@ export default function Index() {
         </SideNote>
       ) : null}
 
-      {isMobile ? <SideNote>The tools listed on this page are not setup for use with mobile devices.</SideNote> : null}
+      {/* {isMobile ? <SideNote>The tools listed on this page are not setup for use with mobile devices.</SideNote> : null} */}
 
       <ToolsList>
         <card.tools href="/misc/fancy-text-generator" title="Fancy Text Generator">
