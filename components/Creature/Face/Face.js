@@ -28,6 +28,6 @@ const Face = styled.div`
 
   align-items: center;
   justify-content: space-evenly;
-  transform: translateZ(calc(var(--cube-depth) * 0.55));
+  transform: translateZ(calc((var(--cube-depth) * 0.51) + 2px));
   transition: all var(--speed) linear;
 `;

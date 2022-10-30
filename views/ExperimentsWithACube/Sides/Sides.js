@@ -29,7 +29,7 @@ const Rect = styled.rect.attrs((props) => {
   height: inherit;
   width: inherit;
   position: absolute;
-  transition: opacity var(--speed, 0.2s) linear;
+  transition: opacity var(--speed) linear;
 `;
 
 export const SVG = styled.svg`
