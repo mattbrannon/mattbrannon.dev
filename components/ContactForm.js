@@ -17,6 +17,7 @@ const fadeInOut = {
 const SET_EMAIL = 'SET_EMAIL';
 const SET_NAME = 'SET_NAME';
 const SET_MESSAGE = 'SET_MESSAGE';
+const SET_WEBSITE = 'SET_WEBSITE';
 const ERROR = 'ERROR';
 const SUCCESS = 'SUCCESS';
 const SUBMIT = 'SUBMIT';
@@ -31,6 +32,9 @@ const reducer = (state, action) => {
     }
     case SET_MESSAGE: {
       return { ...state, message: action.value };
+    }
+    case SET_WEBSITE: {
+      return { ...state, website: action.value };
     }
     case SUBMIT: {
       return { ...state, submit: action.value };
@@ -121,6 +125,16 @@ const Contact = ({ state, dispatch }) => {
           </InputGroup>
         </FlexGroup>
 
+        {/* honeypot: hidden from real visitors, bots that fill it are rejected */}
+        <HoneypotInput
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          onChange={(e) => dispatch({ type: SET_WEBSITE, value: e.target.value })}
+        />
+
         <InputGroup>
           <Label htmlFor="message">Message:</Label>
           <MessageInput
@@ -193,6 +207,14 @@ const ButtonWrapper = styled.div`
   max-width: 200px;
   margin: 16px auto 0 auto;
   color: white;
+`;
+
+const HoneypotInput = styled.input`
+  position: absolute;
+  left: -9999px;
+  height: 0;
+  width: 0;
+  opacity: 0;
 `;
 
 const Label = styled.label`
