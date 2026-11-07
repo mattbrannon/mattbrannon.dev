@@ -37,7 +37,7 @@ export default memo(function MontyHallPage() {
     <Main>
       <Head title="Monty Hall Experiment" description="Monty Hall Experiment discussion" />
 
-      <AppTitle title="Monty Hall Experience" sources={sources} links={links}>
+      <AppTitle title="Monty Hall Experiment" sources={sources} links={links}>
         A game inspired by the Monty Hall problem
       </AppTitle>
 
