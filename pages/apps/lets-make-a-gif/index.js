@@ -20,7 +20,10 @@ export default memo(function LetsMakeAGifpage() {
 
   return (
     <Main>
-      <Head title="Let's Make a Gif" description="Let's Make a Gif discussion page" />
+      <Head
+        title="Let's Make a Gif"
+        description="Let's Make a Gif is a photo and video editor I built with React and Node.js, with 19 effect filters from ffmpeg. Here's how it was made."
+      />
 
       <AppTitle rounded center title="Lets Make a Gif" sources={sources} links={links}>
         A photo &amp; video editor built with React and Nodejs

@@ -166,7 +166,10 @@ export default function Fractals() {
 
   return (
     <>
-      <Head title="Fractals" description="generative art" />
+      <Head
+        title="Fractals"
+        description="Fractals are recursive geometric patterns. Play around with canvas settings to change how one is drawn."
+      />
       <ControlWrapper>
         <FractalControls onChange={onChange} ref={controlRef} dispatch={dispatch} state={state} />
       </ControlWrapper>

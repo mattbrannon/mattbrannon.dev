@@ -18,7 +18,7 @@ export default function Index({ posts }) {
     <layout.blog>
       <Head
         title="Another Developer Blog"
-        description="Thoughts, opinions, criticisms, rantings, ravings, musings on all things great and small"
+        description="Writing about web development and the things I build."
       />
 
       <PageTitle>Another Developer Blog</PageTitle>

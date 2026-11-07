@@ -35,7 +35,10 @@ export default memo(function MontyHallPage() {
 
   return (
     <Main>
-      <Head title="Monty Hall Experiment" description="Monty Hall Experiment discussion" />
+      <Head
+        title="Monty Hall Experiment"
+        description="A game based on the Monty Hall problem, and a walk through why switching doors wins two times out of three."
+      />
 
       <AppTitle title="Monty Hall Experiment" sources={sources} links={links}>
         A game inspired by the Monty Hall problem

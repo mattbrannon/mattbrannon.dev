@@ -8,7 +8,7 @@ import { layout } from '@components/Layout';
 export default function Contact() {
   return (
     <layout.page id="main-content">
-      <Head title="Contact" description="If you want to get in touch, here's how.." />
+      <Head title="Contact" description="Want to get in touch? Send me a message here. It goes straight to my inbox." />
       <PageTitle inline>Contact Me</PageTitle>
       <text.paragraph>
         Wanna get in touch? Send me a message using the form below. All messages go straight to my inbox.

@@ -26,7 +26,10 @@ export default function Index() {
 
   return (
     <layout.page id="main-content">
-      <Head title="Tools and toys" description="A collection of useful and pointless things" />
+      <Head
+        title="Tools and toys"
+        description="A collection of useful and pointless things: a fancy text generator, a fractal playground and a cube for playing with 3D transforms."
+      />
 
       <PageTitle>Tools and Toys</PageTitle>
       <text.paragraph>

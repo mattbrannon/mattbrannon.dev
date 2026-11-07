@@ -19,7 +19,10 @@ export default memo(function PasswordGenerator() {
 
   return (
     <Main>
-      <Head title="Password Generator" description="Password Generator app" />
+      <Head
+        title="Password Generator"
+        description="A configurable random password generator built from a Frontend Mentor design, and what entropy says about how strong a password is."
+      />
       <AppTitle rounded center title="Password Generator" sources={sources} links={links}>
         Configurable random password generator.
       </AppTitle>

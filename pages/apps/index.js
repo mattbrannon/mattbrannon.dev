@@ -48,7 +48,10 @@ const passwordGeneratorConfig = {
 export default memo(function AppsPage() {
   return (
     <layout.page id="main-content">
-      <Head title="Apps" description="Apps built by Matt Brannon" />
+      <Head
+        title="Apps"
+        description="Apps I've built: a realtime chat room, a photo and video editor, a Monty Hall game and a password generator, with notes on how each one was made."
+      />
       <PageTitle>Apps I've Built</PageTitle>
       <text.paragraph>
         Below you'll find a few apps I've built that I'm particularly proud of (there's a whole slew of others that I

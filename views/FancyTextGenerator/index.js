@@ -28,7 +28,10 @@ export default function FancyTextGenerator({ ...props }) {
 
   return (
     <>
-      <Head title="Fancy Text Generator" description="Developer tools" />
+      <Head
+        title="Fancy Text Generator"
+        description="A free online tool for making fancy text for your website: gradients, layered text shadows, variable fonts and more."
+      />
       <layout.fancyTextGenerator controlWidth={controlWidth}>
         <FontControls
           ref={ref}

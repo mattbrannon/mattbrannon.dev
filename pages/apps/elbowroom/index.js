@@ -32,7 +32,10 @@ export default memo(function ElbowRoomPage() {
 
   return (
     <Main>
-      <Head description="Discussion page concerning the making of elbowroom.dev" title="Elbow Room" />
+      <Head
+        description="Elbow Room is a realtime chat room I built with React and Firebase, with Google, Facebook and email sign-in. Here's how it was made."
+        title="Elbow Room"
+      />
 
       <AppTitle title="Elbow Room" sources={videoSources} links={links}>
         Real time chatroom built with React and Firebase

@@ -53,7 +53,10 @@ export default function Experiments() {
 
   return (
     <>
-      <Head title="Experiments with a cube" description="A tool for visualizing 3d transforms" />
+      <Head
+        title="Experiments with a cube"
+        description="A tool for visualizing 3D transforms. The cube on my homepage started out here."
+      />
       <Grid style={{ '--controlWidth': `${width}px` }}>
         <ShapeControls
           ref={controlRef}
