@@ -30,7 +30,7 @@ const elbowRoomConfig = {
 const montyHallConfig = {
   href: '/apps/monty-hall',
   title: 'Monty Hall Experiment',
-  description: 'A game inspired by the monty hall problem',
+  description: 'A game inspired by the Monty Hall problem',
   src: montyHallAvif,
   alt: 'desktop view of the app',
   priority: false,
