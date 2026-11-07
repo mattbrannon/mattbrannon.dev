@@ -9,11 +9,15 @@ import { MotionConfig, LazyMotion, domAnimation, useReducedMotion } from 'framer
 import { ThemeProvider } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 import { ThemeProvider as ContextProvider, StyleSheetManager } from 'styled-components';
+import { useRouter } from 'next/router';
 
 import { useIsBannerVisible } from '@hooks/useIsBannerVisible';
 import { useActiveElement } from '@hooks/useActiveElement';
 import { useHasMounted } from '@hooks/useHasMounted';
 import { useElementSize } from '@hooks/useElementSize';
+
+// Set once the homepage intro has started on this browser, so it never plays again here.
+const INTRO_PLAYED_KEY = 'introPlayed';
 
 export default function Application({ Component, pageProps }) {
   const [isOpen, setIsOpen] = useState(null);
@@ -34,6 +38,45 @@ export default function Application({ Component, pageProps }) {
   const footerRef = useRef();
   const headerSize = useElementSize(headerRef);
   const footerSize = useElementSize(footerRef);
+  const router = useRouter();
+
+  // Read after mount so the server HTML and the first client render match. This runs in the same
+  // effect flush as the hero card's mount guard, so the card's first render already has these flags.
+  useEffect(() => {
+    try {
+      if (window.localStorage.getItem(INTRO_PLAYED_KEY)) {
+        setHasRun(true);
+        setHasStarted(true);
+        setBubblesDone(true);
+      }
+    }
+    catch {
+      // storage is blocked: the intro is remembered for this page load only
+    }
+  }, []);
+
+  useEffect(() => {
+    if (hasStarted) {
+      try {
+        window.localStorage.setItem(INTRO_PLAYED_KEY, 'true');
+      }
+      catch {
+        // storage is blocked: the intro is remembered for this page load only
+      }
+    }
+  }, [hasStarted]);
+
+  // Leaving the homepage once the intro has started finishes it, so coming back never replays part of it.
+  useEffect(() => {
+    if (hasStarted) {
+      const finishIntro = () => {
+        setHasRun(true);
+        setBubblesDone(true);
+      };
+      router.events.on('routeChangeStart', finishIntro);
+      return () => router.events.off('routeChangeStart', finishIntro);
+    }
+  }, [hasStarted, router.events]);
 
   useEffect(() => {
     function traverseNode(root) {
