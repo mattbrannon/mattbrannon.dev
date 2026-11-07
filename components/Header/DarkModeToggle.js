@@ -30,8 +30,10 @@ export function DarkModeToggle() {
     setTheme(newTheme);
   };
 
+  const label = `Switch to ${theme === 'light' ? 'dark' : 'light'} mode`;
+
   return (
-    <ToggleButton id="theme-toggle" title={`Switch to ${theme} mode`} onClick={toggle}>
+    <ToggleButton id="theme-toggle" title={label} aria-label={label} onClick={toggle}>
       <AnimatePresence mode="wait">
         <IconWrapper key={currentIcon} variants={containerVariant} initial="hidden" animate="show" exit="close">
           <Icon />
