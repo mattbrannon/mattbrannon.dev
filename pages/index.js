@@ -27,7 +27,7 @@ export default function HomePage() {
   return (
     <layout.home id="main-content">
       <Head
-        description="I'm Matt Brannon, a web developer and musician. I enjoy building solutions to modern problems with code."
+        description="I'm Matt Brannon, a web developer and musician. I make things for the web, like a realtime chat room and a photo and video editor."
         title="Matt Brannon | Web Developer"
       />
 

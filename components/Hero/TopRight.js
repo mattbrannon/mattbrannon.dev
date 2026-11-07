@@ -6,8 +6,7 @@ const MobileText = ({ ...props }) => {
   return (
     <div>
       <SlidingText>
-        Hey there! My name is Matt. I'm a web developer and musician. Thanks for stopping by my
-        little corner of the web.
+        Hey there! I'm Matt, a web developer and musician. Have a look around, or just say hi.
       </SlidingText>
     </div>
   );
@@ -16,8 +15,8 @@ const MobileText = ({ ...props }) => {
 const RegularText = ({ ...props }) => {
   return (
     <SlidingText>
-      Hey there! My name is Matt. I'm a web developer and musician. I enjoy building solutions to
-      modern problems with code. Thanks for stopping by my little corner of the web.
+      Hey there! I'm Matt, a web developer and musician. I make things for the web, like a realtime
+      chat room and a photo and video editor. Have a look around, or just say hi.
     </SlidingText>
   );
 };
