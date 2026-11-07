@@ -4,6 +4,7 @@ import { FancyTitle } from '@components/FancyTitle';
 import Head from '@components/Head';
 import { layout } from '@components/Layout';
 import { useContext } from 'react';
+import { useReducedMotion } from 'framer-motion';
 // import { breakpoints } from '@constants/breakpoints';
 
 const homePageVariant = {
@@ -11,17 +12,18 @@ const homePageVariant = {
     opacity: 0,
     clipPath: 'var(--left)',
   },
-  show: ({ hasRun }) => {
+  show: ({ hasRun, shouldReduceMotion }) => {
     return {
       opacity: 1,
       clipPath: 'var(--visible)',
-      transition: { duration: hasRun ? 1.5 : 0.8 },
+      transition: shouldReduceMotion ? { type: false } : { duration: hasRun ? 1.5 : 0.8 },
     };
   },
 };
 
 export default function HomePage() {
   const context = useContext(ThemeContext);
+  const shouldReduceMotion = useReducedMotion();
   return (
     <layout.home id="main-content">
       <Head description="Home Base" title="Matt Brannon | Web Developer" />
@@ -36,7 +38,7 @@ export default function HomePage() {
         variants={homePageVariant}
         initial="hidden"
         animate="show"
-        custom={{ hasRun: context.hasRun }}
+        custom={{ hasRun: context.hasRun, shouldReduceMotion }}
       >
         Welcome to my site!
       </FancyTitle>

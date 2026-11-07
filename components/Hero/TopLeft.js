@@ -6,7 +6,7 @@ import { m as motion } from 'framer-motion';
 import { useRandomInterval } from '@hooks/useRandomInterval';
 import { useHasMounted } from '@hooks/useHasMounted';
 import { useMediaQuery } from '@hooks/useMediaQuery';
-import { useAnimation } from 'framer-motion';
+import { useAnimation, useReducedMotion } from 'framer-motion';
 
 const random = (min, max) => {
   min = Math.ceil(min);
@@ -65,6 +65,7 @@ export default function DropDeadFred() {
   const context = useContext(ThemeContext);
   const controls = useAnimation();
   const [isRunning, setIsRunning] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (hasMounted && context.hasRun) {
@@ -97,13 +98,15 @@ export default function DropDeadFred() {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
+      initial={shouldReduceMotion ? false : { opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: context.hasRun ? 1 : 0.4 }}
     >
       <motion.div
         style={{ transformStyle: 'preserve-3d' }}
         onAnimationComplete={(name) => console.log(name, 'done')}
+        // with reduced motion the cube starts in the pose the intro would have left it in
+        initial={shouldReduceMotion ? { rotateY: -12, rotateX: -6 } : undefined}
         animate={controls}
         custom={{ hasRun: context.hasRun }}
         // animate={{

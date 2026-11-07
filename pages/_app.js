@@ -5,7 +5,7 @@ import { MobileMenu } from '@components/MobileMenu';
 
 import '@styles/global.css';
 import { GlobalStyle } from '@styles/global';
-import { MotionConfig, LazyMotion, domAnimation } from 'framer-motion';
+import { MotionConfig, LazyMotion, domAnimation, useReducedMotion } from 'framer-motion';
 import { ThemeProvider } from 'next-themes';
 import { useEffect, useRef, useState } from 'react';
 import { ThemeProvider as ContextProvider, StyleSheetManager } from 'styled-components';
@@ -25,6 +25,8 @@ export default function Application({ Component, pageProps }) {
   const [hasRun, setHasRun] = useState(null);
   const [hasStarted, setHasStarted] = useState(false);
   const [bubblesDone, setBubblesDone] = useState(false);
+  // With reduced motion the homepage intro counts as already played, so it renders its finished state.
+  const shouldReduceMotion = useReducedMotion();
   const isBannerVisible = useIsBannerVisible(400);
   const [hasPlayedGame, setHasPlayedGame] = useState(false);
 
@@ -55,11 +57,11 @@ export default function Application({ Component, pageProps }) {
   const theme = {
     isOpen,
     setIsOpen,
-    hasRun,
+    hasRun: shouldReduceMotion || hasRun,
     setHasRun,
-    hasStarted,
+    hasStarted: shouldReduceMotion || hasStarted,
     setHasStarted,
-    bubblesDone,
+    bubblesDone: shouldReduceMotion || bubblesDone,
     setBubblesDone,
     hasPlayedGame,
     setHasPlayedGame,
@@ -81,7 +83,7 @@ export default function Application({ Component, pageProps }) {
 
   return (
     <>
-      <MotionConfig isValidProp={isValidProp}>
+      <MotionConfig isValidProp={isValidProp} reducedMotion="user">
         <LazyMotion strict features={domAnimation}>
           <StyleSheetManager disableVendorPrefixes>
             <ContextProvider theme={theme}>
