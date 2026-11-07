@@ -1,8 +1,7 @@
 import styled, { ThemeContext } from 'styled-components';
 import { breakpoints } from '@constants/breakpoints';
 // import Link from 'next/link';
-import { link } from '@components/Links';
-import { button } from '@components/Button';
+import { buttonLink } from '@components/Button';
 import { m as motion, useAnimation } from 'framer-motion';
 import { useState, useReducer, useEffect, useContext } from 'react';
 import { useMediaQuery } from '@hooks/useMediaQuery';
@@ -64,19 +63,19 @@ export default function CardBottom({ ...props }) {
   return (
     <Container initial={context.hasStarted ? text.visible : text.hidden} animate={controls}>
       <Bubble side="left">
-        <link.next href="/blog/about-me">
-          <button.teal {...props}>Who am I?</button.teal>
-        </link.next>
+        <buttonLink.teal href="/blog/about-me" {...props}>
+          Who am I?
+        </buttonLink.teal>
       </Bubble>
       <Bubble side="center">
-        <link.next href="/apps">
-          <button.teal {...props}>View my work</button.teal>
-        </link.next>
+        <buttonLink.teal href="/apps" {...props}>
+          View my work
+        </buttonLink.teal>
       </Bubble>
       <Bubble side="right">
-        <link.next href="/contact">
-          <button.teal {...props}>Get in touch</button.teal>
-        </link.next>
+        <buttonLink.teal href="/contact" {...props}>
+          Get in touch
+        </buttonLink.teal>
       </Bubble>
     </Container>
   );

@@ -11,7 +11,7 @@ export const Link = ({ children, ...props }) => {
   };
 
   return (
-    <UnstyledLink onClick={setState} {...props} tabIndex={-1}>
+    <UnstyledLink onClick={setState} {...props}>
       {children}
     </UnstyledLink>
   );

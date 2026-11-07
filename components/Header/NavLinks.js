@@ -116,4 +116,10 @@ const NameLink = styled(link.next)`
   &:hover {
     text-decoration: none;
   }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-outline);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
 `;

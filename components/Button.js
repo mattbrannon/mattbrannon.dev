@@ -1,6 +1,9 @@
 import { breakpoints } from '@constants/breakpoints';
 import styled from 'styled-components';
 import { m as motion } from 'framer-motion';
+// Keep this import above the styled components below: styled-components orders styles by
+// definition, and ButtonLink's font rules have to beat the link's `font: inherit`.
+import { link } from '@components/Links';
 
 const Wrapper = styled(motion.div)`
   width: 100%;
@@ -103,6 +106,30 @@ function withButton(Wrapper) {
   };
 }
 
+// Looks like the button above, but the teal box is the <a> itself, so there is
+// one thing to focus and no <button> nested inside a link.
+const ButtonLink = styled(MotionButton)`
+  font-family: 'Jost';
+  line-height: calc(1em + 0.625rem);
+  text-align: center;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-outline);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+`;
+
+function withLink(Wrapper) {
+  return function LinkComponent(props) {
+    return (
+      <Wrapper>
+        <ButtonLink as={link.next} {...props} />
+      </Wrapper>
+    );
+  };
+}
+
 // export const PinkButton = withButton(PinkWrapper);
 // export const InvertedButton = withButton(InvertedWrapper);
 // export const NormalButton = withButton(TealWrapper);
@@ -114,4 +141,8 @@ export const button = {
   pink: withButton(PinkWrapper),
   orange: withButton(InvertedWrapper),
   basic: withButton(WhiteText),
+};
+
+export const buttonLink = {
+  teal: withLink(TealWrapper),
 };
