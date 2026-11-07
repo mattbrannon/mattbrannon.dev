@@ -26,7 +26,10 @@ export default function HomePage() {
   const shouldReduceMotion = useReducedMotion();
   return (
     <layout.home id="main-content">
-      <Head description="Home Base" title="Matt Brannon | Web Developer" />
+      <Head
+        description="I'm Matt Brannon, a web developer and musician. I enjoy building solutions to modern problems with code."
+        title="Matt Brannon | Web Developer"
+      />
 
       <FancyTitle
         style={{
