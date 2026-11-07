@@ -14,6 +14,12 @@ export const Container = styled(motion.div)`
   position: relative;
 `;
 
+// Drops the browser's default h1 size, weight and margins so the title looks as it did as a div.
+export const Heading = styled.h1`
+  font: inherit;
+  margin: 0;
+`;
+
 export const GradientSpan = styled.span`
   font: inherit;
   background: var(--gradient);
