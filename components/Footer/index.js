@@ -15,13 +15,13 @@ function Footer({ ...props }, ref) {
           <VisuallyHidden>
             <h2>Social Media Links</h2>
           </VisuallyHidden>
-          <ImageLink href="https://github.com/mattbrannon" src="/images/github/github.png" alt="link to github" />
+          <ImageLink href="https://github.com/mattbrannon" src="/images/github/github.png" alt="GitHub" />
           <ImageLink
             href="https://linkedin.com/in/mattbrannon1"
             src="/images/linkedin/linkedin.png"
-            alt="link to linkedin"
+            alt="LinkedIn"
           />
-          <ImageLink href="https://twitter.com/_mattbrannon" src="/images/twitter/twitter.png" alt="link to twitter" />
+          <ImageLink href="https://twitter.com/_mattbrannon" src="/images/twitter/twitter.png" alt="Twitter" />
         </Nav>
       </NavWrapper>
       <Copyright>
@@ -36,9 +36,9 @@ export default forwardRef(Footer);
 
 const ImageLink = ({ ...props }) => {
   return (
-    <link.internal {...props}>
+    <IconLink {...props}>
       <Image alt="" width={30} height={30} {...props} />
-    </link.internal>
+    </IconLink>
   );
 };
 
@@ -83,6 +83,12 @@ const Nav = styled.nav`
   margin: 0;
   padding: 0;
   gap: 32px;
+`;
+
+// 44px tap target around the 30px icon; the negative margin keeps the layout unchanged
+const IconLink = styled(link.internal)`
+  padding: 7px;
+  margin: -7px;
 `;
 
 const Image = styled(NextImage)`
