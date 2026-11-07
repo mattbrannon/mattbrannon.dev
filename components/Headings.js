@@ -2,7 +2,7 @@ import { breakpoints } from '@constants/breakpoints';
 import styled from 'styled-components';
 import { toHeadingId } from '@utils/helpers.js';
 import { link } from '@components/Links';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 const BlogLink = styled.div`
   scroll-margin-top: 60px;
@@ -86,6 +86,7 @@ const withLink = (Heading) => {
     const [id, setId] = useState(ref?.current?.id);
     const [isHovering, setIsHovering] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    const textId = useId();
 
     useEffect(() => {
       if (ref.current) {
@@ -107,17 +108,18 @@ const withLink = (Heading) => {
         onClick={() => svg.current.click()}
         ref={ref}
         id={id}
+        aria-labelledby={textId}
         {...props}
       >
         {/* <div> */}
         <link.icon
-          aria-label={props.children}
+          aria-label="Link to this section"
           isFocused={isFocused}
           isHovering={isHovering}
           ref={svg}
           href={'#' + id}
         />
-        <span>{props.children}</span>
+        <span id={textId}>{props.children}</span>
       </Heading>
     );
   };
