@@ -95,7 +95,7 @@ export default function Error404() {
 
   return (
     <layout.notFound>
-      <DocumentHead title="Whoops" desc="We must have taken a wrong turn at Albuquerque">
+      <DocumentHead title="Whoops" description="We must have taken a wrong turn at Albuquerque">
         <link rel="preload" href="/fonts/decovar.woff2" as="font" crossOrigin="" type="font/woff2" />
       </DocumentHead>
 
