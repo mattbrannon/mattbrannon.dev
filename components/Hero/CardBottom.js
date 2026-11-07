@@ -30,16 +30,17 @@ const bubble = {
   },
   expand: { clipPath: 'circle(400% at center)', transform: 'translateX(0%)' },
   transition: {
+    hidden: { type: false },
     rest: {
-      clipPath: { delay: 0, duration: 0.5 },
-      transform: { duration: 1, delay: 1, ease: [0.09, 0.78, 0.3, 1.5] },
+      clipPath: { delay: 0, duration: 0.3 },
+      transform: { duration: 0.45, delay: 0, ease: [0.09, 0.78, 0.3, 1.5] },
     },
     expand: {
-      transform: { duration: 1, delay: 1, ease: [0.09, 0.78, 0.3, 1.5] },
+      transform: { duration: 0.45, delay: 0, ease: [0.09, 0.78, 0.3, 1.5] },
       clipPath: { delay: 0, duration: 0.5 },
     },
     circle: {
-      clipPath: { duration: 1, delay: 0 },
+      clipPath: { duration: 0.3, delay: 0 },
     },
   },
 };
@@ -47,7 +48,7 @@ const bubble = {
 const text = {
   hidden: { opacity: 0, color: 'transparent', textShadow: '0 0 0 transparent' },
   visible: { opacity: 1, color: 'white', textShadow: '-0.0325em -0.0225em 0.025em black' },
-  transition: { color: { delay: 3.5, duration: 1 }, textShadow: { delay: 3.5, duration: 1 } },
+  transition: { color: { delay: 0.8, duration: 0.25 }, textShadow: { delay: 0.8, duration: 0.25 } },
 };
 
 export default function CardBottom({ ...props }) {
@@ -87,7 +88,6 @@ const Container = styled(motion.div)`
   gap: 8px;
   position: relative;
   margin-top: 16px;
-  transition: all 1s linear;
   @media (min-width: ${breakpoints.laptop}px) {
     margin: 16px 0;
     grid-template-columns: repeat(3, 1fr);
@@ -108,10 +108,15 @@ const Bubble = ({ side, children }) => {
       }
       else {
         controls
-          .start({ clipPath: bubble.hidden[env].clipPath, ...bubble.hidden[env][side] })
+          .start({
+            clipPath: bubble.hidden[env].clipPath,
+            ...bubble.hidden[env][side],
+            transition: bubble.transition.hidden,
+          })
           .then(() => controls.start({ ...bubble.circle, transition: bubble.transition.circle }))
-          .then(() => controls.start({ ...bubble.rest[env], transition: { ...bubble.transition.rest } }))
+          // the intro text starts sliding in as soon as the dots have appeared
           .then(() => context.setBubblesDone(true))
+          .then(() => controls.start({ ...bubble.rest[env], transition: { ...bubble.transition.rest } }))
 
           .then(() => controls.start({ ...bubble.expand, transition: { ...bubble.transition.expand } }));
       }

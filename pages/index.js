@@ -15,10 +15,7 @@ const homePageVariant = {
     return {
       opacity: 1,
       clipPath: 'var(--visible)',
-      transition: {
-        duration: 1.5,
-        delay: hasRun ? 0 : 4,
-      },
+      transition: { duration: hasRun ? 1.5 : 0.8 },
     };
   },
 };

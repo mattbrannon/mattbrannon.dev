@@ -34,9 +34,10 @@ const Container = styled.div`
 `;
 
 const Word = styled.span.attrs((props) => {
-  const translateX = props.bubblesDone ? 0 : props.index * 2 + 700 + 'px';
+  // Words wait a short, still readable distance to the right, then glide into place one after another.
+  const translateX = props.bubblesDone ? 0 : '20px';
   const delay = props.bubblesDone ? (props.index + 1) / 100 : 0;
-  const duration = props.bubblesDone ? (props.index + 100) / 100 : 0;
+  const duration = props.bubblesDone ? 0.5 : 0;
   return {
     style: {
       '--translateX': translateX,
@@ -51,7 +52,7 @@ const Word = styled.span.attrs((props) => {
 
   transform: translateX(var(--translateX));
 
-  transition: transform var(--duration) ease-in-out var(--delay);
+  transition: transform var(--duration) ease-out var(--delay);
 
   @media (max-width: ${breakpoints.mobile}px) {
     line-height: 1.25;

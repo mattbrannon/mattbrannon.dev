@@ -9,7 +9,7 @@ export const HeroCard = ({ children, ...props }) => {
   const hasMounted = useHasMounted();
   const [background, setBackground] = useState('');
   const [boxShadow, setBoxShadow] = useState('');
-  const [transition, setTransition] = useState({ delay: 4, duration: 1 });
+  const [transition, setTransition] = useState({ delay: 0, duration: 0.6 });
   const { theme } = useTheme();
   const [className, setClassName] = useState('');
   const context = useContext(ThemeContext);

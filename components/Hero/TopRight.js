@@ -1,16 +1,15 @@
-import { m as motion } from 'framer-motion';
 import { breakpoints } from '@constants/breakpoints';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import SlidingText from './SlidingText';
 
 const MobileText = ({ ...props }) => {
   return (
-    <motion.div initial={{ x: 40 }} animate={{ x: 0 }} transition={{ duration: 1 }}>
+    <div>
       <SlidingText>
         Hey there! My name is Matt. I'm a web developer and musician. Thanks for stopping by my
         little corner of the web.
       </SlidingText>
-    </motion.div>
+    </div>
   );
 };
 

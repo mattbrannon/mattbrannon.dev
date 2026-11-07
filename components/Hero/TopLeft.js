@@ -25,11 +25,10 @@ const fred = {
   animate: {
     translateX: 0,
     rotateY: 65,
-    rotateX: [6, -6, 6, -6, 6, -6, 6, -6, 6, -6, 6, -6],
+    rotateX: [6, -6, 6, -6, 6, -6],
   },
   transition: {
-    delay: 3.5,
-    duration: 1.5,
+    duration: 0.8,
   },
   // transition: {
   //   translateX: {
@@ -85,11 +84,11 @@ export default function DropDeadFred() {
   useEffect(() => {
     if (!isRunning && !context.hasRun) {
       controls
-        .start({ ...fred.initial({ hasRun: context.hasRun }) })
+        .start({ ...fred.initial({ hasRun: context.hasRun }), transition: { type: false } })
         .then(() => setIsRunning(true))
         .then(() => controls.start({ ...fred.animate, transition: { ...fred.transition } }))
         .then(() =>
-          controls.start({ rotateY: -12, transition: { ease: [0.76, -0.51, 0.2, 1.45], duration: 0.8, delay: 0.8 } })
+          controls.start({ rotateY: -12, transition: { ease: [0.76, -0.51, 0.2, 1.45], duration: 0.55, delay: 0.1 } })
         )
         .then(() => context.setHasRun(true))
         .then(() => controls.stop());
@@ -100,7 +99,7 @@ export default function DropDeadFred() {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ delay: context.hasRun ? 0 : 3, duration: 1 }}
+      transition={{ duration: context.hasRun ? 1 : 0.4 }}
     >
       <motion.div
         style={{ transformStyle: 'preserve-3d' }}
