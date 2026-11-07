@@ -61,11 +61,16 @@ export default function DropDeadFred() {
   const hasMounted = useHasMounted();
   const [angle, setAngle] = useState(0);
   const isMobile = useMediaQuery({ maxWidth: breakpoints.mobile });
-  const cancel = useRandomInterval(() => setRandomAngles(setAngle), 1000, 10000);
+  const shouldReduceMotion = useReducedMotion();
+  // with reduced motion the head stays still instead of turning every few seconds
+  const cancel = useRandomInterval(
+    () => setRandomAngles(setAngle),
+    shouldReduceMotion ? null : 1000,
+    shouldReduceMotion ? null : 10000
+  );
   const context = useContext(ThemeContext);
   const controls = useAnimation();
   const [isRunning, setIsRunning] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     if (hasMounted && context.hasRun) {
