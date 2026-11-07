@@ -51,7 +51,7 @@ export default memo(function AppsPage() {
       <Head title="Apps" description="Apps built by Matt Brannon" />
       <PageTitle>Apps I've Built</PageTitle>
       <text.paragraph>
-        Below you'll find a few apps I've buit that I'm particularly proud of (there's a whole slew of others that I
+        Below you'll find a few apps I've built that I'm particularly proud of (there's a whole slew of others that I
         wish I could forget). All of these apps are live on the web. You'll find links to the live sites on the app
         discussion page. If you'd like to see the code, you'll also find a link to the app's github repository. Please
         feel free to try them out and let me know what you think.
